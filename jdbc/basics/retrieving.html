@@ -1,0 +1,863 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>从结果集中检索和修改值（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="nolinkAHEAD">从结果集中检索和修改值</div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="tables.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="prepared.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>从结果集中检索和修改值</h1></div>
+            <div id="PageContent">
+
+<p>以下方法， <code><a href="gettingstarted.html">CoffeesTable.viewTable</a></code>输出的内容<code>COFFEES</code>表，并演示了<code>ResultSet</code>对象和游标：</p>
+<div class="codeblock"><pre>
+public static void viewTable(Connection con, String dbName)
+    throws SQLException {
+
+    Statement stmt = null;
+    String query =
+        "select COF_NAME, SUP_ID, PRICE, " +
+        "SALES, TOTAL " +
+        "from " + dbName + ".COFFEES";
+
+    try {
+        stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            String coffeeName = rs.getString("COF_NAME");
+            int supplierID = rs.getInt("SUP_ID");
+            float price = rs.getFloat("PRICE");
+            int sales = rs.getInt("SALES");
+            int total = rs.getInt("TOTAL");
+            System.out.println(coffeeName + "\t" + supplierID +
+                               "\t" + price + "\t" + sales +
+                               "\t" + total);
+        }
+    } catch (SQLException e ) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>一种<code>ResultSet</code>对象是代表数据库结果集的数据表，通常由执行查询数据库的语句生成。例如， <code><a href="gettingstarted.html">CoffeeTables.viewTable</a></code>方法创建一个<code>ResultSet</code> ， <code>rs</code> ，当它通过执行查询时<code>Statement</code>宾语， <code>stmt</code> 。请注意<code>ResultSet</code>可以通过实现<code>Statement</code>界面，包括<code>PreparedStatement</code> ， <code>CallableStatement</code>和<code>RowSet</code> 。</p>
+<p>您可以在<code>ResultSet</code>通过游标的对象。请注意，此游标不是数据库游标。此光标是一个指针，它指向<code>ResultSet</code> 。最初，光标位于第一行之前。方法<code>ResultSet.next</code>将光标移动到下一行。该方法返回<code>false</code>如果光标位于最后一行之后。此方法反复调用<code>ResultSet.next</code>用的方法<code>while</code>循环访问中的所有数据<code>ResultSet</code> 。</p>
+<p>此页面涵盖以下主题：</p>
+<ul>
+<li><a href="#rs_interface">ResultSet界面</a></li>
+<li><a href="#retrieve_rs">从行中检索列值</a></li>
+<li><a href="#cursors">游标</a></li>
+<li><a href="#rs_update">更新ResultSet对象中的行</a></li>
+<li><a href="#batch_updates">使用语句对象进行批处理更新</a></li>
+<li><a href="#rs_insert">在ResultSet对象中插入行</a></li>
+</ul>
+<!-- **************************************** -->
+<h2><a name="rs_interface" id="rs_interface">ResultSet界面</a></h2>
+<p>的<code>ResultSet</code>接口提供了用于检索和处理已执行查询的结果的方法，以及<code>ResultSet</code>对象可以具有不同的功能和特征。这些特征是类型，并发和光标<em>可保存性</em> 。</p>
+<!-- ==================================== -->
+<h3>结果集类型</h3>
+<p>一个的类型<code>ResultSet</code>对象在两个方面确定其功能级别：游标可被使用的方式以及对基础数据源进行的并发更改如何被对象反映。 <code>ResultSet</code>宾语。</p>
+<p>灵敏度<code>ResultSet</code>对象由三种不同的一种确定<code>ResultSet</code>类型：</p>
+<ul>
+<li><code>TYPE_FORWARD_ONLY</code> ：结果集无法滚动；它的光标只能从第一行之前移到最后一行之后。结果集中包含的行取决于基础数据库如何生成结果。也就是说，它包含在执行查询时或在检索行时满足查询条件的行。</li>
+<li><code>TYPE_SCROLL_INSENSITIVE</code> ：结果可以滚动；它的光标可以相对于当前位置向前和向后移动，并且可以移动到绝对位置。结果集在打开时对基础数据源所做的更改不敏感。它包含在执行查询时或在检索行时满足查询条件的行。</li>
+<li><code>TYPE_SCROLL_SENSITIVE</code> ：结果可以滚动；它的光标可以相对于当前位置向前和向后移动，并且可以移动到绝对位置。结果集反映在结果集保持打开状态时对基础数据源所做的更改。</li>
+</ul>
+<p>默认值<code>ResultSet</code>类型是<code>TYPE_FORWARD_ONLY</code> 。</p>
+<p><strong>注意</strong> ：并非所有数据库和JDBC驱动程序都支持全部<code>ResultSet</code>类型。方法<code>DatabaseMetaData.supportsResultSetType</code>退货<code>true</code>如果指定<code>ResultSet</code>类型受支持，并且<code>false</code>除此以外。</p>
+<!-- ==================================== -->
+<h3>ResultSet并发</h3>
+<p>一个的并发<code>ResultSet</code>对象确定支持什么级别的更新功能。</p>
+<p>有两个并发级别：</p>
+<ul>
+<li><code>CONCUR_READ_ONLY</code> ： <code>ResultSet</code>无法使用来更新对象<code>ResultSet</code>接口。</li>
+<li><code>CONCUR_UPDATABLE</code> ： <code>ResultSet</code>可以使用来更新对象<code>ResultSet</code>接口。</li>
+</ul>
+<p>默认值<code>ResultSet</code>并发是<code>CONCUR_READ_ONLY</code> 。</p>
+<p><strong>注意</strong> ：并非所有的JDBC驱动程序和数据库都支持并发。方法<code>DatabaseMetaData.supportsResultSetConcurrency</code>退货<code>true</code>如果驱动程序支持指定的并发级别，并且<code>false</code>除此以外。</p>
+<p>方法<code><a href="gettingstarted.html">CoffeesTable.modifyPrices</a></code>演示如何使用<code>ResultSet</code>并发级别为<code>CONCUR_UPDATABLE</code> 。</p>
+<!-- ==================================== -->
+<h3>游标保持能力</h3>
+<p>调用方法<code>Connection.commit</code>可以关闭<code>ResultSet</code>当前事务期间创建的对象。但是，在某些情况下，这可能不是所需的行为。的<code>ResultSet</code>物业<em>可保存性</em>给出了是否应用控制<code>ResultSet</code>调用commit时，对象（光标）关闭。</p>
+<p>下列<code>ResultSet</code>常量可以提供给<code>Connection</code>方法<code>createStatement</code> ， <code>prepareStatement</code>和<code>prepareCall</code> ：</p>
+<ul>
+<li><code>HOLD_CURSORS_OVER_COMMIT</code> ： <code>ResultSet</code>游标未关闭；它们是可<em>保持的</em> ：方法保持打开状态<code>commit</code>叫做。如果您的应用程序主要使用只读的，则可保留游标可能是理想的选择<code>ResultSet</code>对象。</li>
+<li><code>CLOSE_CURSORS_AT_COMMIT</code> ： <code>ResultSet</code>当对象（光标）关闭时， <code>commit</code>方法被调用。调用此方法时关闭游标可以提高某些应用程序的性能。</li>
+</ul>
+<p>默认的游标可保留性取决于您的DBMS。</p>
+<p><strong>注意</strong> ：并非所有的JDBC驱动程序和数据库都支持可保留和不可保留的游标。以下方法， <code>JDBCTutorialUtilities.cursorHoldabilitySupport</code> ，输出默认的光标保持能力<code>ResultSet</code>对象以及是否<code>HOLD_CURSORS_OVER_COMMIT</code>和<code>CLOSE_CURSORS_AT_COMMIT</code>支持：</p>
+<div class="codeblock"><pre>
+public static void cursorHoldabilitySupport(Connection conn)
+    throws SQLException {
+
+    DatabaseMetaData dbMetaData = conn.getMetaData();
+    System.out.println("ResultSet.HOLD_CURSORS_OVER_COMMIT = " +
+        ResultSet.HOLD_CURSORS_OVER_COMMIT);
+
+    System.out.println("ResultSet.CLOSE_CURSORS_AT_COMMIT = " +
+        ResultSet.CLOSE_CURSORS_AT_COMMIT);
+
+    System.out.println("Default cursor holdability: " +
+        <strong>dbMetaData.getResultSetHoldability()</strong>);
+
+    System.out.println("Supports HOLD_CURSORS_OVER_COMMIT? " +
+        <strong>dbMetaData.supportsResultSetHoldability(
+            ResultSet.HOLD_CURSORS_OVER_COMMIT)</strong>);
+
+    System.out.println("Supports CLOSE_CURSORS_AT_COMMIT? " +
+        <strong>dbMetaData.supportsResultSetHoldability(
+            ResultSet.CLOSE_CURSORS_AT_COMMIT)</strong>);
+}
+</pre></div>
+<!-- ********************************************* -->
+<h2><a name="retrieve_rs" id="retrieve_rs">从行中检索列值</a></h2>
+<p>的<code>ResultSet</code>接口声明了getter方法（例如， <code>getBoolean</code>和<code>getLong</code> ）以从当前行中检索列值。您可以使用列的索引号或列的别名或名称来检索值。列索引通常更有效。列从1开始编号。为了获得最大的可移植性，应该以从左到右的顺序读取每一行中的结果集列，并且每一列只能读取一次。</p>
+<p>例如，以下方法<code><a href="gettingstarted.html">CoffeesTable.alternateViewTable</a></code> ，按数字检索列值：</p>
+<div class="codeblock"><pre>
+public static void alternateViewTable(Connection con)
+    throws SQLException {
+
+    Statement stmt = null;
+    String query =
+        "select COF_NAME, SUP_ID, PRICE, " +
+        "SALES, TOTAL from COFFEES";
+
+    try {
+        stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            String coffeeName = rs.getString(1);
+            int supplierID = rs.getInt(2);
+            float price = rs.getFloat(3);
+            int sales = rs.getInt(4);
+            int total = rs.getInt(5);
+            System.out.println(coffeeName + "\t" + supplierID +
+                               "\t" + price + "\t" + sales +
+                               "\t" + total);
+        }
+    } catch (SQLException e ) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>用作getter方法输入的字符串不区分大小写。当使用字符串调用getter方法并且多个列具有与该字符串相同的别名或名称时，将返回第一个匹配列的值。设计用于在生成结果集的SQL查询中使用列别名和名称时使用字符串而不是整数的选项。对于在查询中<em>未</em>明确命名的列（例如， <code>select * from COFFEES</code> ）最好使用列号。如果使用了列名，则开发人员应保证使用列别名唯一地引用了预期的列。列别名有效地重命名结果集的列。要指定列别名，请使用SQL <code>AS</code>中的子句<code>SELECT</code>声明。</p>
+<p>适当类型的getter方法检索每一列中的值。例如，在方法中<code><a href="gettingstarted.html">CoffeeTables.viewTable</a></code> ，即每一行的第一列<code>ResultSet</code><code>rs</code>是<code>COF_NAME</code> ，它存储SQL类型的值<code>VARCHAR</code> 。检索SQL类型值的方法<code>VARCHAR</code>是<code>getString</code> 。每行的第二列存储一个SQL类型的值<code>INTEGER</code> ，而检索该类型值的方法是<code>getInt</code> 。</p>
+<p>注意，虽然方法<code>getString</code>建议检索SQL类型<code>CHAR</code>和<code>VARCHAR</code> ，则可以使用它检索任何基本的SQL类型。获得所有价值<code>getString</code>可能非常有用，但也有其局限性。例如，如果用于检索数字类型， <code>getString</code>将数值转换为Java <code>String</code>对象，并且必须先将值转换回数字类型，然后才能将其用作数字。无论如何，在将该值视为字符串的情况下，没有缺点。此外，如果您希望应用程序检索SQL3类型以外的任何标准SQL类型的值，请使用<code>getString</code>方法。</p>
+<!-- ********************************************* -->
+<h2><a name="cursors" id="cursors">游标</a></h2>
+<p>如前所述，您可以在<code>ResultSet</code>通过光标指向对象，该光标指向<code>ResultSet</code>宾语。但是，当<code>ResultSet</code>首先创建对象，光标位于第一行之前。方法<code><a href="gettingstarted.html">CoffeeTables.viewTable</a></code>通过调用来移动光标<code>ResultSet.next</code>方法。还有其他方法可以移动光标：</p>
+<ul>
+<li><code>next</code> ：将光标向前移动一行。退货<code>true</code>如果光标现在位于一行上，并且<code>false</code>如果光标位于最后一行之后。</li>
+<li><code>previous</code> ：将光标向后移动一排。退货<code>true</code>如果光标现在位于一行上，并且<code>false</code>如果光标位于第一行之前。</li>
+<li><code>first</code> ：将光标移动到<code>ResultSet</code>宾语。退货<code>true</code>如果光标现在位于第一行，并且<code>false</code>如果<code>ResultSet</code>对象不包含任何行。</li>
+<li><code>last:</code> ：将光标移动到<code>ResultSet</code>宾语。退货<code>true</code>如果光标现在位于最后一行，并且<code>false</code>如果<code>ResultSet</code>对象不包含任何行。</li>
+<li><code>beforeFirst</code> ：将光标置于<code>ResultSet</code>对象，在第一行之前。如果<code>ResultSet</code>对象不包含任何行，此方法无效。</li>
+<li><code>afterLast</code> ：将光标置于<code>ResultSet</code>对象，位于最后一行之后。如果<code>ResultSet</code>对象不包含任何行，此方法无效。</li>
+<li><code>relative(int rows)</code> ：相对于其当前位置移动光标。</li>
+<li><code>absolute(int row)</code> ：将光标置于参数指定的行上<code>row</code> 。</li>
+</ul>
+<p>请注意， <code>ResultSet</code>是<code>TYPE_FORWARD_ONLY</code> ，这意味着它无法滚动；您不能调用任何移动光标的方法，除了<code>next</code> ， 如果你的<code>ResultSet</code>无法滚动。方法<code><a href="gettingstarted.html">CoffeesTable.modifyPrices</a></code>下一节所述的演示了如何移动光标<code>ResultSet</code> 。</p>
+<!-- ********************************************* -->
+<h2><a name="rs_update" id="rs_update">更新ResultSet对象中的行</a></h2>
+<p>您无法更新默认值<code>ResultSet</code>对象，则只能将其光标向前移动。但是，您可以创建<code>ResultSet</code>可以滚动的对象（光标可以向后移动或移至绝对位置）并进行更新。</p>
+<p>以下方法， <code><a href="gettingstarted.html">CoffeesTable.modifyPrices</a></code> ，乘以<code>PRICE</code>每行的列由参数<code>percentage</code> ：</p>
+<div class="codeblock"><pre>
+public void modifyPrices(float percentage) throws SQLException {
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement();
+        stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                   ResultSet.CONCUR_UPDATABLE);
+        ResultSet uprs = stmt.executeQuery(
+            "SELECT * FROM " + dbName + ".COFFEES");
+
+        while (uprs.next()) {
+            float f = uprs.getFloat("PRICE");
+            uprs.updateFloat( "PRICE", f * percentage);
+            uprs.updateRow();
+        }
+
+    } catch (SQLException e ) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>场<code>ResultSet.TYPE_SCROLL_SENSITIVE</code>创建一个<code>ResultSet</code>光标可以相对于当前位置和绝对位置向前和向后移动的对象。场<code>ResultSet.CONCUR_UPDATABLE</code>创建一个<code>ResultSet</code>可以更新的对象。见<code>ResultSet</code>您可以指定其他字段的Javadoc来修改其行为<code>ResultSet</code>对象。</p>
+<p>方法<code>ResultSet.updateFloat</code>更新指定的列（在此示例中， <code>PRICE</code>与指定<code>float</code>光标所在行中的值。 <code>ResultSet</code>包含各种更新程序方法，使您可以更新各种数据类型的列值。但是，这些更新程序方法都不能修改数据库。您必须调用该方法<code>ResultSet.updateRow</code>更新数据库。</p>
+<!-- ********************************************* -->
+<h2><a name="batch_updates" id="batch_updates">使用语句对象进行批处理更新</a></h2>
+<p><code>Statement</code> ， <code>PreparedStatement</code>和<code>CallableStatement</code>对象具有与其关联的命令列表。该列表可能包含用于更新，插入或删除行的语句；并且还可能包含DDL语句，例如<code>CREATE TABLE</code>和<code>DROP TABLE</code> 。但是，它不能包含会产生<code>ResultSet</code>对象，例如<code>SELECT</code>声明。换句话说，列表只能包含产生更新计数的语句。</p>
+<p>该列表与一个<code>Statement</code>对象在创建时最初是空的。您可以使用方法将SQL命令添加到此列表中<code>addBatch</code>并用方法将其清空<code>clearBatch</code> 。完成将语句添加到列表中后，调用方法<code>executeBatch</code>将它们全部发送到数据库以作为一个单元或批处理执行。</p>
+<p>例如下面的方法<code><a href="gettingstarted.html">CoffeesTable.batchUpdate</a></code>将四行添加到<code>COFFEES</code>批量更新表：</p>
+<div class="codeblock"><pre>
+public void batchUpdate() throws SQLException {
+
+    Statement stmt = null;
+    try {
+        this.con.setAutoCommit(false);
+        stmt = this.con.createStatement();
+
+        stmt.addBatch(
+            "INSERT INTO COFFEES " +
+            "VALUES('Amaretto', 49, 9.99, 0, 0)");
+
+        stmt.addBatch(
+            "INSERT INTO COFFEES " +
+            "VALUES('Hazelnut', 49, 9.99, 0, 0)");
+
+        stmt.addBatch(
+            "INSERT INTO COFFEES " +
+            "VALUES('Amaretto_decaf', 49, " +
+            "10.99, 0, 0)");
+
+        stmt.addBatch(
+            "INSERT INTO COFFEES " +
+            "VALUES('Hazelnut_decaf', 49, " +
+            "10.99, 0, 0)");
+
+        int [] updateCounts = stmt.executeBatch();
+        this.con.commit();
+
+    } catch(BatchUpdateException b) {
+        JDBCTutorialUtilities.printBatchUpdateException(b);
+    } catch(SQLException ex) {
+        JDBCTutorialUtilities.printSQLException(ex);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+        this.con.setAutoCommit(true);
+    }
+}
+</pre></div>
+<p>下一行禁用了自动提交模式<code>Connection</code>对象con，以便在使用方法时不会自动提交或回滚事务<code>executeBatch</code>叫做。</p>
+<div class="codeblock"><pre>
+this.con.setAutoCommit(false);
+</pre></div>
+<p>为了进行正确的错误处理，应始终在开始批量更新之前始终禁用自动提交模式。</p>
+<p>方法<code>Statement.addBatch</code>将命令添加到与<code>Statement</code>宾语<code>stmt</code> 。在此示例中，这些命令都是<code>INSERT INTO</code>语句，每个语句添加一行包含五个列值的行。列的值<code>COF_NAME</code>和<code>PRICE</code>分别是咖啡的名称和价格。每行中的第二个值是49，因为这是供应商Superior Coffee的标识号。最后两个值，各列的条目<code>SALES</code>和<code>TOTAL</code> ，开始时全部为零，因为还没有销售。 （ <code>SALES</code>是本周售出的该行咖啡的磅数； <code>TOTAL</code>是该咖啡的所有累计销售额的总和。）</p>
+<p>下面的行将添加到其命令列表中的四个SQL命令发送到数据库中，以作为批处理执行：</p>
+<div class="codeblock"><pre>
+int [] updateCounts = stmt.executeBatch();
+</pre></div>
+<p>注意<code>stmt</code>使用方法<code>executeBatch</code>发送一批插入内容，而不是方法<code>executeUpdate</code> ，该命令仅发送一个命令并返回一个更新计数。DBMS按添加到命令列表中的顺序执行命令，因此它将首先添加Amaretto的值行，然后添加Hazelnut的行，然后添加Amaretto decaf的行，最后添加Hazelnut decaf的行。如果所有四个命令均成功执行，则DBMS将按执行顺序返回每个命令的更新计数。指示每个命令影响多少行的更新计数存储在数组中<code>updateCounts</code> 。</p>
+<p>如果批处理中的所有四个命令都成功执行， <code>updateCounts</code>将包含四个值，所有值均为1，因为插入会影响一行。与之关联的命令列表<code>stmt</code>现在将为空，因为先前添加的四个命令已在以下情况下发送到数据库： <code>stmt</code>称为方法<code>executeBatch</code> 。您可以随时使用方法显式清空此命令列表<code>clearBatch</code> 。</p>
+<p>的<code>Connection.commit</code>方法进行批量更新<code>COFFEES</code>表永久。由于以前已禁用此连接的自动提交模式，因此需要显式调用此方法。</p>
+<p>下一行启用当前的自动提交模式<code>Connection</code>宾语。</p>
+<div class="codeblock"><pre>
+this.con.setAutoCommit(true);
+</pre></div>
+<p>现在示例中的每个语句在执行后将自动提交，不再需要调用方法<code>commit</code> 。</p>
+<h3>执行参数化的批次更新</h3>
+<p>也可以进行参数化的批处理更新，如以下代码片段所示，其中<code>con</code>是一个<code>Connection</code>宾语：</p>
+<div class="codeblock"><pre>
+con.setAutoCommit(false);
+PreparedStatement pstmt = con.prepareStatement(
+                              "INSERT INTO COFFEES VALUES( " +
+                              "?, ?, ?, ?, ?)");
+pstmt.setString(1, "Amaretto");
+pstmt.setInt(2, 49);
+pstmt.setFloat(3, 9.99);
+pstmt.setInt(4, 0);
+pstmt.setInt(5, 0);
+pstmt.addBatch();
+
+pstmt.setString(1, "Hazelnut");
+pstmt.setInt(2, 49);
+pstmt.setFloat(3, 9.99);
+pstmt.setInt(4, 0);
+pstmt.setInt(5, 0);
+pstmt.addBatch();
+
+<strong>// ... and so on for each new
+// type of coffee</strong>
+
+int [] updateCounts = pstmt.executeBatch();
+con.commit();
+con.setAutoCommit(true);
+</pre></div>
+<h3>处理批量更新异常</h3>
+<p>你会得到一个<code>BatchUpdateException</code>当您调用方法时<code>executeBatch</code>如果（1）您添加到该批处理中的SQL语句之一产生了一个结果集（通常是一个查询），或者（2）批处理中的SQL语句之一由于其他原因未成功执行。</p>
+<p>您不应该添加查询（ <code>SELECT</code>语句）添加到一批SQL命令中，因为该方法<code>executeBatch</code> ，它返回更新计数的数组，期望成功执行的每个SQL语句的更新计数。这意味着仅返回更新计数的命令（例如<code>INSERT INTO</code> ， <code>UPDATE</code> ， <code>DELETE</code> ）或返回0（例如<code>CREATE TABLE</code> ， <code>DROP TABLE</code> ， <code>ALTER TABLE</code> ）可以成功地批量执行<code>executeBatch</code>方法。</p>
+<p>一种<code>BatchUpdateException</code>包含一个更新计数数组，该数组与方法返回的数组相似<code>executeBatch</code> 。在这两种情况下，更新计数与产生它们的命令的顺序相同。这将告诉您批处理中成功执行了多少个命令以及它们是哪个。例如，如果成功执行了五个命令，则数组将包含五个数字：第一个数字是第一个命令的更新计数，第二个是第二个命令的更新计数，依此类推。</p>
+<p><code>BatchUpdateException</code>来自<code>SQLException</code> 。这意味着您可以使用所有可用的方法<code>SQLException</code>反对。以下方法， <code><a href="gettingstarted.html">JDBCTutorialUtilities.printBatchUpdateException</a></code>打印所有<code>SQLException</code>信息以及包含在其中的更新计数<code>BatchUpdateException</code>宾语。因为<code>BatchUpdateException.getUpdateCounts</code>返回一个数组<code>int</code> ，代码使用<code>for</code>循环以打印每个更新计数：</p>
+<div class="codeblock"><pre>
+public static void printBatchUpdateException(BatchUpdateException b) {
+
+    System.err.println("----BatchUpdateException----");
+    System.err.println("SQLState:  " + b.getSQLState());
+    System.err.println("Message:  " + b.getMessage());
+    System.err.println("Vendor:  " + b.getErrorCode());
+    System.err.print("Update counts:  ");
+    int [] updateCounts = b.getUpdateCounts();
+
+    for (int i = 0; i &lt; updateCounts.length; i++) {
+        System.err.print(updateCounts[i] + "   ");
+    }
+}
+</pre></div>
+<!-- ********************************************* -->
+<h2><a name="rs_insert" id="rs_insert">在ResultSet对象中插入行</a></h2>
+<p><strong>注意</strong> ：并非所有的JDBC驱动程序都支持使用<code>ResultSet</code>接口。如果您尝试插入新行而JDBC驱动程序数据库不支持此功能，则<code>SQLFeatureNotSupportedException</code>引发异常。</p>
+<p>以下方法， <code><a href="gettingstarted.html">CoffeesTable.insertRow</a></code> ，将行插入<code>COFFEES</code>通过一个<code>ResultSet</code>宾语：</p>
+<div class="codeblock"><pre>
+public void insertRow(String coffeeName, int supplierID,
+                      float price, int sales, int total)
+    throws SQLException {
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement(
+            ResultSet.TYPE_SCROLL_SENSITIVE
+            ResultSet.CONCUR_UPDATABLE);
+
+        ResultSet uprs = stmt.executeQuery(
+            "SELECT * FROM " + dbName +
+            ".COFFEES");
+
+        uprs.moveToInsertRow();
+        uprs.updateString("COF_NAME", coffeeName);
+        uprs.updateInt("SUP_ID", supplierID);
+        uprs.updateFloat("PRICE", price);
+        uprs.updateInt("SALES", sales);
+        uprs.updateInt("TOTAL", total);
+
+        uprs.insertRow();
+        uprs.beforeFirst();
+    } catch (SQLException e ) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>这个例子称<code>Connection.createStatement</code>有两个参数的方法， <code>ResultSet.TYPE_SCROLL_SENSITIVE</code>和<code>ResultSet.CONCUR_UPDATABLE</code> 。第一个值启用<code>ResultSet</code>向前和向后移动的对象。第二个值<code>ResultSet.CONCUR_UPDATABLE</code>如果要将行插入到<code>ResultSet</code>宾语;它指定它可以更新。</p>
+<p>在getter方法中使用字符串的相同规定也适用于updater方法。</p>
+<p>方法<code>ResultSet.moveToInsertRow</code>将光标移动到插入行。插入行是与可更新结果集关联的特殊行。实际上，它是一个缓冲区，在该缓冲区中，可以在将行插入结果集中之前通过调用updater方法来构造新行。例如，此方法调用该方法<code>ResultSet.updateString</code>更新插入行的<code>COF_NAME</code>列至<code>Kona</code> 。</p>
+<p>方法<code>ResultSet.insertRow</code>将插入行的内容插入到<code>ResultSet</code>对象并放入数据库。</p>
+<p><strong>注意</strong> ：在<code>ResultSet.insertRow</code> ，则应将光标移动到插入行以外的其他行。例如，此示例使用方法将其移动到结果集中的第一行之前<code>ResultSet.beforeFirst</code> 。如果您的应用程序的另一部分使用相同的结果集，并且光标仍指向插入行，则可能会出现意外的结果。</p>
+<!-- ***************************************** -->
+
+
+        </div>
+        <div class="NavBit">
+            <a href="tables.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="prepared.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>设置表<br><b>下一页：</b>使用准备好的语句</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

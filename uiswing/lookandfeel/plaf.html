@@ -1,0 +1,950 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何设置外观（Java™教程>使用JFC / Swing创建GUI>修改外观）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">修改外观</a></div>
+<div class="nolinkAHEAD">如何设置外观</div>
+<div class="linkAHEAD"><a href="synth.html">合成器外观</a></div>
+<div class="linkBHEAD"><a href="synthExample.html">合成器示例</a></div>
+<div class="linkAHEAD"><a href="nimbus.html">灵气外观</a></div>
+<div class="linkBHEAD"><a href="custom.html">改变雨云的外观</a></div>
+<div class="linkBHEAD"><a href="size.html">调整组件大小</a></div>
+<div class="linkBHEAD"><a href="color.html">更改颜色主题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>修改外观</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">修改外观</a>
+            </div>
+            <div class="NavBit">
+                <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="synth.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何设置外观</h1></div>
+            <div id="PageContent">
+
+<!-- Look and Feel -->
+<p>Swing的体系结构经过设计，因此您可以更改应用程序GUI的“外观”（L＆F）（请参阅<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/architecture-142923.html" target="_blank">《 Swing体系结构概述》</a> ）。 “查找”是指GUI小部件的外观（更正式地说， <code>JComponents</code> ）和“感觉”是指小部件的行为方式。</p>
+<p>Swing的体系结构通过将每个组件分为两个不同的类来启用多个L＆F： <code>JComponent</code>子类和对应的<code>ComponentUI</code>子类。例如，每个<code>JList</code>实例有一个具体的实现<code>ListUI</code> （ <code>ListUI</code>延伸<code>ComponentUI</code> ）。的<code>ComponentUI</code>子类在Swing的文档中由各种名称引用-“ UI”，“组件UI”，“ UI委托”和“外观委托”均用于标识<code>ComponentUI</code>子类。</p>
+<p>大多数开发人员永远不需要直接与UI委托进行交互。在大多数情况下，UI委托由内部使用<code>JComponent</code>关键功能的子类，由<code>JComponent</code>子类，用于对UI委托的所有访问。例如，所有绘画<code>JComponent</code>子类委托给UI委托。通过委托绘画，“外观”可以根据L＆F的不同而不同。</p>
+<p>每个L＆F都有责任为每个<code>ComponentUI</code> Swing定义的子类。例如，Java Look and Feel创建了一个实例<code>MetalTabbedPaneUI</code>为...提供L＆F <code>JTabbedPane</code> 。UI委托的实际创建由Swing为您处理-在大多数情况下，您无需直接与UI委托进行交互。<!--
+In Swing, a JComponent object is an interacting combination of a Model object and a 
+UI delegate object. The division of functionality between these two entities can be fuzzy, but in general:
+<ul>
+<li>
+The Model object for a Swing component contains information on the current state of the component.
+</li>
+<p>
+<li>
+The UI delegate object for a Swing component is responsible for implementing the aspects of the component that depend on the look (painting) 
+and feel (handling user interaction). 
+</li>
+</ul> 
+<p>
+The base classes for the Model objects are found in the <code>javax.swing</code> package—for example, 
+<code>DefaultButtonModel</code> or <code>JToggleButton.ToggleButtonModel.</code> The Model objects are independent of the 
+L&F installed.
+<p>
+The <code>ComponentUI</code> class in the <code>javax.swing.plaf</code> package is the base class for all UI delegate objects in the Swing pluggable 
+look and feel architecture. The JComponent class invokes methods from this class in order to delegate operations (painting, event handling, etc.) 
+that vary depending on the L&F installed. 
+<p>
+A Look and Feel, then, is a set of coordinated UI delegate objects, one for each JComponent used in the GUI.--></p>
+<p>本节的其余部分讨论以下主题：</p>
+<ul>
+<li><a href="#available">可用的外观</a></li>
+<li><a href="#programmatic">以编程方式设置外观</a></li>
+<li><a href="#commandLine">指定外观：命令行</a></li>
+<li><a href="#properties">指定外观：swing.properties</a></li>
+<li><a href="#steps">UI管理器如何选择外观</a></li>
+<li><a href="#dynamic">启动后更改外观</a></li>
+<li><a href="#example">一个例子</a></li>
+<li><a href="#themes">主题</a></li>
+<li><a href="#swingset2">SwingSet2演示程序</a></li>
+</ul>
+<h2><a name="available" id="available">可用的外观</a></h2>
+<p>Sun的JRE提供以下L＆F：</p>
+<ol>
+<li>
+<p><code>CrossPlatformLookAndFeel</code> —这是在所有平台上看起来都一样的“ Java L＆F”（也称为“金属”）。它是Java API（ <code>javax.swing.plaf.metal</code> ），如果您在代码中不执行任何操作来设置其他L＆F，将使用默认值。</p>
+</li>
+<li>
+<p><code>SystemLookAndFeel</code> —在这里，应用程序使用其运行系统本地的L＆F。系统L＆F在运行时确定，其中应用程序要求系统返回适当L＆F的名称。</p>
+</li>
+<li>
+<p>合成器-使用XML文件创建自己的外观的基础。</p>
+</li>
+<li>
+<p>复用-一种让UI方法同时委派给许多不同的外观实现的方法。</p>
+</li>
+</ol>
+<p>对于Linux和Solaris，如果安装了GTK + 2.2或更高版本，则系统L＆F为“ GTK +”，否则为“ Motif”。对于Windows，系统L＆F是“ Windows”，它模仿正在运行的特定Windows操作系统（经典Windows，XP或Vista）的L＆F。GTK +，Motif和Windows L＆F由Sun提供，并且随Java SDK和JRE一起提供，尽管它们不是Java API的一部分。</p>
+<p>苹果提供了自己的JVM，其中包括其专有的L＆F。</p>
+<p>总之，当您使用<code>SystemLookAndFeel</code> ，这是您将看到的：</p>
+<table border="2" cellpadding="2" cellspacing="2" summary="what the user sees when using the system look and feel">
+<tbody><tr>
+<th style="font-weight:bold">平台</th>
+<th style="font-weight:bold">外观</th>
+</tr>
+<tr>
+<td>Solaris，Linux和GTK + 2.2或更高版本</td>
+<td>GTK +</td>
+</tr>
+<tr>
+<td>其他Solaris，Linux</td>
+<td>主题</td>
+</tr>
+<tr>
+<td>IBM UNIX</td>
+<td>IBM *</td>
+</tr>
+<tr>
+<td>惠普UX</td>
+<td>生命值*</td>
+</tr>
+<tr>
+<td>经典视窗</td>
+<td>视窗</td>
+</tr>
+<tr>
+<td>Windows XP</td>
+<td>Windows XP</td>
+</tr>
+<tr>
+<td>Windows Vista</td>
+<td>Windows Vista</td>
+</tr>
+<tr>
+<td>苹果机</td>
+<td>Macintosh *</td>
+</tr>
+</tbody></table>
+<p>*由系统供应商提供。</p>
+<p>您在API中看不到系统L＆F。 Java SDK附带了它所需的GTK +，Motif和Windows软件包，它们是：</p>
+<div class="codeblock"><pre>
+com.sun.java.swing.plaf.gtk.GTKLookAndFeel
+com.sun.java.swing.plaf.motif.MotifLookAndFeel
+com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+</pre></div>
+<p>请注意，该路径包括<code>java</code> ， 并不是<code>javax</code> 。</p>
+<div class="note"><hr><strong>注意：</strong> GTK + L＆F仅在安装了GTK + 2.2或更高版本的UNIX或Linux系统上运行，而Windows L＆F仅在Windows系统上运行。与Java（金属）L＆F一样，Motif L＆F可以在任何平台上运行。
+<hr></div>
+<p>Sun的所有L＆F都有很多共性。这种共同性在<code>Basic</code> API中的外观（ <code>javax.swing.plaf.basic</code> ）。Motif和Windows L＆F分别通过扩展UI委托类来构建。 <code>javax.swing.plaf.basic</code> （可以通过执行相同的操作来构建自定义L＆F）。未经扩展，不得使用“基本” L＆F。</p>
+<p>在API中，您将看到四个L＆F软件包：</p>
+<ul>
+<li>
+<p><code>javax.swing.plaf.basic</code> —创建自定义L＆F时要扩展的基本UI委托</p>
+</li>
+<li>
+<p><code>javax.swing.plaf.metal</code> — Java L＆F，也称为CrossPlatform L＆F（“金属”是此L＆F的Sun项目名称）。该L＆F的当前默认“主题”（如下所述）为“海洋”，因此通常称为Ocean如果。</p>
+</li>
+<li>
+<p><code>javax.swing.plaf.multi</code> —一种多路复用的外观，允许UI方法同时委派给许多外观实现。它可以用于增强特定外观的行为，例如，通过L＆F在Windows外观之上提供音频提示的L＆F。这是创建残障人士可访问的外观的方式。</p>
+</li>
+<li>
+<p><code>javax.swing.plaf.synth</code> -使用XML文件轻松配置的L＆F（在本课程的下一部分中讨论）</p>
+</li>
+</ul>
+<p><!-- Synth works by using XML files to create UI Delegates. Instead of writing code, you create an XML file that follows the Synth 
+DVD. Synth then creates the UI Delegate classes for each JComponent based on your XML element for that widget.
+<p> -->您不仅限于Java平台随附的L＆F。您可以使用程序的类路径中的任何L＆F。外部L＆F通常在一个或多个JAR文件中提供，您可以在运行时将其添加到程序的类路径中。例如：</p>
+<div class="codeblock"><pre>
+java -classpath .;C:\java\lafdir\customlaf.jar YourSwingApplication
+</pre></div>
+<p>一旦外部L＆F进入程序的类路径，您的程序就可以像使用Java平台附带的任何L＆F一样使用它。</p>
+<h2><a name="programmatic" id="programmatic">以编程方式设置外观</a></h2>
+<div class="note"><hr><strong>注意：</strong>如果要设置L＆F，则应将其作为应用程序的第一步。否则，无论您请求什么L＆F，都有冒着初始化Java L＆F的风险。当静态字段引用Swing类时，可能会无意中发生，这会导致L＆F加载。如果尚未指定L＆F，则将加载JRE的默认L＆F。对于Sun的JRE，默认值为Java L＆F，对于苹果的JRE，默认值为Apple L＆F，依此类推。
+<hr></div>
+<p>Swing组件使用的L＆F通过<code>UIManager</code>中的课程<code>javax.swing</code>包。每当创建Swing组件时，该组件都会向UI管理器询问实现该组件L＆F的UI委托。例如，每个<code>JLabel</code>构造函数向UI管理器查询适合该标签的UI委托对象。然后，它使用该UI委托对象来实现其所有绘图和事件处理。</p>
+<p>要以编程方式指定L＆F，请使用<code>UIManager.setLookAndFeel()</code>具有适当子类的完全限定名称的方法<code>LookAndFeel</code>作为其论点。例如，以下代码段中的粗体代码使程序使用跨平台的Java L＆F：</p>
+<div class="codeblock"><pre>
+public static void main(String[] args) {
+    try {
+            // Set cross-platform Java L&amp;F (also called "Metal")
+        <b>UIManager.setLookAndFeel(
+            UIManager.getCrossPlatformLookAndFeelClassName());</b>
+    } 
+    catch (UnsupportedLookAndFeelException e) {
+       // handle exception
+    }
+    catch (ClassNotFoundException e) {
+       // handle exception
+    }
+    catch (InstantiationException e) {
+       // handle exception
+    }
+    catch (IllegalAccessException e) {
+       // handle exception
+    }
+        
+    new SwingApplication(); //Create and show the GUI.
+}
+</pre></div>
+<p>或者，此代码使程序使用系统L＆F：</p>
+<div class="codeblock"><pre>
+public static void main(String[] args) {
+    try {
+            // Set System L&amp;F
+        <b>UIManager.setLookAndFeel(
+            UIManager.getSystemLookAndFeelClassName());</b>
+    } 
+    catch (UnsupportedLookAndFeelException e) {
+       // handle exception
+    }
+    catch (ClassNotFoundException e) {
+       // handle exception
+    }
+    catch (InstantiationException e) {
+       // handle exception
+    }
+    catch (IllegalAccessException e) {
+       // handle exception
+    }
+
+    new SwingApplication(); //Create and show the GUI.
+}
+</pre></div>
+<p>您还可以使用外观的实际类名作为参数<code>UIManager.setLookAndFeel()</code> 。例如，</p>
+<div class="codeblock"><pre>
+// Set cross-platform Java L&amp;F (also called "Metal")
+UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+</pre></div>
+<p>要么</p>
+<div class="codeblock"><pre>
+// Set Motif L&amp;F on any platform
+UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+</pre></div>
+<p>您不仅限于上述参数。您可以为程序的类路径中的任何L＆F指定名称。</p>
+<h2><a name="commandLine" id="commandLine">指定外观：命令行</a></h2>
+<p>您可以使用以下命令在命令行中指定L＆F： <code>-D</code>标志设置<code>swing.defaultlaf</code>属性。例如：</p>
+<div class="codeblock"><pre>
+java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel MyApp
+
+java -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel MyApp
+</pre></div>
+<h2><a name="properties" id="properties">指定外观：swing.properties文件</a></h2>
+<p>指定当前L＆F的另一种方法是使用<code>swing.properties</code>文件设置<code>swing.defaultlaf</code>属性。您可能需要创建此文件，该文件位于<code>lib</code> Sun Java版本的目录（其他Java供应商可能使用其他位置）。例如，如果您正在使用Java解释器<code><em>javaHomeDirectory</em>\bin</code> ，然后<code>swing.properties</code>文件（如果存在）在<code><em>javaHomeDirectory</em>\lib</code> 。这是一个例子的内容<a href="swing.properties"><code>swing.properties</code></a>档案： <!--
+<div class="codeblock"><pre>
+# Swing properties
+
+swing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+
+</pre></div>
+--></p>
+<div class="codeblock"><pre>
+# Swing properties
+swing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+</pre></div>
+<h2><a name="steps" id="steps">UI管理器如何选择外观</a></h2>
+<p>当UI管理器需要设置L＆F时，以下是外观确定步骤：</p>
+<ol>
+<li>如果程序在需要外观之前设置了L＆F，则UI管理器将尝试创建指定外观类的实例。如果成功，所有组件都将使用该L＆F。</li>
+<li>如果程序尚未成功指定L＆F，则UI管理器将使用由<code>swing.defaultlaf</code>属性。如果在两个<code>swing.properties</code>文件<em>和</em>命令行中，命令行定义优先。</li>
+<li>如果这些步骤均未导致有效的L＆F，则Sun的JRE使用Java L＆F。其他供应商（例如Apple）将使用其默认的L＆F。</li>
+</ol>
+<h2><a name="dynamic" id="dynamic">启动后更改外观</a></h2>
+<p>您可以使用<code>setLookAndFeel</code>即使在程序的GUI可见之后。要使现有组件反映新的L＆F，请调用<code>SwingUtilities</code><code>updateComponentTreeUI</code>每个顶级容器一次的方法。然后，您可能希望调整每个顶级容器的大小，以反映其包含的组件的新大小。例如：</p>
+<div class="codeblock"><pre>
+UIManager.setLookAndFeel(lnfName);
+SwingUtilities.updateComponentTreeUI(frame);
+frame.pack();
+</pre></div>
+<h2><a name="example" id="example">一个例子</a></h2>
+<p>在以下示例中， <code>LookAndFeelDemo.java</code> ，您可以尝试不同的外观。该程序创建一个带有按钮和标签的简单GUI。每次单击按钮，标签都会递增。</p>
+<p>您可以通过更改<code>LOOKANDFEEL</code>第18行的常量。前几行的注释告诉您可以接受哪些值：</p>
+<div class="codeblock"><pre>
+    // Specify the look and feel to use by defining the LOOKANDFEEL constant
+    // Valid values are: null (use the default), "Metal", "System", "Motif",
+    // and "GTK"
+    final static String LOOKANDFEEL = "Motif";
+</pre></div>
+<p>在这里，常量设置为“ Motif”，这是可以在任何平台上运行的L＆F（默认设置为“ Metal”）。 “ GTK +”将不会在Windows上运行，而“ Windows”将仅在Windows上运行。如果您选择的L＆F无法运行，那么您将获得Java或Metal，即L＆F。</p>
+<p>在实际设置L＆F的代码部分中，您将看到几种不同的设置方式，如上所述：</p>
+<div class="codeblock"><pre>
+if (LOOKANDFEEL.equals("Metal")) {
+   lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+   //  an alternative way to set the Metal L&amp;F is to replace the 
+   // previous line with:
+   // lookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
+</pre></div>
+<p>您可以通过注释/取消注释这两种选择来验证两个参数是否都起作用。</p>
+<p>这是清单<a class="SourceLink" href="../examples/lookandfeel/LookAndFeelDemoProject/src/lookandfeel/LookAndFeelDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/lookandfeel/LookAndFeelDemoProject/src/lookandfeel/LookAndFeelDemo.java'); return false;"><code>LookAndFeelDemo</code></a>源文件：</p>
+<div class="codeblock"><pre>
+
+package lookandfeel;
+
+import javax.swing.*;          
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.plaf.metal.*;
+
+public class LookAndFeelDemo implements ActionListener {
+    private static String labelPrefix = &quot;Number of button clicks: &quot;;
+    private int numClicks = 0;
+    final JLabel label = new JLabel(labelPrefix + &quot;0    &quot;);
+
+    // Specify the look and feel to use by defining the LOOKANDFEEL constant
+    // Valid values are: null (use the default), &quot;Metal&quot;, &quot;System&quot;, &quot;Motif&quot;,
+    // and &quot;GTK&quot;
+    final static String LOOKANDFEEL = &quot;Metal&quot;;
+    
+    // If you choose the Metal L&amp;F, you can also choose a theme.
+    // Specify the theme to use by defining the THEME constant
+    // Valid values are: &quot;DefaultMetal&quot;, &quot;Ocean&quot;,  and &quot;Test&quot;
+    final static String THEME = &quot;Test&quot;;
+    
+
+    public Component createComponents() {
+        JButton button = new JButton(&quot;I'm a Swing button!&quot;);
+        button.setMnemonic(KeyEvent.VK_I);
+        button.addActionListener(this);
+        label.setLabelFor(button);
+
+        JPanel pane = new JPanel(new GridLayout(0, 1));
+        pane.add(button);
+        pane.add(label);
+        pane.setBorder(BorderFactory.createEmptyBorder(
+                                        30, //top
+                                        30, //left
+                                        10, //bottom
+                                        30) //right
+                                        );
+
+        return pane;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        numClicks++;
+        label.setText(labelPrefix + numClicks);
+    }
+
+    private static void initLookAndFeel() {
+        String lookAndFeel = null;
+       
+        if (LOOKANDFEEL != null) {
+            if (LOOKANDFEEL.equals(&quot;Metal&quot;)) {
+                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+              //  an alternative way to set the Metal L&amp;F is to replace the 
+              // previous line with:
+              // lookAndFeel = &quot;javax.swing.plaf.metal.MetalLookAndFeel&quot;;
+                
+            }
+            
+            else if (LOOKANDFEEL.equals(&quot;System&quot;)) {
+                lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+            } 
+            
+            else if (LOOKANDFEEL.equals(&quot;Motif&quot;)) {
+                lookAndFeel = &quot;com.sun.java.swing.plaf.motif.MotifLookAndFeel&quot;;
+            } 
+            
+            else if (LOOKANDFEEL.equals(&quot;GTK&quot;)) { 
+                lookAndFeel = &quot;com.sun.java.swing.plaf.gtk.GTKLookAndFeel&quot;;
+            } 
+            
+            else {
+                System.err.println(&quot;Unexpected value of LOOKANDFEEL specified: &quot;
+                                   + LOOKANDFEEL);
+                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            }
+
+            try {
+            	
+            	
+                UIManager.setLookAndFeel(lookAndFeel);
+                
+                // If L&amp;F = &quot;Metal&quot;, set the theme
+                
+                if (LOOKANDFEEL.equals(&quot;Metal&quot;)) {
+                  if (THEME.equals(&quot;DefaultMetal&quot;))
+                     MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
+                  else if (THEME.equals(&quot;Ocean&quot;))
+                     MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+                  else
+                     MetalLookAndFeel.setCurrentTheme(new TestTheme());
+                     
+                  UIManager.setLookAndFeel(new MetalLookAndFeel()); 
+                }	
+                	
+                	
+                  
+                
+            } 
+            
+            catch (ClassNotFoundException e) {
+                System.err.println(&quot;Couldn't find class for specified look and feel:&quot;
+                                   + lookAndFeel);
+                System.err.println(&quot;Did you include the L&amp;F library in the class path?&quot;);
+                System.err.println(&quot;Using the default look and feel.&quot;);
+            } 
+            
+            catch (UnsupportedLookAndFeelException e) {
+                System.err.println(&quot;Can't use the specified look and feel (&quot;
+                                   + lookAndFeel
+                                   + &quot;) on this platform.&quot;);
+                System.err.println(&quot;Using the default look and feel.&quot;);
+            } 
+            
+            catch (Exception e) {
+                System.err.println(&quot;Couldn't get specified look and feel (&quot;
+                                   + lookAndFeel
+                                   + &quot;), for some reason.&quot;);
+                System.err.println(&quot;Using the default look and feel.&quot;);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void createAndShowGUI() {
+        //Set the look and feel.
+        initLookAndFeel();
+
+        //Make sure we have nice window decorations.
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        //Create and set up the window.
+        JFrame frame = new JFrame(&quot;SwingApplication&quot;);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        LookAndFeelDemo app = new LookAndFeelDemo();
+        Component contents = app.createComponents();
+        frame.getContentPane().add(contents, BorderLayout.CENTER);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        //Schedule a job for the event dispatch thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
+}
+</pre></div>
+<h2><a name="themes" id="themes">主题</a></h2>
+<p>引入主题是一种轻松更改跨平台Java（金属）外观的颜色和字体的方式。在示例程序中， <code>LookAndfeelDemo.java</code> ，如上所列，您可以通过设置<code>THEME</code>第23行的常量为以下三个值之一：</p>
+<ul>
+<li><code>DefaultMetal</code></li>
+<li><code>Ocean</code></li>
+<li><code>Test</code></li>
+</ul>
+<p><code>Ocean</code>自Java SE 5起，它比纯Metal的外观要柔和一些，已成为Metal（Java）L＆F的默认主题。尽管有它的名字， <code>DefaultMetal</code>不是Metal的默认主题（它在Java SE 5之前，它解释了它的名称）。的<code>Test</code>主题是在中定义的主题<a class="SourceLink" href="../examples/lookandfeel/LookAndFeelDemoProject/src/lookandfeel/TestTheme.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/lookandfeel/LookAndFeelDemoProject/src/lookandfeel/TestTheme.java'); return false;"><code><code>TestTheme.java</code></code></a> ，您必须使用<code>LookAndfeelDemo.java</code> 。正如所写， <code>TestTheme.java</code>设置三种原色（结果有些奇怪）。您可以修改<code>TestTheme.java</code>测试您喜欢的任何颜色。</p>
+<p>设置主题的代码部分可从以下代码的第92行开始找到<code>LookAndfeelDemo.java</code> 。请注意，您必须使用Metal L＆F设置主题。</p>
+<div class="codeblock"><pre>
+ if (LOOKANDFEEL.equals("Metal")) {
+    if (THEME.equals("DefaultMetal"))
+       MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
+    else if (THEME.equals("Ocean"))
+       MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+    else
+       MetalLookAndFeel.setCurrentTheme(new TestTheme());
+                     
+    UIManager.setLookAndFeel(new MetalLookAndFeel()); 
+ }      
+</pre></div>
+<h2><a name="swingset2" id="swingset2">SwingSet2演示程序</a></h2>
+<p>当您下载并打开<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JDK和JavaFX Demos and Samples</a>捆绑包时，会出现一个<code>demo\jfc</code>包含演示程序的文件夹<code>SwingSet2</code> 。该程序具有图形丰富的GUI，可让您从菜单中更改外观。此外，如果您使用的是Java（金属）外观，则可以选择各种不同的主题。各种主题的文件（例如， <code>RubyTheme.java</code> ）位于<code>SwingSet2\src</code>夹。</p>
+<p>这是“海洋”主题，这是跨平台Java（金属）外观的默认设置：</p>
+<center><img src="../../figures/uiswing/lookandfeel/OceanLAF.gif" width="665" height="607" align="bottom" alt=""></center><p>这是“钢”主题，它是跨平台Java（金属）外观的原始主题：</p>
+<center><img src="../../figures/uiswing/lookandfeel/MetalLAF.gif" width="665" height="607" align="bottom" alt=""></center><p>运行<code>SwingSet2</code>安装了JDK的系统上的演示程序，请使用以下命令：</p>
+<div class="codeblock"><pre>
+java -jar SwingSet2.jar
+</pre></div>
+<p>这将为您提供默认的海洋主题。</p>
+<p>要获取金属L＆F，请运行以下命令：</p>
+<div class="codeblock"><pre>
+java -Dswing.metalTheme=steel -jar SwingSet2.jar
+</pre></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="synth.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>修改外观<br><b>下一页：</b>合成器外观</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

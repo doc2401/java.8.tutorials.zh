@@ -1,0 +1,826 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>使用StAX（Java™教程>用于XML处理的Java API（JAXP）>用于XML的流API）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">XML的流API</a></div>
+<div class="linkAHEAD"><a href="why.html">为什么选择StAX？</a></div>
+<div class="linkAHEAD"><a href="api.html">StAX API</a></div>
+<div class="nolinkAHEAD">使用StAX</div>
+<div class="linkAHEAD"><a href="parser.html">Oracle的流XML解析器实现</a></div>
+<div class="linkAHEAD"><a href="example.html">范例程式码</a></div>
+<div class="linkAHEAD"><a href="info.html">更多信息</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>用于XML的流API</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">用于XML的流API</a>
+            </div>
+            <div class="NavBit">
+                <a href="api.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="parser.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用StAX</h1></div>
+            <div id="PageContent">
+
+<!-- Using StAX -->
+<p><a name="indexterm-22" id="indexterm-22"></a></p>
+<p>通常，StAX程序员使用<tt>XMLInputFactory</tt> ， <tt>XMLOutputFactory</tt>和<tt>XMLEventFactory</tt>类创建XML流读取器，写入器和事件。通过在工厂上设置属性来完成配置，从而可以使用工厂上的<tt>setProperty</tt>方法将实现特定的设置传递给基础实现。同样，可以使用<tt>getProperty</tt>工厂方法查询特定于实现的设置。</p>
+<p>下面介绍<tt>XMLInputFactory</tt> ， <tt>XMLOutputFactory</tt>和<tt>XMLEventFactory</tt>类，然后讨论资源分配，名称空间和属性管理，错误处理，最后使用游标和迭代器API读写流。</p>
+<p><a name="bnben" id="bnben"></a></p>
+<h2>StAX工厂类别</h2>
+<p><a name="indexterm-23" id="indexterm-23"></a><a name="indexterm-24" id="indexterm-24"></a></p>
+<p>StAX工厂类。<tt>XMLInputFactory</tt> ， <tt>XMLOutputFactory</tt>和<tt>XMLEventFactory</tt> ，使您可以定义和配置XML流读取器，流写入器和事件类的实现实例。</p>
+<p><a name="bnbeo" id="bnbeo"></a></p>
+<h3>XMLInputFactory</h3>
+<p><a name="indexterm-25" id="indexterm-25"></a><a name="indexterm-26" id="indexterm-26"></a></p>
+<p><tt>XMLInputFactory</tt>类使您可以配置工厂创建的XML流读取器处理器的实现实例。通过在类上调用<tt>newInstance</tt>方法来创建抽象类<tt>XMLInputFactory的</tt>新实例。然后，使用静态方法<tt>XMLInputFactory.newInstance</tt>创建新的工厂实例。</p>
+<p>继承自JAXP的<tt>XMLInputFactory.newInstance</tt>方法通过使用以下查找过程来确定要加载的特定<tt>XMLInputFactory</tt>实现类：</p>
+<ol>
+<li>
+<p>使用<tt>javax.xml.stream。XMLInputFactory</tt>系统属性。</p>
+</li>
+<li>
+<p>使用Java SE平台的Java Runtime Environment（JRE）目录中的<tt>lib / xml.stream.properties</tt>文件。</p>
+</li>
+<li>
+<p>使用服务API（如果可用），通过在<tt>META-INF / services / javax.xml.stream中查找来确定类名<tt>。JRE可用的JAR文件中的XMLInputFactory</tt>文件。</tt></p><tt>
+</tt></li><tt>
+<li>
+<p>使用平台默认的<tt>XMLInputFactory</tt>实例。</p>
+</li>
+</tt></ol><tt>
+<p>在获得对适当的<tt>XMLInputFactory</tt>的引用之后，应用程序可以使用工厂来配置和创建流实例。下表列出了<tt>XMLInputFactory</tt>支持的属性。有关更详细的列表，请参见StAX规范。</p>
+<p><a name="bnbep" id="bnbep"></a></p>
+<table border="1" summary="javax.xml.stream.XMLInputFactory Properties">
+<caption><tt>javax.xml.stream。XMLInputFactory</tt>属性</caption>
+<colgroup><col width="35%">
+<col width="64%">
+</colgroup><tbody><tr>
+<th align="left" valign="top">
+<p>属性</p>
+</th>
+<th align="left" valign="top">
+<p>描述</p>
+</th>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>isValidating</tt></p>
+</td>
+<td align="left" valign="top">
+<p>打开特定于实现的验证。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>isCoalescing</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>要求处理器合并相邻的字符数据。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>isNamespaceAware</tt></p>
+</td>
+<td align="left" valign="top">
+<p>关闭名称空间支持。所有实现都必须支持名称空间。对非命名空间感知文档的支持是可选的。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>isReplacingEntityReferences</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>要求处理器将内部实体引用替换为其替换值，并以字符或描述该实体的事件集的形式报告它们。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>isSupportingExternalEntities</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>要求处理器解析外部解析的实体。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>记者</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>设置并获取<tt>XMLReporter</tt>接口的实现。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>解析器</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>设置并获取<tt>XMLResolver</tt>接口的实现。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+<p><tt>分配器</tt></p>
+</td>
+<td align="left" valign="top">
+<p><b>（必需）</b>设置并获取<tt>XMLEventAllocator</tt>接口的实现。</p>
+</td>
+</tr>
+</tbody></table>
+<p><a name="bnbeq" id="bnbeq"></a></p>
+<h3>XMLOutputFactory</h3>
+<p><a name="indexterm-27" id="indexterm-27"></a><a name="indexterm-28" id="indexterm-28"></a></p>
+<p>通过在类上调用<tt>newInstance</tt>方法来创建抽象类<tt>XMLOutputFactory的</tt>新实例。然后，使用静态方法<tt>XMLOutputFactory.newInstance</tt>创建一个新的工厂实例。用于获取实例的算法与<tt>XMLInputFactory</tt>相同，但是引用了<tt>javax.xml.stream。XMLOutputFactory</tt>系统属性。</p>
+<p><tt>XMLOutputFactory</tt>仅支持一个属性<tt>javax.xml.stream.isRepairingNamespaces</tt> 。此属性是必需的，其目的是创建默认前缀并将其与命名空间URI关联。有关更多信息，请参见StAX规范。</p>
+<p><a name="bnber" id="bnber"></a></p>
+<h3>XMLEventFactory</h3>
+<p><a name="indexterm-29" id="indexterm-29"></a><a name="indexterm-30" id="indexterm-30"></a></p>
+<p>通过在类上调用<tt>newInstance</tt>方法来创建抽象类<tt>XMLEventFactory的</tt>新实例。然后使用静态方法<tt>XMLEventFactory.newInstance</tt>创建一个新的工厂实例。该工厂引用<tt>javax.xml.stream。XMLEventFactory</tt>属性可实例化工厂。用于获取实例的算法与<tt>XMLInputFactory</tt>和<tt>XMLOutputFactory</tt>相同，但是引用了<tt>javax.xml.stream。XMLEventFactory</tt>系统属性。</p>
+<p><tt>XMLEventFactory</tt>没有默认属性。</p>
+<p><a name="bnbes" id="bnbes"></a></p>
+<h2>资源，命名空间和错误</h2>
+<p><a name="indexterm-31" id="indexterm-31"></a></p>
+<p>StAX规范处理资源解析，属性和名称空间以及错误和异常，如下所述。</p>
+<p><a name="bnbet" id="bnbet"></a></p>
+<h3>资源解析</h3>
+<p><tt>XMLResolver</tt>接口提供了一种方法来设置在XML处理期间解析资源的方法。应用程序在<tt>XMLInputFactory</tt>上设置接口，然后在该工厂实例创建的所有处理器上设置接口。</p>
+<p><a name="bnbeu" id="bnbeu"></a></p>
+<h3>属性和命名空间</h3>
+<p>StAX处理器使用光标接口中的查找方法和字符串以及迭代器接口中的<tt>Attribute</tt>和<tt>Namespace</tt>事件来报告<tt>属性</tt> 。请注意，尽管将名称空间与游标和迭代器API中的属性分开报告，但名称空间被视为属性。还要注意，名称空间处理对于StAX处理器是可选的。有关名称空间绑定和可选名称空间处理的完整信息，请参见StAX规范。</p>
+<p><a name="bnbev" id="bnbev"></a></p>
+<h3>错误报告和异常处理</h3>
+<p>所有致命错误都通过<tt>javax.xml.stream报告。XMLStreamException</tt>接口。所有非致命错误和警告均使用<tt>javax.xml.stream报告<tt>。XMLReporter</tt>接口。</tt></p><tt>
+<p><a name="bnbew" id="bnbew"></a></p>
+<h2>读取XML流</h2>
+<p><a name="indexterm-32" id="indexterm-32"></a><a name="indexterm-33" id="indexterm-33"></a></p>
+<p>如本课程前面所述，使用StAX处理器读取XML流的方式（更重要的是，获得的回报）会因使用StAX光标API或事件迭代器API的不同而有很大差异。以下两节描述了如何使用这些API中的每一个读取XML流。</p>
+<p><a name="bnbex" id="bnbex"></a></p>
+<h3>使用XMLStreamReader</h3>
+<p><a name="indexterm-34" id="indexterm-34"></a><a name="indexterm-35" id="indexterm-35"></a></p>
+<p>StAX光标API中的<tt>XMLStreamReader</tt>接口允许您仅向前读取XML流或文档，一次仅读取信息集中的一项。以下方法可用于从流中提取数据或跳过不需要的事件：</p>
+<ul>
+<li>
+<p>获取属性的值</p>
+</li>
+<li>
+<p>读取XML内容</p>
+</li>
+<li>
+<p>确定元素是否具有内容或为空</p>
+</li>
+<li>
+<p>获取对属性集合的索引访问</p>
+</li>
+<li>
+<p>获取对命名空间集合的索引访问</p>
+</li>
+<li>
+<p>获取当前事件的名称（如果适用）</p>
+</li>
+<li>
+<p>获取当前事件的内容（如果适用）</p>
+</li>
+</ul>
+<p><tt>XMLStreamReader的</tt>实例在任何时候都具有一个可操作其方法的单个当前事件。在流上创建<tt>XMLStreamReader</tt>的实例时，当前的初始事件为<tt>START_DOCUMENT</tt>状态。然后可以使用<tt>XMLStreamReader.next</tt>方法移至流中的下一个事件。</p>
+<p><a name="bnbey" id="bnbey"></a></p>
+<h3>读取属性，属性和命名空间</h3>
+<p><tt>XMLStreamReader.next</tt>方法将在流中加载下一个事件的属性。然后，您可以通过调用<tt>XMLStreamReader.getLocalName</tt>和<tt>XMLStreamReader.getText</tt>方法来访问这些属性。</p>
+<p>当<tt>XMLStreamReader</tt>光标位于<tt>StartElement</tt>事件上时，它将读取事件的名称和任何属性，包括名称空间。可以使用索引值访问事件的所有属性，还可以通过名称空间URI和本地名称来查找事件的所有属性。但是请注意，只有在当前<tt>StartEvent</tt>上声明的名称空间才可用。不会维护先前声明的名称空间，并且不会删除重新声明的名称空间。</p>
+<p><a name="bnbez" id="bnbez"></a></p>
+<h3>XMLStreamReader方法</h3>
+<p><tt>XMLStreamReader</tt>提供以下方法来检索有关名称空间和属性的信息：</p>
+<div class="codeblock"><pre>
+int getAttributeCount();
+String getAttributeNamespace(int index);
+String getAttributeLocalName(int index);
+String getAttributePrefix(int index);
+String getAttributeType(int index);
+String getAttributeValue(int index);
+String getAttributeValue(String namespaceUri, String localName);
+boolean isAttributeSpecified(int index);
+</pre></div>
+<p>也可以使用三种其他方法来访问命名空间：</p>
+<div class="codeblock"><pre>
+int getNamespaceCount();
+String getNamespacePrefix(int index);
+String getNamespaceURI(int index);
+</pre></div>
+<p><a name="bnbfa" id="bnbfa"></a></p>
+<h3>实例化XMLStreamReader</h3>
+<p>此示例摘自StAX规范，展示了如何实例化输入工厂，创建读取器以及对XML流的元素进行迭代：</p>
+<div class="codeblock"><pre>
+XMLInputFactory f = XMLInputFactory.newInstance();
+XMLStreamReader r = f.createXMLStreamReader( ... );
+while(r.hasNext()) {
+    r.next();
+}
+</pre></div>
+<p><a name="bnbfb" id="bnbfb"></a></p>
+<h3>使用XMLEventReader</h3>
+<p><a name="indexterm-36" id="indexterm-36"></a><a name="indexterm-37" id="indexterm-37"></a></p>
+<p>StAX事件迭代器API中的<tt>XMLEventReader</tt> API提供了一种将XML流中的事件映射到可以自由重用的已分配事件对象的方法，并且该API本身可以扩展为处理自定义事件。</p>
+<p><tt>XMLEventReader</tt>提供了四种方法来迭代解析XML流：</p>
+<ul>
+<li>
+<p><tt>next</tt> ：返回流中的下一个事件</p>
+</li>
+<li>
+<p><tt>nextEvent</tt> ：返回下一个类型的XMLEvent</p>
+</li>
+<li>
+<p><tt>hasNext</tt> ：如果流中还有更多事件要处理，则返回true</p>
+</li>
+<li>
+<p><tt>peek</tt> ：返回事件，但不迭代到下一个事件</p>
+</li>
+</ul>
+<p>例如，以下代码片段说明了<tt>XMLEventReader</tt>方法声明：</p>
+<div class="codeblock"><pre>
+package javax.xml.stream;
+import java.util.Iterator;
+
+public interface XMLEventReader extends Iterator {
+    public Object next();
+    public XMLEvent nextEvent() throws XMLStreamException;
+    public boolean hasNext();
+    public XMLEvent peek() throws XMLStreamException;
+    // ...
+}
+</pre></div>
+<p>要读取流上的所有事件然后打印它们，可以使用以下命令：</p>
+<div class="codeblock"><pre>
+while(stream.hasNext()) {
+    XMLEvent event = stream.nextEvent();
+    System.out.print(event);
+}
+</pre></div>
+<p><a name="bnbfc" id="bnbfc"></a></p>
+<h3>读取属性</h3>
+<p>您可以从与它们关联的<tt>javax.xml.stream中访问属性<tt>。StartElement</tt> ，如下所示：</tt></p><tt>
+<div class="codeblock"><pre>
+public interface StartElement extends XMLEvent {
+    public Attribute getAttributeByName(QName name);
+    public Iterator getAttributes();
+}
+</pre></div>
+<p>您可以使用<tt>起始元素</tt>接口的<tt>getAttributes</tt>方法对所有属性使用一个<tt>Iterator</tt>宣布该<tt>起始元素</tt> 。</p>
+<p><a name="bnbfd" id="bnbfd"></a></p>
+<h3>读取命名空间</h3>
+<p>与读取属性类似，使用通过在<tt>StartElement</tt>接口上调用<tt>getNamespaces</tt>方法创建的<tt>迭代器</tt>读取名称空间。仅返回当前<tt>StartElement</tt>的名称空间，应用程序可以使用<tt>StartElement.getNamespaceContext</tt>获取当前名称空间上下文。</p>
+<p><a name="bnbfe" id="bnbfe"></a></p>
+<h2>编写XML流</h2>
+<p><a name="indexterm-38" id="indexterm-38"></a><a name="indexterm-39" id="indexterm-39"></a></p>
+<p>StAX是双向API，游标和事件迭代器API都有自己的一组接口，用于编写XML流。与读取流的接口一样，用于游标和事件迭代器的writer API之间存在显着差异。以下各节描述如何使用这些API中的每一个编写XML流。</p>
+<p><a name="bnbff" id="bnbff"></a></p>
+<h3>使用XMLStreamWriter</h3>
+<p><a name="indexterm-40" id="indexterm-40"></a><a name="indexterm-41" id="indexterm-41"></a></p>
+<p>StAX光标API中的<tt>XMLStreamWriter</tt>接口使应用程序可以写回XML流或创建全新的流。XMLStreamWriter具有允许您执行以下操作的方法：</p>
+<ul>
+<li>
+<p>编写格式正确的XML</p>
+</li>
+<li>
+<p>冲洗或关闭输出</p>
+</li>
+<li>
+<p>写出合格的名字</p>
+</li>
+</ul>
+<p>请注意，不需要<tt>XMLStreamWriter</tt>实现对输入执行格式正确或有效性检查。尽管某些实现可能会执行严格的错误检查，但其他实现则可能不会。您实现的规则将应用于<tt>XMLOutputFactory</tt>类中定义的属性。</p>
+<p><tt>writeCharacters</tt>方法用于转义诸如<tt>＆</tt> ， <tt><</tt> ， <tt>></tt>和<tt>“之类的</tt>字符。可以通过传递前缀的实际值，使用<tt>setPrefix</tt>方法或通过设置默认名称空间声明的属性来处理绑定前缀。</p>
+<p>下面的示例摘自StAX规范，展示了如何实例化输出工厂，创建编写器以及编写XML输出：</p>
+<div class="codeblock"><pre>
+XMLOutputFactory output = XMLOutputFactory.newInstance();
+XMLStreamWriter writer = output.createXMLStreamWriter( ... );
+
+writer.writeStartDocument();
+writer.setPrefix("c","http://c");
+writer.setDefaultNamespace("http://c");
+
+writer.writeStartElement("http://c","a");
+writer.writeAttribute("b","blah");
+writer.writeNamespace("c","http://c");
+writer.writeDefaultNamespace("http://c");
+
+writer.setPrefix("d","http://c");
+writer.writeEmptyElement("http://c","d");
+writer.writeAttribute("http://c", "chris","fry");
+writer.writeNamespace("d","http://c");
+writer.writeCharacters("Jean Arp");
+writer.writeEndElement();
+
+writer.flush();
+</pre></div>
+<p>这段代码生成以下XML（换行是非规范性的）：</p>
+<div class="codeblock"><pre>
+&lt;?xml version=&rsquo;1.0&rsquo; encoding=&rsquo;utf-8&rsquo;?>
+&lt;a b="blah" xmlns:c="http://c" xmlns="http://c">
+&lt;d:d d:chris="fry" xmlns:d="http://c"/>Jean Arp&lt;/a>
+</pre></div>
+<p><a name="bnbfg" id="bnbfg"></a></p>
+<h3>使用XMLEventWriter</h3>
+<p><a name="indexterm-42" id="indexterm-42"></a><a name="indexterm-43" id="indexterm-43"></a></p>
+<p>StAX事件迭代器API中的<tt>XMLEventWriter</tt>接口使应用程序可以写回XML流或创建全新的流。可以扩展此API，但是主要API如下：</p>
+<div class="codeblock"><pre>
+public interface XMLEventWriter {
+    public void flush() throws XMLStreamException;
+    public void close() throws XMLStreamException;
+    public void add(XMLEvent e) throws XMLStreamException;
+    // ... other methods not shown.
+}
+</pre></div>
+<p><tt>XMLEventWriter</tt>的实例由<tt>XMLOutputFactory</tt>的实例创建。流事件是迭代添加的，并且在将事件添加到事件编写器实例后，无法对其进行修改。</p>
+<p><a name="bnbfh" id="bnbfh"></a></p>
+<h3>属性，转义字符，绑定前缀</h3>
+<p>在流中添加或遇到除<tt>属性</tt>或<tt>命名空间</tt>以外的事件之前，需要StAX实现来缓冲最后一个<tt>StartElement</tt> 。这意味着，当您向流中添加<tt>属性</tt>或<tt>名称空间时</tt> ，它会附加到当前的<tt>StartElement</tt>事件中。</p>
+<p>您可以使用<tt>Characters</tt>方法转义<tt>＆</tt> ， <tt><</tt> ， <tt>></tt>和<tt>“之</tt>类的字符。</p>
+<p><tt>setPrefix（...）</tt>方法可用于显式绑定要在输出期间使用的前缀，而<tt>getPrefix（...）</tt>方法可用于获取当前前缀。请注意，默认情况下， <tt>XMLEventWriter</tt>将名称空间绑定添加到其内部名称空间映射。前缀在绑定事件的相应<tt>EndElement</tt>之后超出范围。</p>
+
+
+        </tt></tt></tt></div><tt><tt>
+        <div class="NavBit">
+            <a href="api.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="parser.html" target="_top">下一个»</a>
+        </div>
+    </tt></tt></div><tt><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> StAX API<br><b>下一页：</b> Oracle的流XML解析器实现</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></tt></body></html>

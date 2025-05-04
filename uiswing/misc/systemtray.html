@@ -1,0 +1,651 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用系统托盘（Java™教程>使用JFC / Swing创建GUI>使用其他Swing功能）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用其他Swing功能</a></div>
+<div class="linkAHEAD"><a href="desktop.html">如何与桌面类集成</a></div>
+<div class="linkAHEAD"><a href="trans_shaped_windows.html">如何创建半透明和成形的Windows</a></div>
+<div class="linkAHEAD"><a href="jlayer.html">如何使用JLayer类装饰组件</a></div>
+<div class="linkAHEAD"><a href="action.html">如何使用动作</a></div>
+<div class="linkAHEAD"><a href="timer.html">如何使用摇摆计时器</a></div>
+<div class="linkAHEAD"><a href="access.html">如何支持辅助技术</a></div>
+<div class="linkAHEAD"><a href="focus.html">如何使用Focus子系统</a></div>
+<div class="linkAHEAD"><a href="keybinding.html">如何使用键绑定</a></div>
+<div class="linkAHEAD"><a href="modality.html">如何在对话框中使用模态</a></div>
+<div class="linkAHEAD"><a href="printtable.html">如何打印表格</a></div>
+<div class="linkAHEAD"><a href="printtext.html">如何列印文字</a></div>
+<div class="linkAHEAD"><a href="splashscreen.html">如何创建启动画面</a></div>
+<div class="nolinkAHEAD">如何使用系统托盘</div>
+<div class="linkAHEAD"><a href="problems.html">使用其他Swing功能解决常见问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用其他Swing功能</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用其他Swing功能</a>
+            </div>
+            <div class="NavBit">
+                <a href="splashscreen.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="problems.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用系统托盘</h1></div>
+            <div id="PageContent">
+
+<p>系统托盘是桌面的专用区域，用户可以在其中访问当前正在运行的程序。在各种操作系统上，可能会以不同的方式引用此区域。在Microsoft Windows上，系统托盘称为“任务栏状态区域”，而在GNU网络对象模型环境（GNOME）桌面上则称为“通知区域”。在K Desktop Environment（KDE）上，此区域称为系统托盘。但是，在每个系统上，托盘区域由桌面上运行的所有应用程序共享。</p>
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html" target="_blank"><code>java.awt.SystemTray</code></a> Java™SE版本6中引入的类代表了台式机的系统托盘。可以通过调用静态文件来访问系统托盘<code>SystemTray.getSystemTray()</code>方法。在调用此方法之前，请使用静态方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#isSupported--" target="_blank"><code>isSupported()</code></a>检查系统托盘是否受支持。如果此平台不支持系统托盘，则<code>isSupported()</code>方法返回false。如果应用程序尝试调用<code>getSystemTray()</code>在这种情况下，该方法将抛出一个<code>java.lang.UnsupportedOperationException</code> 。</p>
+<p>应用程序无法创建<code>SystemTray</code>类。只能在此类中创建一个实例，并且可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#getSystemTray--" target="_blank"><code>getSystemTray()</code></a>方法。</p>
+<p>系统托盘包含一个或多个托盘图标，可使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#add-java.awt.TrayIcon-" target="_blank"><code>add(java.awt.TrayIcon)</code></a>方法。当不再需要它们时，可以将它们删除。 <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#remove-java.awt.TrayIcon-" target="_blank"><code>remove(java.awt.TrayIcon)</code></a>方法。</p>
+<div class="note"><hr><strong>注意：</strong> <code>add()</code>方法可以抛出<code>AWTException</code>如果操作系统或Java运行时确定无法将图标添加到系统托盘中。例如， <code>AWTException</code>如果桌面上不存在系统托盘，X-Window桌面将抛出该图像。
+<hr></div>
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/TrayIcon.html" target="_blank"><code>TrayIcon</code></a>类功能超出了托盘中显示的图标。它还包括文本工具提示，弹出菜单，气球消息以及与之关联的一组侦听器。一种<code>TrayIcon</code>对象生成各种鼠标事件，并支持添加相应的侦听器以接收这些事件的通知。的<code>TrayIcon</code>类处理一些事件本身。例如，默认情况下，在任务栏图标上单击鼠标右键时，它将显示指定的弹出菜单。双击后， <code>TrayIcon</code>对象生成一个<code>ActionEvent</code>启动一个应用程序。当鼠标指针悬停在任务栏图标上时，将显示工具提示。图标图像会自动调整大小以适合在纸盘上为图像分配的空间。</p>
+<p>下面的演示是使用AWT软件包开发的，演示了SystemTray和TrayIcon类的功能。</p>
+<center><img src="../../figures/uiswing/misc/systemtray.gif" width="302" height="161" align="bottom" alt="系统任务栏带有打开的弹出菜单"></center><p>不幸的是，目前的实施<code>TrayIcon</code>该类提供了对Swing弹出菜单的有限支持（ <code>JPopupMenu</code>类），并且无法使应用程序使用的所有功能<code>javax.swing</code>包。错误数据库中描述了此问题的解决方案，请参见错误ID <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6285881">6285881</a> 。</p>
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>放置<a class="SourceLink" href="../examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif'); return false;"><code>bulb.gif</code></a>图像文件<code>image</code>目录。编译运行示例，请参考<a href="../examples/misc/index.html#TrayIconDemo">示例索引</a> 。</li>
+<li>托盘图标将出现在系统托盘中。
+<center><img src="../../figures/uiswing/misc/bulb32x32.gif" width="219" height="27" align="bottom" alt="纸盒图标图像"></center></li>
+<li>双击任务栏图标以启动相应的应用程序。将显示对话框。</li>
+<li>将鼠标指针悬停在任务栏图标上，然后单击鼠标右键。出现弹出菜单。</li>
+<li>选择设置自动尺寸复选框菜单项。请注意，图标外观如下更改。
+<center><img src="../../figures/uiswing/misc/bulb16x16.gif" width="16" height="16" align="bottom" alt="托盘图标图像已调整大小"></center></li>
+<li>选择设置工具提示复选框菜单项。将鼠标指针悬停在任务栏图标上。出现工具提示。</li>
+<li>选择关于菜单项。出现对话框。关闭对话框。</li>
+<li>选择任何“显示”子菜单项。这些项目中的每一个都显示特定类型的消息对话框：错误，警告，信息或标准。</li>
+<li>使用退出菜单项退出应用程序。
+<hr></li></ol></div>
+<p>以下代码段显示了如何将托盘图标添加到系统托盘并应用弹出菜单：</p>
+<div class="codeblock"><pre>
+...
+        //Check the SystemTray is supported
+        if (!SystemTray.isSupported()) {
+            System.out.println("SystemTray is not supported");
+            return;
+        }
+        final PopupMenu popup = new PopupMenu();
+        final TrayIcon trayIcon =
+                new TrayIcon(createImage("images/bulb.gif", "tray icon"));
+        final SystemTray tray = SystemTray.getSystemTray();
+       
+        // Create a pop-up menu components
+        MenuItem aboutItem = new MenuItem("About");
+        CheckboxMenuItem cb1 = new CheckboxMenuItem("Set auto size");
+        CheckboxMenuItem cb2 = new CheckboxMenuItem("Set tooltip");
+        Menu displayMenu = new Menu("Display");
+        MenuItem errorItem = new MenuItem("Error");
+        MenuItem warningItem = new MenuItem("Warning");
+        MenuItem infoItem = new MenuItem("Info");
+        MenuItem noneItem = new MenuItem("None");
+        MenuItem exitItem = new MenuItem("Exit");
+       
+        //Add components to pop-up menu
+        popup.add(aboutItem);
+        popup.addSeparator();
+        popup.add(cb1);
+        popup.add(cb2);
+        popup.addSeparator();
+        popup.add(displayMenu);
+        displayMenu.add(errorItem);
+        displayMenu.add(warningItem);
+        displayMenu.add(infoItem);
+        displayMenu.add(noneItem);
+        popup.add(exitItem);
+       
+        trayIcon.setPopupMenu(popup);
+       
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            System.out.println("TrayIcon could not be added.");
+        }
+...
+</pre></div>
+<p>有关此演示的完整代码，请参见<a class="SourceLink" href="../examples/misc/TrayIconDemoProject/src/misc/TrayIconDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/TrayIconDemoProject/src/misc/TrayIconDemo.java'); return false;"><code>TrayIconDemo.java</code></a>文件。本演示还使用了<a class="SourceLink" href="../examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif'); return false;"><code>bulb.gif</code></a>图像文件。</p>
+<p>消除当前应用Swing组件的限制，开发人员可以添加以下组件： <code>JMenuItem</code> （带有图片）， <code>JRadioButtonMenuItem</code>和<code>JCheckBoxMenuItem</code> 。</p>
+<h2><a name="api" id="api">SystemTray API</a></h2>
+<p style="text-align:center">在其中仅创建一个实例<code>SystemTray</code>类可以存在。</p>
+<table border="1" summary="system tray API">
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#add-java.awt.TrayIcon-" target="_blank">加</a></td>
+<td>将托盘图标添加到系统托盘。添加后，托盘图标在系统托盘中变得可见。没有指定图标在托盘中的显示顺序-它取决于平台和实现。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#getSystemTray--" target="_blank">getSystemTray</a></td>
+<td>得到<code>SystemTray</code>代表桌面托盘区域的实例。此方法始终为每个应用程序返回相同的实例。在某些平台上，可能不支持系统托盘。使用<code>isSupported()</code>检查系统托盘是否受支持的方法。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html#isSupported--" target="_blank">isSupported</a></td>
+<td>返回有关当前平台是否支持系统托盘的信息。除了显示任务栏图标外，对系统托盘的最小支持还包括一个弹出菜单（请参阅<code>TrayIcon.setPopupMenu(PopupMenu)</code>方法）或动作事件（请参见<code>TrayIcon.addActionListener(ActionListener)</code> ）。</td>
+</tr>
+</tbody></table>
+<h2><a name="api__1" id="api__1">TrayIcon API</a></h2>
+<p style="text-align:center">一种<code>TrayIcon</code>对象表示可以添加到系统托盘的托盘图标。一种<code>TrayIcon</code>对象可以具有工具提示（文本），图像，弹出菜单以及与之关联的一组侦听器。</p>
+<table border="1" summary="trayIcon api">
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/TrayIcon.html#setImageAutoSize-boolean-" target="_blank">setImageAutoSize</a></td>
+<td>设置自动调整大小属性。自动调整大小确定纸盘图像是否自动调整大小以适合为纸盘上的图像分配的空间。默认情况下，auto-size属性设置为<code>false</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/TrayIcon.html#setPopupMenu-java.awt.PopupMenu-" target="_blank">setPopupMenu</a></td>
+<td>为此设置弹出菜单<code>TrayIcon</code>宾语。如果弹出<code>null</code> ，则不会与此菜单关联任何弹出菜单<code>TrayIcon</code>宾语。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/TrayIcon.html#setToolTip-java.lang.String-" target="_blank">setToolTip</a></td>
+<td>为此设置工具提示字符串<code>TrayIcon</code>宾语。当鼠标悬停在图标上时，将自动显示工具提示。将工具提示设置为<code>null</code>删除任何工具提示文本。显示时，工具提示字符串在某些平台上可能会被截断；可能显示的字符数取决于平台。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用SystemTray API的示例</a></h2>下表列出了使用添加到系统托盘中的托盘图标的示例。
+<table summary="list of examples that use tray icons">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr valign="top">
+<td><a href="../examples/misc/index.html#TrayIconDemo"><code>TrayIconDemo</code></a></td>
+<td>这个部分</td>
+<td>在系统任务栏中创建任务栏图标，向任务栏图标添加一个弹出菜单。</td>
+</tr>
+</tbody></table>
+
+
+
+
+        </div>
+        <div class="NavBit">
+            <a href="splashscreen.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="problems.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何创建启动画面<br><b>下一页：</b>使用其他Swing功能解决常见问题</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

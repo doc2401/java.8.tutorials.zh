@@ -1,0 +1,662 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>标准MBean（Java™教程> Java管理扩展（JMX）> MBean简介）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JMX Java tutorial describes the Java Management Extensions (JMX) technology - mbeans, notifications, and remote management ">
+     <meta name="keywords" content="java programming, learn java, java sample code, jmx, java management extension, mbeans, mxbeans">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">介绍MBean</a></div>
+<div class="nolinkAHEAD">标准MBean</div>
+<div class="linkAHEAD"><a href="mxbeans.html">MXBeans</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> Java管理扩展（JMX）<br><b>课程：</b>介绍MBean</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">Java管理扩展（JMX）</a> > <a href="index.html" target="_top">MBean简介</a>
+            </div>
+            <div class="NavBit">
+                <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="mxbeans.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>标准MBean</h1></div>
+            <div id="PageContent">
+
+<p>本节提供了一个简单的标准MBean的示例。</p>
+<p>通过编写称为<code>SomethingMBean</code>还有一个叫做<code>Something</code>实现该接口。接口中的每个方法都定义MBean中的属性或操作。默认情况下，每个方法都定义一个操作。属性和操作是遵循某些设计模式的方法。一个标准的MBean由一个MBean接口和一个类组成。MBean接口列出了所有公开的属性和操作的方法。该类实现此接口，并提供所检测资源的功能。</p>
+<p>以下各节检查标准MBean和管理MBean的简单的启用JMX技术的代理（JMX代理）的示例。</p>
+<h2>MBean接口</h2>
+<p>基本MBean接口的示例， <a class="SourceLink" href="../examples/HelloMBean.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/HelloMBean.java'); return false;"><code>HelloMBean</code></a> ，如下所示：</p>
+<div class="codeblock"><pre>
+
+package com.example; 
+ 
+public interface HelloMBean { 
+ 
+    public void sayHello(); 
+    public int add(int x, int y); 
+    
+    public String getName(); 
+     
+    public int getCacheSize(); 
+    public void setCacheSize(int size); 
+} 
+
+</pre></div>
+<p>按照约定，MBean接口采用实现它的Java类的名称，后缀为<i><code>MBean</code></i>添加。在这种情况下，该接口称为<code>HelloMBean</code> 。的<code>Hello</code>下一节将介绍实现此接口的类。</p>
+<p>根据JMX规范，除了可以由MBean管理的应用程序调用的命名和类型操作之外，MBean接口还包括可读且可能可写的命名和类型属性。的<code>HelloMBean</code>接口声明了两个操作：Java方法<code>add()</code>和<code>sayHello()</code> 。</p>
+<p><code>HelloMBean</code>声明两个属性： <code>Name</code>是只读字符串，并且<code>CacheSize</code>是可以读取和写入的整数。声明了Getter和setter方法以允许托管应用程序访问并可能更改属性值。根据JMX规范的定义， <i>getter</i>是任何不返回void并且名称开头为的公共方法<code>get</code> 。获取器使管理器能够读取属性的值，该属性的类型是返回对象的类型。<i>设置器</i>是任何采用单个参数且名称以开头的公共方法<code>set</code> 。设置器使管理者可以在属性中写入新值，该属性的类型与参数的类型相同。</p>
+<p>这些操作和属性的实现在以下部分中显示。</p>
+<h2>MBean实施</h2>
+<p>的<a class="SourceLink" href="../examples/Hello.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/Hello.java'); return false;"><code>Hello</code></a>接下来的Java类实现<code>HelloMBean</code> MBean接口：</p>
+<div class="codeblock"><pre>
+package com.example; 
+ 
+public class Hello ... 
+    implements HelloMBean { 
+    public void sayHello() { 
+        System.out.println("hello, world"); 
+    } 
+     
+    public int add(int x, int y) { 
+        return x + y; 
+    } 
+     
+    public String getName() { 
+        return this.name; 
+    }  
+     
+    public int getCacheSize() { 
+        return this.cacheSize; 
+    } 
+     
+    public synchronized void setCacheSize(int size) {
+        ...
+    
+        this.cacheSize = size; 
+        System.out.println("Cache size now " + this.cacheSize); 
+    } 
+    ...
+     
+    private final String name = "Reginald"; 
+    private int cacheSize = DEFAULT_CACHE_SIZE; 
+    private static final int 
+        DEFAULT_CACHE_SIZE = 200; 
+}
+</pre></div>
+<p>简单明了<code>Hello</code>类提供了由声明的操作和属性的定义<code>HelloMBean</code> 。的<code>sayHello()</code>和<code>add()</code>操作非常简单，但实际操作可以根据需要简单或复杂。</p>
+<p>获得方法<code>Name</code>属性并获取并设置<code>CacheSize</code>属性也被定义。在此示例中， <code>Name</code>属性值永不变。但是，在实际情况下，此属性可能会随着托管资源的运行而改变。例如，该属性可能表示统计信息，例如正常运行时间或内存使用情况。在这里，属性仅仅是名称<code>Reginald</code> 。</p>
+<p>呼叫<code>setCacheSize</code>方法使您可以更改<code>CacheSize</code>属性从其声明的默认值200开始。在实际情况下，更改<code>CacheSize</code>属性可能需要执行其他操作，例如丢弃条目或分配新条目。本示例仅打印一条消息以确认高速缓存大小已更改。但是，可以定义更复杂的操作，而不是简单地调用<code>println()</code> 。</p>
+<p>随着<code>Hello</code>如此定义的MBean及其接口，现在可以用来管理它们表示的资源，如以下部分所示。</p>
+<h2>创建一个JMX代理来管理资源</h2>
+<p>一旦MBean检测到资源，该资源的管理就由JMX代理执行。</p>
+<p>JMX代理的核心组件是MBean服务器。MBean服务器是其中注册了MBean的受管对象服务器。JMX代理还包括一组用于管理MBean的服务。请参阅API文档，以了解<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/management/MBeanServer.html" target="_blank"><code>MBeanServer</code></a>接口，以获取MBean服务器实现的详细信息。</p>
+<p>的<a class="SourceLink" href="../examples/Main.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/Main.java'); return false;"><code>Main</code></a>后面的类表示基本的JMX代理：</p>
+<div class="codeblock"><pre>
+package com.example; 
+ 
+import java.lang.management.*; 
+import javax.management.*; 
+ 
+public class Main { 
+ 
+    public static void main(String[] args) 
+        throws Exception { 
+     
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer(); 
+        ObjectName name = new ObjectName("com.example:type=Hello"); 
+        Hello mbean = new Hello(); 
+        mbs.registerMBean(mbean, name); 
+          
+        ...
+     
+        System.out.println("Waiting forever..."); 
+        Thread.sleep(Long.MAX_VALUE); 
+    } 
+} 
+</pre></div>
+<p>JMX代理<code>Main</code>首先，获取通过平台创建和初始化的MBean服务器，方法是调用<code>getPlatformMBeanServer()</code>的方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/management/ManagementFactory.html" target="_blank"><code>java.lang.management.ManagementFactory</code></a>类。如果平台尚未创建MBean服务器，则<code>getPlatformMBeanServer()</code>通过调用JMX方法自动创建MBean服务器<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/management/MBeanServerFactory.html#createMBeanServer--" target="_blank"><code>MBeanServerFactory.createMBeanServer()</code></a> 。的<code>MBeanServer</code>实例由<code>Main</code>被称为<code>mbs</code> 。</p>
+<p>下一个， <code>Main</code>为将创建的MBean实例定义一个对象名称。每个JMX MBean必须具有一个对象名称。对象名称是JMX类的实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/management/ObjectName.html" target="_blank"><code>ObjectName</code></a>并且必须符合JMX规范定义的语法。即，对象名称必须包含一个域和一个键属性列表。在定义的对象名称中<code>Main</code> ，该域是<code>com.example</code> （包含示例MBean的程序包）。此外，密钥属性声明此对象的类型为<code>Hello</code> 。</p>
+<p>一个实例<code>Hello</code>对象，命名<code>mbean</code> ， 被建造。的<code>Hello</code>对象名为<code>mbean</code>然后在MBean服务器中注册为MBean <code>mbs</code>与对象名称<code>name</code> ，方法是将对象和对象名称传递给对JMX方法的调用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/management/MBeanServer.html#registerMBean-java.lang.Object-javax.management.ObjectName-" target="_blank"><code>MBeanServer.registerMBean()</code></a> 。</p>
+<p>随着<code>Hello</code>在MBean服务器中注册的MBean， <code>Main</code>只是等待执行管理操作<code>Hello</code> 。在此示例中，这些管理操作正在调用<code>sayHello()</code>和<code>add()</code> ，并获取和设置属性值。</p>
+<h2>运行标准MBean示例</h2>
+<p>检查了示例类之后，您现在可以运行该示例。在此示例中，使用JConsole与MBean进行交互。</p>
+<p>要运行该示例，请按照下列步骤操作：</p>
+<ol>
+<li>保存捆绑的JMX API示例类， <a class="SourceLink" href="../examples/jmx_examples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/jmx_examples.zip'); return false;"><code>jmx_examples.zip</code></a> ，到您的工作目录， <code style="font-style:italic">work_dir</code> 。</li>
+<li>通过在终端窗口中使用以下命令来解压缩样本类包。
+<div class="codeblock"><pre>
+unzip jmx_examples.zip
+</pre></div>
+</li>
+<li>从内部编译示例Java类<code style="font-style:italic">work_dir</code>目录。
+<div class="codeblock"><pre>
+javac com/example/*.java
+</pre></div>
+</li>
+<li>如果您正在运行Java Development Kit（JDK）版本6，请启动<code>Main</code>使用以下命令的应用程序。
+<div class="codeblock"><pre>
+java com.example.Main
+</pre></div>
+<p>如果您运行的JDK版本早于版本6，则需要启动<code>Main</code>指定以下选项的应用程序，以公开应用程序进行监视和管理。</p>
+<div class="codeblock"><pre>
+java -Dcom.sun.management.jmxremote example.Main
+</pre></div>
+<p>确认<code>Main</code>正在等待某事发生。</p>
+</li>
+<li>在同一台计算机上的另一个终端窗口中启动JConsole。
+<div class="codeblock"><pre>
+jconsole
+</pre></div>
+<p>将显示“新建连接”对话框，其中列出了可以连接的正在运行的JMX代理。</p>
+</li>
+<li>在“新建连接”对话框中，选择<code>com.example.Main</code>从列表中，然后单击连接。
+<p>显示平台当前活动的摘要。</p>
+</li>
+<li>单击“ MBeans”选项卡。
+<p>此面板显示当前在MBean服务器中注册的所有MBean。</p>
+</li>
+<li>在左侧框架中，展开<code>com.example</code> MBean树中的节点。
+<p>您看到示例MBean <code>Hello</code>由创建和注册的<code>Main</code> 。如果单击<code>Hello</code> ，您会在MBean树中看到其关联的“属性和操作”节点。</p>
+</li>
+<li>展开的“属性”节点<code>Hello</code> MBean树中的MBean。
+<p>由MBean属性定义的<code>Hello</code>显示班级。</p>
+</li>
+<li>更改值<code>CacheSize</code>属性为150。
+<p>在您开始的终端窗口中<code>Main</code> ，将生成此属性更改的确认。</p>
+</li>
+<li>展开<code>Hello</code> MBean树中的MBean。
+<p>声明的两个操作<code>Hello</code> MBean， <code>sayHello()</code>和<code>add()</code>可见。</p>
+</li>
+<li>调用<code>sayHello()</code>通过单击操作<code>sayHello</code>按钮。
+<p>JConsole对话框通知您该方法已成功调用。消息<i>“ hello world”</i>在终端窗口中生成，其中<code>Main</code>在跑。</p>
+</li>
+<li>提供两个整数<code>add()</code>添加操作并单击<code>add</code>按钮。
+<p>答案显示在“ JConsole”对话框中。</p>
+</li>
+<li>要关闭JConsole，请选择连接->退出。</li>
+</ol>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="mxbeans.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> MBean介绍<br><b>下一页：</b> MXBeans</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,800 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用文本区域（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="nolinkBHEAD">如何使用文字区</div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="table.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="textfield.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用文字区</h1></div>
+            <div id="PageContent">
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html" target="_blank"><code>JTextArea</code></a>类提供了一个显示多行文本的组件，并允许用户编辑文本。如果您只需要从用户那里获得一行输入，则应使用<a href="textfield.html">文本字段</a> 。如果希望文本区域使用多种字体或其他样式显示其文本，则应使用<a href="editorpane.html">编辑器窗格或文本窗格</a> 。如果显示的文本长度有限，并且用户从未对其进行编辑，请使用<a href="label.html">标签</a> 。</p>
+<p>教程的许多示例都使用不可编辑的文本区域来显示程序输出。这是一个示例的图片<code>TextDemo</code>这样您就可以使用文本字段（在顶部）键入文本，然后将键入的文本附加到文本区域（在下面）。</p>
+<center><img src="../../figures/uiswing/components/TextDemo.png" width="232" height="137" align="bottom" alt="TextDemo的快照"></center><p>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行TextDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TextDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TextDemoProject/TextDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" align="bottom" alt="启动TextDemo应用程序"></a><br>
+<p>您可以在以下位置找到该程序的完整代码<a class="SourceLink" href="../examples/components/TextDemoProject/src/components/TextDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TextDemoProject/src/components/TextDemo.java'); return false;"><code>TextDemo.java</code></a> 。以下代码创建并初始化文本区域：</p>
+<div class="codeblock"><pre>
+textArea = new JTextArea(5, 20);
+JScrollPane scrollPane = new JScrollPane(textArea); 
+textArea.setEditable(false);
+</pre></div>
+<p>的两个论点<code>JTextArea</code>构造函数分别提示文本区域应显示的行数和列数。确定滚动窗格的大小时，包含文本区域的滚动窗格会注意这些提示。</p>
+<p>如果不创建滚动窗格，则文本区域将不会自动滚动。的<code>JScrollPane</code>上一片段中所示的构造函数设置了要在滚动窗格中查看的文本区域，并指定了在需要时应该显示滚动窗格的滚动条。如果需要更多信息，请参见<a href="scrollpane.html">如何使用滚动窗格</a> 。</p>
+<p>默认情况下，文本区域是可编辑的。代码<code>setEditable(false)</code>使文本区域不可编辑。它仍然是可选的，用户可以从中复制数据，但是用户不能直接更改文本区域的内容。</p>
+<p>以下代码将文本添加到文本区域。请注意，文本系统内部使用'\ n'字符表示换行符；有关详细信息，请参见API文档。 <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/DefaultEditorKit.html" target="_blank"><code>DefaultEditorKit</code></a> 。</p>
+<div class="codeblock"><pre>
+private final static String newline = "\n";
+...
+textArea.append(text + newline);
+</pre></div>
+<p>除非用户通过在文本区域中单击或拖动来移动插入符号（插入点），否则文本区域将自动滚动以使附加的文本可见。您可以通过以下方式强制将文本区域滚动到底部：在调用以下命令后将插入符号移动到文本区域的末尾<code>append</code> ：</p>
+<div class="codeblock"><pre>
+textArea.setCaretPosition(textArea.getDocument().getLength());
+</pre></div>
+<h2><a name="custom" id="custom">自定义文本区域</a></h2>
+<p>您可以通过多种方式自定义文本区域。例如，尽管给定的文本区域只能以一种字体和颜色显示文本，但是您可以设置其使用的字体和颜色。可以在任何组件上执行此定制选项。您还可以确定文本区域如何换行以及每个选项卡的字符数。最后，您可以使用<code>JTextArea</code>类继承自<code>JTextComponent</code>类以设置属性，例如插入符号，对拖动的支持或颜色选择。</p>
+<p>以下代码摘自<a class="SourceLink" href="../examples/components/TextSamplerDemoProject/src/components/TextSamplerDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TextSamplerDemoProject/src/components/TextSamplerDemo.java'); return false;"><code>TextSamplerDemo.java</code></a>演示如何初始化可编辑文本区域。文本区域使用指定的斜体字体，并在单词之间换行。</p>
+<div class="codeblock"><pre>
+JTextArea textArea = new JTextArea(
+    "This is an editable JTextArea. " +
+    "A text area is a \"plain\" text component, " +
+    "which means that although it can display text " +
+    "in any font, all of the text is in the same font."
+);
+textArea.setFont(new Font("Serif", Font.ITALIC, 16));
+textArea.setLineWrap(true);
+textArea.setWrapStyleWord(true);
+</pre></div>
+<p>默认情况下，文本区域不会换行对于显示区域而言过长的行。取而代之的是，它对换行符之间的所有文本使用一行，并且-如果文本区域在<a href="scrollpane.html">滚动窗格中</a> -允许其水平滚动。本示例通过调用来打开换行<code>setLineWrap</code>方法，然后调用<code>setWrapStyleWord</code>指示文本区域应在单词边界而不是字符边界处换行的方法。</p>
+<p>为了提供滚动功能，该示例将文本区域放在滚动窗格中。</p>
+<div class="codeblock"><pre>
+JScrollPane areaScrollPane = new JScrollPane(textArea);
+areaScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+areaScrollPane.setPreferredSize(new Dimension(250, 250));
+</pre></div>
+<p>您可能已经注意到<code>JTextArea</code>本示例中使用的构造函数未指定行数或列数。相反，该代码通过设置滚动窗格的首选大小来限制文本区域的大小。</p>
+<h2><a name="textareademo" id="textareademo">另一个示例：TextAreaDemo</a></h2>
+<p>的<code>TextAreaDemo</code>该示例介绍了具有特殊功能的可编辑文本区域-单词补全功能。当用户键入单词时，只要程序的词汇表中包含以键入内容开头的单词，该程序就会提示您完成单词的提示。这是一张照片<code>TextAreaDemo</code>应用。</p>
+<center><img src="../../figures/uiswing/components/TextAreaDemo.png" width="244" height="180" align="bottom" alt="TextAreaDemo的快照"></center><p>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行TextAreaDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TextAreaDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TextAreaDemoProject/TextAreaDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TextAreaDemo应用程序"></a><br>
+<p>您可以在以下位置找到该程序的完整代码<a class="SourceLink" href="../examples/components/TextAreaDemoProject/src/components/TextAreaDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TextAreaDemoProject/src/components/TextAreaDemo.java'); return false;"><code>TextAreaDemo.java</code></a> 。</p>
+<p>本示例使用默认滚动条策略为文本区域提供滚动能力。默认情况下，垂直滚动条仅在显示区域完全充满文本且没有空间添加新单词时显示。您可以使用以下代码提供此类型的滚动窗格：</p>
+<div class="codeblock"><pre>
+  textArea.setWrapStyleWord(true);
+  jScrollPane1 = new JScrollPane(textArea);
+</pre></div>
+<p>如上所述，文本区域是可编辑的。您可以通过键入和粘贴文本，或删除文本的某些部分或整个内容来使用文本区域。另外，请尝试使用标准键绑定在文本区域内编辑文本。</p>
+<p>现在探讨如何完成单词补全功能。输入“ Swing”或“ special”之类的词。键入“ sw”后，程序将以浅蓝色突出显示可能的完成“ ing”。按Enter接受完成或继续输入。</p>
+<p>以下代码将文档侦听器添加到文本区域的文档中：</p>
+<div class="codeblock"><pre>
+  textArea.getDocument().addDocumentListener(this);
+</pre></div>
+<p>当您开始输入单词时， <code>insertUpdate</code>方法检查程序的词汇表中是否包含键入的前缀。找到前缀的完成后，请调用<code>invokeLater</code>方法提交一个任务，以便以后更改文档。重要的是要记住，您不能在文档事件通知中修改文档，否则会出现异常。检查下面的以下代码。</p>
+<div class="codeblock"><pre>
+String prefix = content.substring(w + 1).toLowerCase();
+int n = Collections.binarySearch(words, prefix);
+if (n &lt; 0 &amp;&amp; -n &lt;= words.size()) {
+    String match = words.get(-n - 1);
+    if (match.startsWith(prefix)) {
+        // A completion is found
+        String completion = match.substring(pos - w);
+        // We cannot modify Document from within notification,
+        // so we submit a task that does the change later
+        SwingUtilities.invokeLater(
+            new CompletionTask(completion, pos + 1));
+    }
+} else {
+    // Nothing found
+    mode = Mode.INSERT;
+}
+</pre></div>
+<p>粗体显示的代码说明了如何创建选择。插入符号首先设置为完整单词的末尾，然后移至最后键入字符之后的位置。的<code>moveCaretPosition</code>方法不仅将插入符号移动到新位置，而且还在两个位置之间选择文本。完成任务通过以下代码实现：</p>
+<div class="codeblock"><pre>
+  private class CompletionTask implements Runnable {
+        String completion;
+        int position;
+        
+        CompletionTask(String completion, int position) {
+            this.completion = completion;
+            this.position = position;
+        }
+        
+        public void run() {
+            textArea.insert(completion, position);
+            <b>textArea.setCaretPosition(position + completion.length());
+            textArea.moveCaretPosition(position);</b>
+            mode = Mode.COMPLETION;
+        }
+    }
+</pre></div>
+<h2><a name="api" id="api">文字区域API</a></h2>
+<p>下表列出了常用的<code>JTextArea</code>构造函数和方法。您可能会调用的其他方法在中定义<code>JTextComponent</code> ，并在<a href="textapi.html">“文本组件API”中</a>列出。</p>
+<p>您还可以在从其他祖先继承的文本区域上调用方法，例如<code>setPreferredSize</code> ， <code>setForeground</code> ， <code>setBackground</code> ， <code>setFont</code> ， 等等。有关常用继承方法的表，请参见<a href="jcomponent.html">JComponent类</a> 。</p>
+<p>使用文本区域的API包括以下类别：</p>
+
+<ul>
+<li><a href="#contents">设置或获取内容</a></li>
+<li><a href="#looks">微调外观</a></li>
+<li><a href="#function">实现功能</a></li>
+</ul>
+<table border="1" summary="methods for setting or obtaining contents">
+<caption><a name="contents" id="contents" style="font-weight:bold">设置或获取内容</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#JTextArea--" target="_blank">JTextArea（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#JTextArea-java.lang.String-" target="_blank">JTextArea（字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#JTextArea-java.lang.String-int-int-" target="_blank">JTextArea（字符串，整数，整数）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#JTextArea-int-int-" target="_blank">JTextArea（int，int）</a></td>
+<td>创建一个文本区域。存在时， <code>String</code>参数包含初始文本。的<code>int</code>参数分别以列为单位指定所需的宽度，以行为单位指定高度。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#setText-java.lang.String-" target="_blank">setText（String）无效</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#getText--" target="_blank">字符串getText（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>设置或获取由文本区域显示的文本。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for fine tuning the text area's appearance">
+<caption><a name="looks" id="looks" style="font-weight:bold">微调文本区域的外观</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#setEditable-boolean-" target="_blank">void setEditable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#isEditable--" target="_blank">boolean isEditable（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>设置或指示用户是否可以在文本区域中编辑文本。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#setColumns-int-" target="_blank">void setColumns（int）;</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getColumns--" target="_blank">int getColumns（）</a></td>
+<td>设置或获取文本区域显示的列数。这实际上只是计算区域首选宽度的提示。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#setRows-int-" target="_blank">void setRows（int）;</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getRows--" target="_blank">int getRows（）</a></td>
+<td>设置或获取文本区域显示的行数。这是计算该区域首选高度的提示。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#setTabSize-int-" target="_blank">int setTabSize（int）</a></td>
+<td>设置选项卡等效的字符数。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#setLineWrap-boolean-" target="_blank">int setLineWrap（boolean）</a></td>
+<td>设置如果线条太长而无法容纳在分配的宽度内，则是否对其进行换行。默认情况下，此属性为false，并且不包装行。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#setWrapStyleWord-boolean-" target="_blank">int setWrapStyleWord（boolean）</a></td>
+<td>设置是否可以在空白（单词边界）或任何字符处换行。默认情况下，此属性为false，并且可以在任何字符处换行（如果启用了换行）。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for implementing the text area's functionality">
+<caption><a name="function" id="function" style="font-weight:bold">实施文本区域的功能</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#selectAll--" target="_blank">无效selectAll（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>选择文本区域中的所有字符。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#append-java.lang.String-" target="_blank">无效append（String）</a></td>
+<td>将指定的文本添加到文本区域的末尾。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#insert-java.lang.String-int-" target="_blank">无效insert（String，int）</a></td>
+<td>将指定的文本插入指定的位置。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#replaceRange-java.lang.String-int-int-" target="_blank">void replaceRange（String，int，int）</a></td>
+<td>用指定的字符串替换指示位置之间的文本。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getLineCount--" target="_blank">int getLineCount（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getLineOfOffset-int-" target="_blank">int getLineOfOffset（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getLineStartOffset-int-" target="_blank">int getLineStartOffset（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html#getLineEndOffset-int-" target="_blank">int getLineEndOffset（int）</a></td>
+<td>查找行号或指定行的开始或结束位置的实用程序。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用文本区域的示例</a></h2>
+<p>下表列出了使用文本区域的示例，并指向描述这些示例的位置。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextDemo">文字演示</a></td>
+<td valign="top">这个部分</td>
+<td valign="top">将用户输入的文本附加到文本区域的应用程序。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextAreaDemo">TextAreaDemo</a></td>
+<td valign="top">这个部分</td>
+<td valign="top">具有文本区域和单词完成功能的应用程序。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextSamplerDemo">TextSamplerDemo</a></td>
+<td valign="top"><a href="text.html">使用文字组件</a></td>
+<td valign="top">使用每个Swing文本组件之一。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#HtmlDemo">HtmlDemo</a></td>
+<td valign="top"><a href="html.html">如何在Swing组件中使用HTML</a></td>
+<td valign="top">文本区域，使用户能够键入要在标签中显示的HTML代码。</td>
+</tr>
+<tr>
+<td valign="top">
+<a class="TutorialLink" href="../examples/dnd/index.html#BasicDnD" target="_top">基本DnD</a></td>
+<td valign="top">
+<a class="TutorialLink" href="../dnd/intro.html" target="_top">DnD简介</a></td>
+<td valign="top">演示几个Swing组件（包括文本区域）的内置拖放功能。</td>
+</tr>
+<tr>
+<td valign="top">
+<a class="TutorialLink" href="../examples/misc/index.html#FocusConceptsDemo" target="_top">焦点概念演示</a></td>
+<td valign="top">
+<a class="TutorialLink" href="../misc/focus.html" target="_top">如何使用Focus子系统</a></td>
+<td valign="top">演示如何使用包括文本区域在内的一些组件来工作。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="table.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="textfield.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用表格<br><b>下一页：</b>如何使用文本字段</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

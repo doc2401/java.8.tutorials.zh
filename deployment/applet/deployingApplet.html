@@ -1,0 +1,623 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>部署小程序（Java™教程>部署> Java小程序）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This deployment Java tutorial describes development and deployment of applets, Java Web Start applications, rich Internet applications, and JAR related tools">
+     <meta name="keywords" content="java programming, learn java, java sample code, java applet, java web start, rich internet application, RIA, jar, plugin, plug-in">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">Java小程序</a></div>
+<div class="linkAHEAD"><a href="getStarted.html">小程序入门</a></div>
+<div class="linkBHEAD"><a href="subclass.html">定义Applet子类</a></div>
+<div class="linkBHEAD"><a href="appletMethods.html">里程碑方法</a></div>
+<div class="linkBHEAD"><a href="lifeCycle.html">小程序的生命周期</a></div>
+<div class="linkBHEAD"><a href="appletExecutionEnv.html">Applet的执行环境</a></div>
+<div class="linkBHEAD"><a href="developingApplet.html">开发小程序</a></div>
+<div class="nolinkBHEAD">部署小程序</div>
+<div class="linkCHEAD"><a href="html.html">使用Applet标签进行部署</a></div>
+<div class="linkAHEAD"><a href="doingMoreWithApplets.html">用小程序做更多</a></div>
+<div class="linkBHEAD"><a href="data.html">查找和加载数据文件</a></div>
+<div class="linkBHEAD"><a href="param.html">定义和使用Applet参数</a></div>
+<div class="linkBHEAD"><a href="showStatus.html">显示简短的状态字符串</a></div>
+<div class="linkBHEAD"><a href="browser.html">在浏览器中显示文档</a></div>
+<div class="linkBHEAD"><a href="invokingJavaScriptFromApplet.html">从小程序调用JavaScript代码</a></div>
+<div class="linkBHEAD"><a href="invokingAppletMethodsFromJavaScript.html">从JavaScript代码调用Applet方法</a></div>
+<div class="linkBHEAD"><a href="appletStatus.html">使用事件处理程序处理初始化状态</a></div>
+<div class="linkBHEAD"><a href="manipulatingDOMFromApplet.html">处理Applet网页的DOM</a></div>
+<div class="linkBHEAD"><a href="customProgressIndicatorForApplet.html">显示自定义的加载进度指示器</a></div>
+<div class="linkBHEAD"><a href="stdout.html">将诊断写入标准输出和错误流</a></div>
+<div class="linkBHEAD"><a href="draggableApplet.html">开发可拖动的小程序</a></div>
+<div class="linkBHEAD"><a href="iac.html">与其他小程序进行通信</a></div>
+<div class="linkBHEAD"><a href="server.html">使用服务器端应用程序</a></div>
+<div class="linkCHEAD"><a href="clientExample.html">网络客户端小程序示例</a></div>
+<div class="linkBHEAD"><a href="security.html">小程序可以做什么和不能做什么</a></div>
+<div class="linkAHEAD"><a href="problemsindex.html">解决小程序常见问题</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>追踪：</b>部署<br><b>课程：</b> Java小程序<br><b>小节：</b> Applet入门</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">部署</a> > <a href="index.html" target="_top">Java Applets</a>
+            </div>
+            <div class="NavBit">
+                <a href="developingApplet.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="html.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>部署小程序</h1></div>
+            <div id="PageContent">
+
+<p>要部署Java applet，请首先编译源代码，将其打包为JAR文件，然后对JAR文件进行签名。</p>
+<p>Java applet可以通过两种方式启动。</p>
+<ul>
+<li>您可以使用Java网络启动协议（JNLP）启动小程序。使用JNLP启动的Applet可以访问强大的JNLP API和扩展。</li>
+<li>另外，您可以通过直接在applet标记中指定applet的启动属性来启动applet。但是，这种部署小程序的旧方法对小程序施加了严格的安全限制。</li>
+</ul>
+<p>部署工具包脚本包含有用的JavaScript函数，可用于在网页中部署小程序。</p>
+<p>如果您不熟悉这些部署技术，请先阅读“ <a class="TutorialLink" href="../deploymentInDepth/index.html" target="_top">深入部署”</a>课程，然后再继续进行。</p>
+<p>以下是打包和部署小程序的一些分步说明。动态树演示小程序用于说明小程序的部署。您可能需要设置构建脚本来执行以下一些步骤。</p>
+
+<script src="https://www.java.com/js/deployJava.js" type="text/javascript">
+</script><script type="text/javascript">
+//<![CDATA[
+ 
+    var attributes = { code:'appletComponentArch.DynamicTreeApplet.class', archive:'examples/dist/applet_ComponentArch_DynamicTreeDemo/DynamicTreeDemo.jar',  width:300, height:300} ; 
+    var parameters = {jnlp_href: 'examples/dist/applet_ComponentArch_DynamicTreeDemo/dynamictree_applet.jnlp'} ; 
+    deployJava.runApplet(attributes, parameters, '1.7'); 
+//]]>
+</script><noscript>要使此页面正常运行，需要启用JavaScript的浏览器。</noscript>
+<div class="note"><hr><strong>注意：</strong>如果看不到示例正在运行，则可能需要在浏览器中启用JavaScript解释器，以便Deployment Toolkit脚本能够正常运行。<hr></div>
+<ol>
+<li>编译小程序的Java代码，并确保所有类文件和资源（例如图像）都在单独的目录中。
+<p>在使用DynamicTree演示小程序的情况下，将已编译的类放置在<code>build/classes/appletComponentArch</code>目录。</p>
+</li>
+<li>创建一个文本文件，其中包含您的applet需要的所有JAR文件清单属性。
+<p>对于DynamicTree演示小程序，创建一个名为<code>mymanifest.txt</code>在里面<code>build/classes</code>目录，并添加<code>Permissions</code> ， <code>Codebase</code>和<code>Application-Name</code>属性。小程序不需要访问用户的系统资源，因此请使用<code>sandbox</code>的权限。使用您将从中加载示例代码域的域，例如， <code>myserver.com</code> 。将以下属性添加到<code>mymanifest.txt</code>文件。</p>
+<div class="codeblock"><pre>
+Permissions: sandbox
+Codebase: myserver.com
+Application-Name: Dynamic Tree Demo
+</pre></div>    
+<p>还可以使用其他清单属性来限制小程序仅使用受信任的代码，并为需要在特权Java代码和沙箱Java代码之间进行调用或具有调用小程序的JavaScript代码的小程序提供安全性。请参阅“ <a class="TutorialLink" href="../jar/secman.html" target="_top">通过清单属性增强安全性”</a>课程，以了解有关可用清单属性的更多信息。</p></li>
+<li>创建一个包含您的applet的类文件和资源的JAR文件。将清单属性包括在<code>mymanifest.txt</code>您在上一步中创建的文件。
+<p>例如，以下命令创建一个JAR文件，其中的类文件位于<code>build/classes/appletComponentArch</code>目录和清单文件<code>build/classes</code>目录。</p>
+<div class="codeblock"><pre>
+% cd build/classes
+% jar cvfm DynamicTreeDemo.jar mymanifest.txt appletComponentArch
+</pre></div>    
+<p>请参阅“ <a class="TutorialLink" href="../jar/index.html" target="_top">JAR文件中</a>的<a class="TutorialLink" href="../jar/index.html" target="_top">打包程序”</a>课程，以了解有关创建和使用JAR文件的更多信息。</p></li>
+<li>在小程序的JAR文件上签名，并在签名上加上时间戳。使用由受信任的证书颁发机构颁发的有效的当前代码签名证书为您的用户提供安全运行小程序的保证。
+<p>有关更多信息，请参见“ <a class="TutorialLink" href="../jar/signing.html" target="_top">签署JAR文件”</a>课程。</p>
+<p>如果要使用签名的JNLP文件来确保安全，请按照下一步所述创建JNLP文件，并在对JAR文件进行签名之前将其包含在JAR文件中。有关信息，请参见《 Java平台，标准版部署指南<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/signedJNLP.html" target="_blank">》</a>中的<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/signedJNLP.html" target="_blank">签名的JNLP文件</a> 。</p></li>
+<li>创建一个描述如何启动小程序的JNLP文件。
+<p>这是用于启动动态树演示小程序的JNLP文件。</p>来源<a class="SourceLink" href="examples/applet_ComponentArch_DynamicTreeDemo/src/dynamictree_applet.jnlp" target="_blank" onclick="showCode('../../displayCode.html', 'examples/applet_ComponentArch_DynamicTreeDemo/src/dynamictree_applet.jnlp'); return false;"><code><code>dynamictree_applet.jnlp</code></code></a>如下：<div class="codeblock"><pre>    
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;jnlp spec="1.0+" codebase="" href=""&gt;
+    &lt;information&gt;
+        &lt;title&gt;Dynamic Tree Demo&lt;/title&gt;
+        &lt;vendor&gt;Dynamic Team&lt;/vendor&gt;
+    &lt;/information&gt;
+    &lt;resources&gt;
+        &lt;!-- Application Resources --&gt;
+        &lt;j2se version="1.7+"
+            href="http://java.sun.com/products/autodl/j2se" /&gt;
+        &lt;jar href="DynamicTreeDemo.jar" main="true" /&gt;
+
+    &lt;/resources&gt;
+    &lt;applet-desc 
+         name="Dynamic Tree Demo Applet"
+         main-class="components.DynamicTreeApplet"
+         width="300"
+         height="300"&gt;
+     &lt;/applet-desc&gt;
+     &lt;update check="background"/&gt;
+&lt;/jnlp&gt;                                   
+</pre></div>
+<p>请注意，JNLP文件中没有用于请求其他权限的安全元素，因此，该小程序仅在安全沙箱中运行。</p>
+<p><a class="TutorialLink" href="../deploymentInDepth/jnlpFileSyntax.html" target="_top">JNLP文件的结构</a>主题描述了JNLP文件的语法和选项。</p></li>
+<li>创建将显示小程序的HTML页面。调用Deployment Toolkit函数来部署小程序。
+<p>在我们的示例中，动态树演示小程序已部署在<a class="SourceLink" href="examples/dist/applet_ComponentArch_DynamicTreeDemo/AppletPage.html" target="_blank" onclick="showCode('../../displayCode.html', 'examples/dist/applet_ComponentArch_DynamicTreeDemo/AppletPage.html'); return false;"><code><code>AppletPage.html</code></code></a> 。</p>
+<div class="codeblock"><pre>
+&lt;body&gt;
+    &lt;!-- ... --&gt;
+    &lt;script src="https://www.java.com/js/deployJava.js"&gt;&lt;/script&gt;
+    &lt;script&gt; 
+        var attributes = {
+            code:'components.DynamicTreeApplet',  width:300, height:300} ; 
+        var parameters = {jnlp_href: 'dynamictree_applet.jnlp'} ; 
+        deployJava.runApplet(attributes, parameters, '1.7'); 
+    &lt;/script&gt;
+    &lt;!-- ... --&gt;
+&lt;/body&gt;
+</pre></div>
+</li>
+<li>将小程序的JAR文件，JNLP文件和HTML页面放置在适当的文件夹中。
+<p>对于此示例，放置<code>DynamicTreeDemo.jar</code> ， <code>dynamictree_applet.jnlp</code>和<code>AppletPage.html</code>在本地计算机或Web服务器上的同一目录中。首选Web服务器。要从本地计算机运行，必须将应用程序添加到例外站点列表中，该列表由Java控制面板的“安全性”选项卡进行管理。</p>
+</li>
+<li>在浏览器中打开小程序的HTML页面以查看小程序。出现提示时，同意运行applet。检查Java控制台日志中是否有错误和调试消息。</li>
+</ol>
+
+<p>
+<a class="TutorialLink" href="examplesIndex.html#ComponentArchDynamicTreeDemo" target="_top">下载</a> “ <em>动态树演示小程序”</em>示例的<a class="TutorialLink" href="examplesIndex.html#ComponentArchDynamicTreeDemo" target="_top">源代码</a>以进行进一步试验。</p>
+
+        </div>
+        <div class="NavBit">
+            <a href="developingApplet.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="html.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>开发小程序<br><b>下一页：</b>使用Applet标签进行部署</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

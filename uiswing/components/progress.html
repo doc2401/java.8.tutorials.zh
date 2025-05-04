@@ -1,0 +1,987 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用进度条（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"322179",ustr:"",originlat:"0",clientrtt:"0",ghostip:"23.212.3.15",ipv6:false,pct:"10",clientip:"45.78.37.67",requestid:"2a085318",region:"32996",protocol:"",blver:14,akM:"dsca",akN:"ae",akTT:"O",akTX:"1",akTI:"2a085318",ai:"206465",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="nolinkBHEAD">如何使用进度条</div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="passwordfield.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="rootpane.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用进度条</h1></div>
+            <div id="PageContent">
+
+<p>有时，在程序中运行的任务可能需要一段时间才能完成。一个用户友好的程序向用户提供一些指示，表明任务正在执行，任务可能需要花费多长时间以及已经完成了多少工作。指示工作或进度的一种方法是使用动画图像。</p>
+<p>指示工作的另一种方法是使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Cursor.html" target="_blank"><code>Cursor</code></a>类和<code>Component</code>定义的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#setCursor-java.awt.Cursor-" target="_blank"><code>setCursor</code></a>方法。例如，以下代码使光标移到上方时显示等待光标<code>container</code> （包括其中包含的所有未指定游标的组件）：</p>
+<div class="codeblock"><pre>
+container.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+</pre></div>
+<p>要传达任务的完成程度，可以使用如下所示的进度条：</p>
+<center><img src="../../figures/uiswing/components/progressbar.png" width="156" height="27" align="bottom" alt="典型的进度条"></center><p>有时您无法立即确定长时间运行的任务的长度，或者该任务可能长时间停留在相同的完成状态。您可以通过将进度条置于<em>不确定模式</em>来显示没有可衡量进度的工作<em>。</em> 不确定模式下的进度条显示动画，以指示正在进行工作。进度条可以显示更多有意义的信息后，应立即将其切换回默认的确定模式。在Java外观中，不确定的进度条如下所示：</p>
+<center><img src="../../figures/uiswing/components/indprogressbar.gif" width="148" height="21" align="bottom" alt="不确定的进度条"></center><p>Swing提供了三个类来帮助您使用进度条：</p>
+<dl>
+<dt>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html" target="_blank"><strong><code>JProgressBar</code></strong></a></dt>
+<dd>一个可视组件，以图形方式显示总任务已完成的数量。有关信息和使用典型进度条的示例，请参见<a href="#bars">使用确定的</a>进度条。<a href="#indeterminate">使用不确定模式</a>部分介绍如何在知道任务范围之前为进度条设置动画以显示活动。</dd>
+<dt>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html" target="_blank"><strong><code>ProgressMonitor</code></strong></a></dt>
+<dd><em>不是</em>可见的组件。而是，此类的一个实例监视任务的进度，并在必要时弹出一个<a href="dialog.html">对话框</a> 。有关详细信息和<a href="#monitors">使用进度监视器</a>的示例，请参见<a href="#monitors">如何使用进度监视器</a> 。</dd>
+<dt>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitorInputStream.html" target="_blank"><strong><code>ProgressMonitorInputStream</code></strong></a></dt>
+<dd>输入流带有附加的进度监视器，该监视器监视流中的读取。您可以像<a class="TutorialLink" href="../../essential/io/index.html" target="_top">Basic I / O中</a>描述的任何其他输入流一样使用此流的实例。您可以通过以下方式获取信息流的进度监控器： <code>getProgressMonitor</code>并按照<a href="#monitors">如何使用进度监视器中</a>所述进行配置。</dd>
+</dl>
+<p>在看到进度条和进度监视器后， <a href="#deciding">决定使用进度条还是进度监视器</a>可以帮助您确定哪种适合您的应用程序。</p>
+<h2><a name="bars" id="bars">使用确定的进度条</a></h2>
+<p>这是一个小型演示应用程序的图片，该应用程序使用进度条来衡量在其自己的线程中运行的任务的进度：</p>
+<center><img src="../../figures/uiswing/components/ProgressBarDemo.png" width="281" height="203" align="bottom" alt="ProgressBarDemo的快照，它使用进度条"></center><!-- *******  boilerplate stuff ******* -->
+<div class="note"><hr><strong>尝试这个：</strong> <ul>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ProgressBar演示。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ProgressBarDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressBarDemoProject/ProgressBarDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ProgressBar演示示例"></a><br></li>
+</ul>
+<hr></div>
+<!--  ******* end boilerplate stuff  *******  -->
+<!-- 
+<div class="note"><hr /><strong>Try this:</strong> <ol>
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressBarDemoProject/ProgressBarDemo.jnlp">Run ProgressBarDemo</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ProgressBarDemo">example index</a>.
+<p>
+<li> Push the <strong>Start</strong> button.
+     The demo puts up a wait cursor
+     and starts updating 
+     the progress bar.
+     The task displays its output in the text area
+     at the bottom of the window.
+</ol>
+<hr /></div>
+-->
+<p>以下代码来自<a class="SourceLink" href="../examples/components/ProgressBarDemoProject/src/components/ProgressBarDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ProgressBarDemoProject/src/components/ProgressBarDemo.java'); return false;"><code>ProgressBarDemo.java</code></a> ，创建并设置进度条：</p>
+<div class="codeblock"><pre>
+<em>//Where member variables are declared:</em>
+JProgressBar progressBar;
+...
+<em>//Where the GUI is constructed:</em>
+progressBar = new JProgressBar(0, task.getLengthOfTask());
+progressBar.setValue(0);
+progressBar.setStringPainted(true);
+</pre></div>
+<p>创建进度条的构造函数设置进度条的最小值和最大值。您也可以使用<code>setMinimum</code>和<code>setMaximum</code> 。此程序中使用的最小值和最大值为0，且该任务的长度是许多程序和任务的典型长度。但是，进度条的最小值和最大值可以是任何值，甚至可以是负值。该代码段还将进度条的当前值设置为0。
+</p>
+<p>致电<code>setStringPainted</code>使进度条在其范围内以文本形式显示已完成任务的百分比。默认情况下，进度条显示其返回的值<code>getPercentComplete</code>方法格式化为百分比，例如<strong>33％</strong> 。或者，您可以通过调用以下命令将默认值替换为其他字符串<code>setString</code> 。例如，</p>
+<div class="codeblock"><pre>
+if (<em>/*...half way done...*/</em>)
+    progressBar.setString("Half way there!");
+</pre></div>
+<p>当用户单击<b>Start时</b> ，内部类的实例<code>Task</code>创建并执行。</p>
+<div class="codeblock"><pre>
+public void actionPerformed(ActionEvent evt) {
+    startButton.setEnabled(false);
+    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    done = false;
+    <b>task = new Task();
+    task.addPropertyChangeListener(this);
+    task.execute();</b>
+}
+</pre></div>
+<p><code>Task</code>是的子类<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingWorker.html" target="_blank"><code>javax.swing.SwingWorker</code></a> 。的<code>Task</code>实例为以下三个重要事项<code>ProgressBarDemo</code> ：</p>
+<ol>
+<li>实例调用<code>doInBackground</code>在单独的线程中。这是长时间运行的任务实际执行的位置。使用后台线程而不是事件分发线程可以防止任务运行时用户界面冻结。</li>
+<li>后台任务完成后，实例将调用<code>done</code>事件调度线程中的方法。</li>
+<li>该实例维护一个绑定属性， <code>progress</code> ，即进行更新以指示任务的进度。的<code>propertyChange</code>每次调用方法<code>progress</code>变化。</li>
+</ol>
+<p>有关更多信息，请参见<a class="TutorialLink" href="../concurrency/index.html" target="_top">Swing</a>中的<a class="TutorialLink" href="../concurrency/index.html" target="_top">并发中的</a> <a class="TutorialLink" href="../concurrency/worker.html" target="_top">Worker线程和SwingWorker</a> 。 <code>SwingWorker</code> 。</p>
+<p>中的后台任务<code>ProgressBarDemo</code>通过以随机间隔报告随机进度来模拟真实任务。的<code>propertyChange</code>方法响应任务的变化<code>progress</code>通过更新进度条设置属性：</p>
+<div class="codeblock"><pre>
+public void propertyChange(PropertyChangeEvent evt) {
+    if (!done) {
+        int progress = task.getProgress();
+        <b>progressBar.setValue(progress);</b>
+        taskOutput.append(String.format(
+                "Completed %d%% of task.\n", progress));
+    }
+</pre></div>
+<p>后台任务完成后，任务的<code>done</code>方法重置进度条：</p>
+<div class="codeblock"><pre>
+public void done() {
+    //Tell progress listener to stop updating progress bar.
+    done = true;
+    Toolkit.getDefaultToolkit().beep();
+    startButton.setEnabled(true);
+    setCursor(null); //turn off the wait cursor
+    <b>progressBar.setValue(progressBar.getMinimum());</b>
+    taskOutput.append("Done!\n");
+}
+</pre></div>
+<p>请注意<code>done</code>方法设置<code>done</code>到<code>true</code> ，防止<code>propertyChange</code>从进一步更新进度条。这是必要的，因为对<code>progress</code>财产可能在之后发生<code>done</code>被调用。</p>
+<h2><a name="indeterminate" id="indeterminate">使用不确定模式</a></h2>
+<p>在<code>ProgressBarDemo2</code>设置不确定模式，直到实际进度开始：</p>
+<div class="codeblock"><pre>
+public void propertyChange(PropertyChangeEvent evt) {
+    if (!done) {
+        int progress = task.getProgress();
+        if (progress == 0) {
+            <b>progressBar.setIndeterminate(true);</b>
+            taskOutput.append("No progress yet\n");
+        } else {
+            <b>progressBar.setIndeterminate(false); </b>
+            progressBar.setString(null);
+            progressBar.setValue(progress);
+            taskOutput.append(String.format(
+                    "Completed %d%% of task.\n", progress));
+        }
+    }
+}
+</pre></div>
+<p>代码中的其他更改与字符串显示有关。显示字符串的进度条可能比不显示字符串的高，并且作为演示设计者，我们任意决定该进度条仅在处于默认确定模式时才显示字符串。但是，我们要避免进度条在更改模式时更改高度时可能导致的布局丑陋。因此，代码留给了<code>setStringPainted(true)</code>但添加了一个呼叫<code>setString("")</code>这样就不会显示任何文字。稍后，当进度条从不确定模式切换到确定模式时，将调用<code>setString(null)</code>使进度条显示其默认字符串。</p>
+<p>我们<em>未</em>进行的一项更改是删除对<code>progressBar.setValue</code>来自<code>progress</code>事件处理程序。该调用不会造成任何危害，因为不确定的进度条不使用其value属性，除非可以在状态字符串中显示它。实际上，最好使进度条的数据保持最新，因为某些外观可能不支持不确定模式。</p>
+<!-- *******  boilerplate stuff ******* -->
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ProgressBar2 Demo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ProgressBarDemo2">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressBarDemo2Project/ProgressBarDemo2.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ProgressBar2演示示例"></a><br></li>
+<li>按下<strong>开始</strong>按钮。请注意，只要按下按钮，进度条就会开始动画显示，然后切换回确定模式（例如ProgressBarDemo）。</li>
+</ol>
+<hr></div>
+<!--  ******* end boilerplate stuff  *******  -->
+<!--
+
+<div class="note"><hr /><strong>Try this:</strong> <ol>
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressBarDemo2Project/ProgressBarDemo2.jnlp">Run ProgressBarDemo2</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ProgressBarDemo2">example index</a>.
+
+<p>
+<li> Push the <strong>Start</strong> button.
+     Note that the progress bar starts animating as soon as
+     the button is pressed,
+     and then switches back into
+     determinate mode (like ProgressBarDemo).
+</ol>
+<hr /></div>
+-->
+<h2><a name="monitors" id="monitors">如何使用进度监视器</a></h2>
+<p>现在，让我们重写ProgressBarDemo以使用进度监视器而不是进度条。这是新的演示程序ProgressMonitorDemo的图片：</p>
+<center><img src="../../figures/uiswing/components/ProgressMonitorDemo.png" width="469" height="267" align="bottom" alt="ProgressMonitorDemo的快照和进度监视器显示的对话框"></center><!-- *******  boilerplate stuff ******* -->
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ProgressMonitor演示。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ProgressMonitorDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressMonitorDemoProject/ProgressMonitorDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ProgressMonitor演示示例"></a><br></li>
+<li>按下<strong>开始</strong>按钮。一定时间后，程序将显示一个进度对话框。</li>
+<li>单击<strong>确定</strong>按钮。请注意，即使对话框消失了，任务也会继续。</li>
+<li>启动另一个任务。对话框弹出后，单击“ <strong>取消”</strong>按钮。对话框消失，任务停止。</li>
+</ol>
+<hr></div>
+<!--  ******* end boilerplate stuff  *******  -->
+<!-- 
+<div class="note"><hr /><strong>Try this:</strong> <ol>
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ProgressMonitorDemoProject/ProgressMonitorDemo.jnlp">Run ProgressMonitorDemo</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ProgressMonitorDemo">example index</a>.
+ 
+<li> Push the <strong>Start</strong> button.
+     After a certain amount of time, the program displays a progress dialog.
+
+<li> Click the <strong>OK</strong> button.
+     Note that the task continues even though the dialog is gone.
+
+<li> Start another task. After the dialog pops up,
+     click the <strong>Cancel</strong> button.
+     The dialog goes away and the task stops.
+
+</ol>
+<hr /></div>
+-->
+<p>进度监视器无法再次使用，因此每次启动新任务时都必须创建一个新监视器。每次用户使用“ <strong>开始”</strong>按钮启动新任务时，该程序都会创建一个进度监视器。</p>
+<p>这是创建进度监视器的语句：</p>
+<div class="codeblock"><pre>
+progressMonitor = new ProgressMonitor(ProgressMonitorDemo.this,
+                                      "Running a Long Task",
+                                      "", 0, task.getLengthOfTask());
+</pre></div>
+<p>该代码使用<code>ProgressMonitor</code>是创建监视器并初始化几个参数的唯一构造函数：</p>
+<ul>
+<li>第一个参数为进度监视器弹出的对话框提供父组件。</li>
+<li>第二个参数是一个字符串，它描述了被监视任务的性质。该字符串显示在对话框中。有关此参数的详细信息，请参见<a href="#api">Progress Monitoring API</a> 。</li>
+<li>第三个参数是提供可更改状态注释的另一个字符串。该示例使用空字符串指示对话框应为可更改的状态注释留出空间，但该注释最初为空。如果您提供<code>null</code>对于此参数，对话框中省略了注释。该示例在每次<code>progress</code>属性更改。它同时更新监视器的当前值：<div class="codeblock"><pre>
+int progress = task.getProgress();
+String message = String.format("Completed %d%%.\n", progress);
+<b>progressMonitor.setNote(message);
+progressMonitor.setProgress(progress);</b>
+taskOutput.append(message);
+</pre></div>
+</li>
+<li>最后两个参数分别为对话框中显示的进度栏提供最小值和最大值。</li>
+</ul>
+<p>默认情况下，进度监视器将等待最少500毫秒，然后再决定是否弹出对话框。它还等待进度超过最小值。如果计算出要完成该任务将花费2000毫秒以上，则会显示进度对话框。要调整最短等待时间，请调用<code>setMillisToDecidedToPopup</code> 。要调整显示对话框所需的最短进度，请调用<code>setMillisToPopup</code> 。</p>
+<p>由于本示例使用进度监视器这一简单事实，它添加了使用进度条的程序版本中不存在的功能：用户可以通过单击对话框上的“ <strong>取消”</strong>按钮来取消任务。这是示例中的代码，用于检查用户是否取消了任务或任务是否正常退出：</p>
+<div class="codeblock"><pre>
+if (progressMonitor.isCanceled() || task.isDone()) {
+    progressMonitor.close();
+    Toolkit.getDefaultToolkit().beep();
+    if (progressMonitor.isCanceled()) {
+        task.cancel(true);
+        taskOutput.append("Task canceled.\n");
+    } else {
+        taskOutput.append("Task completed.\n");
+    }
+    startButton.setEnabled(true);
+}
+</pre></div>
+<p>请注意，进度监视器本身不会取消任务。它提供了GUI和API，以使程序可以轻松执行此操作。</p>
+<h2><a name="deciding" id="deciding">决定使用进度条还是进度监视器</a></h2>
+<p>如果出现以下<em>情况，</em>请使用<em>进度条</em> ：</p>
+<ul>
+<li>您希望对进度条的配置有更多控制。如果直接使用进度条，则可以将其设置为不确定状态，使其垂直显示，提供要显示的字符串，在其上注册更改侦听器，并为其提供有界范围模型以控制进度条的最小值，最大值和当前值。</li>
+<li>该程序需要显示其他组件以及进度条。</li>
+<li>您需要多个进度条。对于某些任务，您需要监视多个参数。例如，除了成功安装了多少文件之外，安装程序还可能监视磁盘空间使用情况。</li>
+<li>您需要重新使用进度条。进度条可以重复使用；进度监视器不能。一旦进度监视器决定显示（或不显示）对话框，进度监视器将无法再次执行该对话框。</li>
+</ul>
+<p>在以下<em>情况下，</em>请使用<em>进度监视器</em> ：</p>
+<ul>
+<li>您需要一种简单的方法来在<a href="dialog.html">对话框中</a>显示进度。</li>
+<li>正在运行的任务是次要任务，用户可能对任务的进度不感兴趣。进度监视器为用户提供了一种在任务仍在运行时使其退出对话框的方法。</li>
+<li>您希望取消任务的简便方法。进度监视器为用户提供了一个GUI来取消任务。您所要做的就是呼叫进度监视器的<code>isCanceled</code>找出用户是否按下“ <strong>取消”</strong>按钮的方法。</li>
+<li>您的任务在运行时会定期显示一条短消息。进度监视器对话框提供了<code>setNote</code>方法，以便任务可以提供有关其操作的更多信息。例如，安装任务可能会报告每个文件在安装时的名称。</li>
+<li>该任务可能不会花费很长时间才能完成。您可以确定正在运行的任务在什么时候需要花费足够长的时间来保证让用户知道它。如果任务在您设置的时间范围内完成，进度监视器将不会弹出对话框。</li>
+</ul>
+<p>如果您决定使用进度监视器， <em>并且</em>正在监视的任务正在从输入流中读取，请使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitorInputStream.html" target="_blank"><strong><code>ProgressMonitorInputStream</code></strong></a>类。</p>
+<h2><a name="api" id="api">进度监控API</a></h2>
+<p>下表列出了使用进度条和进度监视器的常用API。因为<code>JProgressBar</code>是的子类<code>JComponent</code> ，您可能会调用的其他方法<code>JProgressBar</code>在<a href="jcomponent.html">JComponent类</a>中列出。注意<code>ProgressMonitor</code>是的子类<code>Object</code>并且不是视觉组件。</p>
+<p>用于监视进度的API分为以下几类：</p>
+<ul>
+<li><a href="#progressbarapi">创建进度条</a></li>
+<li><a href="#contentsapi">设置或获取进度栏的约束/值</a></li>
+<li><a href="#looksapi">控制进度条的外观</a></li>
+<li><a href="#progressmonapi">创建进度监视器</a></li>
+<li><a href="#monitorapi">配置进度监视器</a></li>
+<li><a href="#terminateapi">终止进度监视器</a></li>
+</ul>
+<table border="1" summary="methods for creating the progress bar">
+<caption><a name="progressbarapi" id="progressbarapi">创建进度条</a></caption>
+<tbody><tr>
+<th>建设者</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#JProgressBar--" target="_blank">JProgressBar（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#JProgressBar-int-int-" target="_blank">JProgressBar（int，int）</a></td>
+<td>创建一个水平进度条。无参数构造函数使用最小和初始值为0且最大为100初始化进度栏。具有两个整数参数的构造函数指定最小值和最大值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#JProgressBar-int-" target="_blank">JProgressBar（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#JProgressBar-int-int-int-" target="_blank">JProgressBar（int，int，int）</a></td>
+<td>创建具有指定方向的进度条，可以是<code>JProgressBar.HORIZONTAL</code>要么<code>JProgressBar.VERTICAL</code> 。可选的第二和第三个参数指定最小值和最大值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#JProgressBar-javax.swing.BoundedRangeModel-" target="_blank">JProgressBar（BoundedRangeModel）</a></td>
+<td>使用指定的范围模型创建水平进度条。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for setting or getting the progress bar's constraints/values">
+<caption><a name="contentsapi" id="contentsapi">设置或获取进度栏的约束/值</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setValue-int-" target="_blank">无效setValue（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getValue--" target="_blank">int getValue（）</a></td>
+<td>设置或获取进度条的当前值。该值受最小值和最大值的约束。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getPercentComplete--" target="_blank">双重getPercentComplete（）</a></td>
+<td>获取进度条的完成百分比。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setMinimum-int-" target="_blank">无效setMinimum（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getMinimum--" target="_blank">int getMinimum（）</a></td>
+<td>设置或获取进度条的最小值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setMaximum-int-" target="_blank">无效setMaximum（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getMaximum--" target="_blank">int getMaximum（）</a></td>
+<td>设置或获取进度条的最大值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setModel-javax.swing.BoundedRangeModel-" target="_blank">无效setModel（BoundedRangeModel）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getModel--" target="_blank">BoundedRangeModel getModel（）</a></td>
+<td>设置或获取进度条使用的模型。该模型建立了进度条的约束和值，因此您可以直接使用它代替上面列出的各个set / get方法。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for controlling the progress bar">
+<caption><a name="looksapi" id="looksapi">控制进度条的外观</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setIndeterminate-boolean-" target="_blank">void setIndeterminate（boolean）</a></td>
+<td>通过指定<code>true</code> ，将进度条置于不确定模式。指定<code>false</code>将进度条恢复为默认的确定模式。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setOrientation-int-" target="_blank">setOrientation（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getOrientation--" target="_blank">int getOrientation（）</a></td>
+<td>设置或获取进度条是垂直还是水平。可接受的值为<code>JProgressBar.VERTICAL</code>要么<code>JProgressBar.HORIZONTAL</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setBorderPainted-boolean-" target="_blank">void setBorderPainted（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#isBorderPainted--" target="_blank">boolean isBorderPainted（）</a></td>
+<td>设置或获取进度条是否带有边框。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setStringPainted-boolean-" target="_blank">void setStringPainted（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#isStringPainted--" target="_blank">boolean isStringPainted（）</a></td>
+<td>设置或获取进度条是否显示百分比字符串。默认情况下，百分比字符串的值是<code>getPercentComplete</code>格式化为百分比。您可以设置要显示的字符串<code>setString</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setString-java.lang.String-" target="_blank">setString（String）无效</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getString--" target="_blank">字符串getString（）</a></td>
+<td>设置或获取百分比字符串。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for creating the progress monitor">
+<caption><a name="progressmonapi" id="progressmonapi">创建进度监视器</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#ProgressMonitor-java.awt.Component-java.lang.Object-java.lang.String-int-int-" target="_blank">ProgressMonitor（组件，对象，字符串，整数，整数）</a></td>
+<td>创建一个进度监视器。的<code>Component</code>参数是监视器对话框的父级。的<code>Object</code>参数是要放在对话框内<a href="dialog.html">选项窗格</a>上的消息。该对象的值通常为<code>String</code> 。的<code>String</code>参数是可更改的状态注释。最后两个<code>int</code>参数分别为对话框中使用的进度条设置最小值和最大值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitorInputStream.html#getProgressMonitor--" target="_blank">ProgressMonitor getProgressMonitor（）</a><br>
+<em>（在<code>ProgressMonitorInputStream</code> ）</em></td>
+<td>获取一个进度监视器，该监视器监视输入流中的读取。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for configuring the progress monitor">
+<caption><a name="monitorapi" id="monitorapi">配置进度监视器</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setMinimum-int-" target="_blank">无效setMinimum（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getMinimum--" target="_blank">int getMinimum（）</a></td>
+<td>设置或获取进度监视器的最小值。监视器使用此值在对话框中设置进度条。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#setMaximum-int-" target="_blank">无效setMaximum（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JProgressBar.html#getMaximum--" target="_blank">int getMaximum（）</a></td>
+<td>设置或获取进度监视器的最大值。监视器使用此值在对话框中设置进度条。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#setProgress-int-" target="_blank">无效setProgress（int）</a></td>
+<td>更新监视器的进度。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#setNote-java.lang.String-" target="_blank"><code>void setNote(String)</code></a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#getNote--" target="_blank"><code>String getNote()</code></a></td>
+<td>设置或获取状态说明。此注释显示在对话框中。要从对话框中省略状态注释，请提供<code>null</code>作为监视器构造函数的第三个参数。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#setMillisToDecideToPopup-int-" target="_blank"><code>void setMillisToDecideToPopup(int)</code></a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#getMillisToDecideToPopup--" target="_blank"><code>int getMillisToDecideToPopup()</code></a></td>
+<td>设置或获取时间，显示器将在该时间后决定是否弹出对话框。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for terminating the progress monitor">
+<caption><a name="terminateapi" id="terminateapi">终止进度监视器</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#close--" target="_blank"><code>void close()</code></a></td>
+<td>关闭进度监视器。这将处理该对话框。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ProgressMonitor.html#isCanceled--" target="_blank"><code>boolean isCanceled()</code></a></td>
+<td>确定用户是否按下了“ <strong>取消”</strong>按钮。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">监视进度的示例</a></h2>
+<p>以下示例使用<code>JProgressBar</code>要么<code>ProgressMonitor</code> 。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ProgressBarDemo"><code>ProgressBarDemo</code></a></td>
+<td>这个部分</td>
+<td>使用基本进度条显示在单独线程中运行的任务的进度。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ProgressBarDemo2"><code>ProgressBarDemo2</code></a></td>
+<td>这个部分</td>
+<td>使用基本进度条显示在单独线程中运行的任务的进度。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ProgressMonitorDemo"><code>ProgressMonitorDemo</code></a></td>
+<td>这个部分</td>
+<td>上一个示例的修改，该示例使用进度监视器而不是进度栏。</td>
+</tr>
+</tbody></table>
+
+<p>如果您使用JavaFX进行编程，请参阅<a class="OutsideLink" href="https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm" target="_blank">进度栏和进度指示器</a> 。</p>
+
+
+
+        </div>
+        <div class="NavBit">
+            <a href="passwordfield.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="rootpane.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用密码字段<br><b>下一页：</b>如何使用根窗格</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,656 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>SSL和自定义套接字（Java™教程> Java命名和目录接口> LDAP用户的高级主题）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JNDI Java tutorial describes Java Naming and Directory Interface (JNDI) technology, naming and directory operations, and LDAP">
+     <meta name="keywords" content="java programming, learn java, java sample code, jndi, ldap, jndi service provider">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">LDAP用户的高级主题</a></div>
+<div class="linkAHEAD"><a href="ldap.html">LDAP v3</a></div>
+<div class="linkAHEAD"><a href="jndi.html">JNDI作为LDAP API</a></div>
+<div class="linkBHEAD"><a href="operations.html">LDAP操作如何映射到JNDI API</a></div>
+<div class="linkBHEAD"><a href="exceptions.html">LDAP错误代码如何映射到JNDI异常</a></div>
+<div class="linkAHEAD"><a href="security.html">安全</a></div>
+<div class="linkBHEAD"><a href="authentication.html">LDAP认证方式</a></div>
+<div class="linkBHEAD"><a href="auth_mechs.html">认证机制</a></div>
+<div class="linkBHEAD"><a href="anonymous.html">匿名</a></div>
+<div class="linkBHEAD"><a href="simple.html">简单</a></div>
+<div class="linkBHEAD"><a href="sasl.html">SASL</a></div>
+<div class="linkBHEAD"><a href="digest.html">文摘-MD5</a></div>
+<div class="nolinkBHEAD">SSL和自定义套接字</div>
+<div class="linkAHEAD"><a href="rename.html">更多LDAP操作</a></div>
+<div class="linkBHEAD"><a href="compare.html">LDAP比较</a></div>
+<div class="linkBHEAD"><a href="result.html">搜索结果</a></div>
+<div class="linkBHEAD"><a href="unsol.html">LDAP主动通知</a></div>
+<div class="linkAHEAD"><a href="connect.html">连接管理</a></div>
+<div class="linkBHEAD"><a href="create.html">创建</a></div>
+<div class="linkBHEAD"><a href="close.html">闭幕</a></div>
+<div class="linkBHEAD"><a href="pool.html">汇集</a></div>
+<div class="linkBHEAD"><a href="config.html">组态</a></div>
+<div class="linkAHEAD"><a href="faq.html">经常问的问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> Java命名和目录接口<br><b>课程：</b> LDAP用户的高级主题<br><b>部分：</b>安全性</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">Java命名和目录接口</a> > <a href="index.html" target="_top">LDAP用户的高级主题</a>
+            </div>
+            <div class="NavBit">
+                <a href="digest.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="rename.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>SSL和自定义套接字</h1></div>
+            <div id="PageContent">
+
+<p>除SASL身份验证外，大多数LDAP服务器都允许通过SSL访问其服务。 SSL对于LDAP v2服务器特别有用，因为v2协议不支持SASL身份验证。</p>
+<p>启用SSL的服务器通常以两种方式支持SSL。以最基本的方式，服务器除了支持正常（不受保护）端口外，还支持SSL端口。<!--
+To use this service, the client needs to specify the port number of the SSL port
+in the 
+<a class="APILink" target="_blank" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#PROVIDER_URL"><tt>Context.PROVIDER_URL</tt></a>   property and use SSL sockets when communicating with the server.
+-->服务器支持SSL的另一种方法是使用“启动TLS扩展”（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2830.txt" target="_blank">RFC 2830</a> ）。该选项仅适用于LDAP v3服务器，本节对此进行了详细说明。<a name="SSLPROP" id="SSLPROP"></a></p>
+<h2>使用SSL套接字属性</h2>
+<p>默认情况下，与LDAP服务器通信时，JDK中的LDAP服务提供者使用普通套接字。要请求使用SSL套接字，请设置<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PROTOCOL" target="_blank"><tt>上下文。SECURITY_PROTOCOL</tt></a>属性为<tt>“ ssl”</tt> 。</p>
+<p>在里面<a class="SourceLink" href="examples/Ssl.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/Ssl.java'); return false;"><code>following example</code></a> ，则LDAP服务器在端口636处提供SSL。要运行此程序，必须在LDAP服务器上的端口636上启用SSL。此过程通常由目录的管理员执行。</p>
+<hr>
+<p><a name="SERVER" id="SERVER"></a> <strong>服务器要求：</strong> LDAP服务器必须使用X.509 SSL服务器证书进行设置并启用SSL。通常，必须首先从证书颁发机构（CA）获得服务器的签名证书。然后，按照您的目录供应商提供的有关如何启用SSL的说明进行操作。不同的供应商有不同的工具来执行此操作。</p>
+<p>对于<a class="OutsideLink" href="http://www.oracle.com/technetwork/testcontent/index-085178.html" target="_blank">Oracle Directory Server v5.2</a> ，使用管理控制台中的“管理证书”工具来生成证书签名请求（CSR）。将CSR提交给CA以获取X.509 SSL服务器证书。使用管理控制台，将证书添加到服务器的证书列表中。如果服务器的受信任CA列表中还没有CA证书，则还要安装该证书。通过使用管理控制台中的“配置”选项卡启用SSL。在左窗格中选择服务器。在右窗格中选择“加密”选项卡。单击“为此服务器启用SSL”和“使用此密码家族：RSA”复选框，确保已添加的服务器证书在证书列表中。</p>
+<p><a name="CLIENT" id="CLIENT"></a> <strong>客户端要求：</strong>您需要确保客户端信任将要使用的LDAP服务器。您必须在JRE的可信证书数据库中安装服务器的证书（或其CA的证书）。这是一个例子。</p>
+<div class="codeblock"><pre>
+# cd <em>JAVA_HOME</em>/lib/security
+# keytool -import -file server_cert.cer -keystore jssecacerts
+</pre></div>
+<p>有关如何使用安全工具的信息，请参阅“ <a class="TutorialLink" href="../../security/index.html" target="_top">安全性”</a>线索。有关JSSE的信息，请参阅《 <a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html" target="_blank">Java安全套接字扩展（JSSE）参考指南》</a> 。</p>
+<hr>
+<div class="codeblock"><pre>
+// Set up the environment for creating the initial context
+Hashtable&lt;String, Object&gt; env = new Hashtable&lt;String, Object&gt;();
+env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+env.put(Context.PROVIDER_URL, "ldap://localhost:636/o=JNDITutorial");
+
+// Specify SSL
+env.put(Context.SECURITY_PROTOCOL, "ssl");
+
+// Authenticate as S. User and password "mysecret"
+env.put(Context.SECURITY_AUTHENTICATION, "simple");
+env.put(Context.SECURITY_PRINCIPAL, 
+        "cn=S. User, ou=NewHires,o=JNDITutorial");
+env.put(Context.SECURITY_CREDENTIALS, "mysecret");
+
+// Create the initial context
+DirContext ctx = new InitialDirContext(env);
+
+// ... do something useful with ctx
+</pre></div>
+<hr>
+<p><strong>注意：</strong>如果使用SSL连接到<em>不</em>使用SSL的端口上的服务器，则程序将挂起。同样，如果使用普通套接字连接到服务器的SSL套接字，则应用程序将挂起。这是SSL协议的特征。</p>
+<hr>
+<p><a name="LDAPS" id="LDAPS"></a></p>
+<h2>使用LDAPS URL</h2>
+<p>而不是通过使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PROTOCOL" target="_blank"><tt>上下文来请求使用SSL </tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PROTOCOL" target="_blank"><tt>。SECURITY_PROTOCOL</tt></a>属性，您还可以通过使用LDAPS URL来请求使用SSL。 LDAPS URL与LDAP URL相似，不同之处在于URL方案是“ ldaps”而不是“ ldap”。与LDAP服务器通信时，它指定使用SSL。</tt></p><tt>
+<p>在里面<a class="SourceLink" href="examples/Ldaps.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/Ldaps.java'); return false;"><code>following example</code></a> ，则LDAP服务器在端口636处提供SSL。要运行此程序，必须在LDAP服务器上的端口636上启用SSL。</p>
+<div class="codeblock"><pre>
+// Set up the environment for creating the initial context
+Hashtable&lt;String, Object&gt; env = new Hashtable&lt;String, Object&gt;();
+env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+
+// Specify LDAPS URL
+env.put(Context.PROVIDER_URL, "ldaps://localhost:636/o=JNDITutorial");
+
+// Authenticate as S. User and password "mysecret"
+env.put(Context.SECURITY_AUTHENTICATION, "simple");
+env.put(Context.SECURITY_PRINCIPAL, 
+        "cn=S. User, ou=NewHires, o=JNDITutorial");
+env.put(Context.SECURITY_CREDENTIALS, "mysecret");
+
+// Create the initial context
+DirContext ctx = new InitialDirContext(env);
+
+// ... do something useful with ctx
+</pre></div>
+<p>在任何接受LDAP URL的地方都接受LDAPS URL。请查看<a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/misc/url.html" target="_blank">JNDI教程，</a>以获取有关LDAP和LDAPS URL的详细信息。<a name="EXTERNAL" id="EXTERNAL"></a></p>
+<h2>客户端身份验证：将SSL与外部SASL机制配合使用</h2>
+<p>SSL在比LDAP更低的层上提供身份验证和其他安全服务。如果已经在SSL上完成了身份验证，则LDAP层可以通过使用<a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2222.txt" target="_blank">外部</a> SASL机制使用来自SSL的身份验证信息。</p>
+<p>的<a class="SourceLink" href="examples/External.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/External.java'); return false;"><code>following example</code></a>就像<a class="SourceLink" href="examples/Ssl.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/Ssl.java'); return false;"><code>previous SSL example</code></a> ，除了使用简单的身份验证之外，它使用外部SASL身份验证。通过使用外部，您不需要提供任何主体或密码信息，因为它们是从SSL中获取的。</p>
+<hr>
+<p><a name="SERVER2" id="SERVER2"></a> <strong>服务器要求：</strong>此示例要求LDAP服务器允许基于证书的客户端身份验证。另外，LDAP服务器必须信任它所接收的客户端证书（的CA），并且必须能够将客户端证书中的所有者专有名称映射到它所知道的主体。请按照目录供应商提供的说明执行操作。</p>
+<p><a name="CLIENT2" id="CLIENT2"></a> <strong>客户端要求：</strong>此示例要求客户端具有X.509 SSL客户端证书。此外，证书必须作为第一个密钥条目存储在密钥库文件中。如果该条目受密码保护，则它必须具有与密钥库相同的密码。有关JSSE密钥库的更多信息，请参见《 <a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html" target="_blank">Java安全套接字扩展（JSSE）参考指南》</a> 。</p>
+<hr>
+<div class="codeblock"><pre>
+// Set up the environment for creating the initial context
+Hashtable&lt;String, Object&gt; env = new Hashtable&lt;String, Object&gt;(11);
+env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+env.put(Context.PROVIDER_URL, "ldap://localhost:636/o=JNDITutorial");
+
+// Principal and credentials will be obtained from the connection
+env.put(Context.SECURITY_AUTHENTICATION, "EXTERNAL");
+
+// Specify SSL
+env.put(Context.SECURITY_PROTOCOL, "ssl");
+
+// Create the initial context
+DirContext ctx = new InitialDirContext(env);
+
+...
+</pre></div>
+<p>要运行此程序，以便使用客户机的证书进行身份验证，必须（作为系统属性）提供包含客户机的证书的密钥库的位置和密码。这是如何运行程序的示例。</p>
+<div class="codeblock"><pre>
+java -Djavax.net.ssl.keyStore=MyKeystoreFile \
+    -Djavax.net.ssl.keyStorePassword=mysecret \
+    External
+</pre></div>
+<p>如果不提供密钥库，则该程序将使用匿名身份验证运行，因为SSL上不存在任何客户端凭据。</p>
+<p>此示例显示完成基于证书的客户端身份验证的最基本方法。可以通过编写和使用自定义套接字工厂来实现更高级的方式，该工厂可以更灵活的方式访问客户端证书，也许使用LDAP目录。下一节将说明如何在JNDI应用程序中使用自定义套接字工厂。</p>
+<h2>使用自定义套接字</h2>
+<p>使用SSL时，默认情况下，LDAP提供程序将使用套接字工厂<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/net/ssl/SSLSocketFactory.html" target="_blank"><tt>javax.net.ssl。SSLSocketFactory</tt></a> ，用于使用默认的JSSE配置创建与服务器通信的SSL套接字。可以通过多种方式自定义JSSE，如<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html" target="_blank">Java安全套接字扩展（JSSE）参考指南中所述</a> 。但是，有时这些自定义功能还不够，您需要对LDAP服务提供商使用的SSL套接字（或一般来说的套接字）有更多的控制权。例如，您可能需要可以绕过防火墙的套接字，或者使用对其信任和密钥存储使用非默认缓存/检索策略的JSSE套接字。要设置LDAP服务提供者使用的套接字工厂实现，请将<tt>“ java.naming.ldap.factory.socket”</tt>属性设置为套接字工厂的全限定类名。此类必须实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/net/SocketFactory.html" target="_blank"><tt>javax.net。SocketFactory</tt></a>抽象类，并提供<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/net/SocketFactory.html#getDefault--" target="_blank"><tt>getDefault（）</tt></a>方法的实现，该方法返回套接字工厂的实例。请参阅《 <a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html" target="_blank">Java安全套接字扩展（JSSE）参考指南》</a> 。</p>
+<p>这是一个例子<a class="SourceLink" href="examples/CustomSocketFactory.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/CustomSocketFactory.java'); return false;"><code>custom socket factory</code></a>产生普通插座。</p>
+<div class="codeblock"><pre>
+public class CustomSocketFactory extends SocketFactory {
+    public static SocketFactory getDefault() {
+
+        System.out.println("[acquiring the default socket factory]");
+        return new CustomSocketFactory();
+    }
+        ...
+}
+</pre></div>
+<p>请注意，此示例在每次创建新的LDAP连接时都会创建一个<tt>CustomSocketFactory</tt>的新实例。这可能适用于某些应用程序和套接字工厂。如果要重用相同的套接字工厂，则<tt>getDefault（）</tt>应该返回单例。</p>
+<p>要将此自定义套接字工厂与JNDI程序一起使用，请设置<tt>“ java.naming.ldap.factory.socket”</tt>属性，如<a class="SourceLink" href="examples/UseFactory.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/UseFactory.java'); return false;"><code>following example</code></a> 。</p>
+<div class="codeblock"><pre>
+// Set up the environment for creating the initial context
+Hashtable&lt;String, Object&gt; env = new Hashtable&lt;String, Object&gt;();
+env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+env.put(Context.PROVIDER_URL, "ldap://localhost:389/o=JNDITutorial");
+
+// Specify the socket factory
+env.put("java.naming.ldap.factory.socket", "CustomSocketFactory");
+
+// Create the initial context
+DirContext ctx = new InitialDirContext(env);
+
+// ... do something useful with ctx
+</pre></div>
+<p><tt>“ java.naming.ldap.factory.socket”</tt>属性对于基于上下文设置套接字工厂很有用。控制LDAP服务提供者使用的套接字的另一种方法是，使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/net/Socket.html#setSocketImplFactory-java.net.SocketImplFactory-" target="_blank"><tt>java.net为整个程序中使用的所有套接字设置套接字工厂</tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/net/Socket.html#setSocketImplFactory-java.net.SocketImplFactory-" target="_blank"><tt>。Socket.setSocketImplFactory（）</tt></a> 。使用此方法的灵活性较差，因为它会影响所有套接字连接，而不仅是LDAP连接，因此应谨慎使用。</tt></p><tt>
+
+
+        </tt></tt></div><tt><tt>
+        <div class="NavBit">
+            <a href="digest.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="rename.html" target="_top">下一个»</a>
+        </div>
+    </tt></tt></div><tt><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> Digest-MD5<br><b>下一页：</b>更多LDAP操作</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></tt></body></html>

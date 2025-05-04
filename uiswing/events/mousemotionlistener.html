@@ -1,0 +1,667 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>如何编写鼠标移动侦听器（Java™教程>使用JFC / Swing创建GUI>编写事件侦听器）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">编写事件监听器</a></div>
+<div class="linkAHEAD"><a href="intro.html">事件侦听器简介</a></div>
+<div class="linkAHEAD"><a href="generalrules.html">有关编写事件侦听器的一般信息</a></div>
+<div class="linkAHEAD"><a href="eventsandcomponents.html">Swing组件支持的侦听器</a></div>
+<div class="linkAHEAD"><a href="handling.html">为常见事件实现侦听器</a></div>
+<div class="linkBHEAD"><a href="actionlistener.html">如何编写动作监听器</a></div>
+<div class="linkBHEAD"><a href="caretlistener.html">如何编写插入符侦听器</a></div>
+<div class="linkBHEAD"><a href="changelistener.html">如何编写变更监听器</a></div>
+<div class="linkBHEAD"><a href="componentlistener.html">如何编写组件侦听器</a></div>
+<div class="linkBHEAD"><a href="containerlistener.html">如何编写容器侦听器</a></div>
+<div class="linkBHEAD"><a href="documentlistener.html">如何编写文档监听器</a></div>
+<div class="linkBHEAD"><a href="focuslistener.html">如何编写焦点侦听器</a></div>
+<div class="linkBHEAD"><a href="internalframelistener.html">如何编写内部框架侦听器</a></div>
+<div class="linkBHEAD"><a href="itemlistener.html">如何编写项目监听器</a></div>
+<div class="linkBHEAD"><a href="keylistener.html">如何编写密钥侦听器</a></div>
+<div class="linkBHEAD"><a href="listdatalistener.html">如何编写列表数据侦听器</a></div>
+<div class="linkBHEAD"><a href="listselectionlistener.html">如何编写列表选择监听器</a></div>
+<div class="linkBHEAD"><a href="mouselistener.html">如何编写鼠标侦听器</a></div>
+<div class="nolinkBHEAD">如何编写鼠标动作侦听器</div>
+<div class="linkBHEAD"><a href="mousewheellistener.html">如何编写鼠标轮侦听器</a></div>
+<div class="linkBHEAD"><a href="propertychangelistener.html">如何编写属性更改侦听器</a></div>
+<div class="linkBHEAD"><a href="tablemodellistener.html">如何编写表模型侦听器</a></div>
+<div class="linkBHEAD"><a href="treeexpansionlistener.html">如何编写树扩展侦听器</a></div>
+<div class="linkBHEAD"><a href="treemodellistener.html">如何编写树模型侦听器</a></div>
+<div class="linkBHEAD"><a href="treeselectionlistener.html">如何编写树选择侦听器</a></div>
+<div class="linkBHEAD"><a href="treewillexpandlistener.html">如何编写一个树状扩展侦听器</a></div>
+<div class="linkBHEAD"><a href="undoableeditlistener.html">如何编写不可撤销的编辑侦听器</a></div>
+<div class="linkBHEAD"><a href="windowlistener.html">如何编写窗口侦听器</a></div>
+<div class="linkAHEAD"><a href="api.html">侦听器API表</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见的事件处理问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>编写事件侦听器<br><b>本节：</b>实现常见事件的侦听器</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">编写事件监听器</a>
+            </div>
+            <div class="NavBit">
+                <a href="mouselistener.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="mousewheellistener.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何编写鼠标动作侦听器</h1></div>
+            <div id="PageContent">
+
+<p>鼠标移动事件通知用户何时使用鼠标（或类似的输入设备）移动屏幕上的光标。有关侦听其他类型的鼠标事件（例如，单击）的信息，请参阅《 <a href="mouselistener.html">如何编写鼠标侦听器》</a> 。有关监听鼠标滚轮事件的信息，请参见<a href="mousewheellistener.html">如何编写鼠标滚轮监听器</a> 。</p>
+<p>如果应用程序需要同时检测鼠标事件和鼠标运动事件，请使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/MouseInputAdapter.html" target="_blank"><code>MouseInputAdapter</code></a>类，它实现了<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/MouseInputListener.html" target="_blank"><code>MouseInputListener</code></a>一个方便的界面，可同时实现<code>MouseListener</code>和<code>MouseMotionListener</code>接口。</p>
+<p>或者，使用相应的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseAdapter.html" target="_blank"><code>MouseAdapter</code></a> AWT类，该类实现了<code>MouseMotionListener</code>界面，创建一个<code>MouseMotionEvent</code>并覆盖特定事件的方法。</p>
+<p>以下演示代码包含一个鼠标移动侦听器。该演示与“ <a href="mouselistener.html">如何编写鼠标侦听器”</a>部分中描述的演示完全相同，只是替换了<code>MouseMotionListener</code>的界面<code>MouseListener</code>接口。此外，MouseMotionEventDemo实现了<code>mouseDragged</code>和<code>mouseMoved</code>方法而不是鼠标侦听器方法，并显示坐标而不是点击次数。</p>
+<center><img src="../../figures/uiswing/events/MouseMotionEventDemo.png" width="551" height="356 " align="bottom" alt="MouseMotionEventDemo屏幕截图"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行MouseMotionEventDemo。或者，要自己编译并运行示例，请参考<a href="../examples/events/index.html#MouseMotionEventDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/MouseMotionEventDemoProject/MouseMotionEventDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" align="bottom" alt="启动MouseMotionEventDemo应用程序"></a><br></li>
+<li>将光标移到窗口顶部的黄色矩形中。<br>您将看到一个或多个鼠标移动的事件。</li>
+<li>按住鼠标按钮，然后移动鼠标，使光标位于黄色矩形的外部。<br>您将看到鼠标拖动事件。</li>
+</ol>
+<hr></div>
+<p>您可以在以下位置找到该演示的代码<a class="SourceLink" href="../examples/events/MouseMotionEventDemoProject/src/events/MouseMotionEventDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/events/MouseMotionEventDemoProject/src/events/MouseMotionEventDemo.java'); return false;"><code>MouseMotionEventDemo.java</code></a>和<a class="SourceLink" href="../examples/events/MouseMotionEventDemoProject/src/events/BlankArea.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/events/MouseMotionEventDemoProject/src/events/BlankArea.java'); return false;"><code>BlankArea.java</code></a> 。以下代码段来自<code>MouseMotionEventDemo</code>实现鼠标移动事件处理：</p>
+<div class="codeblock"><pre>
+public class MouseMotionEventDemo extends JPanel 
+                                  implements MouseMotionListener {
+    <em>//...in initialization code:</em>
+        //Register for mouse events on blankArea and panel.
+        blankArea.addMouseMotionListener(this);
+        addMouseMotionListener(this);
+        ...
+    }
+
+    public void mouseMoved(MouseEvent e) {
+       saySomething("Mouse moved", e);
+    }
+
+    public void mouseDragged(MouseEvent e) {
+       saySomething("Mouse dragged", e);
+    }
+
+    void saySomething(String eventDescription, MouseEvent e) {
+        textArea.append(eventDescription 
+                        + " (" + e.getX() + "," + e.getY() + ")"
+                        + " detected on "
+                        + e.getComponent().getClass().getName()
+                        + newline);
+    }
+}
+</pre></div>
+<p>SelectionDemo示例绘制一个矩形，以说明用户当前的拖动。要绘制矩形，应用程序必须为三种鼠标事件实现事件处理程序：鼠标按下，鼠标拖动和鼠标释放。要获悉所有这些事件，处理程序必须同时实现<code>MouseListener</code>和<code>MouseMotionListener</code>接口，并注册为鼠标侦听器和鼠标移动侦听器。为避免必须定义空方法，处理程序不会直接实现任何一个侦听器接口。相反，它扩展了<code>MouseInputAdapter</code> ，如以下代码段所示。</p>
+<div class="codeblock"><pre>
+<em>...//where initialization occurs:</em>
+    MyListener myListener = new MyListener();
+    addMouseListener(myListener);
+    addMouseMotionListener(myListener);
+...
+private class MyListener extends MouseInputAdapter {
+    public void mousePressed(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        currentRect = new Rectangle(x, y, 0, 0);
+        updateDrawableRect(getWidth(), getHeight());
+        repaint();
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        updateSize(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        updateSize(e);
+    }
+
+    void updateSize(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        currentRect.setSize(x - currentRect.x,
+                            y - currentRect.y);
+        updateDrawableRect(getWidth(), getHeight());
+        Rectangle totalRepaint = rectToDraw.union(previouseRectDrawn); 
+        repaint(totalRepaint.x, totalRepaint.y,
+                totalRepaint.width, totalRepaint.height);
+    }
+}
+</pre></div>
+<h2><a name="api" id="api">鼠标运动监听器API</a></h2>
+<p style="text-align:center"><a name="mousemotionlistener" id="mousemotionlistener">MouseMotionListener接口</a></p>
+<p><em>相应的适配器类是<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseMotionAdapter.html" target="_blank"><code>MouseMotionAdapter</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseAdapter.html" target="_blank"><code>MouseAdapter</code></a> 。</em></p>
+<table border="1" summary="The MouseMotionListener API">
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseMotionListener.html#mouseDragged-java.awt.event.MouseEvent-" target="_blank">mouseDragged（MouseEvent）</a></td>
+<td>响应于用户在按住鼠标按钮的同时移动鼠标而调用。即使光标不再位于该组件上，也由触发最近鼠标事件的组件触发该事件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseMotionListener.html#mouseMoved-java.awt.event.MouseEvent-" target="_blank">mouseMoved（MouseEvent）</a></td>
+<td>响应用户在没有按下鼠标键的情况下移动鼠标而调用。当前光标所在的组件会触发此事件。</td>
+</tr>
+</tbody></table>
+<p>每个鼠标移动事件方法都有一个参数- <em>不会</em>调用<code>MouseMotionEvent</code> ！相反，每个鼠标移动事件方法都使用一个<code>MouseEvent</code>论点。有关使用的信息，请参见<a href="mouselistener.html#mouseevent">MouseEvent API</a> 。 <code>MouseEvent</code>对象。</p>
+<h2><a name="eg" id="eg">使用鼠标运动侦听器的示例</a></h2>
+<p>下表列出了使用鼠标移动侦听器的示例。</p>
+<table summary="Examples That Use MouseMotionListener">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr valign="top">
+<td><a href="../examples/events/index.html#MouseMotionEventDemo"><code>MouseMotionEventDemo</code></a></td>
+<td>这个部分</td>
+<td>报告在空白面板中发生的所有鼠标移动事件，以演示触发鼠标移动事件的情况。</td>
+</tr>
+<tr valign="top">
+<td><a href="../examples/components/index.html#LayeredPaneDemo"><code>LayeredPaneDemo</code></a>和<br>
+<a href="../examples/components/index.html#LayeredPaneDemo2"><code>LayeredPaneDemo2</code></a></td>
+<td>
+<a class="TutorialLink" href="../components/layeredpane.html" target="_top">如何使用分层窗格</a></td>
+<td>响应鼠标移动事件，在分层窗格中四处移动Duke的图像。</td>
+</tr>
+<tr valign="top">
+<td><a href="../examples/painting/index.html#SelectionDemo"><code>SelectionDemo</code></a></td>
+<td> </td>
+<td>允许用户拖动矩形以选择图像的一部分。使用的子类<code>MouseInputAdapter</code>听鼠标事件和鼠标运动事件。</td>
+</tr>
+<tr valign="top">
+<td><a href="../examples/components/index.html#GlassPaneDemo"><code>GlassPaneDemo</code></a></td>
+<td>
+<a class="TutorialLink" href="../components/rootpane.html" target="_top">如何使用根窗格</a></td>
+<td>使用的子类<code>MouseInputAdapter</code>在根窗格的玻璃窗格上侦听鼠标事件和鼠标移动事件。将事件重新分发到基础组件。</td>
+</tr>
+<tr valign="top">
+<td><a href="../examples/components/index.html#ScrollDemo"><code>ScrollDemo</code></a></td>
+<td>
+<a class="TutorialLink" href="../components/scrollpane.html" target="_top">如何使用滚动窗格</a></td>
+<td>标签子类ScrollablePicture使用鼠标移动侦听器来允许用户滚动图片，即使用户将光标拖到窗口外也是如此。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="mouselistener.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="mousewheellistener.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何编写鼠标侦听器<br><b>下一页：</b>如何编写鼠标轮侦听器</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

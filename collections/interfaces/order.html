@@ -1,0 +1,736 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>对象排序（Java™教程>集合>接口）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This collections Java tutorial describes interfaces, implementations, and algorithms in the Java Collections framework">
+     <meta name="keywords" content="java programming, learn java, java sample code, java collections, set, list, queue, map, array, arraylist">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">介面</a></div>
+<div class="linkAHEAD"><a href="collection.html">收集界面</a></div>
+<div class="linkAHEAD"><a href="set.html">设置界面</a></div>
+<div class="linkAHEAD"><a href="list.html">列表界面</a></div>
+<div class="linkAHEAD"><a href="queue.html">队列接口</a></div>
+<div class="linkAHEAD"><a href="deque.html">双端队列接口</a></div>
+<div class="linkAHEAD"><a href="map.html">地图界面</a></div>
+<div class="nolinkAHEAD">对象排序</div>
+<div class="linkAHEAD"><a href="sorted-set.html">SortedSet接口</a></div>
+<div class="linkAHEAD"><a href="sorted-map.html">SortedMap接口</a></div>
+<div class="linkAHEAD"><a href="summary.html">接口汇总</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>足迹：</b>收藏<br><b>课程：</b>接口</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">集合</a> > <a href="index.html" target="_top">接口</a>
+            </div>
+            <div class="NavBit">
+                <a href="map.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="sorted-set.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>对象排序</h1></div>
+            <div id="PageContent">
+
+<p>一种<code>List</code><code>l</code>可以分类如下。</p>
+<div class="codeblock"><pre>
+Collections.sort(l);
+</pre></div>
+<p>如果<code>List</code>由组成<code>String</code>元素，它将按字母顺序排序。如果包含<code>Date</code>元素，它将按时间顺序排序。这是怎么发生的？ <code>String</code> 和<code>Date</code>都实现了<code><a class="APILink" target="_blank" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html">Comparable</a></code>接口。 <code>Comparable</code>实现为类提供<i>自然排序</i> ，这允许该类的对象自动排序。<span id="table:comparable-implementations">下表</span>总结了实现的一些更重要的Java平台类<code>Comparable</code> 。</p>
+<table border="1" summary="comparable-implementations">
+<caption id="comparable-implementations"><strong>类实现可比</strong></caption>
+<tbody><tr>
+<th>类</th>
+<th>自然排序</th>
+</tr>
+<tr>
+<td><code>Byte</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Character</code></td>
+<td>无符号数值</td>
+</tr>
+<tr>
+<td><code>Long</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Integer</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Short</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Double</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Float</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>BigInteger</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>BigDecimal</code></td>
+<td>签名数字</td>
+</tr>
+<tr>
+<td><code>Boolean</code></td>
+<td><code>Boolean.FALSE < Boolean.TRUE</code></td>
+</tr>
+<tr>
+<td><code>File</code></td>
+<td>路径名依赖于系统的词典</td>
+</tr>
+<tr>
+<td><code>String</code></td>
+<td>辞书</td>
+</tr>
+<tr>
+<td><code>Date</code></td>
+<td>年表</td>
+</tr>
+<tr>
+<td><code>CollationKey</code></td>
+<td>特定于语言环境的词典编目</td>
+</tr>
+</tbody></table>
+<br>
+<p>如果您尝试对列表进行排序，则其元素不会实现<code>Comparable</code> ， <code>Collections.sort(list)</code>会抛出一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html" target="_blank"><code>ClassCastException</code></a> 。同样， <code>Collections.sort(list, comparator)</code>会抛出一个<code>ClassCastException</code>如果您尝试对列表进行排序，则其列表中的元素无法使用<code>comparator</code> 。可以相互比较的元素称为<i>相互可比较</i> 。尽管不同类型的元素可以相互比较，但此处列出的所有类都不允许类间比较。</p>
+<p>这是您真正需要了解的所有信息<code>Comparable</code>接口，如果您只是想对可比较元素的列表进行排序或创建它们的排序集合。如果您想实现自己的下一部分，那么下一部分将是您感兴趣的<code>Comparable</code>类型。</p>
+<h2>编写自己的可比较类型</h2>
+<p>的<code>Comparable</code>接口由以下方法组成。</p>
+<div class="codeblock"><pre>
+public interface Comparable&lt;T&gt; {
+    public int compareTo(T o);
+}
+</pre></div>
+<p>的<code>compareTo</code>方法将接收对象与指定对象进行比较，并根据接收对象是否小于，等于或大于指定对象，返回负整数，0或正整数。如果无法将指定对象与接收对象进行比较，则该方法将抛出一个<code>ClassCastException</code> 。</p>
+<p>的<a class="SourceLink" href="examples/Name.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/Name.java'); return false;"><code>following class representing a person's name</code></a>贯彻<code>Comparable</code> 。</p>
+<div class="codeblock"><pre>
+import java.util.*;
+
+public class Name implements Comparable&lt;Name&gt; {
+    private final String firstName, lastName;
+
+    public Name(String firstName, String lastName) {
+        if (firstName == null || lastName == null)
+            throw new NullPointerException();
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String firstName() { return firstName; }
+    public String lastName()  { return lastName;  }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof Name))
+            return false;
+        Name n = (Name) o;
+        return n.firstName.equals(firstName) &amp;&amp; n.lastName.equals(lastName);
+    }
+
+    public int hashCode() {
+        return 31*firstName.hashCode() + lastName.hashCode();
+    }
+
+    public String toString() {
+	return firstName + &quot; &quot; + lastName;
+    }
+
+    public int compareTo(Name n) {
+        int lastCmp = lastName.compareTo(n.lastName);
+        return (lastCmp != 0 ? lastCmp : firstName.compareTo(n.firstName));
+    }
+}
+</pre></div>
+<p>为了使前面的示例简短，该类在某种程度上受到限制：它不支持中间名，它需要名字和姓氏，并且不以任何方式进行国际化。但是，它说明了以下重要点：</p>
+<ul>
+<li><code>Name</code>对象是<i>不可变的</i> 。在所有其他条件相同的情况下，不可变类型是必经之路，特别是对于将用作元素的对象<code>Set</code> s或作为键<code>Map</code> s。如果您在集合中修改其元素或键，则这些集合将中断。</li>
+<li>构造函数检查其参数是否为<code>null</code> 。这样可以确保所有<code>Name</code>对象的格式正确，因此其他方法都不会抛出<code>NullPointerException</code> 。</li>
+<li>的<code>hashCode</code>方法已重新定义。这对于重新定义<code>equals</code>方法。（相等的对象必须具有相等的哈希码。）</li>
+<li>的<code>equals</code>方法返回<code>false</code>如果指定的对象是<code>null</code>或类型不正确。的<code>compareTo</code>在这种情况下，方法将抛出运行时异常。这两种行为都是相应方法的一般合同所要求的。</li>
+<li>的<code>toString</code>方法已重新定义，因此它会打印<code>Name</code>以人类可读的形式。这总是一个好主意，特别是对于将要放入集合中的对象。各种收藏类型” <code>toString</code>方法取决于<code>toString</code>元素，键和值的方法。</li>
+</ul>
+<p>由于本节是关于元素顺序的，所以让我们再谈一些<code>Name</code>的<code>compareTo</code>方法。它实现了标准的名称排序算法，其中姓氏优先于名字。这正是您想要的自然顺序。如果自然排序不自然，那确实会造成混乱！</p>
+<p>看看如何<code>compareTo</code>实现，因为它很典型。首先，您比较对象的最高有效部分（在本例中为姓）。通常，您可以只使用零件类型的自然顺序。在这种情况下，该部分是<code>String</code>自然的（字典顺序）正是我们所需要的。如果比较得出的结果等于零，则表示等于，那么您就可以完成：您只需返回结果即可。如果最重要的部分相等，则继续比较下一个最重要的部分。在这种情况下，只有两个部分-名和姓。如果有更多部分，则以明显的方式进行操作，比较各部分，直到找到两个不相等的部分，或者您正在比较最低有效部分，此时将返回比较结果。</p>
+<p>只是为了证明一切正常，这里是<a class="SourceLink" href="examples/NameSort.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/NameSort.java'); return false;"><code>a program that builds a list of names and sorts them</code></a> 。</p>
+<div class="codeblock"><pre>
+import java.util.*;
+
+public class NameSort {
+    public static void main(String[] args) {
+        Name nameArray[] = {
+            new Name(&quot;John&quot;, &quot;Smith&quot;),
+            new Name(&quot;Karl&quot;, &quot;Ng&quot;),
+            new Name(&quot;Jeff&quot;, &quot;Smith&quot;),
+            new Name(&quot;Tom&quot;, &quot;Rich&quot;)
+        };
+
+        List&lt;Name&gt; names = Arrays.asList(nameArray);
+        Collections.sort(names);
+        System.out.println(names);
+    }
+}
+</pre></div>
+<p>如果您运行此程序，则显示的内容如下。</p>
+<div class="codeblock"><pre>
+[Karl Ng, Tom Rich, Jeff Smith, John Smith]
+</pre></div>
+<p>行为的限制有四个<code>compareTo</code>方法，我们将不再讨论，因为它们是相当技术性和无聊的，最好留在API文档中。所有实现的类都非常重要<code>Comparable</code>遵守这些限制，因此请阅读有关文档<code>Comparable</code>如果您正在编写实现它的类。尝试对违反限制的对象列表进行排序具有未定义的行为。从技术上讲，这些限制可确保自然顺序是实现该<i>顺序</i>的类的对象的<i>总顺序</i> ；这是确保正确定义排序所必需的。</p>
+<h2>比较器</h2>
+<p>如果要按自然顺序以外的顺序对某些对象进行排序怎么办？或者，如果您想对一些未实现的对象进行排序，该怎么办<code>Comparable</code> ？要执行上述任一操作，您需要提供一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html" target="_blank"><code>Comparator</code></a> —封装顺序的对象。如<code>Comparable</code>界面<code>Comparator</code>接口由单个方法组成。</p>
+<div class="codeblock"><pre>
+public interface Comparator&lt;T&gt; {
+    int compare(T o1, T o2);
+}
+</pre></div>
+<p>的<code>compare</code>方法比较其两个参数，根据第一个参数是否小于，等于或大于第二个参数，返回负整数0或正整数。如果任何一个参数的类型都不适合<code>Comparator</code> ， <code>compare</code>方法抛出一个<code>ClassCastException</code> 。</p>
+<p>大部分关于<code>Comparable</code>适用于<code>Comparator</code>也一样写一个<code>compare</code>方法几乎与编写<code>compareTo</code>方法，除了前者获取两个作为参数传递的对象。的<code>compare</code>方法必须遵守与以下四个相同的技术限制<code>Comparable</code>的<code>compareTo</code>出于相同原因的方法— <code>Comparator</code>必须在比较对象上得出总顺序。</p>
+<p>假设您有一个名为<code>Employee</code> ， 如下。</p>
+<div class="codeblock"><pre>
+public class Employee implements Comparable&lt;Employee&gt; {
+    public Name name()     { ... }
+    public int number()    { ... }
+    public Date hireDate() { ... }
+       ...
+}
+</pre></div>
+<p>假设的自然排序<code>Employee</code>实例是<code>Name</code>按员工姓名排序（如上例中所定义）。不幸的是，老板要求按年长顺序列出员工名单。这意味着我们必须做一些工作，但不多做。以下程序将生成所需的列表。</p>
+<div class="codeblock"><pre>
+import java.util.*;
+public class EmpSort {
+    static final Comparator&lt;Employee&gt; SENIORITY_ORDER = 
+                                        new Comparator&lt;Employee&gt;() {
+            public int compare(Employee e1, Employee e2) {
+                return e2.hireDate().compareTo(e1.hireDate());
+            }
+    };
+
+    // Employee database
+    static final Collection&lt;Employee&gt; employees = ... ;
+
+    public static void main(String[] args) {
+        List&lt;Employee&gt; e = new ArrayList&lt;Employee&gt;(employees);
+        Collections.sort(e, SENIORITY_ORDER);
+        System.out.println(e);
+    }
+}
+</pre></div>
+<p>的<code>Comparator</code>在程序中相当简单。它依赖于<code>Date</code>应用于由<code>hireDate</code>访问器方法。请注意<code>Comparator</code>将第二个参数的聘用日期传递给第一个参数，而不是相反。原因是最近雇用的员工的最低年龄；按照聘用日期的顺序进行排序会使列表按相反的年资顺序排列。人们有时用来实现此效果的另一种技术是保持参数顺序，但否定比较结果。</p>
+<div class="codeblock"><pre>
+// Don't do this!!
+return -r1.hireDate().compareTo(r2.hireDate());
+</pre></div>
+<p>您应该始终使用前一种技术来支持后者，因为不能保证后者可以工作。原因是<code>compareTo</code>方法可以返回任何负数<code>int</code>如果其参数小于调用它的对象。有一个负面的<code>int</code>否定后仍然是负面的，看起来很奇怪。</p>
+<div class="codeblock"><pre>
+-Integer.MIN_VALUE == Integer.MIN_VALUE
+</pre></div>
+<p>的<code>Comparator</code>在前面的程序中可以很好地进行排序<code>List</code> ，但确实有一个不足：它不能用于订购已排序的集合，例如<code>TreeSet</code> ，因为它会生成<i>与</i> equals <i>不兼容</i>的排序。这意味着<code>Comparator</code>等同于<code>equals</code>方法没有。特别是，在同一日期雇用的任何两名雇员将进行比较。当您排序<code>List</code> ，这无关紧要；但是当您使用<code>Comparator</code>订购分类的收藏品是致命的。如果你用这个<code>Comparator</code>将同一天雇用的多名员工插入<code>TreeSet</code> ，只会将第一个添加到集合中；第二个将被视为重复元素，将被忽略。</p>
+<p>要解决此问题，只需调整<code>Comparator</code>这样它就产生了<i>与</i> <code>equals</code> 。换句话说，对其进行调整，以便在使用时唯一的元素被视为相等<code>compare</code>是那些当使用<code>equals</code> 。这样做的方法是执行两部分比较（至于<code>Name</code> ），第一部分是我们感兴趣的部分（在本例中为雇用日期），第二部分是唯一标识对象的属性。在这里，员工人数是显而易见的属性。这是<code>Comparator</code>结果。</p>
+<div class="codeblock"><pre>
+static final Comparator&lt;Employee&gt; SENIORITY_ORDER = 
+                                        new Comparator&lt;Employee&gt;() {
+    public int compare(Employee e1, Employee e2) {
+        int dateCmp = e2.hireDate().compareTo(e1.hireDate());
+        if (dateCmp != 0)
+            return dateCmp;
+
+        return (e1.number() &lt; e2.number() ? -1 :
+               (e1.number() == e2.number() ? 0 : 1));
+    }
+};
+</pre></div>
+<p>最后一点：您可能会想替换最后一个<code>return</code>中的陈述<code>Comparator</code>与更简单：</p>
+<div class="codeblock"><pre>
+return e1.number() - e2.number();
+</pre></div>
+<p>除非您<i>完全确定</i>没有人会有负号，否则请不要这样做！该技巧通常不起作用，因为有符号整数类型不足以表示两个任意有符号整数的差。如果<code>i</code>是一个大的正整数， <code>j</code>是一个大的负整数， <code>i - j</code>将溢出，并返回一个负整数。所结果的<code>comparator</code>违反了我们一直在谈论的四个技术限制（传递性）之一，并产生了可怕的，微妙的错误。这不是纯粹的理论问题；人们被它烧死了。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="map.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="sorted-set.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>地图界面<br><b>下一页：</b> SortedSet接口</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

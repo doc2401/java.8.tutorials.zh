@@ -1,0 +1,774 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用文本字段（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="nolinkBHEAD">如何使用文字栏位</div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="textarea.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="toolbar.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用文字栏位</h1></div>
+            <div id="PageContent">
+
+<p>文本字段是一个基本的文本控件，使用户能够键入少量文本。当用户指示文本输入完成时（通常通过按Enter键），文本字段将触发一个<a class="TutorialLink" href="../events/actionlistener.html" target="_top">动作事件</a> 。如果您需要从用户那里获得多行输入，请使用<a href="textarea.html">文本区域</a> 。</p>
+<p><a name="varieties" id="varieties">Swing API为组件提供了几个类，这些类可以是多种文本字段，也可以包括文本字段。</a></p>
+<table summary="">
+<tbody><tr>
+<td width="30%">
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html" target="_blank"><code>JTextField</code></a></td>
+<td>本节内容：基本文本字段。</td>
+</tr>
+<tr>
+<td><code>JFormattedTextField</code></td>
+<td>一种<code>JTextField</code>子类，可让您指定用户可以输入的合法字符集。请参阅<a href="formattedtextfield.html">如何使用格式化的文本字段</a> 。</td>
+</tr>
+<tr>
+<td><code>JPasswordField</code></td>
+<td>一种<code>JTextField</code>子类，不显示用户键入的字符。请参阅<a href="passwordfield.html">如何使用密码字段</a> 。</td>
+</tr>
+<tr>
+<td><code>JComboBox</code></td>
+<td>可以进行编辑，并提供一个字符串菜单供您选择。请参阅<a href="combobox.html">如何使用组合框</a> 。</td>
+</tr>
+<tr>
+<td><code>JSpinner</code></td>
+<td>将格式化的文本字段与几个小按钮结合在一起，使用户能够选择上一个或下一个可用值。请参阅<a href="spinner.html">如何使用微调框</a> 。</td>
+</tr>
+</tbody></table>
+<p>下面的示例显示一个基本的文本字段和一个文本区域。文本字段是可编辑的。文本区域不可编辑。当用户在文本字段中按Enter键时，程序会将文本字段的内容复制到文本区域，然后选择该文本字段中的所有文本。</p>
+<center><img src="../../figures/uiswing/components/TextDemo.png" width="232" height="137" align="bottom" alt="TextDemo的快照"></center><p>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行TextDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TextDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TextDemoProject/TextDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" align="bottom" alt="启动TextDemo应用程序"></a><br>
+<p>您可以在以下位置找到该程序的完整代码<a class="SourceLink" href="../examples/components/TextDemoProject/src/components/TextDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TextDemoProject/src/components/TextDemo.java'); return false;"><code>TextDemo.java</code></a> 。以下代码创建并设置文本字段：</p>
+<div class="codeblock"><pre>
+textField = new JTextField(20);
+</pre></div>
+<p>传递给的整数参数<code>JTextField</code>构造函数<code>20</code>在示例中，指示字段中的列数。该数字与字段的当前字体提供的度量一起使用，以计算字段的首选宽度。它不限制用户可以输入的字符数。为此，可以使用<a href="formattedtextfield.html">格式化的文本字段</a>或文档侦听器，如“ <a href="generaltext.html">文本组件功能”中所述</a> 。</p>
+<div class="note"><hr><strong>注意：</strong> <p>我们建议您为每个文本字段指定列数。如果未指定列数或首选大小，则每当文本更改时，字段的首选大小都会更改，这可能会导致不必要的布局更新。</p>
+<hr></div>
+<p>下一行代码注册一个<code>TextDemo</code>对象作为文本字段的动作侦听器。</p>
+<div class="codeblock"><pre>
+textField.addActionListener(this);
+</pre></div>
+<p>的<code>actionPerformed</code>方法处理文本字段中的操作事件：</p>
+<div class="codeblock"><pre>
+private final static String newline = "\n";
+...
+public void actionPerformed(ActionEvent evt) {
+    String text = textField.getText();
+    textArea.append(text + newline);
+    textField.selectAll();
+}
+</pre></div>
+<p>注意使用<code>JTextField</code>的<code>getText</code>检索文本字段当前包含的文本的方法。此方法返回的文本<em>不</em>包含触发操作事件的Enter键的换行符。</p>
+<p>您已经了解了如何使用基本文本字段。因为<code>JTextField</code>类继承自<code>JTextComponent</code>在课堂上，文本字段非常灵活，几乎可以按照您喜欢的任何方式进行自定义。例如，您可以添加文档侦听器或文档过滤器，以便在文本更改时得到通知，并且在过滤器的情况下，您可以相应地修改文本字段。有关文本组件的信息可以在“ <a href="generaltext.html">文本组件功能”中</a>找到。自定义之前<code>JTextField</code> ，但是，请确保其他<a href="#varieties">基于文本字段的组件</a>不会为您完成这项工作。</p>
+<p>通常，文本字段与描述文本字段的标签配对。有关创建这些对的信息，请参见<a href="#eg">使用文本字段的示例</a> 。</p>
+<h2><a name="textfielddemo" id="textfielddemo">另一个示例：TextFieldDemo</a></h2>
+<p>的<code>TextFieldDemo</code>该示例介绍了一个文本字段和一个文本区域。您可以在以下位置找到该程序的完整代码<a class="SourceLink" href="../examples/components/TextFieldDemoProject/src/components/TextFieldDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TextFieldDemoProject/src/components/TextFieldDemo.java'); return false;"><code>TextFieldDemo.java</code></a> 。</p>
+<p>在文本字段中键入字符时，程序将在文本区域中搜索键入的文本。如果找到该条目，它将突出显示。如果程序找不到该条目，则文本字段的背景变为粉红色。文本区域下方的状态栏会显示一条消息，指示是否找到文本。退出键用于开始新的搜索或完成当前搜索。这是一张照片<code>TextFieldDemo</code>应用。</p>
+<center><img src="../../figures/uiswing/components/TextFieldDemo.png" width="482" height="323" align="bottom" alt="TextFieldDemo的快照"></center><p>单击启动按钮，使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a>来运行TextFieldDemo（ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TextFieldDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TextFieldDemoProject/TextFieldDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TextFieldDemo应用程序"></a><br>
+<p>为了突出显示文本，本示例使用了荧光笔和绘画工具。下面的代码为文本区域创建并设置荧光笔和绘画工具。</p>
+<div class="codeblock"><pre>
+final Highlighter hilit;
+final Highlighter.HighlightPainter painter;
+...
+hilit = new DefaultHighlighter();
+painter = new DefaultHighlighter.DefaultHighlightPainter(HILIT_COLOR);
+textArea.setHighlighter(hilit);
+</pre></div>
+<p>此代码将文档侦听器添加到文本字段的文档中。</p>
+<div class="codeblock"><pre>
+entry.getDocument().addDocumentListener(this);
+</pre></div>
+<p>文件监听者<code>insertUpdate</code>和<code>removeUpdate</code>方法调用<code>search</code>方法，该方法不仅可以在文本区域中执行搜索，还可以处理突出显示。以下代码突出显示找到的文本，将插入号设置为找到的匹配项的末尾，设置文本字段的默认背景，并在状态栏中显示一条消息。</p>
+<div class="codeblock"><pre>
+hilit.addHighlight(index, end, painter);
+textArea.setCaretPosition(end);
+entry.setBackground(entryBg);
+message("'" + s + "' found. Press ESC to end search");
+</pre></div>
+<p>状态栏是一个<code>JLabel</code>宾语。以下代码显示了<code>message</code>方法已实现。</p>
+<div class="codeblock"><pre>
+private JLabel status;
+...
+void message(String msg) {
+    status.setText(msg);
+}
+</pre></div>
+<p>如果文本区域中没有匹配项，则以下代码将文本字段的背景更改为粉红色，并显示正确的信息消息。</p>
+<div class="codeblock"><pre>
+entry.setBackground(ERROR_COLOR);
+message("'" + s + "' not found. Press ESC to start a new search");
+</pre></div>
+<p>的<code>CancelAction</code>类负责按以下方式处理Escape键。</p>
+<div class="codeblock"><pre>
+   class CancelAction extends AbstractAction {
+       public void actionPerformed(ActionEvent ev) {
+               hilit.removeAllHighlights();
+               entry.setText("");
+               entry.setBackground(entryBg);
+           }
+   }
+</pre></div>
+<h2><a name="api" id="api">文字栏位API</a></h2>
+<p>下表列出了常用的<code>JTextField</code>构造函数和方法。您可能会调用的其他方法在<code>JTextComponent</code>类。请参阅<a href="textapi.html">Text Component API</a> 。</p>
+<p>您也可以在继承自文本字段其他祖先的文本字段上调用方法，例如<code>setPreferredSize</code> ， <code>setForeground</code> ， <code>setBackground</code> ， <code>setFont</code> ， 等等。有关常用继承方法的表，请参见<a href="jcomponent.html">JComponent类</a> 。</p>
+<p>使用文本字段的API分为以下几类：</p>
+
+<ul>
+<li><a href="#contents">设置或获取字段的内容</a></li>
+<li><a href="#looks">微调场地外观</a></li>
+<li><a href="#function">实施现场功能</a></li>
+</ul>
+<table border="1" summary="methods for setting or obtaining the field's contents">
+<caption><a name="contents" id="contents" style="font-weight:bold">设置或获取字段的内容</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#JTextField--" target="_blank">JTextField（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#JTextField-java.lang.String-" target="_blank">JTextField（字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#JTextField-java.lang.String-int-" target="_blank">JTextField（String，int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#JTextField-int-" target="_blank">JTextField（int）</a></td>
+<td>创建一个文本字段。存在时， <code>int</code>参数以列为单位指定所需的宽度。的<code>String</code>参数包含字段的初始文本。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#setText-java.lang.String-" target="_blank">setText（String）无效</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#getText--" target="_blank">字符串getText（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>设置或获取由文本字段显示的文本。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for fine tuning the field's appearance">
+<caption><a name="looks" id="looks" style="font-weight:bold">微调场地外观</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#setEditable-boolean-" target="_blank">void setEditable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#isEditable--" target="_blank">boolean isEditable（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>设置或指示用户是否可以在文本字段中编辑文本。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#setColumns-int-" target="_blank">void setColumns（int）;</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#getColumns--" target="_blank">int getColumns（）</a></td>
+<td>设置或获取文本字段显示的列数。这实际上只是计算字段首选宽度的提示。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#setHorizontalAlignment-int-" target="_blank">setHorizontalAlignment（int）;</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#getHorizontalAlignment--" target="_blank">int getHorizontalAlignment（）</a></td>
+<td>设置或获取文本在其区域内水平对齐的方式。您可以使用<code>JTextField.LEADING</code> ， <code>JTextField.CENTER</code>和<code>JTextField.TRAILING</code>争论。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for implementing the field's functionality">
+<caption><a name="function" id="function" style="font-weight:bold">实施现场功能</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#addActionListener-java.awt.event.ActionListener-" target="_blank">void addActionListener（ActionListener）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTextField.html#removeActionListener-java.awt.event.ActionListener-" target="_blank">void removeActionListener（ActionListener）</a></td>
+<td>添加或删除操作侦听器。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#selectAll--" target="_blank">无效selectAll（）</a><br>
+<em>（在<code>JTextComponent</code> ）</em></td>
+<td>选择文本字段中的所有字符。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用文本字段的示例</a></h2>
+<p>下表显示了一些使用文本字段的示例，并指向描述这些示例的位置。有关在各种文本字段（例如，布局）中相似的代码示例，请查看相关列表的示例列表，例如<a href="formattedtextfield.html#eg">格式文本字段</a>和<a href="spinner.html#eg">微调</a> <a href="formattedtextfield.html#eg">框</a> 。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextDemo">文字演示</a></td>
+<td valign="top">这个部分</td>
+<td valign="top">使用基本文本字段和动作侦听器的应用程序。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextFieldDemo">TextFieldDemo</a></td>
+<td valign="top">这个部分</td>
+<td valign="top">使用文本字段和文本区域的应用程序。在文本区域中进行搜索以从文本字段中找到一个条目。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#DialogDemo">对话演示</a></td>
+<td valign="top"><a href="dialog.html">如何制作对话框</a></td>
+<td valign="top"><code>CustomDialog.java</code>包括一个其值已检查的文本字段。您可以通过单击“更多对话框”选项卡，选择“输入验证对话框”选项，然后单击“显示”来调出该对话框！按钮。</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextSamplerDemo">TextSamplerDemo</a></td>
+<td valign="top"><a href="text.html">使用文字组件</a></td>
+<td valign="top">使用a布置标签文本字段对<code>GridBagLayout</code>和一种方便的方法：<div class="codeblock"><pre>
+addLabelTextRows(JLabel[] <em>labels</em>,
+                 JTextField[] <em>textFields</em>,
+                 GridBagLayout <em>gridbag</em>,
+                 Container <em>container</em>)
+</pre></div>
+</td>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/components/index.html#TextInputDemo">TextInputDemo</a></td>
+<td valign="top"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></td>
+<td valign="top">使用a布置标签文本字段对<code>SpringLayout</code>和一个<code>SpringUtilities</code>便捷方法：<div class="codeblock"><pre>
+makeCompactGrid(Container <em>parent</em>,
+                int <em>rows</em>, int <em>cols</em>,
+                int <em>initialX</em>, int <em>initialY</em>,
+                int <em>xPad</em>, int <em>yPad</em>)
+</pre></div>
+</td>
+</tr>
+</tbody></table>
+
+<p>如果您使用JavaFX编程，请参见<a class="OutsideLink" href="https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/text-field.htm" target="_blank">文本字段</a> 。</p>
+
+
+
+        </div>
+        <div class="NavBit">
+            <a href="textarea.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="toolbar.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用文本区域<br><b>下一页：</b>如何使用工具栏</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

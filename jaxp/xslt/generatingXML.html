@@ -1,0 +1,985 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>从任意数据结构生成XML（Java™教程>用于XML处理的Java API（JAXP）>可扩展样式表语言转换）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">可扩展样式表语言转换</a></div>
+<div class="linkAHEAD"><a href="intro.html">引入XSL，XSLT和XPath</a></div>
+<div class="linkAHEAD"><a href="xpath.html">XPath的工作方式</a></div>
+<div class="linkAHEAD"><a href="writingDom.html">写出DOM作为XML文件</a></div>
+<div class="nolinkAHEAD">从任意数据结构生成XML</div>
+<div class="linkAHEAD"><a href="transformingXML.html">使用XSLT转换XML数据</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>可扩展样式表语言转换</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">可扩展样式表语言转换</a>
+            </div>
+            <div class="NavBit">
+                <a href="writingDom.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="transformingXML.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>从任意数据结构生成XML</h1></div>
+            <div id="PageContent">
+
+<!-- Generating XML from an Arbitrary Data Structure -->
+<p>本节使用XSLT将任意数据结构转换为XML。</p>
+<p>这是过程的概述：</p>
+<ol>
+<li>
+<p>修改一个读取数据的现有程序，以使其生成SAX事件。（目前，该程序是真正的解析器还是只是某种类型的数据过滤器都是无关紧要的）。</p>
+</li>
+<li>
+<p>使用SAX“解析器”构造用于转换的<tt>SAXSource</tt> 。</p>
+</li>
+<li>
+<p>使用上一个练习中创建的相同<tt>StreamResult</tt>对象显示结果。（但是请注意，您可以轻松地创建<tt>DOMResult</tt>对象以在内存中创建DOM）。</p>
+</li>
+<li>
+<p>使用转换器对象将源连接到结果以进行转换。</p>
+</li>
+</ol>
+<p>首先，您需要一个要转换的数据集和一个能够读取数据的程序。接下来的两节将创建一个简单的数据文件和一个读取该文件的程序。</p>
+<p><a name="gghhh" id="gghhh"></a></p>
+<h2>创建一个简单的文件</h2>
+<!--
+<p>This example uses data set for an address book, <tt>PersonalAddressBook.ldif</tt>. If you have not done so already, <a href="../examples/xslt_samples.zip">download the XSLT examples</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory. The file shown here was produced by creating a new address book in Netscape Messenger, giving it some dummy data (one address card), and then exporting it in LDAP Data Interchange Format (LDIF) format. It contained in the directory <tt>xslt/data</tt> after you unzip the XSLT examples.</p>
+-->
+<p>本示例使用地址簿的数据集<tt>PersonalAddressBook.ldif</tt> 。如果您还没有这样做， <a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>download the XSLT examples</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。此处显示的文件是通过在Netscape Messenger中创建一个新的地址簿，为其提供一些虚拟数据（一个地址卡），然后以LDAP数据交换格式（LDIF）格式导出而生成的。解压缩XSLT示例后，它包含在目录<tt>xslt / data中</tt> 。</p>
+
+<p>下<a href="#gghhj">图</a>显示了已创建的地址簿条目。</p>
+<p><a name="gghhj" id="gghhj"></a></p>
+<p>图地址簿条目</p>
+<p><img src="../../figures/jaxp/intro/addressBook.gif" alt="Mozilla Thunderbird联系人详细信息卡的快照。" width="302" height="344"></p>
+<p>导出地址簿会生成一个文件，如下所示。我们关心的文件部分以粗体显示。</p>
+<div class="codeblock"><pre>
+dn: cn=Fred Flintstone,mail=fred@barneys.house
+modifytimestamp: 20010409210816Z
+cn: Fred Flintstone
+<b>xmozillanickname: Fred</b>
+<b>mail: Fred@barneys.house</b>
+<b>xmozillausehtmlmail: TRUE</b>
+<b>givenname: Fred</b>
+<b>sn: Flintstone</b>
+<b>telephonenumber: 999-Quarry</b>
+<b>homephone: 999-BedrockLane</b>
+<b>facsimiletelephonenumber: 888-Squawk</b>
+<b>pagerphone: 777-pager</b>
+<b>cellphone: 555-cell</b>
+<b>xmozillaanyphone: 999-Quarry</b>
+<b>objectclass: top</b>
+<b>objectclass: person</b>
+</pre></div>
+<p>请注意，文件的每一行都包含一个变量名，一个冒号和一个空格，后跟该变量的值。<tt>sn</tt>变量包含该人的姓（姓），变量<tt>cn</tt>包含通讯录条目中的<tt>DisplayName</tt>字段。</p>
+<p><a name="gghhy" id="gghhy"></a></p>
+<h2>创建一个简单的解析器</h2>
+<p>下一步是创建一个解析数据的程序。</p>
+<hr>
+<!--
+<p><b>Note -</b> The code discussed in this section is in <tt>AddressBookReader01.java</tt>, which is found in the <tt>xslt</tt> directory after you unzip <a href="../examples/xslt_samples.zip">XSLT examples</a> into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</p>
+-->
+<p><b>注意-</b>本节中讨论的代码位于<tt>AddressBookReader01.java中</tt> ，在您解压缩后可在<tt>xslt</tt>目录中找到该代码。 <a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>XSLT examples</code></a>进入<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录。</p>
+<hr>
+<p>该程序的文本如下所示。这是一个非常简单的程序，甚至不会循环输入多个条目，因为毕竟这只是一个演示。</p>
+<div class="codeblock"><pre>
+import java.io.*; 
+
+public class AddressBookReader01 { 
+
+    public static void main(String argv[]) {
+        // Check the arguments
+        if (argv.length != 1) {
+            System.err.println("Usage: java AddressBookReader01 filename");
+            System.exit (1);
+        }
+
+        String filename = argv[0];
+        File f = new File(filename);
+        AddressBookReader01 reader = new AddressBookReader01();
+        reader.parse(f);
+    }
+
+    // Parse the input file
+    public void parse(File f) {
+        try {
+            // Get an efficient reader for the file
+            FileReader r = new FileReader(f);
+            BufferedReader br = new BufferedReader(r);
+
+            // Read the file and display its contents.
+            String line = br.readLine();
+            while (null != (line = br.readLine())) {
+                if (line.startsWith("xmozillanickname: "))
+                    break;
+            }
+
+            output("nickname", "xmozillanickname", line);
+            line = br.readLine();
+            output("email",  "mail", line);
+
+            line = br.readLine();
+            output("html", "xmozillausehtmlmail", line);
+
+            line = br.readLine();
+            output("firstname","givenname", line);
+
+            line = br.readLine();
+            output("lastname", "sn", line);
+
+            line = br.readLine();
+            output("work", "telephonenumber", line);
+
+            line = br.readLine();
+            output("home", "homephone", line);
+
+            line = br.readLine();
+            output("fax", "facsimiletelephonenumber", line);
+
+            line = br.readLine();
+            output("pager", "pagerphone", line);
+
+            line = br.readLine();
+            output("cell", "cellphone", line);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</pre></div>
+<p>该程序包含三种方法：</p>
+<dl>
+<dt><tt>主要</tt></dt>
+<dd>
+<p><tt>main</tt>方法从命令行获取文件的名称，创建解析器的实例，并将其设置为可解析文件。当我们将程序转换为SAX解析器时，此方法将消失。（这是将解析代码放入单独方法中的一个原因）。</p>
+</dd>
+<dt><tt>解析</tt></dt>
+<dd>
+<p>此方法对主例程发送给它的<tt>File</tt>对象进行操作。如您所见，这非常简单。效率的唯一让步是使用<tt>BufferedReader</tt> ，当您开始对大文件进行操作时，这可能变得很重要。</p>
+</dd>
+<dt><tt>输出</tt></dt>
+<dd>
+<p>输出方法包含线结构的逻辑。它需要三个参数。第一个参数为该方法提供要显示的名称，因此它可以将<tt>html</tt>输出为变量名称，而不是<tt>xmozillausehtmlmail</tt> 。第二个参数给出存储在文件（ <tt>xmozillausehtmlmail</tt> ）中的变量名称。第三个参数给出包含数据的行。然后，例程从该行的开头剥离变量名称，并输出所需的名称以及数据。</p>
+</dd>
+</dl>
+<p><a name="gghni" id="gghni"></a></p>
+<h3>运行<tt>AddressBookReader01</tt>示例</h3>
+<ol>
+<li><b>导航到<tt>示例</tt>目录。</b>
+<div class="codeblock"><pre>
+% cd <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt>.
+</pre></div>
+</li>
+<!--
+<li><b><a href="../examples/xslt_samples.zip">Download the XSLT examples by clicking this link</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</b></li>
+-->
+<li><b>
+<a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>Download the XSLT examples by clicking this link</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</b></li>
+<li><b>导航到<tt>xslt</tt>目录。</b>
+<div class="codeblock"><pre>
+cd xslt
+</pre></div>
+</li>
+<li><b>编译<tt>AddressBookReader01</tt>示例。</b>
+<p>输入以下命令：</p>
+<div class="codeblock"><pre>
+% javac AddressBookReader01.java
+</pre></div>
+</li>
+<li><b>在数据文件上运行<tt>AddressBookReader01</tt>示例。</b>
+<p>在以下情况下， <tt>AddressBookReader01</tt>在上面显示的文件<tt>PersonalAddressBook.ldif</tt>上运行，在解压缩样本包之后，该文件位于<tt>xslt / data</tt>目录中。</p>
+<div class="codeblock"><pre>
+% java AddressBookReader01 data/PersonalAddressBook.ldif
+</pre></div>
+<p>您将看到以下输出：</p>
+<div class="codeblock"><pre>
+nickname: Fred
+email: Fred@barneys.house
+html: TRUE
+firstname: Fred
+lastname: Flintstone
+work: 999-Quarry
+home: 999-BedrockLane
+fax: 888-Squawk
+pager: 777-pager
+cell: 555-cell
+</pre></div>
+<p>这比“ <a href="#gghhh">创建简单文件”中</a>显示的文件更具可读性。</p>
+</li>
+</ol>
+<p><a name="gghhe" id="gghhe"></a></p>
+<h2>创建一个生成SAX事件的解析器</h2>
+<p>本节说明如何使解析器生成SAX事件，以便可以将其用作XSLT转换中<tt>SAXSource</tt>对象的基础。</p>
+<hr>
+<!--
+<p><b>Note -</b> The code discussed in this section is in <tt>AddressBookReader02.java</tt>, which is found in the <tt>xslt</tt> directory after you unzip <a href="../examples/xslt_samples.zip">XSLT examples</a> into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory. <tt>AddressBookReader02.java</tt> is adapted from <tt>AddressBookReader01.java</tt>, so only the differences in code between the two examples will be discussed here.</p>
+-->
+<p><b>注意-</b>本节中讨论的代码位于<tt>AddressBookReader02.java中</tt> ，在您解压缩后可在<tt>xslt</tt>目录中找到该代码。 <a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>XSLT examples</code></a>进入<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录。<tt>AddressBookReader02.java</tt>改编自<tt>AddressBookReader01.java</tt> ，因此这里仅讨论两个示例之间的代码差异。</p>
+<hr>
+<p><tt>AddressBookReader02</tt>需要以下在<tt>AddressBookReader01</tt>中未使用的突出显示的类。</p>
+<div class="codeblock"><pre>
+import java.io.*; 
+
+<b>import org.xml.sax.*;</b>
+<b>import org.xml.sax.helpers.AttributesImpl;</b>
+</pre></div>
+<p>该应用程序还扩展了<tt>XmlReader</tt> 。此更改将应用程序转换为生成适当的SAX事件的解析器。</p>
+<div class="codeblock"><pre>
+public class AddressBookReader02 <b>implements XMLReader</b> { /* ... */ }
+</pre></div>
+<p>与<tt>AddressBookReader01</tt>示例不同，此应用程序没有<tt>主要</tt>方法。</p>
+<p>以下全局变量将在本节后面使用：</p>
+<div class="codeblock"><pre>
+public class AddressBookReader02 implements XMLReader {
+    <b>ContentHandler handler;</b>
+
+    <b>String nsu = "";</b>  
+    <b>Attributes atts = new AttributesImpl();</b>
+    <b>String rootElement = "addressbook";</b>
+
+    <b>String indent = "\n ";</b>
+
+    // ...
+}
+</pre></div>
+<p>SAX <tt>ContentHandler</tt>是将获取解析器生成的SAX事件的对象。为了使应用程序成为<tt>XmlReader</tt> ，该应用程序定义了<tt>setContentHandler</tt>方法。处理程序变量将保存对调用<tt>setContentHandler</tt>时发送的对象的引用。</p>
+<p>当解析器生成SAX元素事件时，它将需要提供名称空间和属性信息。因为这是一个简单的应用程序，所以它为这两个都定义了空值。</p>
+<p>该应用程序还为数据结构（ <tt>地址簿</tt> ）定义了一个根元素，并设置了一个缩进字符串以提高输出的可读性。</p>
+<p>此外，对parse方法进行了修改，以使其采用<tt>InputSource</tt> （而不是<tt>File</tt> ）作为参数并说明了它可以生成的异常：</p>
+<div class="codeblock"><pre>
+public void parse<b>(InputSource input)</b> <b>throws IOException, SAXException</b>
+</pre></div>
+<p>现在，而不是像在<tt>AddressBookReader01中</tt>那样创建新的<tt>FileReader</tt>实例，而是使用<tt>InputSource</tt>对象封装阅读器：</p>
+<div class="codeblock"><pre>
+try {
+    <b>java.io.Reader r = input.getCharacterStream();</b>
+    BufferedReader Br = new BufferedReader(r);
+    // ...
+}
+</pre></div>
+<hr>
+<p><b>注意-</b>下一部分将说明如何创建输入源对象，以及输入对象实际上将是一个缓冲读取器。但是<tt>AddressBookReader</tt>可能会被其他人使用，甚至可能被其他人使用。此步骤可确保无论您使用什么阅读器，处理都将高效。</p>
+<hr>
+<p>下一步是修改parse方法，以为文档的开头和根元素生成SAX事件。以下突出显示的代码可以做到这一点：</p>
+<div class="codeblock"><pre>
+public void parse(InputSource input) {
+    try {
+        // ...
+        String line = br.readLine();
+        while (null != (line = br.readLine())) {
+            if (line.startsWith("xmozillanickname: ")) 
+                break;
+        }
+
+        <b>if (handler == null) {</b>
+            <b>throw new SAXException("No content handler");</b>
+        <b>}</b>
+
+        <b>handler.startDocument();</b> 
+        <b>handler.startElement(nsu, rootElement, rootElement, atts);</b>
+
+        output("nickname", "xmozillanickname", line);
+        // ...
+        output("cell", "cellphone", line);
+
+        <b>handler.ignorableWhitespace("\n".toCharArray(),</b> 
+            <b>0,  // start index</b>
+            <b>1   // length</b>
+        <b>);</b> 
+        handler.endElement(nsu, rootElement, rootElement);
+        handler.endDocument(); 
+    }
+    catch (Exception e) {
+        // ...
+    }
+}
+</pre></div>
+<p>在这里，应用程序检查以确保解析器已使用<tt>ContentHandler</tt>正确配置。（对于此应用程序，我们不在乎其他任何东西）。然后，它为文档的开始和根元素生成事件，并通过发送根元素的结束事件和文档的结束事件来结束。</p>
+<p>此时，有两点值得注意：</p>
+<ul>
+<li>
+<p>尚未发送<tt>setDocumentLocator</tt>事件，因为这是可选的。重要的是，该事件将在<tt>startDocument</tt>事件之前立即发送。</p>
+</li>
+<li>
+<p>在根元素结束之前会生成<tt>ignorableWhitespace</tt>事件。这也是可选的，但是可以极大地提高输出的可读性，这将在不久后看到。（在这种情况下，空格由单个换行符组成，该换行符的发送方式与将字符发送到characters方法的方式相同：作为字符数组，起始索引和长度）。</p>
+</li>
+</ul>
+<p>现在已经为文档和根元素生成了SAX事件，下一步是修改输出方法以为每个数据项生成适当的元素事件。删除对<tt>System.out.println（name +“：” + text）</tt>的调用并添加以下突出显示的代码即可实现：</p>
+<div class="codeblock"><pre>
+void output(String name, String prefix, String line) 
+    throws SAXException {
+
+    int startIndex = 
+    prefix.length() + 2;   // 2=length of ": "
+    String text = line.substring(startIndex);
+
+    <b>int textLength = line.length() - startIndex;</b>
+    <b>handler.ignorableWhitespace (indent.toCharArray(),</b> 
+        <b>0,    // start index</b>
+        <b>indent.length()</b>
+    <b>);</b>
+    <b>handler.startElement(nsu, name, name /*"qName"*/, atts);</b>
+    <b>handler.characters(line.toCharArray(),</b> 
+        <b>startIndex,</b>
+        <b>textLength;</b>
+    <b>);</b>
+    <b>handler.endElement(nsu, name, name);</b>
+}
+</pre></div>
+<p>因为<tt>ContentHandler</tt>方法可以将<tt>SAXExceptions</tt>发送回解析器，所以解析器必须准备好处理它们。在这种情况下，不会出现任何情况，因此，如果发生任何应用程序，仅允许应用程序失败。</p>
+<p>然后计算数据的长度，再次为可读性生成一些可忽略的空格。在这种情况下，只有一层数据，因此我们可以使用固定缩进字符串。（如果数据更加结构化，我们将不得不根据数据的嵌套计算要缩进多少空间）。</p>
+<hr>
+<p><b>注意-</b>缩进字符串对数据没有影响，但会使输出更易于阅读。如果没有该字符串，则所有元素将首尾相连：</p>
+<div class="codeblock"><pre>
+&lt;addressbook>
+&lt;nickname>Fred&lt;/nickname>
+&lt;email>...
+</pre></div>
+<hr>
+<p>接下来，以下方法使用要接收其生成的事件的<tt>ContentHandler</tt>配置解析器：</p>
+<div class="codeblock"><pre>
+void output(String name, String prefix, String line)
+    throws SAXException {
+    //  ...
+}
+
+// Allow an application to register a content event handler.
+<b>public void setContentHandler(ContentHandler handler) {</b>
+    <b>this.handler = handler;</b>
+<b>}</b>  
+
+// Return the current content handler.
+<b>public ContentHandler getContentHandler() {</b>
+    <b>return this.handler;</b>
+<b>}</b>
+</pre></div>
+<p>为了满足<tt>XmlReader</tt>接口，还必须实现其他几种方法。出于本练习的目的，将为所有它们生成空方法。但是，生产应用程序将需要实施错误处理程序方法以生成更可靠的应用程序。但是，对于此示例，以下代码为它们生成空方法：</p>
+<div class="codeblock"><pre>
+// Allow an application to register an error event handler.
+public void setErrorHandler(ErrorHandler handler) { } 
+
+// Return the current error handler.
+public ErrorHandler getErrorHandler() { 
+    return null; 
+}
+</pre></div>
+<p>然后，以下代码为<tt>XmlReader</tt>接口的其余部分生成空方法。（它们大多数对于真正的SAX解析器有价值，但对像这样的数据转换应用程序影响很小）。</p>
+<div class="codeblock"><pre>
+// Parse an XML document from a system identifier (URI).
+public void parse(String systemId) throws IOException, SAXException 
+{ } 
+
+// Return the current DTD handler.
+public DTDHandler getDTDHandler() { return null; } 
+
+// Return the current entity resolver.
+public EntityResolver getEntityResolver() { return null; } 
+
+// Allow an application to register an entity resolver.
+public void setEntityResolver(EntityResolver resolver) { } 
+
+// Allow an application to register a DTD event handler.
+public void setDTDHandler(DTDHandler handler) { } 
+
+// Look up the value of a property.
+public Object getProperty(String name) { return null; } 
+
+// Set the value of a property.
+public void setProperty(String name, Object value) { }  
+
+// Set the state of a feature.
+public void setFeature(String name, boolean value) { } 
+
+// Look up the value of a feature.
+public boolean getFeature(String name) { return false; }
+</pre></div>
+<p>现在，您有了一个可用于生成SAX事件的解析器。在下一部分中，您将使用它来构造一个SAX源对象，该对象将使您将数据转换为XML。</p>
+<p><a name="gghik" id="gghik"></a></p>
+<h2>使用解析器作为<tt>SAXSource</tt></h2>
+<p>给定一个SAX解析器用作事件源，您可以构造一个转换器以产生结果。在本节中，尽管<tt>TransformerApp</tt>可以很容易地产生DOM结果，但将对其进行更新以产生流输出结果。</p>
+<hr>
+<!--
+<p><b>Note -</b> Note: The code discussed in this section is in <tt>TransformationApp03.java</tt>, which is found in the <tt>xslt</tt> directory after you unzip <a href="../examples/xslt_samples.zip">XSLT examples</a> into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</p>
+-->
+<p><b>注-</b>注意：本节中讨论的代码位于<tt>TransformationApp03.java中</tt> ，在您解压缩后可在<tt>xslt</tt>目录中找到该代码。 <a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>XSLT examples</code></a>进入<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录。</p>
+<hr>
+<p>首先，从<tt>TransformationApp02</tt> <tt>TransformationApp03</tt>不同之处在于它的类需要导入构建<tt>的SAXSource</tt>对象。这些类在下面突出显示。此时不再需要DOM类，因此将其丢弃，尽管将它们保留在其中不会带来任何危害。</p>
+<div class="codeblock"><pre>
+import org.xml.sax.SAXException; 
+import org.xml.sax.SAXParseException; 
+<b>import org.xml.sax.ContentHandler;</b>
+<b>import org.xml.sax.InputSource;</b>
+
+<b>import javax.xml.transform.sax.SAXSource;</b> 
+import javax.xml.transform.stream.StreamResult;
+</pre></div>
+<p>接下来，该应用程序创建一个SAX解析器，而不是创建DOM <tt>DocumentBuilderFactory</tt>实例，它是<tt>AddressBookReader的</tt>一个实例：</p>
+<div class="codeblock"><pre>
+public class TransformationApp03 {
+    static Document document;  
+    public static void main(String argv[]) {
+        // ...
+        // Create the sax "parser".
+        <b>AddressBookReader saxReader = new AddressBookReader();</b>
+
+        try {
+            File f = new File(argv[0]);
+            // ...
+        }
+        // ...
+    }
+}
+</pre></div>
+<p>然后，以下突出显示的代码构造了一个<tt>SAXSource</tt>对象</p>
+<div class="codeblock"><pre>
+// Use a Transformer for output
+// ...
+Transformer transformer = tFactory.newTransformer();
+
+// Use the parser as a SAX source for input
+<b>FileReader fr = new FileReader(f);</b>
+<b>BufferedReader br = new BufferedReader(fr);</b>
+<b>InputSource inputSource = new InputSource(br);</b>
+<b>SAXSource source = new SAXSource(saxReader, inputSource);</b>
+StreamResult result = new StreamResult(System.out);
+transformer.transform(source, result);
+</pre></div>
+<p>在这里， <tt>TransformationApp03</tt>构造了一个缓冲的读取器（如前所述），并将其封装在输入源对象中。然后，它创建一个<tt>SAXSource</tt>对象，将读取器和<tt>InputSource</tt>对象传递给它，并将其传递给转换器。</p>
+<p>当应用程序运行时，转换器将自身配置为SAX解析器的<tt>ContentHandler</tt> （ <tt>AddressBookReader</tt> ），并告诉解析器对<tt>inputSource</tt>对象进行操作。解析器生成的事件然后转到转换器，转换器执行适当的操作并将数据传递到结果对象。</p>
+<p>最后， <tt>TransformationApp03</tt>不会生成异常，因此不再存在<tt>TransformationApp02中显示</tt>的异常处理代码。</p>
+<p><a name="gghmh" id="gghmh"></a></p>
+<h3>运行<tt>TransformationApp03</tt>示例</h3>
+<ol>
+<li><b>导航到<tt>示例</tt>目录。</b>
+<div class="codeblock"><pre>
+% cd <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt>.
+</pre></div>
+</li>
+<!--
+<li><b><a href="../examples/xslt_samples.zip">Download the XSLT examples by clicking this link</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</b></li>
+-->
+<li><b>
+<a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>Download the XSLT examples by clicking this link</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</b></li>
+<li><b>导航到<tt>xslt</tt>目录。</b>
+<div class="codeblock"><pre>
+cd xslt
+</pre></div>
+</li>
+<li><b>编译<tt>TransformationApp03</tt>示例。</b>
+<p>输入以下命令：</p>
+<div class="codeblock"><pre>
+% javac TransformationApp03.java
+</pre></div>
+</li>
+<li><b>在要转换为XML的数据文件上运行<tt>TransformationApp03</tt>示例。</b>
+<p>在以下情况下，在解压缩样本包后， <tt>TransformationApp03</tt>在<tt>PersonalAddressBook.ldif</tt>文件上运行，该文件位于<tt>xslt / data</tt>目录中。</p>
+<div class="codeblock"><pre>
+% java TransformationApp03 
+  data/PersonalAddressBook.ldif
+</pre></div>
+<p>您将看到以下输出：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;addressbook>
+    &lt;nickname>Fred&lt;/nickname>
+    &lt;email>Fred@barneys.house&lt;/email>
+    &lt;html>TRUE&lt;/html>
+    &lt;firstname>Fred&lt;/firstname>
+    &lt;lastname>Flintstone&lt;/lastname>
+    &lt;work>999-Quarry&lt;/work>
+    &lt;home>999-BedrockLane&lt;/home>
+    &lt;fax>888-Squawk&lt;/fax>
+    &lt;pager>777-pager&lt;/pager>
+    &lt;cell>555-cell&lt;/cell>
+&lt;/addressbook>
+</pre></div>
+<p>如您所见，LDIF格式文件<tt>PersonalAddressBook</tt>已转换为XML！</p>
+</li>
+</ol>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="writingDom.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="transformingXML.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>将DOM编写为XML文件<br><b>下一页：</b>使用XSLT转换XML数据</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,698 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>使用XML模式进行验证（Java™教程>用于XML处理的Java API（JAXP）>文档对象模型）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">文件对象模型</a></div>
+<div class="linkAHEAD"><a href="when.html">何时使用DOM</a></div>
+<div class="linkAHEAD"><a href="readingXML.html">将XML数据读入DOM</a></div>
+<div class="nolinkAHEAD">使用XML模式进行验证</div>
+<div class="linkAHEAD"><a href="info.html">更多信息</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>文档对象模型</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">文档对象模型</a>
+            </div>
+            <div class="NavBit">
+                <a href="readingXML.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="info.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用XML模式进行验证</h1></div>
+            <div id="PageContent">
+
+<!-- Validating With XML Schema -->
+<p>本节介绍XML Schema验证的过程。尽管对XML Schema的完整处理不在本教程的讨论范围之内，但是本节向您展示了使用XML Schema定义验证XML文档所采取的步骤。（要了解有关XML Schema的更多信息，可以查看在线教程<a class="OutsideLink" href="http://www.w3.org/TR/xmlschema-0/" target="_blank">XML Schema Part 0：Primer</a> 。在本节的最后，您还将学习如何使用XML Schema定义来验证包含来自多个名称空间的元素的文档。</p>
+<p><a name="ggegv" id="ggegv"></a></p>
+<h2>验证过程概述</h2>
+<p>要通知XML文档中的验证错误，必须满足以下条件：</p>
+<ul>
+<li>必须配置工厂，并设置适当的错误处理程序。
+</li>
+<li>该文档必须与至少一个架构关联，并且可能与更多架构关联。
+</li>
+</ul>
+<p><a name="ggehg" id="ggehg"></a></p>
+<h2>配置<tt>DocumentBuilder</tt>工厂</h2>
+<p>首先定义在配置工厂时将使用的常量会很有帮助。这些常量与使用XML Schema进行SAX解析时定义的常量相同，它们在<tt>DOMEcho</tt>示例程序的开头声明。</p>
+<div class="codeblock"><pre>
+static final String JAXP_SCHEMA_LANGUAGE =
+    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+static final String W3C_XML_SCHEMA =
+    "http://www.w3.org/2001/XMLSchema";
+</pre></div>
+<p>接下来，您配置<tt>DocumentBuilderFactory</tt>以生成可识别名称空间的，验证使用XML Schema的解析器。这是通过调用<tt>DocumentBuilderFactory</tt>实例<tt>dbf</tt>上的<tt>setValidating</tt>方法来完成的，该实例是在<a class="TutorialLink" href="readingXML.html" target="_top">实例化Factory中</a>创建<a class="TutorialLink" href="readingXML.html" target="_top">的</a> 。</p>
+<div class="codeblock"><pre>
+// ...
+
+dbf.setNamespaceAware(true);
+dbf.setValidating(dtdValidate || xsdValidate);
+
+if (xsdValidate) {
+    try {
+        dbf.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+    }
+    catch (IllegalArgumentException x) {
+        System.err.println("Error: JAXP DocumentBuilderFactory attribute " 
+                           + "not recognized: " + JAXP_SCHEMA_LANGUAGE);
+        System.err.println("Check to see if parser conforms to JAXP spec.");
+        System.exit(1);
+    }
+}
+
+// ...
+</pre></div>
+<p>由于默认情况下，与JAXP兼容的解析器不支持名称空间，因此有必要设置属性以使架构验证起作用。您还设置了工厂属性以指定要使用的解析器语言。（另一方面，对于SAX解析，您在工厂生成的解析器上设置属性）。</p>
+<p><a name="ggegr" id="ggegr"></a></p>
+<h2>将文档与模式关联</h2>
+<p>现在，该程序已准备好使用XML Schema定义进行验证，仅需要确保XML文档与（至少）一个关联即可。有两种方法可以做到这一点：</p>
+<ul>
+<li>在XML文档中带有模式声明</li>
+<li>通过指定在应用程序中使用的模式</li>
+</ul>
+<hr>
+<p><b>注-</b>当应用程序指定要使用的架构时，它将覆盖文档中的所有架构声明。</p>
+<hr>
+<p>要在文档中指定架构定义，您将创建如下的XML：</p>
+<p><code><<i>documentRoot</i> xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation='<i>YourSchemaDefinition.xsd</i>'> [...]</code></p>
+<p>第一个属性定义XML名称空间（ <tt>xmlns</tt> ）前缀<tt>xsi</tt> ，它表示“ XML模式实例”。第二行指定用于文档中没有名称空间前缀的元素的模式，即，您通常在任何简单，不复杂的XML文档中定义的元素的架构。（在下一节中，您将看到如何处理多个名称空间。）</p>
+<p>您还可以在应用程序中指定架构文件， <tt>DOMEcho</tt>就是这种情况。</p>
+<div class="codeblock"><pre>
+static final String JAXP_SCHEMA_SOURCE =
+    "http://java.sun.com/xml/jaxp/properties/schemaSource";
+        
+// ...
+
+dbf.setValidating(dtdValidate || xsdValidate);
+if (xsdValidate) {
+    // ...    
+}
+
+if (schemaSource != null) {
+    dbf.setAttribute(JAXP_SCHEMA_SOURCE, new File(schemaSource));
+}
+</pre></div>
+<p>在这里，您也可以使用一些机制来指定多个架构。接下来，我们将看看这些内容。</p>
+<p><a name="ggeht" id="ggeht"></a></p>
+<h2>验证多个命名空间</h2>
+<p>命名空间使您可以在同一文档中合并具有不同用途的元素，而不必担心名称重叠。</p>
+<hr>
+<p><b>注-</b>本节中讨论的内容也适用于使用SAX解析器时的验证。您在这里看到了它，因为到此为止，您已经了解了足够的有关名称空间的知识，从而使讨论有意义。</p>
+<hr>
+<p>为了构想一个示例，请考虑跟踪人员数据的XML数据集。数据集可能包含来自纳税申报表的信息以及来自雇员雇用表的信息，两个元素在其各自的模式中都被命名为<tt>form</tt> 。</p>
+<p>如果为税名称空间定义了一个前缀，而为雇用名称空间定义了另一个前缀，则人员数据可以包括类似于以下内容的段。</p>
+<div class="codeblock"><pre>
+&lt;employee id="...">
+  &lt;name>....&lt;/name>
+  &lt;tax:form>
+     ...w2 tax form data...
+  &lt;/tax:form>
+  &lt;hiring:form>
+     ...employment history, etc....
+  &lt;/hiring:form>
+&lt;/employee>
+</pre></div>
+<p><tt>tax：form</tt>元素的内容显然与<tt>hiring：form</tt>元素的内容不同，因此必须进行不同的验证。</p>
+<p>还要注意，在此示例中，存在一个默认名称空间，该名称空间是不合格元素名称<tt>employee</tt>和<tt>name</tt>所属。为了正确验证文档，必须声明该名称空间的架构以及<tt>tax</tt>和<tt>hiring</tt>名称空间的架构。</p>
+<hr>
+<p><b>注意-</b>默认名称空间实际上是特定的名称空间。它定义为“没有名称的命名空间”。因此，您不能简单地将一个名称空间用作本周的默认名称，而将另一名称空间用作稍后的默认名称。此“未命名名称空间”（或“空名称空间”）就像数字零。它没有任何价值可言（没有名字），但是它仍然是精确定义的。因此，具有名称的名称空间永远不能用作默认名称空间。</p>
+<hr>
+<p>解析后，只要声明了这些模式，就将根据适当的模式验证数据集中的每个元素。同样，可以将模式声明为XML数据集的一部分，也可以在程序中声明。（也可以混合使用声明。不过，总的来说，将所有声明放在一个位置是一个好主意。）</p>
+<p><a name="ggegq" id="ggegq"></a></p>
+<h2>在XML数据集中声明模式</h2>
+<p>要声明数据集中用于上述示例的模式，XML代码应类似于以下内容。</p>
+<div class="codeblock"><pre>
+&lt;documentRoot
+  xmlns:xsi=
+  "http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation=
+    "employeeDatabase.xsd"
+  xsi:schemaLocation=
+  "http://www.irs.gov.example.com/ 
+   fullpath/w2TaxForm.xsd
+   http://www.ourcompany.example.com/ 
+   relpath/hiringForm.xsd"
+  xmlns:tax=
+    "http://www.irs.gov.example.com/"
+  xmlns:hiring=
+    "http://www.ourcompany.example.com/"
+>
+</pre></div>
+<p>您已经看到了<tt>noNamespaceSchemaLocation</tt>声明，以及最后两个条目，它们定义了命名空间前缀<tt>tax</tt>和<tt>hiring</tt> 。新的是中间的条目，它定义了用于文档中引用的每个名称空间的架构的位置。</p>
+<p><tt>xsi：schemaLocation</tt>声明由条目对组成，其中每对中的第一个条目是指定名称空间的标准URI，第二个条目包含指向架构定义的完整路径或相对路径。通常，建议使用完全限定的路径。这样，将仅存在该模式的一个副本。</p>
+<p>请注意，定义架构位置时不能使用名称空间前缀。<tt>xsi：schemaLocation</tt>声明仅理解名称空间名称，而不能理解前缀。</p>
+<p><a name="ggehq" id="ggehq"></a></p>
+<h2>在应用程序中声明架构</h2>
+<p>要在应用程序中声明等效的架构，代码应类似于以下内容。</p>
+<div class="codeblock"><pre>
+static final String employeeSchema = "employeeDatabase.xsd";
+static final String taxSchema = "w2TaxForm.xsd";
+static final String hiringSchema = "hiringForm.xsd";
+
+static final String[] schemas = {
+    employeeSchema,
+    taxSchema, 
+    hiringSchema,
+};
+
+static final String JAXP_SCHEMA_SOURCE =
+    "http://java.sun.com/xml/jaxp/properties/schemaSource";
+
+// ...
+
+DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance()
+    
+// ...
+
+factory.setAttribute(JAXP_SCHEMA_SOURCE, schemas);
+</pre></div>
+<p>在这里，指向模式定义（ <tt>.xsd</tt>文件）的字符串数组作为参数传递给<tt>factory.setAttribute</tt>方法。请注意与声明模式用作XML数据集的一部分时的区别。</p>
+<ul>
+<li>默认（未命名）模式没有特殊的声明。
+</li>
+<li>您未指定名称空间名称。而是，您仅提供指向<tt>.xsd</tt>文件的指针。
+</li>
+</ul>
+<p>为了进行名称空间分配，解析器读取<tt>.xsd</tt>文件，并在其中找到它们应用的目标名称空间的名称。因为文件是用URI指定的，所以解析器可以使用<tt>EntityResolver</tt> （如果已定义）来查找模式的本地副本。</p>
+<p>如果架构定义未定义目标名称空间，则它适用于默认（未命名或空）名称空间。因此，在我们的示例中，您将期望在模式中看到这些目标名称空间声明：</p>
+<ul>
+<li>指向架构URI的字符串</li>
+<li>具有模式内容的<tt>InputStream</tt></li>
+<li>一个SAX <tt>的InputSource</tt>
+</li>
+<li>一份文件</li>
+<li>对象数组，每个对象都是此处定义的类型之一</li>
+</ul>
+<p>仅当模式语言具有在运行时组装模式的能力时，才能使用对象数组。同样，当传递对象数组时，拥有共享相同名称空间的两个模式是非法的。</p>
+<p><a name="ggege" id="ggege"></a></p>
+<h2>使用架构验证运行<tt>DOMEcho</tt>示例</h2>
+<p>要使用架构验证运行<tt>DOMEcho</tt>示例，请按照以下步骤操作。</p>
+<ol>
+<li><b>导航到<tt>示例</tt>目录。</b><code>% cd <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt>.</code></li>
+<li><b>使用刚刚设置的类路径编译示例类。</b><code>% javac dom/*</code></li>
+<li><b>在XML文件上运行<tt>DOMEcho</tt>程序，并指定模式验证。</b>
+<p>在<tt>数据</tt>目录中选择一个XML文件，并使用<tt>-xsd</tt>选项在其上运行<tt>DOMEcho</tt>程序。在这里，我们选择了在文件<tt>personal-schema.xml</tt>上运行程序。</p>
+<code>% java dom/DOMEcho -xsd data/personal-schema.xml</code>
+<p>如在“ <a class="TutorialLink" href="readingXML.html#geswk" target="_top">配置工厂”中</a>所看到<a class="TutorialLink" href="readingXML.html#geswk" target="_top">的</a> ， <tt>-xsd</tt>选项告诉<tt>DOMEcho</tt>对<tt>personal-schema.xml</tt>文件中定义的XML模式执行验证。在这种情况下，模式是文件<tt>personal.xsd</tt> ，该文件也位于<tt>sample / data</tt>目录中。</p>
+</li>
+<li><b>在文本编辑器中打开<tt>personal-schema.xml</tt>并删除模式声明。</b>
+<p>从开头删除以下内容<tt><personnel></personnel></tt>标签。</p>
+<code>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation='personal.xsd'</code>
+<p>不要忘记保存文件。</p>
+</li>
+<li><b>再次运行<tt>DOMEcho，</tt>再次指定<tt>-xsd</tt>选项。</b><code>% java dom/DOMEcho -xsd data/personal-schema.xml</code>
+<p>这次，您将看到一系列错误。</p>
+</li>
+<li><b>再运行<tt>一次DOMEcho</tt> ，这一次指定<tt>-xsdss</tt>选项并指定架构定义文件。</b>
+<p>如在<a class="TutorialLink" href="readingXML.html#geswk" target="_top">配置工厂中</a>所看到<a class="TutorialLink" href="readingXML.html#geswk" target="_top">的</a> ， <tt>-xsdss</tt>选项告诉<tt>DOMEcho</tt>对在程序运行时指定的XML模式定义执行验证。再一次使用文件<tt>personal.xsd</tt> 。</p>
+<code>% java dom/DOMEcho -xsdss data/personal.xsd data/personal-schema.xml</code>
+<p>您将看到与以前相同的输出，这意味着已针对该模式成功验证了XML文件。</p>
+</li>
+</ol>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="readingXML.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="info.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：将</b> XML数据读入DOM<br><b>下一页：</b>更多信息</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

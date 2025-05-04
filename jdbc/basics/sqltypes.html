@@ -1,0 +1,719 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>使用高级数据类型（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="nolinkAHEAD">使用高级数据类型</div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="webrowset.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="blob.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用高级数据类型</h1></div>
+            <div id="PageContent">
+
+<!-- ************************************** -->
+<p>本节中介绍的高级数据类型为关系数据库提供了更多灵活性，可以用作表列的值。例如，一列可用于存储<code>BLOB</code> （二进制大对象）值，可以将大量数据存储为原始字节。列也可以是类型<code>CLOB</code> （字符大对象），它能够以字符格式存储大量数据。</p>
+<p>ANSI / ISO SQL标准的最新版本通常称为SQL：2003。该标准指定以下数据类型：</p>
+<ul>
+<li>
+<p>SQL92内置类型，由熟悉的SQL列类型组成，例如<code>CHAR</code> ， <code>FLOAT</code>和<code>DATE</code></p>
+</li>
+<li>
+<p>SQL99内置类型，由SQL99添加的类型组成：</p>
+<ul>
+<li>
+<p><code>BOOLEAN</code> ：布尔值（正确或错误）</p>
+</li>
+<li>
+<p><code>BLOB</code> ：二进制大对象</p>
+</li>
+<li>
+<p><code>CLOB</code> ：字符大对象</p>
+</li>
+</ul>
+</li>
+<li>
+<p>SQL：2003添加的新内置类型：</p>
+<ul>
+<li>
+<p><code>XML</code> ：XML对象</p>
+</li>
+</ul>
+</li>
+<li>
+<p>用户定义的类型：</p>
+<ul>
+<li>
+<p>结构化类型：用户定义类型；例如：</p>
+<div class="codeblock"><pre>
+CREATE TYPE PLANE_POINT
+AS (X FLOAT, Y FLOAT) NOT FINAL
+</pre></div>
+</li>
+<li>
+<p><code>DISTINCT</code>类型：基于内置类型的用户定义类型；例如：</p>
+<div class="codeblock"><pre>
+CREATE TYPE MONEY
+AS NUMERIC(10,2) FINAL
+</pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p>构造类型：基于给定基本类型的新类型：</p>
+<ul>
+<li>
+<p><code>REF(<em>structured-type</em>)</code> ：持久地表示驻留在数据库中的结构化类型的实例的指针</p>
+</li>
+<li>
+<p><code><em>base-type</em> ARRAY[<em>n</em>]</code> ： <em>n个</em>基本类型元素的数组</p>
+</li>
+</ul>
+</li>
+<li>
+<p>定位器：是指向数据库服务器上数据的逻辑指针的实体。<em>定位器</em>存在于客户端计算机中，是服务器上数据的瞬时逻辑指针。定位器通常指的是太大而无法在客户端上实现的数据，例如图像或音频。（实例化<em>视图</em>是已预先存储或“实例化”为架构对象的查询结果。）在SQL级别定义了一些运算符，以检索由定位符表示的随机访问的数据：</p>
+<ul>
+<li>
+<p><code>LOCATOR(<em>structured-type</em>)</code> ：服务器中结构化实例的定位器</p>
+</li>
+<li>
+<p><code>LOCATOR(<em>array</em>)</code> ：服务器中数组的定位器</p>
+</li>
+<li>
+<p><code>LOCATOR(<em>blob</em>)</code> ：服务器中二进制大对象的定位器</p>
+</li>
+<li>
+<p><code>LOCATOR(<em>clob</em>)</code> ：服务器中字符大对象的定位器</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Datalink</code> ：用于管理数据源外部数据的类型。 <code>Datalink</code>值是SQL MED（外部数据管理）的一部分，SQL MED / SQL ANSI / ISO标准规范的一部分。</p>
+</li>
+</ul>
+<h2>映射高级数据类型</h2>
+<p>JDBC API为SQL：2003标准指定的高级数据类型提供默认映射。以下列表提供了数据类型以及它们映射到的接口或类：</p>
+<ul>
+<li><code>BLOB</code> ： <code>Blob</code>接口</li>
+<li><code>CLOB</code> ： <code>Clob</code>接口</li>
+<li><code>NCLOB</code> ： <code>NClob</code>接口</li>
+<li><code>ARRAY</code> ： <code>Array</code>接口</li>
+<li><code>XML</code> ： <code>SQLXML</code>接口</li>
+<li>结构化类型： <code>Struct</code>接口</li>
+<li><code>REF(structured type)</code> ： <code>Ref</code>接口</li>
+<li><code>ROWID</code> ： <code>RowId</code>接口</li>
+<li><code>DISTINCT</code> ：基本类型映射到的类型。例如，一个<code>DISTINCT</code>基于SQL的值<code>NUMERIC</code>类型映射到一个<code>java.math.BigDecimal</code>输入是因为<code>NUMERIC</code>映射到<code>BigDecimal</code>使用Java编程语言。</li>
+<li><code>DATALINK</code> ： <code>java.net.URL</code>宾语</li>
+</ul>
+<!-- ************************************** -->
+<h2>使用高级数据类型</h2>
+<p>您以与处理其他数据类型相同的方式检索，存储和更新高级数据类型。您可以使用<code>ResultSet.get<em>DataType</em></code>要么<code>CallableStatement.get<em>DataType</em></code>检索它们的方法， <code>PreparedStatement.set<em>DataType</em></code>存储它们的方法，以及<code>ResultSet.update<em>DataType</em></code>更新它们的方法。（变量<code><em>DataType</em></code>是映射到高级数据类型的Java接口或类的名称。）在高级数据类型上执行的操作中大约90％涉及使用<code>get<em>DataType</em></code> ， <code>set<em>DataType</em></code>和<code>update<em>DataType</em></code>方法。下表显示了要使用的方法：</p>
+<table border="1" summary="Advanced data types and corresponding methods">
+<tbody><tr>
+<th><strong>进阶资料类型</strong></th>
+<th><strong><code>get<em>DataType</em></code>方法</strong></th>
+<th><strong><code>set<em>DataType</em></code>方法</strong></th>
+<th><strong><code>update<em>DataType</em></code>方法</strong></th>
+</tr>
+<tr>
+<td><code>BLOB</code></td>
+<td><code>getBlob</code></td>
+<td><code>setBlob</code></td>
+<td><code>updateBlob</code></td>
+</tr>
+<tr>
+<td><code>CLOB</code></td>
+<td><code>getClob</code></td>
+<td><code>setClob</code></td>
+<td><code>updateClob</code></td>
+</tr>
+<tr>
+<td><code>NCLOB</code></td>
+<td><code>getNClob</code></td>
+<td><code>setNClob</code></td>
+<td><code>updateNClob</code></td>
+</tr>
+<tr>
+<td><code>ARRAY</code></td>
+<td><code>getArray</code></td>
+<td><code>setArray</code></td>
+<td><code>updateArray</code></td>
+</tr>
+<tr>
+<td><code>XML</code></td>
+<td><code>getSQLXML</code></td>
+<td><code>setSQLXML</code></td>
+<td><code>updateSQLXML</code></td>
+</tr>
+<tr>
+<td><code>Structured type</code></td>
+<td><code>getObject</code></td>
+<td><code>setObject</code></td>
+<td><code>updateObject</code></td>
+</tr>
+<tr>
+<td><code>REF(structured type)</code></td>
+<td><code>getRef</code></td>
+<td><code>setRef</code></td>
+<td><code>updateRef</code></td>
+</tr>
+<tr>
+<td><code>ROWID</code></td>
+<td><code>getRowId</code></td>
+<td><code>setRowId</code></td>
+<td><code>updateRowId</code></td>
+</tr>
+<tr>
+<td><code>DISTINCT</code></td>
+<td><code>getBigDecimal</code></td>
+<td><code>setBigDecimal</code></td>
+<td><code>updateBigDecimal</code></td>
+</tr>
+<tr>
+<td><code>DATALINK</code></td>
+<td><code>getURL</code></td>
+<td><code>setURL</code></td>
+<td><code>updateURL</code></td>
+</tr>
+</tbody></table>
+<p><strong>注意</strong> ： <code>DISTINCT</code>数据类型的行为与其他高级SQL数据类型不同。作为基于现有内置类型的用户定义类型，它没有接口作为Java编程语言中的映射。因此，您使用与Java类型相对应的方法， <code>DISTINCT</code>数据类型基于。有关更多信息，请参见<a href="distinct.html">使用DISTINCT数据类型</a> 。</p>
+<p>例如，以下代码片段检索一个SQL <code>ARRAY</code>值。对于此示例，假设该列<code>SCORES</code>在桌子上<code>STUDENTS</code>包含类型的值<code>ARRAY</code> 。变量<code><em>stmt</em></code>是一个<code>Statement</code>宾语。</p>
+<div class="codeblock"><pre>
+ResultSet rs = stmt.executeQuery(
+    "SELECT SCORES FROM STUDENTS " +
+    "WHERE ID = 002238&quot;);
+rs.next();
+Array scores = rs.getArray(&quot;SCORES&quot;);
+</pre></div>
+<p>变量<code><em>scores</em></code>是指向SQL的逻辑指针<code>ARRAY</code>表中存储的对象<code>STUDENTS</code>在学生排<code>002238</code> 。</p>
+<p>如果要在数据库中存储值，请使用适当的<code>set</code>方法。例如，以下代码片段，其中<code><em>rs</em></code>是一个<code>ResultSet</code>对象，存储一个<code>Clob</code>宾语：</p>
+<div class="codeblock"><pre>
+Clob notes = rs.getClob("NOTES");
+PreparedStatement pstmt =
+    con.prepareStatement(
+        "UPDATE MARKETS SET COMMENTS = ? " +
+        "WHERE SALES &lt; 1000000&quot;);
+pstmt.setClob(1, notes);
+pstmt.executeUpdate();
+</pre></div>
+<p>此代码集<code><em>notes</em></code>作为发送到数据库的更新语句中的第一个参数。的<code>Clob</code>指定的值<code><em>notes</em></code>将存储在表格中<code>MARKETS</code>在列中<code>COMMENTS</code>在每一列中的值<code>SALES</code>少于一百万。</p>
+<!-- ************************************** -->
+
+
+        </div>
+        <div class="NavBit">
+            <a href="webrowset.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="blob.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>使用WebRowSet对象<br><b>下一页：</b>使用大对象</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

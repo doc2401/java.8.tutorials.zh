@@ -1,0 +1,691 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用面板（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="nolinkBHEAD">如何使用面板</div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="menu.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="passwordfield.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用面板</h1></div>
+            <div id="PageContent">
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JPanel.html" target="_blank"><code>JPanel</code></a>类提供了用于轻量级组件的通用容器。默认情况下，面板不为自己的背景添加颜色；但是，您可以轻松地为其添加边框，也可以自定义其绘画。有关详细信息，请参见“ <a class="TutorialLink" href="../painting/index.html" target="_top">执行自定义绘画”</a> 。</p>
+<p>在许多类型的外观中，默认情况下面板是不透明的。如<a class="TutorialLink" href="toplevel.html" target="_top">使用顶层容器中</a>所述，不透明面板可以很好地用作内容窗格，并且可以有效地进行绘画。您可以通过以下方式更改面板的透明度： <code>setOpaque</code>方法。透明面板不会绘制背景，因此下面的任何组件都可以显示出来。</p>
+<h2><a name="anexample" id="anexample">一个例子</a></h2>
+<p>下图显示了彩色版本的<code>Converter</code>应用程序，将在“ <a href="model.html">使用模型”中</a>详细讨论。</p>
+<center><img src="../../figures/uiswing/components/ConverterColored.png" width="288" height="198" align="bottom" alt="多彩转换器"></center><p>的<code>Converter</code>该示例以多种方式使用面板：</p>
+<ul>
+<li>一<code>JPanel</code>实例（在前面的快照中为红色）用作应用程序框架的内容窗格。此内容窗格使用从上到下<a class="TutorialLink" href="../layout/box.html" target="_top"><code>BoxLayout</code></a>布置其内容，并留出一个空白边框，在其周围放置5个像素的空间。有关内容窗格的信息，请参见<a href="toplevel.html">使用顶级容器</a> 。</li>
+<li>自定义的两个实例<code>JPanel</code>子类命名<code>ConversionPanel</code> —彩色青色—用于包含组件并协调组件之间的通信。这些<code>ConversionPanel</code>面板还具有标题边框，这些边框描述了它们的内容并用一条线将内容括起来。每<code>ConversionPanel</code>面板使用从左到右<code>BoxLayout</code>反对布置其内容。</li>
+<li>每一个<code>ConversionPanel</code> ， 一种<code>JPanel</code>实例-洋红色-用于确保组合框的尺寸和位置正确。这些每个<code>JPanel</code>实例使用从上到下<code>BoxLayout</code>对象（由一个不可见的空间填充组件帮助）对组合框进行布局。</li>
+<li>每一个<code>ConversionPanel</code> ，一个未命名的实例<code>JPanel</code>子类（颜色为蓝色）将两个组件（一个文本字段和一个滑块）组合在一起并限制了它们的大小。这些每个<code>JPanel</code>实例使用从上到下<code>BoxLayout</code>反对布置其内容。</li>
+</ul>
+<p>这是什么<code>Converter</code>应用程序通常看起来像。</p>
+<center><img src="../../figures/uiswing/components/ConverterMetal.png" width="288" height="198" align="bottom" alt="普通转换器"></center><p>作为<code>Converter</code>如示例所示，面板对于将组件分组，简化组件布局以及在组件组周围放置边框很有用。本节的其余部分提供有关组件分组和布局的提示。有关使用边框的信息，请参见<a class="TutorialLink" href="../components/border.html" target="_top">如何使用边框</a> 。</p>
+<h2><a name="layout" id="layout">设置布局管理器</a></h2>
+<p>像其他容器一样，面板使用布局管理器来定位和调整其组件的大小。默认情况下，面板的布局管理器是<a class="TutorialLink" href="../layout/flow.html" target="_top"><code>FlowLayout</code></a> ，它将面板的内容连续放置。您可以通过以下方式轻松地使面板使用任何其他布局管理器： <code>setLayout</code>方法或在创建面板时通过指定布局管理器。由于性能原因，后一种方法是可取的，因为它避免了不必要的创建<code>FlowLayout</code>宾语。</p>
+<p>这是创建面板时如何设置布局管理器的示例。</p>
+<div class="codeblock"><pre>
+JPanel p = new JPanel(new BorderLayout()); //PREFERRED!
+</pre></div>
+<p>这种方法不适用于<code>BoxLayout</code> ，因为<code>BoxLayout</code>构造函数需要一个预先存在的容器。这是一个使用的例子<code>BoxLayout</code> 。</p>
+<div class="codeblock"><pre>
+JPanel p = new JPanel();
+p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+</pre></div>
+<h2><a name="add" id="add">添加组件</a></h2>
+<p>将组件添加到面板时，可以使用<code>add</code>方法。您确切地指定了哪些参数<code>add</code>方法取决于面板使用的布局管理器。当布局管理器是<code>FlowLayout</code> ， <code>BoxLayout</code> ， <code>GridLayout</code> ， 要么<code>SpringLayout</code> ，您通常会使用一个参数<code>add</code>方法，如下所示：</p>
+<div class="codeblock"><pre>
+aFlowPanel.add(aComponent);
+aFlowPanel.add(anotherComponent);
+</pre></div>
+<p>当布局管理器是<code>BorderLayout</code> ，您需要提供一个参数来指定添加的组件在面板中的位置。例如：</p>
+<div class="codeblock"><pre>
+aBorderPanel.add(aComponent, BorderLayout.CENTER);
+aBorderPanel.add(anotherComponent, BorderLayout.PAGE_END);
+</pre></div>
+<p>用<code>GridBagLayout</code>您可以使用<code>add</code>方法，但您必须以某种方式为每个组件指定<a class="TutorialLink" href="../layout/gridbag.html#gridbagConstraints" target="_top">网格袋约束</a> 。</p>
+<p>有关选择和使用标准布局管理器的信息，请参阅《 <a class="TutorialLink" href="../layout/using.html" target="_top">使用布局管理器》</a> 。</p>
+<h2><a name="api" id="api">面板API</a></h2>
+<p>中的API <code>JPanel</code>类本身是最小的。您最有可能在<code>JPanel</code>对象是它从其超类继承的对象- <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html" target="_blank"><code>JComponent</code></a> ， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html" target="_blank"><code>Container</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html" target="_blank"><code>Component</code></a> 。下表列出了您最可能使用的API，与<a class="TutorialLink" href="../components/border.html" target="_top">边框</a>和<a href="jcomponent.html#layoutapi">布局提示</a>有关的方法除外。有关所有API的更多信息<code>JComponent</code>对象可以使用，请参见<a href="jcomponent.html">JComponent类</a> 。</p>
+<p>
+</p>
+<ul>
+<li><a href="#creating">创建一个<code>JPanel</code></a></li>
+<li><a href="#contents">管理容器的组件</a></li>
+<li><a href="#layoutapi">设置或获取布局管理器</a></li>
+</ul>
+<table border="1" summary="methods for creating a jpanel">
+<caption><a name="creating" id="creating" style="font-weight:bold">创建一个<code>JPanel</code></a></caption>
+<tbody><tr>
+<th align="left"><a name="creating__1" id="creating__1">建设者</a></th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JPanel.html#JPanel--" target="_blank">JPanel（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JPanel.html#JPanel-java.awt.LayoutManager-" target="_blank">JPanel（LayoutManager）</a></td>
+<td>创建一个面板。的<code>LayoutManager</code>参数为新面板提供布局管理器。默认情况下，面板使用<code>FlowLayout</code>布置其组件。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for managing a container's components">
+<caption><a name="contents" id="contents" style="font-weight:bold">管理容器的组件</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-" target="_blank">无效添加（组件）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-int-" target="_blank">void add（Component，int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-java.lang.Object-" target="_blank">无效添加（组件，对象）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-java.lang.Object-int-" target="_blank">无效add（Component，Object，int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.lang.String-java.awt.Component-" target="_blank">void add（String，Component）</a></td>
+<td>将指定的组件添加到面板中。存在时， <code>int</code>参数是容器内组件的索引。默认情况下，添加的第一个组件位于索引0，第二个组件位于索引1，依此类推。的<code>Object</code>参数取决于布局管理器，通常向布局管理器提供有关所添加组件的位置和其他布局约束的信息。的<code>String</code>参数类似于<code>Object</code>参数。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getComponentCount--" target="_blank">int getComponentCount（）</a></td>
+<td>获取此面板中的组件数。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getComponent-int-" target="_blank">组件getComponent（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getComponentAt-int-int-" target="_blank">组件getComponentAt（int，int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getComponentAt-java.awt.Point-" target="_blank">组件getComponentAt（Point）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getComponents--" target="_blank">Component [] getComponents（）</a></td>
+<td>获取指定的组件。您可以根据其索引或<em>x，y</em>位置获得组件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#remove-java.awt.Component-" target="_blank">无效remove（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#remove-int-" target="_blank">无效remove（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#removeAll--" target="_blank">无效removeAll（）</a></td>
+<td>删除指定的组件。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for setting or getting the layout manager">
+<caption><a name="layoutapi" id="layoutapi" style="font-weight:bold">设置或获取布局管理器</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#setLayout-java.awt.LayoutManager-" target="_blank">setLayout（LayoutManager）无效</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#getLayout--" target="_blank">LayoutManager getLayout（）</a></td>
+<td>设置或获取此面板的布局管理器。布局管理器负责根据某些原理将面板的组件放置在面板的边界内。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用面板的示例</a></h2>
+<p>本课程中使用的许多示例<code>JPanel</code>对象。下表列出了一些。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#Converter"><code>Converter</code></a></td>
+<td>这个部分</td>
+<td>使用五个面板，其中四个使用<code>BoxLayout</code>其中之一使用<code>GridLayout</code> 。面板使用边框以及必要时的尺寸和对齐提示来影响布局。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ListDemo"><code>ListDemo</code></a></td>
+<td><a href="list.html">如何使用清单</a></td>
+<td>使用面板，默认情况下<code>FlowLayout</code>经理，将三个组件连续排列在中心。
+</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ToolBarDemo"><code>ToolBarDemo</code></a></td>
+<td><a href="toolbar.html">如何使用工具栏</a></td>
+<td>使用面板作为内容窗格。该面板包含三个组件，分别由<code>BorderLayout</code> 。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#BorderDemo"><code>BorderDemo</code></a></td>
+<td><a href="border.html">如何使用边框</a></td>
+<td>包含许多具有各种边框的面板。几个面板使用<code>BoxLayout</code> 。</td>
+</tr>
+<tr>
+<td><a href="../examples/layout/index.html#BoxLayoutDemo"><code>BoxLayoutDemo</code></a></td>
+<td><a href="../layout/box.html">如何使用BoxLayout</a></td>
+<td>说明了将面板与Swing一起使用<code>BoxLayout</code>经理。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="menu.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="passwordfield.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用菜单<br><b>下一页：</b>如何使用密码字段</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

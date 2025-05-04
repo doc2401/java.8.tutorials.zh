@@ -1,0 +1,598 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>服务提供者接口简介（Java™教程>声音）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="java programming, learn java, java sample code, ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkAHEAD"><a href="sampled-overview.html">采样包概述</a></div>
+<div class="linkAHEAD"><a href="accessing.html">访问音频系统资源</a></div>
+<div class="linkAHEAD"><a href="playing.html">播放音频</a></div>
+<div class="linkAHEAD"><a href="capturing.html">捕捉音频</a></div>
+<div class="linkAHEAD"><a href="controls.html">使用控件处理音频</a></div>
+<div class="linkAHEAD"><a href="converters.html">使用文件和格式转换器</a></div>
+<div class="linkAHEAD"><a href="overview-MIDI.html">MIDI包概述</a></div>
+<div class="linkAHEAD"><a href="accessing-MIDI.html">访问MIDI系统资源</a></div>
+<div class="linkAHEAD"><a href="MIDI-messages.html">传输和接收MIDI信息</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-intro.html">音序器简介</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-methods.html">使用定序器方法</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-adv.html">使用高级音序器功能</a></div>
+<div class="linkAHEAD"><a href="MIDI-synth.html">合成声音</a></div>
+<div class="nolinkAHEAD">服务提供商接口简介</div>
+<div class="linkAHEAD"><a href="SPI-providing-sampled.html">提供音频采样服务</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-MIDI.html">提供MIDI服务</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>踪迹：</b>声音</div>
+            <div id="BreadCrumbs">
+                <a href="../index.html" target="_top">主页</a> > <a href="./index.html" target="_top">声音</a>
+            </div>
+            <div class="NavBit">
+                <a href="MIDI-synth.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="SPI-providing-sampled.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>服务提供商接口简介</h1></div>
+            <div id="PageContent">
+
+<h2><a name="what" id="what"></a>什么是服务？</h2>
+<p>服务是声音处理功能的单元，当应用程序使用Java Sound API的实现时，这些功能会自动提供。它们由负责读取，写入，混合，处理和转换音频和MIDI数据的对象组成。Java Sound API的实现通常提供一组基本的服务，但是API中还包括一些机制，以支持第三方开发人员（或实现本身的供应商）开发新的声音服务。这些新服务可以“插入”现有已安装的实现中，以扩展其功能而无需新版本。在Java Sound API架构中，第三方服务以某种方式集成到系统中，使得应用程序与第三方服务的接口与“内置”服务的接口相同。在某些情况下，使用<code>javax.sound.sampled</code>和<code>javax.sound.midi</code>软件包甚至可能不知道它们正在使用第三方服务。</p>
+<p>潜在的第三方采样音频服务的示例包括：</p>
+<ul>
+<li>声音文件读写器</li>
+<li>在不同音频数据格式之间转换的转换器</li>
+<li>新的音频混音器和输入/输出设备，无论是纯软件实现还是带软件接口的硬件实现</li>
+</ul>
+<p>第三方MIDI服务可能包括：</p>
+<ul>
+<li>MIDI文件读取器和写入器</li>
+<li>各种音库文件的阅读器（通常特定于特定的合成器）</li>
+<li>MIDI控制的声音合成器，音序器和I / O端口，无论是纯软件实现还是带软件接口的硬件实现</li>
+</ul>
+<h2><a name="how" id="how"></a>服务如何运作</h2>
+<p>的<code>javax.sound.sampled</code>和<code>javax.sound.midi</code>软件包为希望在其应用程序中包括声音服务的应用程序开发人员提供功能。这些软件包面向声音服务的<em>消费者</em> ，提供了获取有关，控制以及访问音频和MIDI服务的信息的接口。此外，Java Sound API还提供了两个软件包，这些软件包定义了声音服务<em>提供者</em>要使用的抽象类： <code>javax.sound.sampled.spi</code>和<code>javax.sound.midi.spi</code>包。</p>
+<p>新的声音服务的开发人员在SPI包中实现适当类的具体子类。这些子类以及支持新服务所需的任何其他类都放置在Java归档（JAR）归档文件中，其中包含所包含服务的描述。当该JAR文件安装在用户的<code>CLASSPATH</code> ，运行时系统会自动使新服务可用，从而扩展了Java平台的运行时系统的功能。</p>
+<p>一旦安装了新服务，就可以像以前安装的任何服务一样对其进行访问。服务的使用者可以通过调用以下方法获取有关新服务的信息，或获取新服务类本身的实例： <code>AudioSystem</code>和<code>MidiSystem</code>类（在<code>javax.sound.sampled</code>和<code>javax.sound.midi</code>包）以返回有关新服务的信息，或返回新或现有服务类本身的实例。应用程序不需要（也不应）直接引用SPI包（及其子类）中的类来利用已安装的服务。</p>
+<p>例如，假设一个名为Acme Software，Inc.的假设服务提供商有兴趣提供一种允许应用程序读取新格式的声音文件（但其音频数据为标准数据格式的文件）的程序包。SPI类<code>AudioFileReader</code>可以细分为一个类，例如， <code>AcmeAudioFileReader</code> 。在新的子类中，Acme将提供在中定义的所有方法的实现。 <code>AudioFileReader</code> ;在这种情况下，只有两种方法（带有参数变体）， <code>getAudioFileFormat</code>和<code>getAudioInputStream</code> 。然后，当应用程序尝试读取碰巧是Acme的文件格式的声音文件时，它将调用<code>AudioSystem</code>上课<code>javax.sound.sampled</code>访问文件及其有关信息。方法<code>AudioSystem.getAudioInputStream</code>和<code>AudioSystem.getAudioFileFormat</code>提供标准的API来读取音频流；与<code>AcmeAudioFileReader</code>如果安装了此类，则扩展该接口以透明地支持新文件类型。应用程序开发人员不需要直接访问新注册的SPI类： <code>AudioSystem</code>对象方法将查询传递给已安装的对象<code>AcmeAudioFileReader</code>类。</p>
+<p>拥有这些“工厂”类有什么意义？为什么不允许应用程序开发人员直接访问新提供的服务？这是一种可能的方法，但是让服务的所有管理和实例化都通过网守系统对象进行传递，使应用程序开发人员不必知道有关已安装服务的身份的任何信息。应用程序开发人员仅使用对他们有价值的服务，甚至可能没有意识到它。同时，该体系结构允许服务提供商有效地管理其程序包中的可用资源。</p>
+<p>新声音服务的使用通常对应用程序是透明的。例如，设想一种情况，应用程序开发人员希望从文件中读取音频流。假如说<code>thePathName</code>识别音频输入文件，程序将执行以下操作：</p>
+<div class="codeblock"><pre>
+    File theInFile = new File(thePathName);
+    AudioInputStream theInStream = AudioSystem.getAudioInputStream(theInFile); 
+</pre></div>
+<p>在幕后， <code>AudioSystem</code>确定哪些已安装的服务可以读取文件，并要求其提供音频数据作为<code>AudioInputStream</code>宾语。开发人员可能不知道，甚至不关心输入的音频文件是某种新文件格式（例如Acme的格式），并受安装的第三方服务支持。程序与流的首次联系是通过<code>AudioSystem</code>对象，以及其随后对流及其属性的所有访问均通过以下方法<code>AudioInputStream</code> 。这两个都是标准对象<code>javax.sound.sampled</code> API；新文件格式可能需要的特殊处理已完全隐藏。</p>
+<h2><a name="how_providers" id="how_providers"></a>供应商如何准备新服务</h2>
+<p>服务提供者以特殊格式的JAR文件提供其新服务，这些文件将安装在用户系统上Java运行时将在其中找到它们的目录中。JAR文件是归档文件，每个文件都包含可能在归档内的分层目录结构中组织的文件集。在接下来的几页中，将讨论有关准备进入这些归档文件的类文件的详细信息，这些文件描述了音频和MIDI SPI软件包的详细信息。在这里，我们仅概述JAR文件的创建过程。</p>
+<p>一个或多个新服务的JAR文件应包含JAR文件中支持的每个服务的类文件。遵循Java平台的约定，每个类文件都具有新定义的类的名称，该类是抽象服务提供程序类之一的具体子类。JAR文件还必须包含新服务实现所需的任何支持类。为了使运行时系统的服务提供者机制可以定位一个或多个新服务，JAR文件还必须包含特殊文件（如下所述），这些文件将SPI类名称映射到所定义的新子类。</p>
+<p>为了继续上述示例，Acme Software，Inc.正在分发一包新的采样音频服务。让我们假设这个包包含两个新服务：</p>
+<ul>
+<li>的<code>AcmeAudioFileReader</code>类，它是上面提到的，并且是<code>AudioFileReader</code></li>
+<li>的子类<code>AudioFileWriter</code>叫<code>AcmeAudioFileWriter</code> ，它将以Acme的新格式写入声音文件</li>
+</ul>
+<p>从任意目录开始-称它为<code>/devel</code> —在我们想要进行构建的位置，我们创建子目录并将新的类文件放入其中，这些子文件的组织方式应提供所需的路径名，以引用新类：</p>
+<div class="codeblock"><pre>
+    com/acme/AcmeAudioFileReader.class
+    com/acme/AcmeAudioFileWriter.class
+</pre></div>
+<p>另外，对于每个子类化的新SPI类，我们都在一个特别命名的目录中创建一个映射文件。 <code>META-INF/services</code> 。文件的名称是被子类化的SPI类的名称，并且文件包含该SPI抽象类的新子类的名称。</p>
+<p>我们创建文件</p>
+<div class="codeblock"><pre>
+  META-INF/services/javax.sound.sampled.spi.AudioFileReader
+</pre></div>
+<p>其中包括</p>
+<div class="codeblock"><pre>
+    # Providers of sound file-reading services 
+    # (a comment line begins with a pound sign)
+    com.acme.AcmeAudioFileReader
+</pre></div>
+<p>还有文件</p>
+<div class="codeblock"><pre>
+  META-INF/services/javax.sound.sampled.spi.AudioFileWriter
+</pre></div>
+<p>其中包括</p>
+<div class="codeblock"><pre>
+    # Providers of sound file-writing services 
+    com.acme.AcmeAudioFileWriter
+</pre></div>
+<p>现在我们开始<code>jar</code>从任何目录使用命令行：</p>
+<div class="codeblock"><pre>
+jar cvf acme.jar -C /devel .
+</pre></div>
+<p>的<code>-C</code>选择原因<code>jar</code>切换到<code>/devel</code>目录，而不使用执行命令的目录。最后时期论点指示<code>jar</code>存档该目录的所有内容（即， <code>/devel</code> ），而不是目录本身。</p>
+<p>此运行将创建文件<code>acme.jar</code>内容：</p>
+<div class="codeblock"><pre>
+com/acme/AcmeAudioFileReader.class
+com/acme/AcmeAudioFileWriter.class
+META-INF/services/javax.sound.sampled.spi.AudioFileReader
+META-INF/services/javax.sound.sampled.spi.AudioFileWriter
+META-INF/Manifest.mf
+</pre></div>
+<p>文件<code>Manifest.mf,</code>这是由<code>jar</code>实用程序本身是存档中包含的所有文件的列表。</p>
+<h2><a name="how_users" id="how_users"></a>用户如何安装新服务</h2>
+<p>对于希望通过其应用程序访问新服务的最终用户（或系统管理员），安装很简单。他们将提供的JAR文件放在其目录中<code>CLASSPATH.</code>执行后，Java运行时将在需要时找到引用的类。</p>
+<p>为同一服务安装多个提供程序不是错误。例如，两个不同的服务提供商可能会提供支持以读取相同类型的声音文件。在这种情况下，系统会任意选择提供者之一。关心选择了哪个提供程序的用户，应仅安装所需的提供程序。</p>
+<p> </p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="MIDI-synth.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="SPI-providing-sampled.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>合成声音<br><b>下一页：</b>提供采样音频服务</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

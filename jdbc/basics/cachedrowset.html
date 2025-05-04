@@ -1,0 +1,772 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>使用CachedRowSetObjects（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="nolinkAHEAD">使用CachedRowSetObjects</div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="jdbcrowset.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="joinrowset.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用CachedRowSetObjects</h1></div>
+            <div id="PageContent">
+
+<p>一种<code>CachedRowSet</code>对象的特殊之处在于它可以在不连接到其数据源的情况下运行，也就是说，它是<i>断开连接的</i> <code>RowSet</code>宾语。它之所以得名，是因为它将数据存储（缓存）在内存中，这样它就可以对自己的数据进行操作，而不是对数据库中存储的数据进行操作。</p>
+<p>的<code>CachedRowSet</code>接口是所有断开连接的超级接口<code>RowSet</code>对象，因此此处演示的所有内容也适用于<code>WebRowSet</code> ， <code>JoinRowSet</code>和<code>FilteredRowSet</code>对象。</p>
+<p>请注意，尽管<code>CachedRowSet</code>对象（和<code>RowSet</code>从它派生的对象）几乎总是一个关系数据库， <code>CachedRowSet</code>对象能够从以表格格式存储其数据的任何数据源获取数据。例如，平面文件或电子表格可能是数据源。当<code>RowSetReader</code>断开连接的对象<code>RowSet</code>实现对象以从此类数据源读取数据。参考实现<code>CachedRowSet</code>界面有一个<code>RowSetReader</code>从关系数据库读取数据的对象，因此在本教程中，数据源始终是数据库。</p>
+<p>涵盖以下主题：</p>
+<ul>
+<li><a href="#setting-up-cachedrowset-object">设置CachedRowSet对象</a></li>
+<li><a href="#populating-cachedrowset-object">填充CachedRowSet对象</a></li>
+<li><a href="#reader">读者做什么</a></li>
+<li><a href="#updating-cachedrowset-object">更新CachedRowSet对象</a></li>
+<li><a href="#updating-data-source">更新数据源</a></li>
+<li><a href="#writer">作家做什么</a></li>
+<li><a href="#notifying-listeners">通知听众</a></li>
+<li><a href="#sending-large-amounts-of-data">发送大量数据</a></li>
+</ul>
+<!-- ****************************************** -->
+<h2><a name="setting-up-cachedrowset-object" id="setting-up-cachedrowset-object">设置CachedRowSet对象</a></h2>
+<p>设置一个<code>CachedRowSet</code>对象涉及以下内容：</p>
+<ul>
+<li><a href="#creating-cachedrowset-object">创建CachedRowSet对象</a></li>
+<li><a href="#setting-cachedrowset-properties">设置CachedRowSet属性</a></li>
+<li><a href="#setting-key-columns">设置键列</a></li>
+</ul>
+<!-- ****************************************** -->
+<h3><a name="creating-cachedrowset-object" id="creating-cachedrowset-object">创建CachedRowSet对象</a></h3>
+<p>您可以创建一个新的<code>CachedRowSet</code>对象以不同的方式：</p>
+<ul>
+<li><a href="#using-default-constructor">使用默认构造函数</a></li>
+<li>使用的实例<code>RowSetFactory</code> ，它是从类创建的<code>RowSetProvider</code> ：有关更多信息，请参见<a href="jdbcrowset.html#rowsetfactory">“</a> <a href="jdbcrowset.html">使用JdbcRowSet对象”</a>中的“ <a href="jdbcrowset.html">使用</a> <a href="jdbcrowset.html#rowsetfactory">RowSetFactory接口”</a> 。</li>
+</ul>
+<p><strong>注意</strong> ：或者，您可以使用<code>CachedRowSet</code> JDBC驱动程序的实现。但是， <code>RowSet</code>接口将与参考实现不同。这些实现将具有不同的名称和构造函数。例如，Oracle JDBC驱动程序的实现<code>CachedRowSet</code>接口被命名<code>oracle.jdbc.rowset.OracleCachedRowSet</code> 。</p>
+<!-- ****************************************** -->
+<h4><a name="using-default-constructor" id="using-default-constructor">使用默认构造函数</a></h4>
+<p>您可以使用以下一种方法来创建<code>CachedRowSet</code>对象是通过调用参考实现中定义的默认构造函数来完成的，如以下代码行所示：</p>
+<div class="codeblock"><pre>
+CachedRowSet crs = new CachedRowSetImpl();
+</pre></div>
+<p>物体<code>crs</code>其属性的默认值与<code>JdbcRowSet</code>对象在首次创建时具有。此外，已为其分配了默认实例<code>SyncProvider</code>实施， <code>RIOptimisticProvider</code> 。</p>
+<p>一种<code>SyncProvider</code>对象提供一个<code>RowSetReader</code>对象（ <i>读者</i> ）和一个<code>RowSetWriter</code>断开连接的对象（ <i>作家</i> ） <code>RowSet</code>对象需要从其数据源读取数据或将数据写回到其数据源。稍后将在“ <a href="#reader">读者做</a> <a href="#writer">什么</a> <a href="#reader">”</a>和<a href="#writer">“作家做什么</a> ”部分中说明读者和作家的工作。要记住的一件事是，读者和作家完全是在后台工作，因此对他们如何工作的解释仅供参考。对读者和作家有一定的了解，应该可以帮助您了解<code>CachedRowSet</code>界面在后台执行。</p>
+<h3><a name="setting-cachedrowset-properties" id="setting-cachedrowset-properties">设置CachedRowSet属性</a></h3>
+<p>通常，属性的默认值可以保持原样，但是您可以通过调用适当的setter方法来更改属性的值。您必须自行设置一些没有默认值的属性。</p>
+<p>为了获取数据，断开了<code>RowSet</code>对象必须能够连接到数据源，并具有一些选择要保存的数据的方法。以下属性保存获取与数据库的连接所需的信息。</p>
+<ul>
+<li><code>username</code> ：用户为获得访问权限而提供给数据库的名称</li>
+<li><code>password</code> ：用户的数据库密码</li>
+<li><code>url</code> ：用户要连接到的数据库的JDBC URL</li>
+<li><code>datasourceName</code> ：用于检索已向JNDI命名服务注册的DataSource对象的名称</li>
+</ul>
+<p>您必须设置这些属性中的哪一个取决于您将如何建立连接。首选方式是使用<code>DataSource</code>对象，但您注册一个对象可能不切实际<code>DataSource</code>具有JNDI命名服务的对象，通常由系统管理员来完成。因此，所有代码示例均使用<code>DriverManager</code>获得连接的机制，您可以使用<code>url</code>财产，而不是<code>datasourceName</code>属性。</p>
+<p>以下代码行设置了<code>username</code> ， <code>password</code>和<code>url</code>属性，以便可以使用<code>DriverManager</code>类。（您将找到JDBC URL设置为<code>url</code>属性在JDBC驱动程序的文档中。）</p>
+<div class="codeblock"><pre>
+public void setConnectionProperties(
+    String username, String password) {
+    crs.setUsername(username);
+    crs.setPassword(password);
+    crs.setUrl("jdbc:mySubprotocol:mySubname");
+    // ...
+</pre></div>
+<p>您必须设置的另一个属性是<code>command</code>属性。在参考实现中，数据被读入<code>RowSet</code>来自的对象<code>ResultSet</code>宾语。产生那个的查询<code>ResultSet</code> object是该值<code>command</code>属性。例如，以下代码行设置了<code>command</code>属性与产生一个<code>ResultSet</code>包含表中所有数据的对象<code>MERCH_INVENTORY</code> ：</p>
+<div class="codeblock"><pre>
+crs.setCommand("select * from MERCH_INVENTORY");
+</pre></div>
+<!-- ****************************************** -->
+<h3><a name="setting-key-columns" id="setting-key-columns">设置键列</a></h3>
+<p>如果您要对<code>crs</code>对象并希望将这些更新保存在数据库中，则必须再设置一条信息：键列。键列本质上与主键相同，因为它们指示一个或多个唯一标识行的列。区别在于，在数据库的表上设置了主键，而在特定表上设置了键列<code>RowSet</code>宾语。以下代码行设置了以下内容的关键列： <code>crs</code>到第一列：</p>
+<div class="codeblock"><pre>
+int [] keys = {1};
+crs.setKeyColumns(keys);
+</pre></div>
+<p>表格的第一栏<code>MERCH_INVENTORY</code>是<code>ITEM_ID</code> 。它可以用作键列，因为每个项目标识都不相同，因此唯一标识表中的一行，而仅标识一行<code>MERCH_INVENTORY</code> 。另外，此列在定义中被指定为主键<code>MERCH_INVENTORY</code>表。方法<code>setKeyColumns</code>采用一个数组来考虑以下事实：它可能需要两列或更多列来唯一地标识一行。</p>
+<p>有趣的是，该方法<code>setKeyColumns</code>没有为属性设置值。在这种情况下，它将设置字段的值<code>keyCols</code> 。键列在内部使用，因此在设置键列之后，您无需再对其进行任何操作。在“ <a href="#syncresolver">使用SyncResolver对象</a> ”部分中，您将看到如何以及何时使用键列。</p>
+<!-- ****************************************** -->
+<h2><a name="populating-cachedrowset-object" id="populating-cachedrowset-object">填充CachedRowSet对象</a></h2>
+<p>填充断开连接<code>RowSet</code>与填充连接的对象相比，对象需要更多的工作<code>RowSet</code>宾语。幸运的是，额外的工作是在后台完成的。完成准备工作后， <code>CachedRowSet</code>宾语<code>crs</code> ，下面的代码行<code>crs</code> ：</p>
+<div class="codeblock"><pre>
+crs.execute();
+</pre></div>
+<p>数据在<code>crs</code>是中的数据<code>ResultSet</code>通过在command属性中执行查询而产生的对象。</p>
+<p>不同的是<code>CachedRowSet</code>实施<code>execute</code>该方法比<code>JdbcRowSet</code>实施。或更正确地说， <code>CachedRowSet</code>该方法执行的对象的读取器将其任务委托给它的对象执行的工作更多。</p>
+<p>每次断开<code>RowSet</code>对象有一个<code>SyncProvider</code>分配给它的对象<code>SyncProvider</code>对象是什么提供<code>RowSet</code>对象的<em>读者</em> （ <code>RowSetReader</code>宾语）。当。。。的时候<code>crs</code>对象已创建，它被用作默认对象<code>CachedRowSetImpl</code>构造函数，除了设置属性的默认值外，还分配<code>RIOptimisticProvider</code>实施为默认<code>SyncProvider</code>宾语。</p>
+<!-- ****************************************** -->
+<h2><a name="reader" id="reader">读者做什么</a></h2>
+<p>当应用程序调用该方法时<code>execute</code> ，已断开连接<code>RowSet</code>对象的阅读器在幕后工作以填充<code>RowSet</code>带有数据的对象。新创建的<code>CachedRowSet</code>对象未连接到数据源，因此必须获得与该数据源的连接才能从中获取数据。默认的参考实现<code>SyncProvider</code>对象（ <code>RIOptimisticProvider</code> ）提供了一个读取器，该读取器使用为用户名，密码以及JDBC URL或数据源名称（以较新设置的那个为准）设置的值来获得连接。然后，阅读器执行命令查询集。它读取<code>ResultSet</code>查询产生的对象，填充<code>CachedRowSet</code>带有该数据的对象。最后，阅读器关闭连接。</p>
+<!-- ****************************************** -->
+<h2><a name="updating-cachedrowset-object" id="updating-cachedrowset-object">更新CachedRowSet对象</a></h2>
+<p>在“茶歇”方案中，所有者希望简化操作。所有者决定让仓库中的员工将库存直接输入PDA（个人数字助理）中，从而避免了由第二个人进行数据输入的容易出错的过程。一种<code>CachedRowSet</code>在这种情况下，对象是理想的，因为它是轻量级的，可序列化的，并且可以在不连接数据源的情况下进行更新。</p>
+<p>所有者将让应用程序开发团队为PDA创建一个GUI工具，仓库员工将使用该工具来输入库存数据。总部将创建一个<code>CachedRowSet</code>对象，其中包含显示当前清单的表，并使用Internet将其发送到PDA。当仓库员工使用GUI工具输入数据时，该工具会将每个条目添加到一个数组中， <code>CachedRowSet</code>对象将用于在后台执行更新。完成清单后，PDA将其新数据发送回总部，然后将数据上传到总部。</p>
+<p>本节涵盖以下主题：</p>
+<ul>
+<li><a href="#updating-column-value">更新列值</a></li>
+<li><a href="#inserting-and-deleting-rows">插入和删除行</a></li>
+</ul>
+<!-- ****************************************** -->
+<h3><a name="updating-column-value" id="updating-column-value">更新列值</a></h3>
+<p>更新数据<code>CachedRowSet</code>对象与更新<code>JdbcRowSet</code>宾语。例如，以下代码片段来自<code><a href="gettingstarted.html">CachedRowSetSample.java</a></code>增加列中的值<code>QUAN</code>在其行中按1 <code>ITEM_ID</code>列的项目标识符为<code>12345</code> ：</p>
+<div class="codeblock"><pre>
+while (crs.next()) {
+    System.out.println(
+        "Found item " + crs.getInt("ITEM_ID") +
+        ": " + crs.getString("ITEM_NAME"));
+    if (crs.getInt("ITEM_ID") == 1235) {
+        int currentQuantity = crs.getInt("QUAN") + 1;
+        System.out.println("Updating quantity to " +
+          currentQuantity);
+        crs.updateInt("QUAN", currentQuantity + 1);
+        crs.updateRow();
+        // Synchronizing the row
+        // back to the DB
+        crs.acceptChanges(con);
+    }
+</pre></div>
+<!-- ****************************************** -->
+<h3><a name="inserting-and-deleting-rows" id="inserting-and-deleting-rows">插入和删除行</a></h3>
+<p>就像更新列值一样，用于在行中插入和删除行的代码<code>CachedRowSet</code>对象与<code>JdbcRowSet</code>宾语。</p>
+<p>以下摘录自<code><a href="gettingstarted.html">CachedRowSetSample.java</a></code>将新行插入<code>CachedRowSet</code>宾语<code>crs</code> ：</p>
+<div class="codeblock"><pre>
+crs.moveToInsertRow();
+crs.updateInt("ITEM_ID", newItemId);
+crs.updateString("ITEM_NAME", "TableCloth");
+crs.updateInt("SUP_ID", 927);
+crs.updateInt("QUAN", 14);
+Calendar timeStamp;
+timeStamp = new GregorianCalendar();
+timeStamp.set(2006, 4, 1);
+crs.updateTimestamp(
+    "DATE_VAL",
+    new Timestamp(timeStamp.getTimeInMillis()));
+crs.insertRow();
+crs.moveToCurrentRow();
+</pre></div>
+<p>如果总部决定停止库存特定物品，则可能会删除该咖啡本身的行。但是，在这种情况下，使用PDA的仓库员工也可以将其删除。以下代码片段查找行中的值<code>ITEM_ID</code>列为<code>12345</code>并将其从<code>CachedRowSet</code><code>crs</code> ：</p>
+<div class="codeblock"><pre>
+while (crs.next()) {
+    if (crs.getInt("ITEM_ID") == 12345) {
+        crs.deleteRow();
+        break;
+    }
+}
+</pre></div>
+<!-- ****************************************** -->
+<h2><a name="updating-data-source" id="updating-data-source">更新数据源</a></h2>
+<p>更改<code>JdbcRowSet</code>对象并进行更改<code>CachedRowSet</code>宾语。因为一个<code>JdbcRowSet</code>对象连接到其数据源，方法<code>updateRow</code> ， <code>insertRow</code>和<code>deleteRow</code>可以同时更新<code>JdbcRowSet</code>对象和数据源。在断开连接的情况下<code>RowSet</code>对象，但是，这些方法会更新存储在<code>CachedRowSet</code>对象的内存，但不会影响数据源。断开连接<code>RowSet</code>对象必须调用方法<code>acceptChanges</code>为了将其更改保存到数据源。在清单场景中，回到总部，应用程序将调用该方法<code>acceptChanges</code>用列的新值更新数据库<code>QUAN</code> 。</p>
+<div class="codeblock"><pre>
+crs.acceptChanges();
+</pre></div>
+<!-- ****************************************** -->
+<h2><a name="writer" id="writer">作家做什么</a></h2>
+<p>喜欢的方法<code>execute</code> ， 方法<code>acceptChanges</code>看不见地工作。而方法<code>execute</code>将其工作委托给<code>RowSet</code>对象的读者，方法<code>acceptChanges</code>将其任务委托给<code>RowSet</code>对象的作者。在后台，编写器打开与数据库的连接，并使用对数据库所做的更改来更新数据库。 <code>RowSet</code>对象，然后关闭连接。</p>
+<!-- ****************************************** -->
+<h3>使用默认实现</h3>
+<p>困难在于可能会发生<i>冲突</i> 。冲突是指另一方已更新数据库中与在服务器中更新的值相对应的值的情况。 <code>RowSet</code>宾语。哪个值应保留在数据库中？发生冲突时，作者所做的工作取决于冲突的实现方式，并且有很多可能性。一方面，编写者甚至不检查冲突，而只是将所有更改写入数据库。情况就是这样<code>RIXMLProvider</code>实现，由<code>WebRowSet</code>宾语。另一方面，编写者通过设置数据库锁来防止其他人进行更改，从而确保不存在冲突。</p>
+<p>的作家<code>crs</code>对象是默认提供的对象<code>SyncProvider</code>实施， <code>RIOptimisticProvider</code> 。的<code>RIOPtimisticProvider</code>实现的名称来自使用乐观并发模型的事实。该模型假定几乎没有冲突，因此不设置数据库锁。作者检查是否存在任何冲突，如果没有冲突，则将对更改的更改写入。 <code>crs</code>对象添加到数据库，这些更改将变得持久。如果有任何冲突，默认是不写新的<code>RowSet</code>值到数据库。</p>
+<p>在这种情况下，默认行为效果很好。因为总部的任何人都不可能改变<code>QUAN</code>的列<code>COF_INVENTORY</code> ，不会有任何冲突。结果，将值输入到<code>crs</code>仓库中的对象将被写入数据库，因此将是持久的，这是期望的结果。</p>
+<h2><a name="syncresolver" id="syncresolver">使用SyncResolver对象</a></h2>
+<p>但是，在其他情况下，可能存在冲突。为了适应这些情况， <code>RIOPtimisticProvider</code>实现提供了一个选项，使您可以查看冲突中的值并确定应保留的值。此选项是使用<code>SyncResolver</code>宾语。</p>
+<p>当作者完成寻找冲突并发现一个或多个冲突时，它将创建一个<code>SyncResolver</code>包含导致冲突的数据库值的对象。接下来，方法<code>acceptChanges</code>抛出一个<code>SyncProviderException</code>对象，应用程序可以捕获并用于检索对象<code>SyncResolver</code>宾语。以下几行代码检索<code>SyncResolver</code>宾语<code>resolver</code> ：</p>
+<div class="codeblock"><pre>
+try {
+    crs.acceptChanges();
+} catch (SyncProviderException spe) {
+    SyncResolver resolver = spe.getSyncResolver();
+}
+</pre></div>
+<p>物体<code>resolver</code>是一个<code>RowSet</code>复制对象的对象<code>crs</code>对象，只包含导致冲突的数据库中的值。所有其他列值均为空。</p>
+<p>随着<code>resolver</code>对象，您可以遍历其行以找到不为null的值，因此是引起冲突的值。然后，您可以将值定位在<code>crs</code>反对并进行比较。以下代码片段检索<code>resolver</code>并使用<code>SyncResolver</code>方法<code>nextConflict</code>遍历具有冲突值的行。物体<code>resolver</code>获取每个冲突值的状态，如果是<code>UPDATE_ROW_CONFLICT</code> ，表示<code>crs</code>在发生冲突时正在尝试更新， <code>resolver</code>对象获取该值的行号。然后代码将光标移到<code>crs</code>对象到同一行。接下来，代码在该行的该行中找到该列<code>resolver</code>包含冲突值的对象，该值将为非null值。从两个位置检索该列中的值后<code>resolver</code>和<code>crs</code>对象，您可以比较这两个对象并确定要成为持久对象的对象。最后，代码在两个<code>crs</code>对象和数据库使用的方法<code>setResolvedValue</code> ，如以下代码所示：</p>
+<div class="codeblock"><pre>
+try {
+    crs.acceptChanges();
+} catch (SyncProviderException spe) {
+    SyncResolver resolver = spe.getSyncResolver();
+  
+    // value in crs
+    Object crsValue;
+  
+    // value in the SyncResolver object
+    Object resolverValue; 
+  
+    // value to be persistent
+    Object resolvedValue; 
+
+    while (resolver.nextConflict()) {
+        if (resolver.getStatus() ==
+            SyncResolver.UPDATE_ROW_CONFLICT) {
+            int row = resolver.getRow();
+            crs.absolute(row);
+            int colCount =
+                crs.getMetaData().getColumnCount();
+            for (int j = 1; j &lt;= colCount; j++) {
+                if (resolver.getConflictValue(j)
+                    != null) {
+                    crsValue = crs.getObject(j);
+                    resolverValue = 
+                        resolver.getConflictValue(j);
+
+                    // ...
+                    // compare crsValue and
+                    // resolverValue to
+                    // determine the value to be
+                    // persistent
+
+                    resolvedValue = crsValue;
+                    resolver.setResolvedValue(
+                        j, resolvedValue);
+                }
+            }
+        }
+    }
+}
+</pre></div>
+<!-- ****************************************** -->
+<h2><a name="notifying-listeners" id="notifying-listeners">通知听众</a></h2>
+<p>成为JavaBeans组件意味着<code>RowSet</code>当某些事情发生时，对象可以通知其他组件。例如，如果<code>RowSet</code>对象更改， <code>RowSet</code>对象可以将该更改通知相关方。关于此通知机制的好处是，作为应用程序程序员，您要做的就是添加或删除将要通知的组件。</p>
+<p>本节涵盖以下主题：</p>
+<ul>
+<li><a href="#setting-up-listeners">设置监听器</a></li>
+<li><a href="#how-notification-works">通知的工作方式</a></li>
+</ul>
+<!-- ****************************************** -->
+<h3><a name="setting-up-listeners" id="setting-up-listeners">设置监听器</a></h3>
+<p>一个<i>听众</i> <code>RowSet</code>对象是一个组件，可通过以下方式实现以下方法<code>RowSetListener</code>接口：</p>
+<ul>
+<li><code>cursorMoved</code> ：定义当光标移到侦听器中时侦听器将执行的操作（如果有）。 <code>RowSet</code>对象移动。</li>
+<li><code>rowChanged</code> ：定义当行中的一个或多个列值已更改，已插入行或已删除行时侦听器将执行的操作（如果有）。</li>
+<li><code>rowSetChanged</code> ：定义侦听器在<code>RowSet</code>对象已填充有新数据。</li>
+</ul>
+<p>一个可能希望成为侦听器的组件的示例是<code>BarGraph</code>图形化对象中的数据的对象<code>RowSet</code>宾语。随着数据的变化， <code>BarGraph</code>对象可以更新自身以反映新数据。</p>
+<p>作为应用程序程序员，要利用通知机制，您唯一要做的就是添加或删除侦听器。以下代码行意味着，每次将光标移到<code>crs</code>对象移动，值在<code>crs</code>被更改，或<code>crs</code>整体上获得新数据， <code>BarGraph</code>宾语<code>bar</code>将收到通知：</p>
+<div class="codeblock"><pre>
+crs.addRowSetListener(bar);
+</pre></div>
+<p>您还可以通过删除侦听器来停止通知，如下面的代码行所示：</p>
+<div class="codeblock"><pre>
+crs.removeRowSetListener(bar);
+</pre></div>
+<p>使用Coffee Break场景，假设总部定期与数据库核对，以获取其在线销售的咖啡的最新价格表。在这种情况下，监听者是<code>PriceList</code>宾语<code>priceList</code>在Coffee Break网站上，该网站必须实施<code>RowSetListener</code>方法<code>cursorMoved</code> ， <code>rowChanged</code>和<code>rowSetChanged</code> 。实施<code>cursorMoved</code>方法可能什么也不做，因为光标的位置不会影响<code>priceList</code>宾语。的实现<code>rowChanged</code>和<code>rowSetChanged</code>另一方面，方法必须确定进行了哪些更改并更新<code>priceList</code>相应地。</p>
+
+<h3><a name="how-notification-works" id="how-notification-works">通知的工作方式</a></h3>
+<p>在参考实现中，导致任何<code>RowSet</code>事件自动通知所有注册的侦听器。例如，任何移动光标的方法也会调用该方法<code>cursorMoved</code>在每个听众上。同样，方法<code>execute</code>调用方法<code>rowSetChanged</code>在所有听众上，以及<code>acceptChanges</code>来电<code>rowChanged</code>在所有听众上。</p>
+<!-- ****************************************** -->
+<h2><a name="sending-large-amounts-of-data" id="sending-large-amounts-of-data">发送大量数据</a></h2>
+<p>样例代码<a href="gettingstarted.html"><code>CachedRowSetSample.testCachedRowSet</code></a>演示了如何以较小的片段发送数据。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="jdbcrowset.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="joinrowset.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>使用JdbcRowSet对象<br><b>下一页：</b>使用JoinRowSet对象</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

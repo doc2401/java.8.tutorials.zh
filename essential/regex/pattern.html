@@ -1,0 +1,702 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>模式类的方法（Java™教程>基本类>正则表达式）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Java tutorial describes exceptions, basic input/output, concurrency, regular expressions, and the platform environment">
+     <meta name="keywords" content="java programming, learn java, java sample code, java exception, java input output, java threads, java regex, regular expressions, path, classpath, environment variable">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">常用表达</a></div>
+<div class="linkAHEAD"><a href="intro.html">介绍</a></div>
+<div class="linkAHEAD"><a href="test_harness.html">测试线束</a></div>
+<div class="linkAHEAD"><a href="literals.html">字符串文字</a></div>
+<div class="linkAHEAD"><a href="char_classes.html">角色类</a></div>
+<div class="linkAHEAD"><a href="pre_char_classes.html">预定义字符类</a></div>
+<div class="linkAHEAD"><a href="quant.html">量词</a></div>
+<div class="linkAHEAD"><a href="groups.html">捕获组</a></div>
+<div class="linkAHEAD"><a href="bounds.html">边界匹配器</a></div>
+<div class="nolinkAHEAD">模式类的方法</div>
+<div class="linkAHEAD"><a href="matcher.html">Matcher类的方法</a></div>
+<div class="linkAHEAD"><a href="pse.html">PatternSyntaxException类的方法</a></div>
+<div class="linkAHEAD"><a href="unicode.html">Unicode支持</a></div>
+<div class="linkAHEAD"><a href="resources.html">其他资源</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>基本课程<br><b>课程：</b>正则表达式</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">基本类</a> > <a href="index.html" target="_top">正则表达式</a>
+            </div>
+            <div class="NavBit">
+                <a href="bounds.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="matcher.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>模式类的方法</h1></div>
+            <div id="PageContent">
+
+<!--Methods of the Pattern Class-->
+<p>到目前为止，我们仅使用测试工具来创建<code>Pattern</code>最基本形式的对象。本节探讨了高级技术，例如使用标志创建模式以及使用嵌入式标志表达式。它还探讨了一些我们尚未讨论的其他有用方法。</p>
+<h2>用标志创建图案</h2>
+<p>的<code>Pattern</code>类定义备用<code>compile</code>接受一组影响模式匹配方式的标志的方法。flags参数是一个位掩码，可以包括以下任何公共静态字段：</p>
+<ul>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#CANON_EQ" target="_blank"><code>Pattern.CANON_EQ</code></a>启用规范对等。当指定此标志时，只有且仅当其完整规范分解匹配时，两个字符才会被视为匹配。表达方式<code>"a\u030A"</code> ，例如，将匹配字符串<code>"\u00E5"</code>指定此标志时。默认情况下，匹配不考虑规范对等。指定此标志可能会导致性能下降。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#CASE_INSENSITIVE" target="_blank"><code>Pattern.CASE_INSENSITIVE</code></a>启用不区分大小写的匹配。默认情况下，不区分大小写的匹配假定只匹配US-ASCII字符集中的字符。可以通过将UNICODE_CASE标志与该标志一起指定来启用Unicode感知的不区分大小写的匹配。不区分大小写的匹配也可以通过嵌入式标志表达式启用<code>(?i)</code> 。指定此标志可能会导致轻微的性能损失。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#COMMENTS" target="_blank"><code>Pattern.COMMENTS</code></a>允许空格和模式中的注释。在此模式下，空格将被忽略，并且嵌入的注释以<code>#</code>直到行尾都将被忽略。也可以通过嵌入式标志表达式启用注释模式<code>(?x)</code> 。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#DOTALL" target="_blank"><code>Pattern.DOTALL</code></a>启用dotall模式。在dotall模式下，表达式<code>.</code>匹配任何字符，包括行终止符。默认情况下，此表达式不匹配行终止符。还可以通过嵌入式标志表达式启用Dotall模式<code>(?s)</code> 。（s是“单行”模式的助记符，在Perl中被称为。）</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#LITERAL" target="_blank"><code>Pattern.LITERAL</code></a>启用模式的文字分析。指定此标志后，指定模式的输入字符串将被视为文字字符序列。输入序列中的元字符或转义序列将没有特殊含义。旗帜<code>CASE_INSENSITIVE</code>和<code>UNICODE_CASE</code>与该标志一起使用时，保留它们对匹配的影响。其他标志变得多余。没有用于启用文字分析的嵌入式标志字符。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#MULTILINE" target="_blank"><code>Pattern.MULTILINE</code></a>启用多行模式。在多行模式下，表达式<code>^</code>和<code>$</code>分别在行终止符或输入序列的结尾之后或之前匹配。默认情况下，这些表达式仅在整个输入序列的开头和结尾匹配。也可以通过嵌入式标志表达式启用多行模式<code>(?m)</code> 。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#UNICODE_CASE" target="_blank"><code>Pattern.UNICODE_CASE</code></a>启用支持Unicode的大小写折叠。如果指定了此标志，则不区分大小写的匹配（由<code>CASE_INSENSITIVE</code>标志，以与Unicode标准一致的方式完成。默认情况下，不区分大小写的匹配假定只匹配US-ASCII字符集中的字符。还可以通过嵌入式标志表达式启用支持Unicode的大小写折叠<code>(?u)</code> 。指定此标志可能会导致性能下降。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#UNIX_LINES" target="_blank"><code>Pattern.UNIX_LINES</code></a>启用UNIX行模式。在此模式下，只有<code>'\n'</code>行终止符被识别为<code>.</code> ， <code>^</code>和<code>$</code> 。UNIX行模式也可以通过嵌入式标志表达式启用<code>(?d)</code> 。</li>
+</ul>
+<p>在以下步骤中，我们将修改测试工具， <a class="SourceLink" href="examples/RegexTestHarness.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/RegexTestHarness.java'); return false;"><code>RegexTestHarness.java</code></a>创建不区分大小写的匹配模式。</p>
+<p>首先，修改代码以调用备用版本<code>compile</code> ：</p>
+<div class="codeblock"><pre>
+Pattern pattern = 
+Pattern.compile(console.readLine("%nEnter your regex: "),
+Pattern.CASE_INSENSITIVE);
+</pre></div>
+<p>然后编译并运行测试工具以获取以下结果：</p>
+<div class="codeblock"><pre> 
+Enter your regex: dog
+Enter input string to search: DoGDOg
+I found the text "DoG" starting at index 0 and ending at index 3.
+I found the text "DOg" starting at index 3 and ending at index 6.
+</pre></div> 
+<p>如您所见，字符串文字“ dog”无论大小写都匹配这两种情况。要编译带有多个标志的模式，请使用按位OR运算符“ <code>|</code> ”。为了清楚起见，以下代码示例对正则表达式进行了硬编码，而不是从<code>Console</code> ：</p>
+<div class="codeblock"><pre> 
+pattern = Pattern.compile("[az]$", Pattern.MULTILINE <b>|</b> Pattern.UNIX_LINES);
+</pre></div> 
+<p>您还可以指定一个<code>int</code>变量：</p>
+<div class="codeblock"><pre> 
+final int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
+Pattern pattern = Pattern.compile("aa", flags);
+</pre></div> 
+<p><a name="embedded" id="embedded"></a></p>
+<h2>嵌入式标志表达式</h2>
+<p>也可以使用<i>嵌入式标志表达式</i>来启用各种标志。嵌入式标志表达式是两个参数版本的的替代方法<code>compile</code> ，并在正则表达式本身中指定。以下示例使用原始测试工具， <a class="SourceLink" href="examples/RegexTestHarness.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/RegexTestHarness.java'); return false;"><code>RegexTestHarness.java</code></a>带有嵌入式标志表达式<code>(?i)</code>启用不区分大小写的匹配。</p>
+<div class="codeblock"><pre> 
+Enter your regex: (?i)foo
+Enter input string to search: FOOfooFoOfoO
+I found the text "FOO" starting at index 0 and ending at index 3.
+I found the text "foo" starting at index 3 and ending at index 6.
+I found the text "FoO" starting at index 6 and ending at index 9.
+I found the text "foO" starting at index 9 and ending at index 12.
+</pre></div> 
+<p>再一次，无论大小写，所有比赛都成功。</p>
+<p>对应于的嵌入式标志表达式<code>Pattern</code>的公开字段如下表所示：</p>
+<table border="1" cellspacing="2" cellpadding="0" summary="table of flag expressions that correspond to Pattern's publicly accessible fields">
+<tbody><tr>
+<th>不变</th>
+<th>等效嵌入式标志表达</th>
+</tr>
+<tr>
+<td><code>Pattern.CANON_EQ</code></td>
+<td>没有</td>
+</tr>
+<tr>
+<td><code>Pattern.CASE_INSENSITIVE</code></td>
+<td><code>(?i)</code></td>
+</tr>
+<tr>
+<td><code>Pattern.COMMENTS</code></td>
+<td><code>(?x)</code></td>
+</tr>
+<tr>
+<td><code>Pattern.MULTILINE</code></td>
+<td><code>(?m)</code></td>
+</tr>
+<tr>
+<td><code>Pattern.DOTALL</code></td>
+<td><code>(?s)</code></td>
+</tr>
+<tr>
+<td><code>Pattern.LITERAL</code></td>
+<td>没有</td>
+</tr>
+<tr>
+<td><code>Pattern.UNICODE_CASE</code></td>
+<td><code>(?u)</code></td>
+</tr>
+<tr>
+<td><code>Pattern.UNIX_LINES</code></td>
+<td><code>(?d)</code></td>
+</tr>
+</tbody></table>
+<h2>使用<code>matches(String,CharSequence)</code>方法</h2>
+<p>的<code>Pattern</code>类定义了一个方便<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#matches-java.lang.String-java.lang.CharSequence-" target="_blank"><code>matches</code></a>允许您快速检查给定输入字符串中是否存在模式的方法。与所有公共静态方法一样，您应调用<code>matches</code>通过其类名，例如<code>Pattern.matches("\\d","1");</code> 。在此示例中，该方法返回<code>true</code> ，因为数字“ 1”与正则表达式匹配<code>\d</code> 。</p>
+<h2>使用<code>split(String)</code>方法</h2>
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#split-java.lang.CharSequence-" target="_blank"><code>split</code></a>方法是一种用于收集位于已匹配模式两侧的文本的好工具。如下图所示<a class="SourceLink" href="examples/SplitDemo.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/SplitDemo.java'); return false;"><code>SplitDemo.java</code></a> ， <code>split</code>方法可以提取“ <code>one two three four five</code> “来自字符串” <code>one:two:three:four:five</code> “：</p>
+<div class="codeblock"><pre>
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class SplitDemo {
+
+    private static final String REGEX = &quot;:&quot;;
+    private static final String INPUT =
+        &quot;one:two:three:four:five&quot;;
+    
+    public static void main(String[] args) {
+        Pattern p = Pattern.compile(REGEX);
+        String[] items = p.split(INPUT);
+        for(String s : items) {
+            System.out.println(s);
+        }
+    }
+}
+</pre></div>
+<div class="codeblock"><pre>
+OUTPUT:
+
+one
+two
+three
+four
+five
+</pre></div> 
+<p>为简单起见，我们匹配了字符串文字冒号（ <code>:</code> ），而不是复杂的正则表达式。由于我们仍在使用<code>Pattern</code>和<code>Matcher</code>对象，则可以使用split获取位于任何正则表达式两侧的文本。这是同一个例子<a class="SourceLink" href="examples/SplitDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/SplitDemo2.java'); return false;"><code>SplitDemo2.java</code></a> ，修改为按数字拆分：</p>
+<div class="codeblock"><pre>
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class SplitDemo2 {
+
+    private static final String REGEX = &quot;\\d&quot;;
+    private static final String INPUT =
+        &quot;one9two4three7four1five&quot;;
+
+    public static void main(String[] args) {
+        Pattern p = Pattern.compile(REGEX);
+        String[] items = p.split(INPUT);
+        for(String s : items) {
+            System.out.println(s);
+        }
+    }
+}
+</pre></div>
+<div class="codeblock"><pre>
+OUTPUT:
+
+one
+two
+three
+four
+five
+</pre></div> 
+<h2>其他实用程序方法</h2>
+<p>您可能会发现以下方法也很有用：</p>
+<ul>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#quote-java.lang.String-" target="_blank"><code>public static String quote(String s)</code></a>返回文字模式<code>String</code>对于指定的<code>String</code> 。此方法产生一个<code>String</code>可以用来创建一个<code>Pattern</code>那会匹配<code>String s</code>好像它是一个文字模式。输入序列中的元字符或转义序列将没有特殊含义。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#toString--" target="_blank"><code>public String toString()</code></a>返回<code>String</code>此模式的表示。这是从中编译此模式的正则表达式。</li>
+</ul>
+<h2>模式方法中的等效项<code>java.lang.String</code></h2>
+<p>正则表达式支持还存在于<code>java.lang.String</code>通过几种模仿行为的方法<code>java.util.regex.Pattern</code> 。为了方便起见，下面列出了其API的主要摘录。</p>
+<ul>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#matches-java.lang.String-" target="_blank"><code>public boolean matches(String regex)</code></a> ：判断此字符串是否与给定的正则表达式匹配。这种形式的方法的调用<code><i>str</i>.matches(<i>regex</i>)</code>产生与表达式完全相同的结果<code>Pattern.matches(<i>regex</i>, <i>str</i>)</code> 。</li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-int-" target="_blank"><code>public String[] split(String regex, int limit)</code></a> ：将字符串拆分为给定正则表达式的匹配项。这种形式的方法的调用<code><i>str</i>.split(<i>regex</i>, <i>n</i>)</code>产生与表达式相同的结果<code>Pattern.compile(<i>regex</i>).split(<i>str</i>, <i>n</i>)</code></li>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-" target="_blank"><code>public String[] split(String regex)</code></a> ：将字符串拆分为给定正则表达式的匹配项。此方法的工作原理与您使用给定表达式且限制参数为零的两参数拆分方法相同。尾随空字符串不包括在结果数组中。</li>
+</ul>
+<p>还有一种替换方法，可以替换一个<code>CharSequence</code>和另外一个：</p>
+<ul>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#replace-java.lang.CharSequence-java.lang.CharSequence-" target="_blank"><code>public String replace(CharSequence target,CharSequence replacement)</code></a> ：使用指定的文字替换序列替换该字符串中与文字目标序列匹配的每个子字符串。替换从字符串的开头到结尾进行，例如，将字符串“ aaa”中的“ aa”替换为“ b”将得到“ ba”而不是“ ab”。</li>
+</ul>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="bounds.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="matcher.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>边界匹配器<br><b>下一页：</b> Matcher类的方法</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,742 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>量词（Java™教程>基本类>正则表达式）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Java tutorial describes exceptions, basic input/output, concurrency, regular expressions, and the platform environment">
+     <meta name="keywords" content="java programming, learn java, java sample code, java exception, java input output, java threads, java regex, regular expressions, path, classpath, environment variable">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">常用表达</a></div>
+<div class="linkAHEAD"><a href="intro.html">介绍</a></div>
+<div class="linkAHEAD"><a href="test_harness.html">测试线束</a></div>
+<div class="linkAHEAD"><a href="literals.html">字符串文字</a></div>
+<div class="linkAHEAD"><a href="char_classes.html">角色类</a></div>
+<div class="linkAHEAD"><a href="pre_char_classes.html">预定义字符类</a></div>
+<div class="nolinkAHEAD">量词</div>
+<div class="linkAHEAD"><a href="groups.html">捕获组</a></div>
+<div class="linkAHEAD"><a href="bounds.html">边界匹配器</a></div>
+<div class="linkAHEAD"><a href="pattern.html">模式类的方法</a></div>
+<div class="linkAHEAD"><a href="matcher.html">Matcher类的方法</a></div>
+<div class="linkAHEAD"><a href="pse.html">PatternSyntaxException类的方法</a></div>
+<div class="linkAHEAD"><a href="unicode.html">Unicode支持</a></div>
+<div class="linkAHEAD"><a href="resources.html">其他资源</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>基本课程<br><b>课程：</b>正则表达式</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">基本类</a> > <a href="index.html" target="_top">正则表达式</a>
+            </div>
+            <div class="NavBit">
+                <a href="pre_char_classes.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="groups.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>量词</h1></div>
+            <div id="PageContent">
+
+<!--Quantifiers-->
+<p><i>量词</i>允许您指定要匹配的出现次数。为方便起见，以下介绍了模式API规范的三个部分，分别描述了贪婪，不情愿和所有格的量词。乍看之下，量词似乎<code>X?</code> ， <code>X??</code>和<code>X?+</code>做完全一样的事情，因为他们都承诺匹配“ <code>X</code> ，一次还是根本没有”。在实现方面存在细微的差异，将在本节末尾进行解释。</p>
+<table border="1" cellspacing="2" cellpadding="0" summary="table of greedy, reluctant, and possessive quantifiers">
+<tbody><tr>
+<th>贪婪</th>
+<th>不情愿</th>
+<th>所有格</th>
+<th>含义</th>
+</tr>
+<tr>
+<td><code>X?</code></td>
+<td><code>X??</code></td>
+<td><code>X?+</code></td>
+<td><code style="font-style:italic">X</code> ，一次或根本不</td>
+</tr>
+<tr>
+<td><code>X*</code></td>
+<td><code>X*?</code></td>
+<td><code>X*+</code></td>
+<td><code style="font-style:italic">X</code> ，零次或多次</td>
+</tr>
+<tr>
+<td><code>X+</code></td>
+<td><code>X+?</code></td>
+<td><code>X++</code></td>
+<td><code style="font-style:italic">X</code> ，一次或多次</td>
+</tr>
+<tr>
+<td><code>X{n}</code></td>
+<td><code>X{n}?</code></td>
+<td><code>X{n}+</code></td>
+<td><code style="font-style:italic">X</code> ，恰好<i><code>n</code></i>次</td>
+</tr>
+<tr>
+<td><code>X{n,}</code></td>
+<td><code>X{n,}?</code></td>
+<td><code>X{n,}+</code></td>
+<td><code style="font-style:italic">X</code> ， 至少<i><code>n</code></i>次</td>
+</tr>
+<tr>
+<td><code>X{n,m}</code></td>
+<td><code>X{n,m}?</code></td>
+<td><code>X{n,m}+</code></td>
+<td><code style="font-style:italic">X</code> ， 至少<i><code>n</code></i>但不超过<i><code>m</code></i>次</td>
+</tr>
+</tbody></table>
+<p>让我们从创建三个不同的正则表达式开始看贪婪量词：字母“ a”后跟两个<code>?</code> ， <code>*</code> ， 要么<code>+</code> 。让我们看看针对空输入字符串测试这些表达式时会发生什么<code>""</code> ：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a?
+Enter input string to search: 
+I found the text "" starting at index 0 and ending at index 0.
+
+Enter your regex: a*
+Enter input string to search: 
+I found the text "" starting at index 0 and ending at index 0.
+
+Enter your regex: a+
+Enter input string to search: 
+No match found.
+</pre></div> 
+<h2>零长度火柴</h2>
+<p>在上面的示例中，在前两种情况下匹配成功，因为表达式<code>a?</code>和<code>a*</code>都允许出现零次的字母<code>a</code> 。您还将注意到开始索引和结束索引均为零，这与到目前为止我们看到的任何示例都不相同。空的输入字符串<code>""</code>没有长度，因此测试仅在索引0处不匹配任何内容。这种匹配称为<i>零长度匹配</i> 。零长度匹配可能在几种情况下发生：在空的输入字符串中，在输入字符串的开头，在输入字符串的最后一个字符之后或在输入字符串的任何两个字符之间。零长度匹配总是容易识别，因为它们始终在相同的索引位置开始和结束。</p>
+<p>让我们通过更多示例探讨零长度匹配。将输入字符串更改为单个字母“ a”，您会发现一些有趣的事情：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a?
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "" starting at index 1 and ending at index 1.
+
+Enter your regex: a*
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "" starting at index 1 and ending at index 1.
+
+Enter your regex: a+
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+</pre></div> 
+<p>所有三个量词都找到字母“ a”，但前两个量词还在索引1处找到零长度匹配；也就是说，在输入字符串的最后一个字符之后。请记住，匹配器将字符“ a”视为位于索引0和索引1之间的单元中，并且我们的测试工具循环运行，直到不再找到匹配项为止。根据所使用的量词，最后一个字符之后的索引处“无”可能会触发也可能不会触发匹配。</p>
+<p>现在，将输入字符串连续五次更改为字母“ a”，您将获得以下内容：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a?
+Enter input string to search: aaaaa
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "a" starting at index 1 and ending at index 2.
+I found the text "a" starting at index 2 and ending at index 3.
+I found the text "a" starting at index 3 and ending at index 4.
+I found the text "a" starting at index 4 and ending at index 5.
+I found the text "" starting at index 5 and ending at index 5.
+
+Enter your regex: a*
+Enter input string to search: aaaaa
+I found the text "aaaaa" starting at index 0 and ending at index 5.
+I found the text "" starting at index 5 and ending at index 5.
+
+Enter your regex: a+
+Enter input string to search: aaaaa
+I found the text "aaaaa" starting at index 0 and ending at index 5.
+</pre></div> 
+<p>表达方式<code>a?</code>为每个字符找到一个单独的匹配项，因为当“ a”出现零次或一次时匹配。表达方式<code>a*</code>找到两个单独的匹配项：第一个匹配项中所有字母“ a”都在匹配，然后在索引5的最后一个字符之后为零长度匹配项。最后， <code>a+</code>匹配所有出现的字母“ a”，而忽略最后一个索引中不存在“ nothing”。</p>
+<p>在这一点上，您可能想知道如果前两个量词遇到的字母不是“ a”，那么结果将是什么。例如，如果遇到字母“ b”，如“ ababaaaab”，会发生什么？</p>
+<p>让我们找出：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a?
+Enter input string to search: ababaaaab
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "" starting at index 1 and ending at index 1.
+I found the text "a" starting at index 2 and ending at index 3.
+I found the text "" starting at index 3 and ending at index 3.
+I found the text "a" starting at index 4 and ending at index 5.
+I found the text "a" starting at index 5 and ending at index 6.
+I found the text "a" starting at index 6 and ending at index 7.
+I found the text "a" starting at index 7 and ending at index 8.
+I found the text "" starting at index 8 and ending at index 8.
+I found the text "" starting at index 9 and ending at index 9.
+
+Enter your regex: a*
+Enter input string to search: ababaaaab
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "" starting at index 1 and ending at index 1.
+I found the text "a" starting at index 2 and ending at index 3.
+I found the text "" starting at index 3 and ending at index 3.
+I found the text "aaaa" starting at index 4 and ending at index 8.
+I found the text "" starting at index 8 and ending at index 8.
+I found the text "" starting at index 9 and ending at index 9.
+
+Enter your regex: a+
+Enter input string to search: ababaaaab
+I found the text "a" starting at index 0 and ending at index 1.
+I found the text "a" starting at index 2 and ending at index 3.
+I found the text "aaaa" starting at index 4 and ending at index 8.
+</pre></div> 
+<p>即使字母“ b”出现在单元1、3和8中，输出也会报告在那些位置的零长度匹配。正则表达式<code>a?</code>不是专门寻找字母“ b”；它只是在寻找字母“ a”的存在（或缺乏）。如果量词允许“ a”匹配零次，则输入字符串中不是“ a”的任何内容都将显示为零长度匹配。其余的a根据前面示例中讨论的规则进行匹配。</p>
+<p>要完全匹配一个模式<i>n</i>次，只需在一组花括号内指定数字：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a{3}
+Enter input string to search: aa
+No match found.
+
+Enter your regex: a{3}
+Enter input string to search: aaa
+I found the text "aaa" starting at index 0 and ending at index 3.
+
+Enter your regex: a{3}
+Enter input string to search: aaaa
+I found the text "aaa" starting at index 0 and ending at index 3.
+</pre></div> 
+<p>在这里，正则表达式<code>a{3}</code>正在搜索连续出现的三个字母“ a”。第一次测试失败，因为输入字符串没有足够的a来匹配。第二个测试在输入字符串中恰好包含3个a，这会触发匹配。第三个测试也会触发匹配，因为在输入字符串的开头恰好有3个a。以下与第一场比赛无关的任何事情。如果该模式在该点之后再次出现，则将触发后续匹配：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a{3}
+Enter input string to search: aaaaaaaaa
+I found the text "aaa" starting at index 0 and ending at index 3.
+I found the text "aaa" starting at index 3 and ending at index 6.
+I found the text "aaa" starting at index 6 and ending at index 9.
+</pre></div> 
+<p>要要求图案至少出现<i>n</i>次，请在数字后添加一个逗号：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a{3,}
+Enter input string to search: aaaaaaaaa
+I found the text "aaaaaaaaa" starting at index 0 and ending at index 9.
+</pre></div> 
+<p>使用相同的输入字符串，此测试仅找到一个匹配项，因为连续的9个a满足“至少” 3个a的需要。</p>
+<p>最后，要指定出现次数的上限，请在花括号内添加第二个数字：</p>
+<div class="codeblock"><pre> 
+Enter your regex: a{3,6} // find at least 3 (but no more than 6) a's in a row
+Enter input string to search: aaaaaaaaa
+I found the text "aaaaaa" starting at index 0 and ending at index 6.
+I found the text "aaa" starting at index 6 and ending at index 9.
+</pre></div> 
+<p>在这里，第一场比赛被迫停止在6个字符的上限。第二个匹配项包括剩下的所有内容，恰好是三个a-该匹配项允许的最少字符数。如果输入字符串短一个字符，则不会有第二个匹配项，因为将仅保留两个a。</p>
+<h2>用量词捕获组和字符类</h2>
+<p>到目前为止，我们仅在包含一个字符的输入字符串上测试了量词。实际上，量词一次只能附加一个字符，因此正则表达式“ abc +”的意思是“ a，后跟b，再后跟c一次或多次”。它不会一次或多次表示“ abc”。但是，量词也可以附加到<a class="TutorialLink" href="char_classes.html" target="_top">字符类</a>和<a class="TutorialLink" href="groups.html" target="_top">捕获组</a> ，例如<code>[abc]+</code> （a或b或c，一次或多次）或<code>(abc)+</code> （组“ abc”，一次或多次）。</p>
+<p>让我们通过指定组来说明<code>(dog)</code> ，连续三遍。</p>
+<div class="codeblock"><pre> 
+Enter your regex: (dog){3}
+Enter input string to search: dogdogdogdogdogdog
+I found the text "dogdogdog" starting at index 0 and ending at index 9.
+I found the text "dogdogdog" starting at index 9 and ending at index 18.
+
+Enter your regex: dog{3}
+Enter input string to search: dogdogdogdogdogdog
+No match found.
+</pre></div>
+<p>在这里，第一个示例找到三个匹配项，因为量词适用于整个捕获组。但是，删除括号，匹配失败，因为量词<code>{3}</code>现在仅适用于字母“ g”。</p>
+<p>同样，我们可以对整个字符类应用量词：</p>
+<div class="codeblock"><pre>
+Enter your regex: [abc]{3}
+Enter input string to search: abccabaaaccbbbc
+I found the text "abc" starting at index 0 and ending at index 3.
+I found the text "cab" starting at index 3 and ending at index 6.
+I found the text "aaa" starting at index 6 and ending at index 9.
+I found the text "ccb" starting at index 9 and ending at index 12.
+I found the text "bbc" starting at index 12 and ending at index 15.
+
+Enter your regex: abc{3}
+Enter input string to search: abccabaaaccbbbc
+No match found.
+</pre></div> 
+<p>这里的量词<code>{3}</code>在第一个示例中适用于整个字符类，但在第二个示例中仅适用于字母“ c”。<a name="difs" id="difs"></a></p>
+<h2>贪婪，勉强和所有格量词之间的差异</h2>
+<p>贪婪，勉强和所有格修饰语之间存在细微的差异。</p>
+<p>贪婪的量词被认为是“贪婪的”，因为它们会迫使匹配器在尝试第一个匹配之前先读入或<i>吃掉</i>整个输入字符串。如果第一次匹配尝试失败（整个输入字符串）失败，则匹配器将输入字符串退回一个字符，然后再次尝试，重复此过程，直到找到匹配项或没有其他要退回的字符。根据表达式中使用的量词，它将尝试与之匹配的最后一件事是1或0个字符。</p>
+<p>但是，勉强的量词采用相反的方法：它们始于输入字符串的开头，然后一次勉强地吃掉一个字符以寻找匹配项。他们尝试的最后一件事是整个输入字符串。</p>
+<p>最后，所有格量词总是吃掉整个输入字符串，尝试一次（也只有一次）进行匹配。与贪婪的量词不同，所有格量词从不退缩，即使这样做会使整体匹配成功。</p>
+<p>为了说明，考虑输入字符串<code>xfooxxxxxxfoo</code> 。</p>
+<div class="codeblock"><pre> 
+Enter your regex: .*foo  // greedy quantifier
+Enter input string to search: xfooxxxxxxfoo
+I found the text "xfooxxxxxxfoo" starting at index 0 and ending at index 13.
+
+Enter your regex: .*?foo  // reluctant quantifier
+Enter input string to search: xfooxxxxxxfoo
+I found the text "xfoo" starting at index 0 and ending at index 4.
+I found the text "xxxxxxfoo" starting at index 4 and ending at index 13.
+
+Enter your regex: .*+foo // possessive quantifier
+Enter input string to search: xfooxxxxxxfoo
+No match found.
+</pre></div> 
+<p>第一个示例使用贪婪量词<code>.*</code>查找“任何”，零次或多次，然后跟字母<code>"f" "o" "o"</code> 。因为量词是贪婪的，所以<code>.*</code>表达式的一部分首先吃掉整个输入字符串。此时，整体表达式无法成功，因为最后三个字母（ <code>"f" "o" "o"</code> ）已被消耗。因此，匹配器每次一次缓慢地退回一个字母，直到最右边出现的“ foo”重新反响为止，这时匹配成功并且搜索结束。</p>
+<p>但是，第二个示例是勉强的，因此首先要先消耗“无”。因为“ foo”没有出现在字符串的开头，所以它被迫吞下第一个字母（“ x”），这会在0和4处触发第一个匹配项。我们的测试工具将继续该过程，直到输入字符串用尽。它在4和13找到另一个匹配项。</p>
+<p>第三个示例找不到匹配项，因为量词是所有格。在这种情况下，整个输入字符串将被<code>.*+</code> ，在表达式末尾不留任何内容来满足“ foo”。如果您想抓住所有东西而又不退缩，请使用所有格量词；如果没有立即找到匹配项，它将胜过等效的贪婪量词。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="pre_char_classes.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="groups.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>预定义字符类<br><b>下一页：</b>捕获组</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

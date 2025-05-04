@@ -1,0 +1,641 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>何时使用DOM（Java™教程>用于XML处理的Java API（JAXP）>文档对象模型）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">文件对象模型</a></div>
+<div class="nolinkAHEAD">何时使用DOM</div>
+<div class="linkAHEAD"><a href="readingXML.html">将XML数据读入DOM</a></div>
+<div class="linkAHEAD"><a href="validating.html">使用XML模式进行验证</a></div>
+<div class="linkAHEAD"><a href="info.html">更多信息</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>文档对象模型</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">文档对象模型</a>
+            </div>
+            <div class="NavBit">
+                <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="readingXML.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>何时使用DOM</h1></div>
+            <div id="PageContent">
+
+<!-- When to Use DOM -->
+<p>首先，文档对象模型标准是为文档（例如，文章和书籍）设计的。另外，JAXP 1.4.2实现支持XML Schema，这对于任何给定的应用程序都是重要的考虑因素。</p>
+<p>另一方面，如果您正在处理简单的数据结构，并且如果XML Schema不是计划的主要部分，那么您可能会发现，一种面向对象的标准（例如JDOM或dom4j）更适合于你的目的。</p>
+<p>从一开始，DOM就旨在与语言无关。因为它是为与C和Perl等语言一起使用而设计的，所以DOM没有利用Java的面向对象功能。这个事实，除了文档和数据之间的区别外，还有助于说明处理DOM与处理JDOM或dom4j结构不同的方式。</p>
+<p>在本节中，我们将检查这些标准所基于的模型之间的差异，以帮助您选择最适合您的应用程序的模型。</p>
+<p><a name="gchlq" id="gchlq"></a></p>
+<h2>文件与数据</h2>
+<p>DOM中使用的文档模型与JDOM或dom4j中使用的数据模型之间的主要区别在于：</p>
+<ul>
+<li>层次结构中存在的节点类型</li>
+<li>混合内容的容量</li>
+</ul>
+<p>构成数据层次结构中“节点”的不同之处主要是考虑了使用这两种模型进行编程的差异。但是，混合内容的功能比其他任何功能都更能说明标准定义节点的方式。因此，我们首先研究DOM的混合内容模型。</p>
+<p><a name="gchkp" id="gchkp"></a></p>
+<h2>混合内容模型</h2>
+<p>文本和元素可以在DOM层次结构中自由混合。这种结构在DOM模型中称为混合内容。</p>
+<p>混合内容经常出现在文档中。例如，假设您要表示此结构：</p>
+<p><code><sentence>This is an <bold>important</bold> idea.</sentence></code></p>
+<p>DOM节点的层次结构如下所示，其中每一行代表一个节点：</p>
+<div class="codeblock"><pre>
+ELEMENT: sentence
+   + TEXT: This is an
+   + ELEMENT: bold
+     + TEXT: important
+   + TEXT: idea.
+</pre></div>
+<p>请注意，句子元素包含文本，后跟一个子元素，后跟其他文本。文本和元素的混合定义了混合内容模型。</p>
+<p><a name="gchla" id="gchla"></a></p>
+<h2>节点类型</h2>
+<p>为了提供混合内容的容量，DOM节点本质上非常简单。在前面的示例中，第一个元素的“内容”（其值）仅标识了它的节点类型。</p>
+<p>通常，这个事实会引发DOM的首次用户。导航到<tt><sentence></sentence></tt>节点，他们要求节点的“内容”，并期望得到有用的东西。相反，他们只能找到元素的名称， <tt>句子</tt> 。</p>
+<hr>
+<p><b>注意</b> <tt>-DOM</tt>节点API定义了<tt>nodeValue（）</tt> ， <tt>nodeType（）</tt>和<tt>nodeName（）</tt>方法。对于第一个元素节点， <tt>nodeName（）</tt>返回<tt>句子</tt> ，而<tt>nodeValue（）</tt>返回null。对于第一个文本节点， <tt>nodeName（）</tt>返回<tt>#text</tt> ，而<tt>nodeValue（）</tt>返回“ <tt>This is an</tt> ”。重要的一点是，元素的<b>值</b>与其<b>内容不同</b> 。</p>
+<hr>
+<p>在上面的示例中，要求句子的“文本”是什么意思？根据您的应用程序，下列任何一项可能都是合理的：</p>
+<ul>
+<li>这是一</li>
+<li>这是一个主意。
+</li>
+<li>这是一个重要的想法。
+</li>
+<li>这是一个<bold>重要的</bold>想法。
+</li>
+</ul>
+<p><a name="gchkz" id="gchkz"></a></p>
+<h2>一个更简单的模型</h2>
+<p>使用DOM，您可以自由创建所需的语义。但是，还要求您执行实现这些语义所必需的处理。另一方面，诸如JDOM和dom4j之类的标准使执行简单操作变得更加容易，因为层次结构中的每个节点都是一个对象。</p>
+<p>尽管JDOM和dom4j允许包含混合内容的元素，但它们并不是主要为此类情况设计的。相反，它们针对XML结构包含数据的应用程序。</p>
+<p>数据结构中的元素通常包含文本或其他元素，但不能同时包含两者。例如，以下是一些XML，它们表示一个简单的通讯录：</p>
+<div class="codeblock"><pre>
+&lt;addressbook>
+    &lt;entry>
+        &lt;name>Fred&lt;/name>
+        &lt;email>fred@home&lt;/email>
+    &lt;/entry>
+      ...
+&lt;/addressbook>
+</pre></div>
+<hr>
+<p><b>注–</b>对于像这样的非常简单的XML数据结构，还可以使用1.4版Java平台中内置的正则表达式包（ <tt>java.util.regex</tt> ）。</p>
+<hr>
+<p>在JDOM和dom4j中，导航到包含文本的元素后，可以调用诸如<tt>text（）之</tt>类的方法来获取其内容。但是，在处理DOM时，必须检查子元素列表以将节点的文本“放在一起”，就像您在前面看到的那样-即使该列表仅包含一项（TEXT节点）。</p>
+<p>因此，对于简单的数据结构（例如地址簿），您可以使用JDOM或dom4j节省一些工作。即使在技术上“混合”了数据，也可能使用其中一种模型，但是给定节点始终只有一个（只有一个）文本段。</p>
+<p>这是这种结构的示例，也可以在JDOM或dom4j中轻松处理：</p>
+<div class="codeblock"><pre>
+&lt;addressbook>
+    &lt;entry>Fred
+        &lt;email>fred@home&lt;/email>
+    &lt;/entry>
+      ...
+&lt;/addressbook>
+</pre></div>
+<p>在这里，每个条目都有一点标识文本，后跟其他元素。使用这种结构，程序可以导航到一个条目，调用<tt>text（）</tt>找出它属于谁，然后处理<tt><email></email></tt>子元素（如果它在正确的节点上）。</p>
+<p><a name="gchls" id="gchls"></a></p>
+<h2>增加复杂性</h2>
+<p>但是，为了使您充分了解搜索或操作DOM时需要进行的处理类型，重要的是要知道DOM可以包含的节点类型。</p>
+<p>这是一个说明这一点的示例。它是此数据的表示形式：</p>
+<div class="codeblock"><pre>
+&lt;sentence>
+    The &amp;projectName; &lt;![CDATA[&lt;i>project&lt;/i>]]&gt; is
+    &lt;?editor: red>&lt;bold>important&lt;/bold>&lt;?editor: normal>.
+&lt;/sentence>
+</pre></div>
+<p>这句话包含一个<b>实体引用</b> -指向在其他地方定义的实体的指针。在这种情况下，实体包含项目的名称。该示例还包含一个CDATA部分（未解释的数据，例如<tt></tt></p><pre>
++ ELEMENT: sentence
+       + TEXT: The
+       + ENTITY REF: projectName
+        + COMMENT: 
+        The latest name we are using
+        + TEXT: Eagle
+       + CDATA: &lt;i>project&lt;/i>
+       + TEXT: is
+       + PI: editor: red
+       + ELEMENT: bold
+          + TEXT: important
+       + PI: editor: normal
+</pre></div>
+<p>此示例描述了DOM中可能出现的节点类型。尽管您的应用程序可能大部分时间都可以忽略其中的大多数，但真正可靠的实现需要识别并处理它们中的每一个。</p>
+<p>同样，导航到节点的过程涉及处理子元素，忽略您不感兴趣的子元素并检查您感兴趣的子元素，直到找到您感兴趣的节点。</p>
+<p>一个处理固定的内部生成数据的程序可以做出简化的假设：处理指令，注释，CDATA节点和实体引用将不存在于数据结构中。但是必须准备处理各种数据（尤其是来自外部世界的数据）的真正可靠的应用程序，以处理所有可能的XML实体。</p>
+<p>（“简单”应用程序仅在输入数据包含其期望的简化XML结构时才起作用。但是没有验证机制可以确保不存在更复杂的结构。毕竟，XML是专门为允许它们而设计的。）</p>
+<p>为了更强大，DOM应用程序必须执行以下操作：</p>
+<ol>
+<li>搜索元素时：<ol type="a">
+<li>忽略注释，属性和处理说明。
+</li>
+<li>允许子元素未按预期顺序出现的可能性。
+</li>
+<li>如果不进行验证，则跳过包含可忽略空格的TEXT节点。
+</li>
+</ol>
+</li>
+<li>为节点提取文本时：<ol type="a">
+<li>从CDATA节点以及文本节点中提取文本。
+</li>
+<li>收集文本时，请忽略注释，属性和处理说明。
+</li>
+<li>如果遇到实体引用节点或另一个元素节点，请递归（即，将文本提取过程应用于所有子节点）。
+</li>
+</ol>
+</li>
+</ol>
+<p>当然，许多应用程序不必担心此类事情，因为它们看到的数据类型将受到严格控制。但是，如果数据可以来自各种外部来源，则应用程序可能需要考虑这些可能性。</p>
+<p>在完成本节“ <a class="TutorialLink" href="readingXML.html#ggdwa" target="_top">搜索节点</a>并<a class="TutorialLink" href="readingXML.html#ggdxv" target="_top">获取节点内容”之后，</a>将提供执行这些功能所需的代码。现在，目标只是确定DOM是否适合您的应用程序。</p>
+<p><a name="gchln" id="gchln"></a></p>
+<h2>选择模型</h2>
+<p>如您所见，当您使用DOM时，即使是简单的操作（例如从节点获取文本）也需要花费一些编程时间。因此，如果您的程序处理简单的数据结构，那么JDOM，dom4j甚至1.4正则表达式包（ <tt>java.util.regex</tt> ）可能更适合您的需求。</p>
+<p>另一方面，对于成熟的文档和复杂的应用程序，DOM为您提供了很大的灵活性。而且，如果您需要使用XML Schema，那么至少现在还是要使用DOM。</p>
+<p>如果您在开发的应用程序中同时处理文档和数据，那么DOM可能仍然是您的最佳选择。毕竟，在编写了检查和处理DOM结构的代码之后，为特定目的自定义它相当容易。因此，选择在DOM中执行所有操作意味着您将只需要处理一组API，而不是两个。</p>
+<p>此外，DOM标准是内存文档模型的统一标准。它功能强大且健壮，并且具有许多实现。对于许多大型安装而言，这是一个重要的决策因素，尤其是对于需要将API更改所导致的成本降至最低的大型应用程序而言。</p>
+<p>最后，即使当今通讯录中的文本可能不允许使用粗体，斜体，颜色和字体大小，但总有一天您可能想处理这些问题。因为DOM几乎可以处理您扔给它的任何东西，所以选择DOM可以使您的应用程序更容易过时。</p>
+
+
+        </pre></div>
+        <div class="NavBit">
+            <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="readingXML.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>文档对象模型<br><b>下一页：将</b> XML数据读入DOM</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

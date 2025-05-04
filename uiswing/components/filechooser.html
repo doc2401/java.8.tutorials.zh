@@ -1,0 +1,972 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用文件选择器（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="nolinkBHEAD">如何使用文件选择器</div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="editorpane.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="formattedtextfield.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用文件选择器</h1></div>
+            <div id="PageContent">
+
+<p>文件选择器提供了一个GUI，用于浏览文件系统，然后从列表中选择文件或目录，或者输入文件或目录的名称。要显示文件选择器，通常使用<code>JFileChooser</code>用于显示包含文件选择器的模式<a href="dialog.html">对话框的</a> API。呈现文件选择器的另一种方法是添加的实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html" target="_blank"><code>JFileChooser</code></a>到一个容器。</p>
+<div class="note"><hr><strong>注意：</strong> <p>如果您打算将程序作为沙箱Java Web Start应用程序分发，请不要使用<code>JFileChooser</code> API，您应该使用JNLP API提供的文件服务。这些服务- <code>FileOpenService</code>和<code>FileSaveService</code> -不仅为在受限环境中选择文件提供支持，而且还要照顾实际打开和保存文件的情况。在<a href="../examples/components/index.html#JWSFileChooserDemo">JWSFileChooserDemo中</a>提供了使用这些服务的<a href="../examples/components/index.html#JWSFileChooserDemo">示例</a> 。可以在<a class="TutorialLink" href="../../deployment/webstart/index.html" target="_top">Java Web Start</a>课程中找到有关使用JNLP API的文档。</p>
+<hr></div>
+<p>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a>运行JWSFileChooserDemo（ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#JWSFileChooserDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/JWSFileChooserDemoProject/JWSFileChooserDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动JWSFileChooserDemo应用程序"></a><br>
+<p>当使用<code>JWSFileChooserDemo</code>例如，请小心不要丢失所需的文件。每当您单击保存按钮并选择一个现有文件时，此演示都会弹出“文件已存在”对话框，并要求您替换文件。接受请求将覆盖文件。</p>
+<p>本节的其余部分讨论如何使用<code>JFileChooser</code> API。一种<code>JFileChooser</code>对象仅显示用于选择文件的GUI。您的程序负责对所选文件执行某些操作，例如打开或保存它。有关如何读取和写入文件的信息，请参考<a class="TutorialLink" href="../../essential/io/index.html" target="_top">基本I / O。</a></p>
+<p>的<code>JFileChooser</code> API使您可以轻松打开和保存对话框。外观的类型决定了这些标准对话框的外观以及它们之间的区别。在Java外观中，保存对话框的外观与打开的对话框相同，不同之处在于对话框窗口上的标题和批准操作的按钮上的文本。这是Java外观中的标准打开对话框的图片：</p>
+<center><img src="../../figures/uiswing/components/FileChooserOpenMetal.png" width="508" height="360" align="bottom" alt="Java外观中显示的标准打开对话框"></center><p>这是一个名为的应用程序的图片<code>FileChooserDemo</code>弹出一个打开对话框和一个保存对话框。</p>
+<center><img src="../../figures/uiswing/components/FileChooserDemo2Metal.png" width="272" height="163" align="bottom" alt="出现打开或保存对话框的程序"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>编译运行示例，请参考<a href="../examples/components/index.html#FileChooserDemo">示例索引</a> 。</li>
+<li>单击打开文件按钮。浏览文件选择器，选择一个文件，然后单击对话框的“打开”按钮。</li>
+<li>使用“保存文件”按钮调出一个保存对话框。尝试使用文件选择器上的所有控件。</li>
+<li>在源文件中<a class="SourceLink" href="../examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java'); return false;"><code>FileChooserDemo.java</code></a> ，将文件选择模式更改为仅目录模式。（搜索<code>DIRECTORIES_ONLY</code>并取消注释包含它的行。）然后编译并再次运行该示例。您将只能查看和选择目录，而不能查看普通文件。</li>
+</ol>
+<hr></div>
+<p>弹出一个标准的打开对话框只需要两行代码：</p>
+<div class="codeblock"><pre>
+//Create a file chooser
+final JFileChooser fc = new JFileChooser();
+...
+<em>//In response to a button click:</em>
+int returnVal = fc.showOpenDialog(<em>aComponent</em>);
+</pre></div>
+<p>的论点<code>showOpenDialog</code>方法指定对话框的父组件。父组件会影响对话框的位置以及对话框所依赖的框架。例如，Java外观将对话框直接放在父组件上。如果父组件位于框架中，则对话框取决于该框架。当框架最小化时，此对话框消失，而当框架最大化时，此对话框重新出现。</p>
+<p>默认情况下，之前未显示的文件选择器将显示用户主目录中的所有文件。您可以使用以下任一方法指定文件选择器的初始目录： <code>JFileChooser</code>的其他构造函数，或者您可以使用<code>setCurrentDirectory</code>方法。</p>
+<p>致电<code>showOpenDialog</code>出现在<code>actionPerformed</code> “打开文件”按钮的操作侦听器的方法：</p>
+<div class="codeblock"><pre>
+public void actionPerformed(ActionEvent e) {
+    //Handle open button action.
+    if (e.getSource() == openButton) {
+        int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            //This is where a real application would open the file.
+            log.append("Opening: " + file.getName() + "." + newline);
+        } else {
+            log.append("Open command cancelled by user." + newline);
+        }
+   } ...
+}
+</pre></div>
+<p>的<code>show<em>Xxx</em>Dialog</code>方法返回一个整数，该整数指示用户是否选择了文件。根据您使用文件选择器的方式，通常足以检查返回值是否为<code>APPROVE_OPTION</code>然后不更改任何其他值。要获取所选文件（或目录，如果您将文件选择器设置为允许目录选择），请调用<code>getSelectedFile</code>文件选择器上的方法。此方法返回的实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" target="_blank"><code>File</code></a> 。</p>
+<p>该示例获取文件的名称，并在日志消息中使用它。您可以在<code>File</code>对象，例如<code>getPath</code> ， <code>isDirectory</code> ， 要么<code>exists</code>获取有关文件的信息。您还可以调用其他方法，例如<code>delete</code>和<code>rename</code>以某种方式更改文件。当然，您可能还想通过使用Java平台提供的阅读器或编写器类之一来打开或保存文件。有关使用读取器和写入器读取数据并将其写入文件系统的信息，请参见<a class="TutorialLink" href="../../essential/io/index.html" target="_top">基本I / O。</a></p>
+<p>示例程序使用相同的实例<code>JFileChooser</code>类以显示标准保存对话框。这次程序调用<code>showSaveDialog</code> ：</p>
+<div class="codeblock"><pre>
+int returnVal = fc.showSaveDialog(FileChooserDemo.this);
+</pre></div>
+<p>通过使用相同的文件选择器实例来显示其打开和保存对话框，该程序可获得以下好处：</p>
+<ul>
+<li>选择器会记住两次使用之间的当前目录，因此打开和保存版本会自动共享同一当前目录。</li>
+<li>您只需要自定义一个文件选择器，并且自定义既适用于打开版本又适用于保存版本。</li>
+</ul>
+<p>最后，该示例程序具有注释掉的代码行，可让您更改文件选择模式。例如，以下代码行使文件选择器只能选择目录，而不能选择文件：</p>
+<div class="codeblock"><pre>
+fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+</pre></div>
+<p>另一种可能的选择模式是<code>FILES_AND_DIRECTORIES</code> 。默认是<code>FILES_ONLY</code> 。下图显示了一个打开的对话框，其中文件选择模式设置为<code>DIRECTORIES_ONLY</code> 。请注意，至少在Java外观上，仅目录可见，而不是文件。</p>
+<center><img src="../../figures/uiswing/components/FileChooserDirectoriesMetal.png" width="508" height="360" align="bottom" alt="在DIRECTORIES_ONLY模式下的文件选择器"></center><p>如果要为打开或保存以外的任务创建文件选择器，或者要自定义文件选择器，请继续阅读。我们将讨论以下主题：</p><ul>
+<li> <a href="#advancedexample">另一个示例：FileChooserDemo2</a></li>
+<li> <a href="#customtask">使用文件选择器执行自定义任务</a></li>
+<li> <a href="#filters">过滤文件列表</a></li>
+<li> <a href="#fileview">自定义文件视图</a></li>
+<li> <a href="#accessory">提供配件</a></li>
+<li> <a href="#api">文件选择器API</a></li>
+<li> <a href="#eg">使用文件选择器的示例</a></li>
+</ul>
+ <a name="advancedexample" id="advancedexample"></a><p></p>
+<h2><a name="advancedexample__1" id="advancedexample__1">另一个示例：FileChooserDemo2</a></h2>
+<p>让我们来看看<a href="../examples/components/index.html#FileChooserDemo2"><code>FileChooserDemo2</code></a>例如，先前演示程序的修改版本，它使用了更多<code>JFileChooser</code> API。本示例使用通过多种方式自定义的文件选择器。类似于原始示例，用户只需按一下按钮即可调用文件选择器。这是文件选择器的图片：</p>
+<center><img src="../../figures/uiswing/components/FileChooserDemo3Metal.png" width="536" height="360" align="bottom" alt="具有各种自定义功能的文件选择器"></center><p>如图所示，此文件选择器已针对特殊任务（附加）进行了自定义，提供了用户可选择的文件过滤器（“仅图像”），对图像文件使用了特殊的文件视图，并具有显示缩略图的附件。当前选择的图像文件。</p>
+<p>本节的其余部分向您显示创建和自定义此文件选择器的代码。请参阅<a href="../examples/components/index.html#FileChooserDemo2">示例索引</a>以获取到此示例所需的所有文件的链接。</p>
+<h2><a name="customtask" id="customtask">使用文件选择器执行自定义任务</a></h2>
+<p>如您所见， <code>JFileChooser</code>类提供了<code>showOpenDialog</code>显示打开对话框的方法和<code>showSaveDialog</code>显示保存对话框的方法。</p>
+<p>该类还有另一种方法， <code>showDialog</code> ，用于在对话框中显示自定义任务的文件选择器。在Java外观中，此对话框与其他文件选择器对话框的唯一区别是对话框窗口上的标题和批准按钮上的标签。这是来自的代码<code>FileChooserDemo2</code>弹出“附加”任务的文件选择器对话框：</p>
+<div class="codeblock"><pre>
+JFileChooser fc = new JFileChooser();
+int returnVal = fc.showDialog(FileChooserDemo2.this, "Attach");
+</pre></div>
+<p>第一个参数<code>showDialog</code>方法是对话框的父组件。第二个参数是<code>String</code>同时提供对话框窗口标题和批准按钮标签的对象。</p>
+<p>同样，文件选择器对所选文件不执行任何操作。该程序负责实现为其创建文件选择器的自定义任务。</p>
+<h2><a name="filters" id="filters">过滤文件列表</a></h2>
+<p>默认情况下，文件选择器显示其检测到的所有文件和目录，隐藏文件除外。程序可以将一个或多个<em>文件过滤器</em>应用于文件选择器，以便选择器仅显示一些文件。文件选择器调用过滤器的<code>accept</code>每个文件确定是否应显示的方法。文件过滤器根据诸如文件类型，大小，所有权等条件来接受或拒绝文件。过滤器影响文件选择器显示的文件列表。用户可以输入任何文件的名称，即使它没有显示。</p>
+<p><code>JFileChooser</code>支持三种不同的过滤。将按照此处列出的顺序检查过滤器。例如，应用程序控制的过滤器仅查看内置过滤器接受的那些文件。</p>
+<dl>
+<dt><strong>内置过滤</strong></dt>
+<dd>过滤是通过文件选择器上的特定方法调用来设置的。当前，唯一可用的内置过滤器用于隐藏文件，例如在UNIX系统上其名称以句点（。）开头的文件。默认情况下，不显示隐藏文件。呼叫<code>setFileHidingEnabled(false)</code>显示隐藏文件。</dd>
+<dt><strong>应用控制过滤</strong></dt>
+<dd>应用程序确定显示哪些文件。创建一个自定义子类<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/filechooser/FileFilter.html" target="_blank"><code>FileFilter</code></a> ，实例化它，并将实例用作<code>setFileFilter</code>方法。已安装的过滤器显示在用户可选择的过滤器列表中。文件选择器仅显示过滤器接受的那些文件。</dd>
+<dt><strong>用户可选择的过滤</strong></dt>
+<dd>文件选择器GUI提供了可供用户选择的过滤器列表。当用户选择过滤器时，文件选择器仅显示该过滤器接受的文件。 <code>FileChooserDemo2</code>将自定义文件过滤器添加到用户可选择的过滤器列表中：<div class="codeblock"><pre>
+fc.addChoosableFileFilter(new ImageFilter());
+</pre></div>默认情况下，用户可选择的过滤器列表包括“全部接受”过滤器，使用户可以查看所有非隐藏文件。本示例使用以下代码禁用“全部接受”过滤器：<div class="codeblock"><pre>
+fc.setAcceptAllFileFilterUsed(false);
+</pre></div>我们的自定义文件过滤器在<a class="SourceLink" href="../examples/components/FileChooserDemo2Project/src/components/ImageFilter.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/FileChooserDemo2Project/src/components/ImageFilter.java'); return false;"><code>ImageFilter.java</code></a>并且是的子类<code>FileFilter</code> 。的<code>ImageFilter</code>类实现<code>getDescription</code>返回“ Just Images”的方法-将字符串放入用户可选择的过滤器列表中。 <code>ImageFilter</code>还实现了<code>accept</code>方法，以便它接受所有目录以及具有<code>.png</code> ， <code>.jpg</code> ， <code>.jpeg</code> ， <code>.gif</code> ， <code>.tif</code> ， 要么<code>.tiff</code>文件扩展名。
+<div class="codeblock"><pre>
+public boolean accept(File f) {
+    <strong>if (f.isDirectory()) {
+        return true;
+    }</strong>
+
+    String extension = Utils.getExtension(f);
+    if (extension != null) {
+        if (extension.equals(Utils.tiff) ||
+            extension.equals(Utils.tif) ||
+            extension.equals(Utils.gif) ||
+            extension.equals(Utils.jpeg) ||
+            extension.equals(Utils.jpg) ||
+            extension.equals(Utils.png)) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+
+    return false;
+}
+</pre></div>通过接受所有目录，此筛选器允许用户在文件系统中浏览。如果此方法中省略了粗线，则用户将被限制在初始化选择器的目录中。
+<p>前面的代码示例使用<code>getExtension</code>方法和几个字符串常量<a class="SourceLink" href="../examples/components/FileChooserDemo2Project/src/components/Utils.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/FileChooserDemo2Project/src/components/Utils.java'); return false;"><code>Utils.java</code></a> ，如下所示：</p>
+<div class="codeblock"><pre>
+public class Utils {
+
+    public final static String jpeg = "jpeg";
+    public final static String jpg = "jpg";
+    public final static String gif = "gif";
+    public final static String tiff = "tiff";
+    public final static String tif = "tif";
+    public final static String png = "png";
+
+    /*
+     * Get the extension of a file.
+     */  
+    public static String getExtension(File f) {
+        String ext = null;
+        String s = f.getName();
+        int i = s.lastIndexOf('.');
+
+        if (i &gt; 0 &amp;&amp;  i &lt; s.length() - 1) {
+            ext = s.substring(i+1).toLowerCase();
+        }
+        return ext;
+    }
+}
+</pre></div>
+</dd>
+</dl>
+<h2><a name="fileview" id="fileview">自定义文件视图</a></h2>
+<p>在Java外观中，选择器的列表显示每个文件的名称，并显示一个小图标，表示该文件是真实文件还是目录。您可以通过创建以下内容的自定义子类来自定义此<em>文件视图</em> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/filechooser/FileView.html" target="_blank"><code>FileView</code></a>并使用该类的实例作为<code>setFileView</code>方法。该示例使用一个自定义类的实例，该实例在<a class="SourceLink" href="../examples/components/FileChooserDemo2Project/src/components/ImageFileView.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/FileChooserDemo2Project/src/components/ImageFileView.java'); return false;"><code>ImageFileView.java</code></a> ，作为文件选择器的文件视图。</p>
+<div class="codeblock"><pre>
+fc.setFileView(new ImageFileView());
+</pre></div>
+<p>的<code>ImageFileView</code>类别针对上述图像过滤器接受的每种图像类型显示不同的图标。</p>
+<p>的<code>ImageFileView</code>类覆盖了定义的五个抽象方法<code>FileView</code>如下。</p>
+<dl>
+<dt><strong><code>String getTypeDescription(File f)</code></strong></dt>
+<dd>返回文件类型的描述。这是<code>ImageFileView</code>方法的实现：<div class="codeblock"><pre>
+public String getTypeDescription(File f) {
+    String extension = Utils.getExtension(f);
+    String type = null;
+
+    if (extension != null) {
+        if (extension.equals(Utils.jpeg) ||
+            extension.equals(Utils.jpg)) {
+            type = "JPEG Image";
+        } else if (extension.equals(Utils.gif)){
+            type = "GIF Image";
+        } else if (extension.equals(Utils.tiff) ||
+                   extension.equals(Utils.tif)) {
+            type = "TIFF Image";
+        } else if (extension.equals(Utils.png)){
+            type = "PNG Image";
+        }
+    }
+    return type;
+}
+</pre></div>
+</dd>
+<dt><strong><code>Icon getIcon(File f)</code></strong></dt>
+<dd>返回表示文件或其类型的图标。这是<code>ImageFileView</code>方法的实现：<div class="codeblock"><pre>
+public Icon getIcon(File f) {
+    String extension = Utils.getExtension(f);
+    Icon icon = null;
+
+    if (extension != null) {
+        if (extension.equals(Utils.jpeg) ||
+            extension.equals(Utils.jpg)) {
+            icon = jpgIcon;
+        } else if (extension.equals(Utils.gif)) {
+            icon = gifIcon;
+        } else if (extension.equals(Utils.tiff) ||
+                   extension.equals(Utils.tif)) {
+            icon = tiffIcon;
+        } else if (extension.equals(Utils.png)) {
+            icon = pngIcon;
+        }
+    }
+    return icon;
+}
+</pre></div>
+</dd>
+<dt><strong><code>String getName(File f)</code></strong></dt>
+<dd>返回文件名。此方法的大多数实现应返回<code>null</code>表示应该弄清楚外观。另一个常见的实现回报<code>f.getName()</code> 。</dd>
+<dt><strong><code>String getDescription(File f)</code></strong></dt>
+<dd>返回文件的描述。目的是更具体地描述单个文件。此方法的常见实现返回<code>null</code>表示应该弄清楚外观。</dd>
+<dt><strong><code>Boolean isTraversable(File f)</code></strong></dt>
+<dd>返回目录是否可遍历。此方法的大多数实现应返回<code>null</code>表示应该弄清楚外观。某些应用程序可能希望阻止用户进入某种类型的目录，因为它表示复合文档。的<code>isTraversable</code>方法永不返回<code>true</code>对于非目录。</dd>
+</dl>
+<h2><a name="accessory" id="accessory">提供配件</a></h2>
+<p>中的自定义文件选择器<code>FileChooserDemo2</code>有一个配件。如果当前选择的项目是PNG，JPEG，TIFF或GIF图像，则附件组件将显示图像的缩略图。否则，附件组件为空。除了预览器以外，附件组件最常见的用途可能是面板上带有更多控件，例如在功能之间切换的复选框。</p>
+<p>该示例调用<code>setAccessory</code>建立实例的方法<code>ImagePreview</code>类，在<a class="SourceLink" href="../examples/components/FileChooserDemo2Project/src/components/ImagePreview.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/FileChooserDemo2Project/src/components/ImagePreview.java'); return false;"><code>ImagePreview.java</code></a> ，作为选择者的辅助组件：</p>
+<div class="codeblock"><pre>
+fc.setAccessory(new ImagePreview(fc));
+</pre></div>
+<p>从继承的任何对象<code>JComponent</code>类可以是附件组件。该组件应具有在文件选择器中看起来不错的首选大小。</p>
+<p>当用户在列表中选择一个项目时，文件选择器将触发属性更改事件。每当选择更改时，带有附件组件的程序必须注册以接收这些事件以更新附件组件。在示例中， <code>ImagePreview</code>对象本身会注册这些事件。这样会将与附件组件有关的所有代码都归为一类。</p>
+<p>这是示例的实现<code>propertyChange</code>方法，这是在触发属性更改事件时调用的方法：</p>
+<div class="codeblock"><pre>
+//<em>where member variables are declared</em>
+File file = null;
+...
+public void propertyChange(PropertyChangeEvent e) {
+    boolean update = false;
+    String prop = e.getPropertyName();
+
+    //If the directory changed, don't show an image.
+    if (JFileChooser.DIRECTORY_CHANGED_PROPERTY.equals(prop)) {
+        file = null;
+        update = true;
+
+    //If a file became selected, find out which one.
+    } else if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(prop)) {
+        file = (File) e.getNewValue();
+        update = true;
+    }
+
+    //Update the preview accordingly.
+    if (update) {
+        thumbnail = null;
+        if (isShowing()) {
+            loadImage();
+            repaint();
+        }
+    }
+}
+</pre></div>
+<p>如果<code>SELECTED_FILE_CHANGED_PROPERTY</code>是更改的属性，此方法获得一个<code>File</code>文件选择器中的对象。的<code>loadImage</code>和<code>repaint</code>方法使用<code>File</code>对象以加载图像并重新绘制附件组件。</p>
+<h2><a name="api" id="api">文件选择器API</a></h2>
+<p>使用文件选择器的API分为以下几类：</p>
+<ul>
+<li><a href="#show">创建和显示文件选择器</a></li>
+<li><a href="#selection">选择文件和目录</a></li>
+<li><a href="#navigation">浏览文件选择器的列表</a></li>
+<li><a href="#customization">自定义文件选择器</a></li>
+</ul>
+<table border="1" summary="Creating and Showing the File Chooser">
+<caption><a name="show" id="show" style="font-weight:bold">创建和显示文件选择器</a></caption>
+<tbody><tr>
+<th align="left">方法或构造函数</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#JFileChooser--" target="_blank">JFileChooser（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#JFileChooser-java.io.File-" target="_blank">JFileChooser（文件）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#JFileChooser-java.lang.String-" target="_blank">JFileChooser（字符串）</a></td>
+<td>创建一个文件选择器实例。的<code>File</code>和<code>String</code>参数（如果存在）提供初始目录。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#showOpenDialog-java.awt.Component-" target="_blank">int showOpenDialog（组件）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#showSaveDialog-java.awt.Component-" target="_blank">int showSaveDialog（组件）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#showDialog-java.awt.Component-java.lang.String-" target="_blank">int showDialog（组件，字符串）</a></td>
+<td>显示包含文件选择器的模式对话框。这些方法返回<code>APPROVE_OPTION</code>如果用户批准了该操作，并且<code>CANCEL_OPTION</code>如果用户取消了它。另一个可能的返回值是<code>ERROR_OPTION</code> ，这意味着发生了意外错误。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Selecting Files and Directories">
+<caption><a name="selection" id="selection" style="font-weight:bold">选择文件和目录</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setSelectedFile-java.io.File-" target="_blank">void setSelectedFile（File）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getSelectedFile--" target="_blank">文件getSelectedFile（）</a></td>
+<td>设置或获取当前选择的文件或（如果已启用目录选择）目录。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setSelectedFiles-java.io.File:A-" target="_blank">void setSelectedFiles（File []）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getSelectedFiles--" target="_blank">File [] getSelectedFiles（）</a></td>
+<td>如果文件选择器设置为允许多选，则设置或获取当前选择的文件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setFileSelectionMode-int-" target="_blank">void setFileSelectionMode（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getFileSelectionMode--" target="_blank">无效的getFileSelectionMode（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#isDirectorySelectionEnabled--" target="_blank">boolean isDirectorySelectionEnabled（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#isFileSelectionEnabled--" target="_blank">boolean isFileSelectionEnabled（）</a></td>
+<td>设置或获取文件选择模式。可接受的值为<code>FILES_ONLY</code> （默认）， <code>DIRECTORIES_ONLY</code>和<code>FILES_AND_DIRECTORIES</code> 。<br>解释是否可以根据当前选择模式选择目录或文件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setMultiSelectionEnabled-boolean-" target="_blank">void setMultiSelectionEnabled（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#isMultiSelectionEnabled--" target="_blank">boolean isMultiSelectionEnabled（）</a></td>
+<td>设置或解释是否可以一次选择多个文件。默认情况下，用户只能选择一个文件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setAcceptAllFileFilterUsed-boolean-" target="_blank">无效setAcceptAllFileFilterUsed（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#isAcceptAllFileFilterUsed--" target="_blank">boolean isAcceptAllFileFilterUsed（）</a></td>
+<td>设置或获取是否<code>AcceptAll</code>在可选择的过滤器列表中，将文件过滤器用作允许的选择；默认值为<code>true</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#createDialog-java.awt.Component-" target="_blank">对话框createDialog（Component）</a></td>
+<td>给定父级组件，创建并返回一个新对话框，其中包含此文件选择器，该对话框取决于父级框架，并位于父级上方。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Navigating the File Chooser's List">
+<caption><a name="navigation" id="navigation" style="font-weight:bold">浏览文件选择器的列表</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#ensureFileIsVisible-java.io.File-" target="_blank">void verifyFileIsVisible（File）</a></td>
+<td>滚动文件选择器的列表，以使显示的文件可见。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setCurrentDirectory-java.io.File-" target="_blank">void setCurrentDirectory（File）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getCurrentDirectory--" target="_blank">文件getCurrentDirectory（）</a></td>
+<td>设置或获取其文件显示在文件选择器列表中的目录。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#changeToParentDirectory--" target="_blank">void changeToParentDirectory（）</a></td>
+<td>更改列表以显示当前目录的父目录。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#rescanCurrentDirectory--" target="_blank">无效rescanCurrentDirectory（）</a></td>
+<td>检查文件系统并更新选择器的列表。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setDragEnabled-boolean-" target="_blank">void setDragEnabled（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getDragEnabled--" target="_blank">布尔值getDragEnabled（）</a></td>
+<td>设置或获取确定是否启用自动拖动处理的属性。有关更多详细信息，请参见<a class="TutorialLink" href="../dnd/index.html" target="_top">拖放和数据传输</a> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Customizing the File Chooser">
+<caption><a name="customization" id="customization" style="font-weight:bold">自定义文件选择器</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setAccessory-javax.swing.JComponent-" target="_blank">void setAccessory（javax.swing。JComponent）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getAccessory--" target="_blank">JComponent getAccessory（）</a></td>
+<td>设置或获取文件选择器的附件组件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setFileFilter-javax.swing.filechooser.FileFilter-" target="_blank">无效setFileFilter（FileFilter）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getFileFilter--" target="_blank">FileFilter getFileFilter（）</a></td>
+<td>设置或获取文件选择器的主文件过滤器。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setFileView-javax.swing.filechooser.FileView-" target="_blank">无效setFileView（FileView）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getFileView--" target="_blank">FileView getFileView（）</a></td>
+<td>设置或获取选择器的文件视图。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getChoosableFileFilters--" target="_blank">FileFilter [] getChoosableFileFilters（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#addChoosableFileFilter-javax.swing.filechooser.FileFilter-" target="_blank">无效的addChoosableFileFilter（FileFilter）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#removeChoosableFileFilter-javax.swing.filechooser.FileFilter-" target="_blank">布尔值removeChoosableFileFilter（FileFilter）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#resetChoosableFileFilters--" target="_blank">void resetChoosableFileFilters（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getAcceptAllFileFilter--" target="_blank">FileFilter getAcceptAllFileFilter（）</a></td>
+<td>设置，获取或修改用户可选择的文件过滤器列表。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setFileHidingEnabled-boolean-" target="_blank">void setFileHidingEnabled（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#isFileHidingEnabled--" target="_blank">boolean isFileHidingEnabled（）</a></td>
+<td>设置或获取是否显示隐藏文件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#setControlButtonsAreShown-boolean-" target="_blank">void setControlButtonsAreShown（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFileChooser.html#getControlButtonsAreShown--" target="_blank">布尔值getControlButtonsAreShown（）</a></td>
+<td>设置或获取指示文件选择器中是否显示“批准”和“取消”按钮的属性。默认情况下，此属性为true。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用文件选择器的示例</a></h2>
+<p>下表显示了使用文件选择器的示例，并指向描述这些示例的位置。</p>
+<table summary="Examples That Use File Choosers">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#FileChooserDemo"><code>FileChooserDemo</code></a></td>
+<td>这个部分</td>
+<td>显示一个打开的对话框和一个保存对话框。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#FileChooserDemo2"><code>FileChooserDemo2</code></a></td>
+<td>这个部分</td>
+<td>使用具有自定义过滤，自定义文件视图和附件组件的文件选择器。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#JWSFileChooserDemo"><code>JWSFileChooserDemo</code></a></td>
+<td>这个部分</td>
+<td>使用JNLP API打开和保存文件。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="editorpane.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="formattedtextfield.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用编辑器窗格和文本窗格<br><b>下一页：</b>如何使用格式化的文本字段</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

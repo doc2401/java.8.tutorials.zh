@@ -1,0 +1,617 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>作为超类的对象（Java™教程>学习Java语言>接口和继承）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This beginner Java tutorial describes fundamentals of programming in the Java programming language">
+     <meta name="keywords" content="java programming, learn java, java sample code, java objects, java classes, java inheritance, interfaces, variables, arrays, data types, operators, control flow, number, string">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">接口和继承</a></div>
+<div class="linkAHEAD"><a href="createinterface.html">介面</a></div>
+<div class="linkBHEAD"><a href="interfaceDef.html">定义接口</a></div>
+<div class="linkBHEAD"><a href="usinginterface.html">实施接口</a></div>
+<div class="linkBHEAD"><a href="interfaceAsType.html">使用接口作为类型</a></div>
+<div class="linkBHEAD"><a href="nogrow.html">不断发展的界面</a></div>
+<div class="linkBHEAD"><a href="defaultmethods.html">默认方法</a></div>
+<div class="linkBHEAD"><a href="summary-interface.html">接口汇总</a></div>
+<div class="linkQUESTIONS"><a href="QandE/interfaces-questions.html">问题与练习</a></div>
+<div class="linkAHEAD"><a href="subclasses.html">遗产</a></div>
+<div class="linkBHEAD"><a href="multipleinheritance.html">状态，实现和类型的多重继承</a></div>
+<div class="linkBHEAD"><a href="override.html">覆盖和隐藏方法</a></div>
+<div class="linkBHEAD"><a href="polymorphism.html">多态性</a></div>
+<div class="linkBHEAD"><a href="hidevariables.html">隐藏场</a></div>
+<div class="linkBHEAD"><a href="super.html">使用关键字超级</a></div>
+<div class="nolinkBHEAD">作为超类的对象</div>
+<div class="linkBHEAD"><a href="final.html">编写最终课程和方法</a></div>
+<div class="linkBHEAD"><a href="abstract.html">抽象方法和类</a></div>
+<div class="linkBHEAD"><a href="summaryinherit.html">继承摘要</a></div>
+<div class="linkQUESTIONS"><a href="QandE/inherit-questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>学习Java语言<br><b>课程：</b>接口和继承<br><b>部分：</b>继承</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">学习Java语言</a> > <a href="index.html" target="_top">接口和继承</a>
+            </div>
+            <div class="NavBit">
+                <a href="super.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="final.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>作为超类的对象</h1></div>
+            <div id="PageContent">
+
+<!-- Being a Descendent of Object -->
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" target="_blank"><code>Object</code></a>类，在<code>java.lang</code>包，位于类层次结构树的顶部。每个类别都是该类别的直接或间接的后代<code>Object</code>类。您使用或编写的每个类都继承了的实例方法<code>Object</code> 。您不需要使用任何这些方法，但是，如果您选择使用这些方法，则可能需要使用特定于您的类的代码覆盖它们。从继承的方法<code>Object</code>本节中讨论的是：</p>
+<ul>
+<li><code>protected Object clone() throws CloneNotSupportedException</code><br>创建并返回此对象的副本。</li>
+<li><code>public boolean equals(Object obj)</code><br>指示其他某个对象是否与此对象“相等”。</li>
+<li><code>protected void finalize() throws Throwable</code><br>当垃圾回收时，由垃圾回收器在对象上调用<br>集合确定不再有对该对象的引用</li>
+<li><code>public final Class getClass()</code><br>返回对象的运行时类。</li>
+<li><code>public int hashCode()</code><br>返回对象的哈希码值。</li>
+<li><code>public String toString()</code><br>返回对象的字符串表示形式。</li>
+</ul>
+<p>的<code>notify</code> ， <code>notifyAll</code>和<code>wait</code>方法<code>Object</code>所有这些都在同步程序中独立运行的线程的活动中发挥作用，这将在后面的课程中进行讨论，此处不再赘述。这些方法有五种：</p>
+<ul>
+<li><code>public final void notify()</code></li>
+<li><code>public final void notifyAll()</code></li>
+<li><code>public final void wait()</code></li>
+<li><code>public final void wait(long timeout)</code></li>
+<li><code>public final void wait(long timeout, int nanos)</code></li>
+</ul>
+<div class="note"><hr><strong>注意：</strong>许多这些方法都有一些细微的方面，尤其是<code>clone</code>方法。
+<hr></div>
+<h2>clone（）方法</h2>
+<p>如果某个类或其超类之一实现了<code>Cloneable</code>界面，您可以使用<code>clone()</code>从现有对象创建副本的方法。要创建克隆，请编写：</p>
+<div class="codeblock"><pre>
+<i>aCloneableObject</i>.clone();
+</pre></div>
+<p><code>Object</code>此方法的实现检查对象是否位于<code>clone()</code>被调用实现<code>Cloneable</code>接口。如果对象不存在，则该方法将引发<code>CloneNotSupportedException</code>例外。异常处理将在以后的课程中介绍。目前，您需要知道<code>clone()</code>必须声明为</p>
+<div class="codeblock"><pre>
+protected Object clone() throws CloneNotSupportedException
+</pre></div>
+<p>要么：</p>
+<div class="codeblock"><pre>
+public Object clone() throws CloneNotSupportedException
+</pre></div>
+<p>如果你要写一个<code>clone()</code>覆盖其中一个的方法<code>Object</code> 。</p>
+<p>如果物体在哪<code>clone()</code>被调用确实实现了<code>Cloneable</code>接口， <code>Object</code>的实施<code>clone()</code>方法创建与原始对象相同类的对象，并将新对象的成员变量初始化为具有与原始对象的相应成员变量相同的值。</p>
+<p>使类可克隆的最简单方法是添加<code>implements Cloneable</code>到班级的声明。然后您的对象可以调用<code>clone()</code>方法。</p>
+<p>对于某些类，默认行为是<code>Object</code>的<code>clone()</code>方法效果很好。但是，如果对象包含对外部对象的引用，请说<code>ObjExternal</code> ，您可能需要覆盖<code>clone()</code>获得正确的行为。否则，改变<code>ObjExternal</code>由一个对象创建的对象也将在其克隆中可见。这意味着原始对象及其克隆不是独立的，要分离它们，您必须重写<code>clone()</code>以便克隆对象<i>并</i> <code>ObjExternal</code> 。然后原始对象引用<code>ObjExternal</code>该克隆引用了一个克隆<code>ObjExternal</code> ，因此对象及其克隆是真正独立的。</p>
+<h2>equals（）方法</h2>
+<p>的<code>equals()</code>方法比较两个对象是否相等并返回<code>true</code>如果它们相等。的<code>equals()</code>中提供的方法<code>Object</code>类使用身份运算符（ <code>==</code> ），以确定两个对象是否相等。对于原始数据类型，这将给出正确的结果。但是，对于对象，不是。的<code>equals()</code>提供的方法<code>Object</code>测试对象<i>引用</i>是否相等，即是否比较的对象是完全相同的对象。</p>
+<p>要测试两个对象在<i>等效</i>意义上是否<i>相等</i> （包含相同的信息），必须覆盖<code>equals()</code>方法。这是一个例子<code>Book</code>覆盖的类<code>equals()</code> ：</p>
+<div class="codeblock"><pre>
+public class Book {
+    ...
+    public boolean equals(Object obj) {
+        if (obj instanceof Book)
+            return ISBN.equals((Book)obj.getISBN()); 
+        else
+            return false;
+    }
+}
+</pre></div>
+<p>考虑一下这段代码，该代码测试了<code>Book</code>平等课程：</p>
+<div class="codeblock"><pre>
+// Swing Tutorial, 2nd edition
+Book firstBook  = new Book("0201914670");
+Book secondBook = new Book("0201914670");
+if (firstBook.equals(secondBook)) {
+    System.out.println("objects are equal");
+} else {
+    System.out.println("objects are not equal");
+}
+</pre></div>
+<p>该程序显示<code>objects are equal</code>即使<code>firstBook</code>和<code>secondBook</code>引用两个不同的对象。之所以认为它们相等，是因为所比较的对象包含相同的ISBN号。</p>
+<p>您应该始终覆盖<code>equals()</code>如果标识运算符不适合您的班级，请使用此方法。</p>
+<div class="note"><hr><strong>注意：</strong>如果您覆盖<code>equals()</code> ，您必须覆盖<code>hashCode()</code>也一样
+<hr></div>
+<h2>finalize（）方法</h2>
+<p>的<code>Object</code>类提供了一个回调方法， <code>finalize()</code> ， <i>可以</i>在对象变成垃圾时在其上调用。 <code>Object</code>的实现<code>finalize()</code>什么都不做-您可以覆盖<code>finalize()</code>进行清理，例如释放资源。</p>
+<p>的<code>finalize()</code>方法<em>可能会</em>由系统自动调用，但是何时调用，即使调用它，也不确定。因此，您不应依赖此方法为您进行清理。例如，如果您在执行I / O之后没有在代码中关闭文件描述符，则您期望<code>finalize()</code>要为您关闭它们，您可能用完了文件描述符。</p>
+<h2>getClass（）方法</h2>
+<p>您不能覆盖<code>getClass</code> 。</p>
+<p>的<code>getClass()</code>方法返回一个<code>Class</code>对象，该对象具有可用于获取有关类的信息的方法，例如其名称（ <code>getSimpleName()</code> ），其超类（ <code>getSuperclass()</code> ）及其实现的接口（ <code>getInterfaces()</code> ）。例如，以下方法获取并显示对象的类名称：</p>
+<div class="codeblock"><pre>
+void printClassName(Object obj) {
+    System.out.println("The object's" + " class is " +
+        obj.getClass().getSimpleName());
+}
+</pre></div>
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html" target="_blank"><code>Class</code></a>类，在<code>java.lang</code>包，具有大量方法（超过50种）。例如，您可以测试以查看该类是否为注释（ <code>isAnnotation()</code> ），界面（ <code>isInterface()</code> ）或枚举（ <code>isEnum()</code> ）。您可以看到对象的字段是（ <code>getFields()</code> ）或其方法是（ <code>getMethods()</code> ）， 等等。</p>
+<h2>hashCode（）方法</h2>
+<p>传回的值<code>hashCode()</code>是对象的哈希码，它是对象的内存地址（十六进制）。</p>
+<p>根据定义，如果两个对象相等，则它们的哈希码<i>也</i>必须相等。如果您覆盖<code>equals()</code>方法，您可以更改两个对象的相等方式， <code>Object</code>的实现<code>hashCode()</code>不再有效。因此，如果您覆盖<code>equals()</code>方法，您还必须覆盖<code>hashCode()</code>方法。</p>
+<h2>toString（）方法</h2>
+<p>您应该始终考虑覆盖<code>toString()</code>类中的方法。</p>
+<p>的<code>Object</code>的<code>toString()</code>方法返回一个<code>String</code>对象的表示形式，这对于调试非常有用。的<code>String</code>对象的表示形式完全取决于对象，这就是为什么需要覆盖的原因<code>toString()</code>在你的课上。</p>
+<p>您可以使用<code>toString()</code>随着<code>System.out.println()</code>显示对象的文本表示形式，例如的实例<code>Book</code> ：</p>
+<div class="codeblock"><pre>
+System.out.println(firstBook.toString());
+</pre></div>
+<p>适当覆盖<code>toString()</code>方法，打印一些有用的内容，例如：</p>
+<div class="codeblock"><pre>
+ISBN: 0201914670; The Swing Tutorial; A Guide to Constructing GUIs, 2nd Edition
+</pre></div>
+
+        </div>
+        <div class="NavBit">
+            <a href="super.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="final.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>使用超级关键字<br><b>下一页：</b>编写最终的类和方法</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

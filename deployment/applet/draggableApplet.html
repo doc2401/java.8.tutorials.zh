@@ -1,0 +1,628 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>开发可拖动小程序（Java™教程>部署> Java小程序）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This deployment Java tutorial describes development and deployment of applets, Java Web Start applications, rich Internet applications, and JAR related tools">
+     <meta name="keywords" content="java programming, learn java, java sample code, java applet, java web start, rich internet application, RIA, jar, plugin, plug-in">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">Java小程序</a></div>
+<div class="linkAHEAD"><a href="getStarted.html">小程序入门</a></div>
+<div class="linkBHEAD"><a href="subclass.html">定义Applet子类</a></div>
+<div class="linkBHEAD"><a href="appletMethods.html">里程碑方法</a></div>
+<div class="linkBHEAD"><a href="lifeCycle.html">小程序的生命周期</a></div>
+<div class="linkBHEAD"><a href="appletExecutionEnv.html">Applet的执行环境</a></div>
+<div class="linkBHEAD"><a href="developingApplet.html">开发小程序</a></div>
+<div class="linkBHEAD"><a href="deployingApplet.html">部署小程序</a></div>
+<div class="linkCHEAD"><a href="html.html">使用Applet标签进行部署</a></div>
+<div class="linkAHEAD"><a href="doingMoreWithApplets.html">用小程序做更多</a></div>
+<div class="linkBHEAD"><a href="data.html">查找和加载数据文件</a></div>
+<div class="linkBHEAD"><a href="param.html">定义和使用Applet参数</a></div>
+<div class="linkBHEAD"><a href="showStatus.html">显示简短的状态字符串</a></div>
+<div class="linkBHEAD"><a href="browser.html">在浏览器中显示文档</a></div>
+<div class="linkBHEAD"><a href="invokingJavaScriptFromApplet.html">从小程序调用JavaScript代码</a></div>
+<div class="linkBHEAD"><a href="invokingAppletMethodsFromJavaScript.html">从JavaScript代码调用Applet方法</a></div>
+<div class="linkBHEAD"><a href="appletStatus.html">使用事件处理程序处理初始化状态</a></div>
+<div class="linkBHEAD"><a href="manipulatingDOMFromApplet.html">处理Applet网页的DOM</a></div>
+<div class="linkBHEAD"><a href="customProgressIndicatorForApplet.html">显示自定义的加载进度指示器</a></div>
+<div class="linkBHEAD"><a href="stdout.html">将诊断写入标准输出和错误流</a></div>
+<div class="nolinkBHEAD">开发可拖动的小程序</div>
+<div class="linkBHEAD"><a href="iac.html">与其他小程序进行通信</a></div>
+<div class="linkBHEAD"><a href="server.html">使用服务器端应用程序</a></div>
+<div class="linkCHEAD"><a href="clientExample.html">网络客户端小程序示例</a></div>
+<div class="linkBHEAD"><a href="security.html">小程序可以做什么和不能做什么</a></div>
+<div class="linkAHEAD"><a href="problemsindex.html">解决小程序常见问题</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>追踪：</b>部署<br><b>课程：</b> Java小程序<br><b>部分：</b>对Applet进行更多操作</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">部署</a> > <a href="index.html" target="_top">Java Applets</a>
+            </div>
+            <div class="NavBit">
+                <a href="stdout.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="iac.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>开发可拖动的小程序</h1></div>
+            <div id="PageContent">
+
+<p>通过指定<code>draggable</code>可以将参数拖动到浏览器之外，并动态转换为Java Web Start应用程序。可以通过按Alt键和鼠标左键并拖动鼠标来拖动Java小程序。开始拖动操作后，小程序将从其父容器中删除（ <code>Applet</code>要么<code>JApplet</code> ），并放置在新的未修饰的顶层窗口中（ <code>Frame</code>要么<code>JFrame</code> ）。拖动的小程序旁边会显示一个小的浮动关闭按钮。单击浮动的关闭按钮后，小程序将重新放置在浏览器中。从此以后，可以从浏览器中拖出的Java小程序将称为<em>可拖动小程序</em> 。</p>
+<p>您可以通过以下方式自定义可拖动小程序的行为：</p>
+<ul>
+<li>您可以更改用于将小程序拖动到浏览器外部的按键和鼠标按钮顺序。</li>
+<li>您可以添加桌面快捷方式，该快捷方式可用于在浏览器外部启动应用程序。</li>
+<li>您可以定义将小程序拖到浏览器之外后应如何关闭。</li>
+</ul>
+<p>以下各节描述如何实现和自定义可拖动小程序。的<a class="SourceLink" href="examples/applet_Draggable/src/MenuChooserApplet.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/applet_Draggable/src/MenuChooserApplet.java'); return false;"><code>MenuChooserApplet</code></a>类用于演示可拖动小程序的开发和部署。打开<a class="SourceLink" href="examples/dist/applet_Draggable/AppletPage.html" target="_blank" onclick="showCode('../../displayCode.html', 'examples/dist/applet_Draggable/AppletPage.html'); return false;"><code><code>AppletPage.html</code></code></a>在浏览器中查看新页面上的菜单选择器小程序。</p>
+<div class="note"><hr><strong>注意：</strong>如果看不到小程序正在运行，则至少需要安装<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit（JDK）6 update 10</a>发行版。<hr></div><div class="note"><hr><strong>注意：</strong>如果看不到示例正在运行，则可能需要在浏览器中启用JavaScript解释器，以便Deployment Toolkit脚本能够正常运行。<hr></div><h2>启用拖动小程序的功能</h2>
+<p>您可以通过以下方式启用拖动小程序的功能： <code>draggable</code>参数<code>true</code>部署小程序时，如以下代码片段所示：</p>
+<div class="codeblock"><pre>
+&lt;script src="https://www.java.com/js/deployJava.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var attributes = { code:'MenuChooserApplet', width:900, height:300 };
+    var parameters = { jnlp_href: 'draggableapplet.jnlp', <b>draggable: 'true'</b> };
+    deployJava.runApplet(attributes, parameters, '1.6');
+&lt;/script&gt;
+</pre></div>
+<h2>更改用于拖动小程序的按键和鼠标按钮顺序</h2>
+<p>您可以通过实现以下操作来更改用于拖动小程序的按键和鼠标按钮顺序<code>isAppletDragStart</code>方法。在以下代码片段中，可以通过按鼠标左键并拖动鼠标来拖动小程序：</p>
+<div class="codeblock"><pre>
+ public boolean isAppletDragStart(MouseEvent e) {
+        if(e.getID() == MouseEvent.MOUSE_DRAGGED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</pre></div>
+<h2>当Applet与浏览器断开连接时，启用桌面快捷方式的添加</h2>
+<p>如果用户在将小应用程序拖动到页面之外后关闭浏览器窗口或导航离开该页面，则该小应用程序被称为与浏览器<em>断开连接</em> 。当小程序与浏览器断开连接时，可以为小程序创建桌面快捷方式。桌面快捷方式可用于在浏览器外部启动应用程序。要启用桌面快捷方式的创建，请添加<code>offline-allowed</code>和<code>shortcut</code>小程序的Java网络启动协议（JNLP）文件中的标签。</p>
+<div class="codeblock"><pre>
+&lt;information&gt;
+    &lt;!-- ... --&gt;
+    &lt;offline-allowed /&gt;
+    &lt;shortcut online="false"&gt;
+        &lt;desktop /&gt;
+    &lt;/shortcut&gt;
+&lt;/information&gt;
+</pre></div>
+<div class="note"><hr><strong>注意：</strong>根据用户Java控制面板中“快捷方式创建”的设置，在创建快捷方式之前，可能会提示用户进行确认。
+<hr></div>
+<h2>定义应如何关闭小程序</h2>
+<p>您可以定义如何关闭小程序。例如，您的Swing小程序可以有一个<code>JButton</code>关闭小程序，而不是依靠默认的浮动“关闭”按钮。</p>
+<p>Java插件软件为applet提供了<code>ActionListener</code>类。这个实例<code>ActionListener</code>类，也称为<em>关闭侦听器</em> ，可用于修改小程序的默认关闭行为。</p>
+<p>要定义应如何关闭小程序，请实施<code>setAppletCloseListener</code>和<code>appletRestored</code>小程序中的方法。</p>
+<p>在以下代码段中， <a class="SourceLink" href="examples/applet_Draggable/src/MenuChooserApplet.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/applet_Draggable/src/MenuChooserApplet.java'); return false;"><code>MenuChooserApplet</code></a>类接收关闭的侦听器，并将其传递给的实例<a class="SourceLink" href="examples/applet_Draggable/src/MenuItemChooser.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/applet_Draggable/src/MenuItemChooser.java'); return false;"><code>MenuItemChooser</code></a>类：</p>
+<div class="codeblock"><pre>
+MenuItemChooser display = null;
+// ...
+display = new MenuItemChooser();
+// ...
+public void setAppletCloseListener(ActionListener cl) {
+    display.setCloseListener(cl);
+}
+
+public void appletRestored() {
+    display.setCloseListener(null);
+}
+</pre></div>
+<p>的<code>MenuItemChooser</code>类负责控制小程序的用户界面。的<code>MenuItemChooser</code>类定义一个<code>JButton</code>标记为“关闭”。当用户单击关闭按钮时，将执行以下代码：</p>
+<div class="codeblock"><pre>
+private void close() {
+    // invoke actionPerformed of closeListener received
+    // from the Java Plug-in software.
+    if (closeListener != null) {
+        closeListener.actionPerformed(null);
+    }
+}
+</pre></div>
+<p><a id="decoration" name="decoration"></a></p>
+<h2>请求和自定义Applet装饰</h2>
+<p>从Java SE 7发行版开始，在部署小程序时，您可以指定拖动的小程序窗口应使用默认或自定义窗口标题进行装饰。</p>
+<p>要启用拖动小程序的窗口装饰，请指定<code>java_decorated_frame</code>参数值为<code>"true"</code> 。要启用自定义窗口标题，请指定<code>java_applet_title</code>参数也。此参数的值应该是窗口标题的文本。</p>
+<div class="codeblock"><pre>
+&lt;script src="https://www.java.com/js/deployJava.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var attributes =
+      { code:'SomeDraggableApplet', width:100, height:100 };
+    var parameters =
+      { jnlp_href: 'somedraggableapplet.jnlp', 
+          <b>java_decorated_frame: 'true',
+          java_applet_title: 'A Custom Title'</b>   
+      };
+    deployJava.runApplet(attributes, parameters, '1.7');
+&lt;/script&gt;
+</pre></div>
+<p>的<code>java_decorated_frame</code>和<code>java_applet_title</code>也可以在applet的JNLP文件中指定参数，如以下代码片段所示：</p>
+<div class="codeblock"><pre>
+&lt;applet-desc main-class="SayHello" name="main test" height="150" width="300"&gt;
+    &lt;param name="java_decorated_frame" value="true" /&gt;
+    &lt;param name="java_applet_title" value="" /&gt;
+&lt;/applet-desc&gt;
+</pre></div>
+
+<p>
+<a class="TutorialLink" href="examplesIndex.html#DraggableApplet" target="_top">下载</a> <em>Draggable Applet</em>示例的<a class="TutorialLink" href="examplesIndex.html#DraggableApplet" target="_top">源代码</a>以进行进一步试验。</p>
+
+        </div>
+        <div class="NavBit">
+            <a href="stdout.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="iac.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>将诊断写入标准输出和错误流<br><b>下一页：</b>与其他小程序进行通信</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

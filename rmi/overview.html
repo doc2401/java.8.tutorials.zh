@@ -1,0 +1,561 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>RMI应用程序概述（Java™教程> RMI）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This RMI Java tutorial describes the Java RMI system. It walks through a complete client/server example">
+     <meta name="keywords" content="java programming, learn java, java sample code, java rmi, java client server">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="nolinkAHEAD">RMI应用程序概述</div>
+<div class="linkAHEAD"><a href="server.html">编写RMI服务器</a></div>
+<div class="linkBHEAD"><a href="designing.html">设计远程接口</a></div>
+<div class="linkBHEAD"><a href="implementing.html">实施远程接口</a></div>
+<div class="linkAHEAD"><a href="client.html">创建客户端程序</a></div>
+<div class="linkAHEAD"><a href="example.html">编译并运行示例</a></div>
+<div class="linkBHEAD"><a href="compiling.html">编译示例程序</a></div>
+<div class="linkBHEAD"><a href="running.html">运行示例程序</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>追踪：</b> RMI</div>
+            <div id="BreadCrumbs">
+                <a href="../index.html" target="_top">主页</a> > <a href="./index.html" target="_top">RMI</a>
+            </div>
+            <div class="NavBit">
+                <a href="TOC.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="server.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>RMI应用程序概述</h1></div>
+            <div id="PageContent">
+
+<p>RMI应用程序通常包含两个单独的程序，即服务器和客户端。一个典型的服务器程序会创建一些远程对象，使对这些对象的引用可访问，并等待客户端调用这些对象上的方法。一个典型的客户端程序获取对服务器上一个或多个远程对象的远程引用，然后调用它们上的方法。RMI提供了一种机制，服务器和客户端通过该机制进行通信并来回传递信息。这样的应用程序有时称为<i>分布式对象应用程序</i> 。</p>
+<p>分布式对象应用程序需要执行以下操作：</p>
+<ul>
+<li><b>找到远程对象。</b> 应用程序可以使用各种机制来获取对远程对象的引用。例如，应用程序可以使用RMI的简单命名功能RMI注册表注册其远程对象。或者，应用程序可以传递和返回远程对象引用，作为其他远程调用的一部分。</li>
+<li><b>与远程对象进行通信。</b> 远程对象之间的通信详细信息由RMI处理。对程序员而言，远程通信看起来类似于常规的Java方法调用。</li>
+<li><b>为传递的对象加载类定义。</b> 因为RMI使对象能够来回传递，所以它提供了用于加载对象的类定义以及传输对象的数据的机制。</li>
+</ul>
+<p>下图描述了使用RMI注册表获取对远程对象的引用的RMI分布式应用程序。服务器调用注册表以将名称与远程对象关联（或绑定）。客户端在服务器的注册表中通过其名称查找远程对象，然后在其上调用一个方法。该图还显示RMI系统使用现有的Web服务器在需要时从服务器到客户端以及从客户端到服务器为对象加载类定义。</p>
+<center><img src="../figures/rmi/rmi-2.gif" width="355" height="181" align="bottom" alt="RMI系统使用现有的Web服务器，从服务到客户端以及从客户端到服务器进行通信"></center><p><a name="advantages" id="advantages"></a></p>
+<h2><a name="advantages__1" id="advantages__1">动态代码加载的优点</a></h2>
+<p>RMI的中心和独特功能之一是，如果未在接收方的Java虚拟机中定义对象的类，则它可以下载该类的定义。以前只能在单个Java虚拟机中使用的对象的所有类型和行为，都可以传输到另一个可能是远程的Java虚拟机。RMI按对象的实际类传递对象，因此将对象发送到另一个Java虚拟机时，它们的行为不会改变。此功能允许将新类型和行为引入远程Java虚拟机，从而动态扩展应用程序的行为。此跟踪中的计算引擎示例使用此功能将新行为引入分布式程序。</p>
+<h2><a name="remote" id="remote">远程接口，对象和方法</a></h2>
+<p>像任何其他Java应用程序一样，使用Java RMI构建的分布式应用程序由接口和类组成。接口声明方法。这些类实现在接口中声明的方法，也许还声明其他方法。在分布式应用程序中，某些实现可能驻留在某些Java虚拟机中，而不能驻留在其他虚拟机中。具有可以在Java虚拟机之间调用的方法的<i>对象</i>称为<i>远程对象</i> 。</p>
+<p>通过实现具有以下特征的<i>远程接口</i> ，对象将变为远程：</p>
+<ul>
+<li>远程接口扩展了接口<code>java.rmi.Remote</code> 。</li>
+<li>接口的每个方法都声明<code>java.rmi.RemoteException</code>在其<code>throws</code>子句，以及任何特定于应用程序的例外。</li>
+</ul>
+<p>当对象从一个Java虚拟机传递到另一Java虚拟机时，RMI将其与非远程对象区别对待。RMI不会在接收的Java虚拟机中复制实现对象，而是传递远程对象的远程<i>存根</i> 。存根充当远程对象的本地代表或代理，对于客户端而言，它基本上是远程引用。客户端在本地存根上调用方法，该存根负责对远程对象执行方法调用。</p>
+<p>远程对象的存根实现与远程对象实现的相同的一组远程接口。使用此属性，可以将存根转换为远程对象实现的任何接口。但是， <i>只有</i>在远程接口中定义的那些方法才可以从接收方Java虚拟机中调用。</p>
+<h2><a name="creating" id="creating">使用RMI创建分布式应用程序</a></h2>
+<p><a name="creating__1" id="creating__1">使用RMI开发分布式应用程序涉及以下一般步骤：</a></p>
+<ol>
+<li>设计和实现分布式应用程序的组件。</li>
+<li>编译源。</li>
+<li>使班级网络可访问。</li>
+<li>启动应用程序。</li>
+</ol>
+<h3>设计和实现应用程序组件</h3>
+<p>首先，确定您的应用程序体系结构，包括哪些组件是本地对象以及哪些组件可远程访问。此步骤包括：</p>
+<ul>
+<li><b>定义远程接口。</b> 远程接口指定客户端可以远程调用的方法。客户端编程为远程接口，而不是这些接口的实现类。此类接口的设计包括确定将用作这些方法的参数和返回值的对象类型。如果这些接口或类尚不存在，则还需要定义它们。</li>
+<li><b>实现远程对象。</b> 远程对象必须实现一个或多个远程接口。远程对象类可以包括仅本地可用的其他接口和方法的实现。如果要将任何本地类用作这些方法中任何一个的参数或返回值，则也必须实现它们。</li>
+<li><b>实施客户。</b> 在定义了远程接口之后，包括在部署了远程对象之后，都可以在任何时候实现使用远程对象的客户端。</li>
+</ul>
+<h3>编译源</h3>
+<p>与任何Java程序一样，您可以使用<code>javac</code>编译器编译源文件。源文件包含远程接口，其实现，任何其他服务器类和客户端类的声明。</p>
+<div class="note"><hr><strong>注意：</strong>对于Java Platform Standard Edition 5.0之前的版本，需要额外的步骤来建立存根类，方法是使用<code>rmic</code>编译器。但是，此步骤不再是必需的。
+<hr></div>
+<h3>使班级可访问网络</h3>
+<p>在此步骤中，您可以通过网络访问某些类定义，例如，远程接口及其相关类型的定义以及需要下载到客户端或服务器的类的定义。通常通过Web服务器通过网络访问类定义。</p>
+<h3>开始申请</h3>
+<p>启动应用程序包括运行RMI远程对象注册表，服务器和客户端。</p>
+<p>本节的其余部分将逐步介绍用于创建计算引擎的步骤。</p>
+<h2><a name="generic" id="generic">构建通用计算引擎</a></h2>
+<p><a name="generic__1" id="generic__1">本教程着重于一个简单但功能强大的分布式应用程序，称为<i>计算引擎</i> 。计算引擎是服务器上的远程对象，可从客户端获取任务，运行任务并返回任何结果。任务在运行服务器的计算机上运行。这种类型的分布式应用程序可以使许多客户端计算机使用功能特别强大的计算机或具有专用硬件的计算机。</a></p>
+<p><a name="generic__2" id="generic__2">计算引擎的新颖之处在于，在编写或启动计算引擎时无需定义其运行的任务。可以随时创建新的任务，然后将其分配给要运行的计算引擎。任务的唯一要求是其类实现特定的接口。RMI系统可以将完成任务所需的代码下载到计算引擎。然后，计算引擎使用运行计算引擎的计算机上的资源来运行任务。</a></p>
+<p>Java平台的动态特性实现了执行任意任务的能力，Java平台的动态特性通过RMI扩展到网络。 RMI将任务代码动态加载到计算引擎的Java虚拟机中，并且无需事先了解实现该任务的类就可以运行该任务。这种具有动态下载代码能力的应用程序通常称为基于<i>行为的应用程序</i> 。此类应用程序通常需要完整的启用代理的基础结构。使用RMI，此类应用程序是Java平台上分布式计算的基本机制的一部分。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="TOC.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="server.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>目录<br><b>下一页：</b>编写RMI服务器</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,839 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用JLayer类装饰组件（Java™教程>使用JFC / Swing创建GUI>使用其他Swing功能）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用其他Swing功能</a></div>
+<div class="linkAHEAD"><a href="desktop.html">如何与桌面类集成</a></div>
+<div class="linkAHEAD"><a href="trans_shaped_windows.html">如何创建半透明和成形的Windows</a></div>
+<div class="nolinkAHEAD">如何使用JLayer类装饰组件</div>
+<div class="linkAHEAD"><a href="action.html">如何使用动作</a></div>
+<div class="linkAHEAD"><a href="timer.html">如何使用摇摆计时器</a></div>
+<div class="linkAHEAD"><a href="access.html">如何支持辅助技术</a></div>
+<div class="linkAHEAD"><a href="focus.html">如何使用Focus子系统</a></div>
+<div class="linkAHEAD"><a href="keybinding.html">如何使用键绑定</a></div>
+<div class="linkAHEAD"><a href="modality.html">如何在对话框中使用模态</a></div>
+<div class="linkAHEAD"><a href="printtable.html">如何打印表格</a></div>
+<div class="linkAHEAD"><a href="printtext.html">如何列印文字</a></div>
+<div class="linkAHEAD"><a href="splashscreen.html">如何创建启动画面</a></div>
+<div class="linkAHEAD"><a href="systemtray.html">如何使用系统托盘</a></div>
+<div class="linkAHEAD"><a href="problems.html">使用其他Swing功能解决常见问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用其他Swing功能</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用其他Swing功能</a>
+            </div>
+            <div class="NavBit">
+                <a href="trans_shaped_windows.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="action.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用JLayer类装饰组件</h1></div>
+            <div id="PageContent">
+
+<!-- How to Decorate Components with the JLayer Class -->
+<p>的<code>JLayer</code> class是Swing组件的灵活而强大的<i>装饰器</i> 。它使您能够利用组件并响应组件事件，而无需直接修改基础组件。</p>
+<p>本文档介绍了一些示例，这些示例显示了<code>JLayer</code>类。完整的源代码可用。</p>
+<ul>
+<li><a href="#using">使用<code>JLayer</code>类</a></li>
+<li><a href="#layerui">使用<code>LayerUI</code>类</a></li>
+<li><a href="#drawing">绘制零件</a></li>
+<li><a href="#events">响应事件</a></li>
+<li><a href="#animating">动画忙碌指示器</a></li>
+<li><a href="#validation">验证文本字段</a></li>
+</ul>
+<p>有关此页面上内容的简要介绍，请观看以下视频。</p>
+<p><iframe width="560" height="349" title="在Swing应用程序中使用JLayer" src="http://www.youtube.com/embed/6mQYsWCkx4g" frameborder="1" longdesc="a video on youtube that demonstrates the capabilities of the jlayer component"></iframe></p>
+<p>视频需要启用JavaScript的Web浏览器和Internet连接。如果看不到视频，请尝试<a href="http://www.youtube.com/watch?v=6mQYsWCkx4g">在YouTube上观看</a> 。</p>
+<h2><a name="using" id="using">使用<code>JLayer</code>类</a></h2>
+<p>的<code>javax.swing.JLayer</code>班级是团队的一半。另一半是<code>javax.swing.plaf.LayerUI</code>类。假设您要在顶部创建一些自定义绘图<code>JButton</code>对象（ <i>装饰</i> <code>JButton</code>宾语）。要装饰的组件是<i>target</i> 。</p>
+<ul>
+<li>创建目标组件。</li>
+<li>创建一个实例<code>LayerUI</code>子类做绘图。</li>
+<li>创建一个<code>JLayer</code>包装目标和对象的对象<code>LayerUI</code>宾语。</li>
+<li>使用<code>JLayer</code>就像使用目标组件一样，在用户界面中显示对象。</li>
+</ul>
+<p>例如，添加一个实例<code>JPanel</code>子类<code>JFrame</code>对象，您将执行以下操作：</p>
+<div class="codeblock"><pre>
+JFrame f = new JFrame();
+
+JPanel panel = createPanel();
+
+f.add (panel);
+</pre></div>
+<p>装饰<code>JPanel</code>对象，而是执行与此类似的操作：</p>
+<div class="codeblock"><pre>
+JFrame f = new JFrame();
+
+JPanel panel = createPanel();
+LayerUI&lt;JPanel&gt; layerUI = new MyLayerUISubclass();
+JLayer&lt;JPanel&gt; jlayer = new JLayer&lt;JPanel&gt;(panel, layerUI);
+
+f.add (jlayer);
+</pre></div>
+<p>使用泛型来确保<code>JPanel</code>对象和<code>LayerUI</code>对象适用于兼容类型。在上一个示例中， <code>JLayer</code>对象和<code>LayerUI</code>对象与<code>JPanel</code>类。</p>
+<p>的<code>JLayer</code>该类通常使用其视图组件的确切类型来生成，而<code>LayerUI</code>该类旨在与<code>JLayer</code>通用参数或其任何祖先的类别。</p>
+<p>例如，一个<code>LayerUI<JComponent></code>对象可以与<code>JLayer<AbstractButton></code>宾语。</p>
+<p>一种<code>LayerUI</code>对象负责自定义装饰和事件处理<code>JLayer</code>宾语。当您创建一个实例时<code>LayerUI</code>子类，您的自定义行为可以应用于每个<code>JLayer</code>具有适当泛型的对象。这就是为什么<code>JLayer</code>类是<code>final</code> ;所有自定义行为都封装在您的<code>LayerUI</code>子类，因此无需进行<code>JLayer</code>子类。</p>
+<h2><a name="layerui" id="layerui">使用<code>LayerUI</code>类</a></h2>
+<p>的<code>LayerUI</code>类从<code>ComponentUI</code>类。以下是最常用的覆盖方法：</p>
+<ul>
+<li>的<code>paint(Graphics g, JComponent c)</code>当需要绘制目标组件时，将调用方法。要以与Swing呈现组件相同的方式呈现组件，请调用<code>super.paint(g, c)</code>方法。</li>
+<li>的<code>installUI(JComponent c)</code>当您的实例<code>LayerUI</code>子类与组件关联。在这里执行任何必要的初始化。传入的组件是对应的<code>JLayer</code>宾语。使用以下命令检索目标组件<code>JLayer</code>类' <code>getView()</code>方法。</li>
+<li>的<code>uninstallUI(JComponent c)</code>当您的实例<code>LayerUI</code>子类不再与给定组件关联。如有必要，请在此处清理。</li>
+</ul>
+<h2><a name="drawing" id="drawing">绘制零件</a></h2>
+<p>要使用<code>JLayer</code>上课，你需要一个好<code>LayerUI</code>子类。最简单的一种<code>LayerUI</code>类更改绘制组件的方式。例如，这是在组件上绘制透明的颜色渐变的一种。</p>
+<div class="codeblock"><pre>
+class WallpaperLayerUI extends LayerUI&lt;JComponent&gt; {
+  @Override
+  public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+
+    Graphics2D g2 = (Graphics2D) g.create();
+
+    int w = c.getWidth();
+    int h = c.getHeight();
+    g2.setComposite(AlphaComposite.getInstance(
+            AlphaComposite.SRC_OVER, .5f));
+    g2.setPaint(new GradientPaint(0, 0, Color.yellow, 0, h, Color.red));
+    g2.fillRect(0, 0, w, h);
+
+    g2.dispose();
+  }
+}
+</pre></div>
+<p>的<code>paint()</code>方法是进行自定义绘图的地方。呼吁<code>super.paint()</code>方法绘制内容<code>JPanel</code>宾语。设置50％透明的复合材料后，将绘制颜色渐变。</p>
+<p>之后<code>LayerUI</code>定义了子类，使用起来很简单。这是一些使用<code>WallpaperLayerUI</code>类：</p>
+<div class="codeblock"><pre>
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.plaf.LayerUI;
+
+public class Wallpaper {
+  public static void main(String[] args) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        createUI();
+      }
+    });
+  }
+
+  public static void createUI() {
+    JFrame f = new JFrame("Wallpaper");
+    
+    JPanel panel = createPanel();
+    LayerUI&lt;JComponent&gt; layerUI = new WallpaperLayerUI();
+    JLayer&lt;JComponent&gt; jlayer = new JLayer&lt;JComponent&gt;(panel, layerUI);
+    
+    f.add (jlayer);
+    
+    f.setSize(300, 200);
+    f.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+    f.setLocationRelativeTo (null);
+    f.setVisible (true);
+  }
+
+  private static JPanel createPanel() {
+    JPanel p = new JPanel();
+
+    ButtonGroup entreeGroup = new ButtonGroup();
+    JRadioButton radioButton;
+    p.add(radioButton = new JRadioButton("Beef", true));
+    entreeGroup.add(radioButton);
+    p.add(radioButton = new JRadioButton("Chicken"));
+    entreeGroup.add(radioButton);
+    p.add(radioButton = new JRadioButton("Vegetable"));
+    entreeGroup.add(radioButton);
+
+    p.add(new JCheckBox("Ketchup"));
+    p.add(new JCheckBox("Mustard"));
+    p.add(new JCheckBox("Pickles"));
+
+    p.add(new JLabel("Special requests:"));
+    p.add(new JTextField(20));
+
+    JButton orderButton = new JButton("Place Order");
+    p.add(orderButton);
+
+    return p;
+  }
+}
+</pre></div>
+<p>结果如下：</p>
+<center><img src="../../figures/uiswing/misc/Wallpaper.png" width="300" height="200" align="bottom" alt="装饰有爵士乐的面板"></center><p>源代码：</p>
+<dl>
+<dd>
+<a class="SourceLink" href="../examples/zipfiles/misc-WallpaperProject.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/zipfiles/misc-WallpaperProject.zip'); return false;"><code>Wallpaper NetBeans Project</code></a></dd>
+<dd>
+<a class="SourceLink" href="../examples/misc/WallpaperProject/src/Wallpaper.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/WallpaperProject/src/Wallpaper.java'); return false;"><code>Wallpaper.java</code></a></dd>
+</dl>
+<p>使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java Web Start</a>运行：</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/WallpaperProject/Wallpaper.jnlp"><img src="../../images/jws-launch-button.png" alt="启动示例"></a><br>
+<p>的<code>LayerUI</code>类' <code>paint()</code>方法使您可以完全控制组件的绘制方式。这是另一个<code>LayerUI</code>子类，显示如何使用Java 2D图像处理修改面板的全部内容：</p>
+<div class="codeblock"><pre>
+class BlurLayerUI extends LayerUI&lt;JComponent&gt; {
+  private BufferedImage mOffscreenImage;
+  private BufferedImageOp mOperation;
+
+  public BlurLayerUI() {
+    float ninth = 1.0f / 9.0f;
+    float[] blurKernel = {
+      ninth, ninth, ninth,
+      ninth, ninth, ninth,
+      ninth, ninth, ninth
+    };
+    mOperation = new ConvolveOp(
+            new Kernel(3, 3, blurKernel),
+            ConvolveOp.EDGE_NO_OP, null);
+  }
+
+  @Override
+  public void paint (Graphics g, JComponent c) {
+    int w = c.getWidth();
+    int h = c.getHeight();
+
+    if (w == 0 || h == 0) {
+      return;
+    }
+
+    // Only create the offscreen image if the one we have
+    // is the wrong size.
+    if (mOffscreenImage == null ||
+            mOffscreenImage.getWidth() != w ||
+            mOffscreenImage.getHeight() != h) {
+      mOffscreenImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+    }
+
+    Graphics2D ig2 = mOffscreenImage.createGraphics();
+    ig2.setClip(g.getClip());
+    super.paint(ig2, c);
+    ig2.dispose();
+
+    Graphics2D g2 = (Graphics2D)g;
+    g2.drawImage(mOffscreenImage, mOperation, 0, 0);
+  }
+}
+</pre></div>
+<p>在里面<code>paint()</code>方法，将面板渲染为屏幕外图像。屏幕外图像由卷积运算符处理，然后绘制到屏幕上。</p>
+<p>整个用户界面仍处于活动状态，只是模糊：</p>
+<center><img src="../../figures/uiswing/misc/Myopia.png" width="300" height="200" align="bottom" alt="图形化的反向用户界面"></center><p>源代码：</p>
+<dl>
+<dd>
+<a class="SourceLink" href="../examples/zipfiles/misc-MyopiaProject.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/zipfiles/misc-MyopiaProject.zip'); return false;"><code>Myopia NetBeans Project</code></a></dd>
+<dd>
+<a class="SourceLink" href="../examples/misc/MyopiaProject/src/Myopia.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/MyopiaProject/src/Myopia.java'); return false;"><code>Myopia.java</code></a></dd>
+</dl>
+<p>使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java Web Start</a>运行：</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/MyopiaProject/Myopia.jnlp"><img src="../../images/jws-launch-button.png" alt="启动示例"></a><br>
+<h2><a name="events" id="events">响应事件</a></h2>
+<p>你的<code>LayerUI</code>子类还可以接收其相应组件的所有事件。然而<code>JLayer</code>实例必须在特定类型的事件中注册其兴趣。这发生在<code>JLayer</code>类' <code>setLayerEventMask()</code>方法。但是，通常，此调用是通过在<code>LayerUI</code>类' <code>installUI()</code>方法。</p>
+<p>例如，以下摘录显示了<code>LayerUI</code>注册以接收鼠标和鼠标运动事件的子类。</p>
+<div class="codeblock"><pre>
+public void installUI(JComponent c) {
+  super.installUI(c);
+  JLayer jlayer = (JLayer)c;
+  jlayer.setLayerEventMask(
+    AWTEvent.MOUSE_EVENT_MASK |
+    AWTEvent.MOUSE_MOTION_EVENT_MASK
+  );
+}
+</pre></div>
+<p>所有事件都将转到您的<code>JLayer</code>子类被路由到名称与事件类型匹配的事件处理程序方法。例如，您可以通过覆盖相应的方法来响应鼠标和鼠标的运动事件：</p>
+<div class="codeblock"><pre>
+protected void processMouseEvent(MouseEvent e, JLayer l) {
+  // ...
+}
+
+protected void processMouseMotionEvent(MouseEvent e, JLayer l) {
+  // ...
+}
+</pre></div>
+<p>以下是一个<code>LayerUI</code>子类，当鼠标在面板内移动时，它会绘制一个半透明的圆。</p>
+<div class="codeblock"><pre>
+class SpotlightLayerUI extends LayerUI&lt;JPanel&gt; {
+  private boolean mActive;
+  private int mX, mY;
+
+  @Override
+  public void installUI(JComponent c) {
+    super.installUI(c);
+    JLayer jlayer = (JLayer)c;
+    jlayer.setLayerEventMask(
+      AWTEvent.MOUSE_EVENT_MASK |
+      AWTEvent.MOUSE_MOTION_EVENT_MASK
+    );
+  }
+
+  @Override
+  public void uninstallUI(JComponent c) {
+    JLayer jlayer = (JLayer)c;
+    jlayer.setLayerEventMask(0);
+    super.uninstallUI(c);
+  }
+
+  @Override
+  public void paint (Graphics g, JComponent c) {
+    Graphics2D g2 = (Graphics2D)g.create();
+
+    // Paint the view.
+    super.paint (g2, c);
+
+    if (mActive) {
+      // Create a radial gradient, transparent in the middle.
+      java.awt.geom.Point2D center = new java.awt.geom.Point2D.Float(mX, mY);
+      float radius = 72;
+      float[] dist = {0.0f, 1.0f};
+      Color[] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f), Color.BLACK};
+      RadialGradientPaint p =
+          new RadialGradientPaint(center, radius, dist, colors);
+      g2.setPaint(p);
+      g2.setComposite(AlphaComposite.getInstance(
+          AlphaComposite.SRC_OVER, .6f));
+      g2.fillRect(0, 0, c.getWidth(), c.getHeight());
+    }
+
+    g2.dispose();
+  }
+
+  @Override
+  protected void processMouseEvent(MouseEvent e, JLayer l) {
+    if (e.getID() == MouseEvent.MOUSE_ENTERED) mActive = true;
+    if (e.getID() == MouseEvent.MOUSE_EXITED) mActive = false;
+    l.repaint();
+  }
+
+  @Override
+  protected void processMouseMotionEvent(MouseEvent e, JLayer l) {
+    Point p = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), l);
+    mX = p.x;
+    mY = p.y;
+    l.repaint();
+  }
+}
+</pre></div>
+<p>的<code>mActive</code>变量指示鼠标是否在面板的坐标内。在里面<code>installUI()</code>方法， <code>setLayerEventMask()</code>调用方法以指示<code>LayerUI</code>子类对接收鼠标和鼠标运动事件的兴趣。</p>
+<p>在里面<code>processMouseEvent()</code>方法， <code>mActive</code>标志的设置取决于鼠标的位置。在里面<code>processMouseMotionEvent()</code>方法，鼠标移动的坐标存储在<code>mX</code>和<code>mY</code>成员变量，以便以后可以在<code>paint()</code>方法。</p>
+<p>的<code>paint()</code>方法显示面板的默认外观，然后叠加一个径向渐变以获得聚光灯效果：</p>
+<center><img src="../../figures/uiswing/misc/Diva.png" width="300" height="200" align="bottom" alt="跟随鼠标的聚光灯"></center><p>源代码：</p>
+<dl>
+<dd>
+<a class="SourceLink" href="../examples/zipfiles/misc-DivaProject.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/zipfiles/misc-DivaProject.zip'); return false;"><code>Diva NetBeans Project</code></a></dd>
+<dd>
+<a class="SourceLink" href="../examples/misc/DivaProject/src/Diva.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/DivaProject/src/Diva.java'); return false;"><code>Diva.java</code></a></dd>
+</dl>
+<p>使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java Web Start</a>运行：</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/DivaProject/Diva.jnlp"><img src="../../images/jws-launch-button.png" alt="启动示例"></a><br>
+<h2><a name="animating" id="animating">动画忙碌指示器</a></h2>
+<p>此示例是一个动画忙碌指示器。它以动画形式演示动画<code>LayerUI</code>子类，并具有淡入和淡出功能。与前面的示例相比，它要复杂得多，但它基于定义以下内容的相同原理： <code>paint()</code>自定义绘图的方法。</p>
+<p>单击下<b>订单</b>按钮以查看忙碌指示器4秒钟。注意面板如何变灰并且指示器旋转。指标的要素具有不同的透明度。</p>
+<p>的<code>LayerUI</code>子类<code>WaitLayerUI</code>类，显示如何触发属性更改事件以更新组件。的<code>WaitLayerUI</code>类使用一个<code>Timer</code>对象每秒更新其状态24次。这发生在计时器的目标方法中<code>actionPerformed()</code>方法。</p>
+<p>的<code>actionPerformed()</code>方法使用<code>firePropertyChange()</code>指示内部状态已更新的方法。这会触发对<code>applyPropertyChange()</code>方法，重新绘制<code>JLayer</code>宾语：</p>
+<center><img src="../../figures/uiswing/misc/TapTapTap.png" width="300  " height="200" align="bottom" alt="繁忙状态指示灯"></center><p>源代码：</p>
+<dl>
+<dd>
+<a class="SourceLink" href="../examples/zipfiles/misc-TapTapTapProject.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/zipfiles/misc-TapTapTapProject.zip'); return false;"><code>TapTapTap NetBeans Project</code></a></dd>
+<dd>
+<a class="SourceLink" href="../examples/misc/TapTapTapProject/src/TapTapTap.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/TapTapTapProject/src/TapTapTap.java'); return false;"><code>TapTapTap.java</code></a></dd>
+</dl>
+<p>使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java Web Start</a>运行：</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TapTapTapProject/TapTapTap.jnlp"><img src="../../images/jws-launch-button.png" alt="启动示例"></a><br>
+<h2><a name="validation" id="validation">验证文本字段</a></h2>
+<p>本文档中的最后一个示例显示了<code>JLayer</code>类可用于修饰文本字段以显示它们是否包含有效数据。而其他示例使用<code>JLayer</code>类来包装面板或常规组件，此示例说明如何包装<code>JFormattedTextField</code>专门的组件。这也说明了<code>LayerUI</code>子类实现可用于多个<code>JLayer</code>实例。</p>
+<p>的<code>JLayer</code>类用于为具有无效数据的字段提供可视指示。当。。。的时候<code>ValidationLayerUI</code>类绘制文本字段，如果无法解析字段内容，则绘制红色X。这是一个例子：</p>
+<center><img src="../../figures/uiswing/misc/FieldValidator.png" width="277" height="122" align="bottom" alt="立即反馈输入错误"></center><p>源代码：</p>
+<dl>
+<dd>
+<a class="SourceLink" href="../examples/zipfiles/misc-FieldValidatorProject.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/zipfiles/misc-FieldValidatorProject.zip'); return false;"><code>FieldValidator NetBeans Project</code></a></dd>
+<dd>
+<a class="SourceLink" href="../examples/misc/FieldValidatorProject/src/FieldValidator.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/misc/FieldValidatorProject/src/FieldValidator.java'); return false;"><code>FieldValidator.java</code></a></dd>
+</dl>
+<p>使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java Web Start</a>运行：</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/FieldValidatorProject/FieldValidator.jnlp"><img src="../../images/jws-launch-button.png" alt="启动示例"></a><br>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="trans_shaped_windows.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="action.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何创建半透明和成形的窗口<br><b>下一页：</b>如何使用动作</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

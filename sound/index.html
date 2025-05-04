@@ -1,0 +1,470 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body >﻿
+        <title>Trail：声音（Java™教程）</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="keywords" content="java programming, learn java, java sample code, ">
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- trailheader -->
+     <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+     <div id="TopBar_tr"> <div id="TopBar_tl"> <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                    <div id="TopBar_right"></div> 
+                </div> </div> </div> </div> </div>
+
+    <div class="MainFlow_wide">
+        <div id="BreadCrumbs">
+            <a href="../index.html" target="_top">主页</a>
+        </div>
+        <div class="NavBit">
+            <a href="../index.html">«上一个</a> • <a href="./TOC.html">追踪</a> • <a href="sampled-overview.html">下一个»</a>
+        </div>
+        <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+        <div id="PageTitle"><h1>踪迹：声音</h1></div>
+        <div id="PageContent">
+
+<p>Java Sound API是用于影响和控制声音媒体（包括音频和乐器数字接口（MIDI）数据）的输入和输出的低级API。Java Sound API在提高可扩展性和灵活性的框架中，提供了对声音输入和输出通常所需的功能的显式控制。<a name="111814"></a></p>
+<p><a name="111816"></a> Java Sound API可以满足众多应用程序开发人员的需求。潜在的应用领域包括：</p>
+<ul>
+<li><a name="111817"></a>通信框架，例如会议和电话</li>
+<li><a name="111818"></a>最终用户内容传送系统，例如使用流式传输内容的媒体播放器和音乐</li>
+<li><a name="111819"></a>交互式应用程序，例如使用动态内容的游戏和网站</li>
+<li><a name="111820"></a>内容创建和编辑</li>
+<li><a name="111821"></a>工具，工具箱和实用程序</li>
+</ul>
+<p><a name="111823"></a> <!--
+<h2> How Does the Java Sound API Relate to Other Interfaces? </h2>
+--></p>
+<p><a name="111825"></a> Java Sound API在Java平台上提供了最低级别的声音支持。它为应用程序提供了对声音操作的大量控制，并且是可扩展的。例如，Java Sound API提供了用于安装，访问和操纵系统资源的机制，例如音频混合器，MIDI合成器，其他音频或MIDI设备，文件读取器和写入器以及声音格式转换器。Java Sound API不包括复杂的声音编辑器或图形工具，但是它提供了可以构建此类程序的功能。它强调了低级控制，超出了最终用户通常期望的控制范围。</p>
+<p><a name="111827"></a></p>
+<p>Java Sound API包括对数字音频和MIDI数据的支持。这两个主要的功能模块在单独的软件包中提供：</p>
+<ul>
+<li><a name="111834"></a> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/package-summary.html" target="_blank"><code>javax.sound.sampled</code></a> –该包指定用于捕获，混合和播放数字（采样）音频的接口。</li>
+<li><a name="111837"></a> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/package-summary.html" target="_blank"><code>javax.sound.midi</code></a> –该软件包提供了MIDI合成，音序和事件传输的接口。</li>
+</ul>
+<p>另外两个软件包允许服务提供者（与应用程序开发者相对）创建定制软件组件，以扩展Java Sound API的实现功能：<a name="111842"></a></p>
+<ul>
+<li>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/spi/package-summary.html" target="_blank"><code>javax.sound.sampled.spi</code></a></li>
+<li><a name="111843"></a> 
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/spi/package-summary.html" target="_blank"><code>javax.sound.midi.spi</code></a><p><a name="111845"></a></p>
+</li>
+</ul>
+<p>本页介绍了采样音频系统，MIDI系统和SPI软件包。然后，本教程后面将详细讨论每个软件包。<a name="111847"></a></p>
+<div class="note"><hr><strong>注意：</strong> <p>还有其他Java平台API也具有与声音相关的元素。<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/tech/index-jsp-140239.html" target="_blank">Java Media Framework API（JMF）</a>是一个更高级别的API，当前可以作为Java平台的标准扩展使用。JMF为捕获和回放基于时间的媒体指定了统一的体系结构，消息传递协议和编程接口。JMF为基本的媒体播放器应用程序提供了一种更简单的解决方案，它使音频和视频等不同媒体类型之间的同步成为可能。另一方面，专注于声音的程序可以从Java Sound API中受益，特别是当它们需要更高级的功能时，例如能够仔细控制缓冲的音频播放或直接操纵MIDI合成器的功能。其他具有声音方面的Java API包括Java 3D和电话和语音API。所有这些API的实现都可以在内部使用Java Sound API的实现，但并非必须这样做。</p>
+<hr></div>
+<h2>什么是采样音频？</h2>
+<p><a name="112308"></a>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/package-summary.html" target="_blank"><code>javax.sound.sampled</code></a>包处理数字音频数据，Java Sound API将其称为采样音频。<em>样本</em>是信号的连续快照。就音频而言，信号是声波。麦克风将声音信号转换为相应的模拟电信号，而模数转换器将该模拟信号转换为采样的数字形式。下图显示了录音中的一小段时间。</p>
+<center><img src="../figures/sound/chapter1.anc.gif" width="268" height="239" align="bottom" alt="采样声波"><p></p><p class="FigureCaption">采样声波</p></center><p>该图在垂直轴上绘制声压（振幅），在水平轴上绘制时间。以一定速率定期测量模拟声波的幅度，从而得到包含数字音频信号的离散采样（图中的红色数据点）。中心水平线表示振幅为零；线上方的点为正值样本，线下方的点为负值。模拟信号的数字逼近的精度取决于其时间分辨率（ <em>采样率</em> ）及其<em>量化</em>或幅度分辨率（用于表示每个样本的位数）。作为参考，记录为记录在光盘上的音频每秒被采样44100次，并以每个采样16位表示。</p>
+<p><a name="115938"></a>术语“采样音频”在这里稍微宽松地使用。声波可以以离散的间隔采样，同时以模拟形式保留。但是，出于Java Sound API的目的，“采样音频”等效于“数字音频”。</p>
+<p><a name="115936"></a>通常，计算机上采样的音频来自录音，但是可以替代地合成产生声音（例如，创建按键式电话的声音）。术语“采样音频”是指数据的类型，而不是其来源。</p>
+<p><a name="111869"></a> Java Sound API不采用特定的音频硬件配置。它旨在允许将不同种类的音频组件安装在系统上并由API访问。 Java Sound API支持通用功能，例如声卡的输入和输出（例如，用于记录和回放声音文件）以及混合多个音频流。这是典型音频体系结构的一个示例：</p>
+<center><img src="../figures/sound/chapter1.anc1.gif" width="413" height="251" align="bottom" alt="以下上下文描述了此图"><p></p><p class="FigureCaption">典型的音频架构</p></center><p>在此示例中，诸如声卡之类的设备具有各种输入和输出端口，并且在软件中提供了混合。混音器可能会接收已从文件读取，从网络流传输，由应用程序动态生成或由MIDI合成器生成的数据。混音器将所有音频输入合并为一个流，然后可以将其发送到输出设备进行渲染。</p>
+<h2>什么是MIDI？</h2>
+<p><a name="111878"></a> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/package-summary.html" target="_blank">javax.sound.midi</a>包包含用于传输和排序MIDI事件以及从这些事件中合成声音的API。</p>
+<p><a name="111880"></a>采样的音频是声音本身的直接表示，而<i>MIDI数据</i>可以视为创建声音（尤其是音乐声音）的秘诀。MIDI数据与音频数据不同，它不能直接描述声音。相反，它描述的事件会影响由启用MIDI的设备或乐器（如合成器）执行的声音（或动作）。MIDI数据类似于图形用户界面的键盘和鼠标事件。在MIDI的情况下，事件可以被视为对音乐键盘的操作，以及对该乐器上各种踏板，滑块，开关和旋钮的操作。这些事件实际上不一定源于硬件乐器。它们可以在软件中模拟，也可以存储在MIDI文件中。可以创建，编辑和执行这些文件的程序称为定序器。许多计算机声卡都包含MIDI可控制的音乐合成器芯片，音序器可以向其发送MIDI事件。合成器也可以完全用软件实现。合成器解释接收到的MIDI事件并产生音频输出。通常，从MIDI数据合成的声音是音乐声（例如，与语音相反）。MIDI合成器还能够生成各种声音效果。</p>
+<p><a name="111884"></a>某些声卡包括MIDI输入和输出端口，可以将外部MIDI硬件设备（例如键盘合成器或其他乐器）连接到这些声卡。应用程序可以从MIDI输入端口接收由配备了MIDI的外部乐器产生的事件。该程序可能会使用计算机的内部合成器播放音乐演奏，将其作为MIDI文件保存到磁盘上，或将其呈现为音乐符号。程序可以使用MIDI输出端口来播放外部乐器，或控制其他外部设备，例如录音设备。</p>
+<p>下图说明了基于Java Sound API的可能的MIDI配置中主要组件之间的功能关系。 （与音频一样，Java Sound API允许安装和互连各种MIDI软件设备。这里显示的系统只是一种可能的情况。）组件之间的数据流由箭头指示。数据可以是标准文件格式，也可以（如图右下角的键所示），可以是音频，原始MIDI字节或带有时间标记的MIDI消息。</p>
+<center><img src="../figures/sound/chapter1.anc2.gif" width="520" height="360" align="bottom" alt="以下上下文描述了此图。"><p></p><p class="FigureCaption">可能的MIDI配置</p></center><p>在此示例中，应用程序通过将乐谱作为标准MIDI文件存储在磁盘（图的左侧）上来准备乐曲。标准MIDI文件包含音轨，每个音轨都是带有时间标签的MIDI事件的列表。大多数事件代表音符（音高和节奏）。读取此MIDI文件，然后由软件音序器“执行”。音序器通过将MIDI消息发送到其他设备（例如内部或外部合成器）来执行音乐。合成器本身可以读取音库文件，其中包含用于模拟某些乐器的声音的指令。如果没有，则合成器将使用已加载到其中的任何乐器声音来播放MIDI文件中存储的音符。</p>
+<p><a name="111898"></a>如图所示，在通过MIDI输出端口将MIDI事件发送到外部MIDI乐器之前，必须将MIDI事件转换为原始（无时间标记）MIDI。类似地，从外部MIDI源（图中的键盘乐器）进入计算机的原始MIDI数据将转换为带有时间标记的MIDI消息，这些消息可以控制合成器或音序器可以存储以供以后使用。</p>
+<h2>服务提供商接口</h2>
+<p><a name="111902"></a>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/spi/package-summary.html" target="_blank"><code>javax.sound.sampled.spi</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/spi/package-summary.html" target="_blank"><code>javax.sound.midi.spi</code></a>软件包中包含API，这些API使软件开发人员可以创建新的音频或MIDI资源，这些资源可以分别提供给用户并“插入”到Java Sound API的现有实现中。以下是可以通过这种方式添加的服务（资源）的一些示例：</p>
+<ul>
+<li><a name="111903"></a>音频混音器</li>
+<li><a name="112110"></a> MIDI合成器</li>
+<li><a name="111906"></a>可以读取或写入新型音频或MIDI文件的文件解析器</li>
+<li><a name="111907"></a>在不同声音数据格式之间转换的转换器</li>
+</ul>
+<p><a name="111910"></a>在某些情况下，服务是通往硬件设备（例如声卡）功能的软件接口，并且服务提供者可能与硬件供应商相同。在其他情况下，服务纯粹存在于软件中。例如，合成器或混频器可以是声卡上芯片的接口，也可以完全不用任何硬件支持来实现。</p>
+<p><a name="111912"></a> Java Sound API的实现包含一组基本服务，但是服务提供商接口（SPI）包允许第三方创建新服务。这些第三方服务以与内置服务相同的方式集成到系统中。的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/AudioSystem.html" target="_blank"><code>AudioSystem</code></a>类和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/MidiSystem.html" target="_blank"><code>MidiSystem</code></a>类充当协调器，使应用程序可以显式或隐式访问服务。通常，服务的存在对于使用该服务的应用程序是完全透明的。服务提供者机制使基于Java Sound API的应用程序用户受益，因为可以将新的声音功能添加到程序中，而无需新版本的JDK或运行时环境，并且在许多情况下甚至不需要新的功能。释放应用程序本身。</p>
+
+
+        </div>
+    <div class="NavBit">
+        <a href="../index.html">«上一页</a> • <a href="./TOC.html">目录</a> • <a href="sampled-overview.html">下一页»</a>
+
+    </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>教程开始<br><b>下一页：</b>采样包概述</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

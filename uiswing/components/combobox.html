@@ -1,0 +1,872 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用组合框（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="nolinkBHEAD">如何使用组合框</div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="colorchooser.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="dialog.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用组合框</h1></div>
+            <div id="PageContent">
+
+<!-- How to Use Combo Boxes -->
+<p>一种<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html" target="_blank"><code>JComboBox</code></a> ，它使用户可以从几种选择中选择一种，可以有两种非常不同的形式。默认形式是不可编辑的组合框，它具有一个按钮和一个值的下拉列表。第二种形式称为可编辑组合框，其特征是带有一个小按钮的文本字段。用户可以在文本字段中输入值，或单击按钮以显示下拉列表。这是Java外观中两种形式的组合框：</p>
+<p style="text-align:center"></p>
+<table summary="layout">
+<tbody><tr>
+<td>
+<center><img src="../../figures/uiswing/components/UneditableComboMenuMetal.png" width="177" height="25" align="bottom" alt="不可编辑的组合框"></center></td>
+<td>
+<center><img src="../../figures/uiswing/components/EditableComboBoxMenuMetal.png" width="211" height="25" align="bottom" alt="可编辑的组合框"></center></td>
+</tr>
+<tr valign="top">
+<td>
+<center><img src="../../figures/uiswing/components/UneditableComboMenu2Metal.png" width="177" height="117" align="bottom" alt="不可编辑的组合框"></center></td>
+<td>
+<center><img src="../../figures/uiswing/components/EditableComboBoxMenuMetal2.png" width="211" height="171" align="bottom" alt="可编辑的组合框"></center></td>
+</tr>
+<tr>
+<td style="font-weight:bold">不可编辑的组合框，前（顶部）<br>然后单击按钮后</td>
+<td style="font-weight:bold">之前和之后的可编辑组合框<br>单击箭头按钮</td>
+</tr>
+</tbody></table>
+<p>组合框只需要很小的屏幕空间，它们的可编辑（文本字段）形式对于让用户快速选择一个值而不会将用户限制在显示的值上很有用。可以显示多个选择的其他组件是<a href="button.html#radiobutton">单选按钮</a>和<a href="list.html">列表组</a> 。通常，用户最容易理解成组的单选按钮，但是当空间有限或有多个选择可用时，组合框可能更合适。列表并不是很吸引人，但是当项目数量很大（例如超过20个）或选择多个项目可能有效时，列表比组合框更合适。</p>
+<p>由于可编辑和不可编辑的组合框非常不同，因此本节将它们分开对待。本节涵盖以下主题：</p>
+<ul>
+<li><a href="#uneditable">使用不可编辑的组合框</a></li>
+<li><a href="#listeners">在组合框上处理事件</a></li>
+<li><a href="#editable">使用可编辑的组合框</a></li>
+<li><a href="#renderer">提供自定义渲染器</a></li>
+<li><a href="#api">组合框API</a></li>
+<li><a href="#eg">使用组合框的示例</a></li>
+</ul>
+<p><a name="uneditable" id="uneditable"></a></p>
+<h2><a name="uneditable__1" id="uneditable__1">使用不可编辑的组合框</a></h2>
+<p>此处显示的应用程序使用不可编辑的组合框来选择宠物图片：</p>
+<center><img src="../../figures/uiswing/components/ComboBoxDemoMetal.png" width="225" height="231" align="bottom" alt="不可编辑的组合框"></center><p><a name="trythis" id="trythis"></a></p>
+<div class="note"><hr><strong>尝试这个：</strong> <ol><!-- *******  boilerplate stuff ******* -->
+<li>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ComboBox演示。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ComboBoxDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ComboBoxDemoProject/ComboBoxDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ComboBoxDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  -->
+ <!-- 
+
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ComboBoxDemoProject/ComboBoxDemo.jnlp">Run ComboBoxDemo</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ComboBoxDemo">example index</a>.
+--></p>
+</li>
+<li>从组合框中选择一个动物名称以查看其图片。</li>
+<li>将程序的操作和GUI与使用单选按钮的程序进行比较： <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/RadioButtonDemoProject/RadioButtonDemo.jnlp">运行RadioButtonDemo</a> （需要版本6）。您可能还需要比较源代码： <a class="SourceLink" href="../examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java'); return false;"><code>ComboBoxDemo.java</code></a>与<a class="SourceLink" href="../examples/components/RadioButtonDemoProject/src/components/RadioButtonDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/RadioButtonDemoProject/src/components/RadioButtonDemo.java '); return false;"><code>RadioButtonDemo.java</code></a> 。</li>
+</ol>
+<hr></div>
+<p>以下代码摘自<a class="SourceLink" href="../examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java '); return false;"><code>ComboBoxDemo.java</code></a> ，创建一个不可编辑的组合框并进行设置：</p>
+<div class="codeblock"><pre>
+String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+
+//Create the combo box, select item at index 4.
+//Indices start at 0, so 4 specifies the pig.
+JComboBox petList = new JComboBox(petStrings);
+petList.setSelectedIndex(4);
+petList.addActionListener(this);
+</pre></div>
+<p>该组合框包含一个字符串数组，但是您可以轻松地使用图标来代替。要将其他任何内容放入组合框中或自定义组合框中的项目外观，则需要编写自定义渲染器。可编辑的组合框还需要自定义编辑器。有关信息和示例，请参阅<a href="#renderer">提供自定义渲染器</a> 。</p>
+<p>前面的代码在组合框上注册了一个动作侦听器。要查看动作侦听器的实现并了解组合框支持的其他类型的侦听器，请参阅在组合框上<a href="#listeners">处理事件</a> 。</p>
+<p>无论使用哪种构造函数，组合框都将使用组合框模型来包含和管理其菜单中的项目。当您使用数组或向量初始化组合框时，组合框会为您创建一个默认模型对象。与其他Swing组件一样，您可以通过实现自定义模型来部分自定义组合框，该模型可实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ComboBoxModel.html" target="_blank"><code>ComboBoxModel</code></a>接口。 <a name="datsun" id="datsun"> </a></p>
+<div class="note"><hr><strong>注意：</strong> <p>为组合框实现自定义模型时要小心。的<code>JComboBox</code>更改组合框菜单中项目的方法，例如<code>insertItemAt</code> ，只有在数据模型实现了<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/MutableComboBoxModel.html" target="_blank"><code>MutableComboBoxModel</code></a>接口（的子接口<code>ComboBoxModel</code> ）。请参阅<a href="#api">API</a>表以查看哪些方法受到影响。</p>
+<p>需要注意的其他事项（即使对于无法编辑的组合框）也要确保，当组合框的数据或状态发生更改时，自定义模型会触发<a class="TutorialLink" href="../events/listdatalistener.html" target="_top">列表数据事件</a> 。即使数据永远不变的不可变组合框模型，也必须触发列表数据事件（ <code>CONTENTS_CHANGED</code>事件）。免费获取列表数据事件触发代码的一种方法是使组合框模型成为以下子类的子类<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/AbstractListModel.html" target="_blank"><code>AbstractListModel</code></a> 。</p>
+<hr></div>
+<h2><a name="listeners" id="listeners">在组合框上处理事件</a></h2>
+<p>这是来自的代码<code>ComboBoxDemo.java</code>在组合框上注册并实现一个动作侦听器：</p>
+<div class="codeblock"><pre>
+public class ComboBoxDemo ... implements ActionListener {
+    . . .
+        petList.addActionListener(this) {
+    . . .
+    public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox)e.getSource();
+        String petName = (String)cb.getSelectedItem();
+        updateLabel(petName);
+    }
+    . . .
+}
+</pre></div>
+<p>此动作侦听器从组合框中获取新选择的项目，使用它来计算图像文件的名称，并更新标签以显示图像。当用户从组合框的菜单中选择一个项目时，组合框将触发一个动作事件。有关实现动作侦听<a class="TutorialLink" href="../events/actionlistener.html" target="_top">器</a>的一般信息，请参见<a class="TutorialLink" href="../events/actionlistener.html" target="_top">如何编写动作侦听器</a> 。</p>
+<p>组合框还会生成项目事件，当任何项目的选择状态更改时都会触发该事件。组合框中一次只能选择一个项目，因此当用户进行新选择时，以前选择的项目将变为未选择状态。因此，每次用户从菜单中选择不同的项目时，就会触发两个项目事件。如果用户选择相同的项目，则不会触发任何项目事件。使用<code>addItemListener</code>在组合框上注册项目侦听器。
+<a class="TutorialLink" href="../events/itemlistener.html" target="_top">如何编写项目监听器</a>提供了有关实现项目监听<a class="TutorialLink" href="../events/itemlistener.html" target="_top">器的</a>一般信息。</p>
+<p>虽然<code>JComboBox</code>继承方法以注册用于低级事件（例如，焦点，键和鼠标事件）的侦听器-我们建议您不要在组合框上侦听低级事件。原因如下：组合框是一个<em>复合组件</em> —它由两个或多个其他组件组成。组合框本身会触发高级事件，例如动作事件。它的子组件触发低级事件，例如鼠标，键和焦点事件。低级别事件和触发它们的子组件与外观有关。为了避免编写与外观相关的代码，您应该只侦听复合组件（如组合框）上的高级事件。有关事件的信息，包括有关高级别和低级别事件的讨论，请参阅<a class="TutorialLink" href="../events/index.html" target="_top">编写事件侦听器</a> 。</p>
+<h2><a name="editable" id="editable">使用可编辑的组合框</a></h2>
+<p>这是演示应用程序的图片，该应用程序使用可编辑的组合框输入用于格式化日期的模式。</p>
+<center><img src="../../figures/uiswing/components/ComboBoxDemo2Metal.png" width="239" height="177" align="bottom" alt="可编辑的组合框"></center><div class="note"><hr><strong>尝试这个：</strong> <ol><!-- *******  boilerplate stuff ******* -->
+<li>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ComboBox2演示。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ComboBoxDemo2">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ComboBoxDemo2Project/ComboBoxDemo2.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ComboBoxDemo2示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  -->
+ <!-- 
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ComboBoxDemo2Project/ComboBoxDemo2.jnlp">Run ComboBoxDemo2</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ComboBoxDemo2">example index</a>.
+        
+        --></p>
+</li>
+<li>通过从组合框的菜单中选择一种来输入新的模式。该程序将重新格式化当前日期和时间。</li>
+<li>输入一个新模式，然后按Enter。程序再次重新格式化当前日期和时间。</li>
+</ol>
+<hr></div>
+<p>以下代码摘自<a class="SourceLink" href="../examples/components/ComboBoxDemo2Project/src/components/ComboBoxDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ComboBoxDemo2Project/src/components/ComboBoxDemo2.java'); return false;"><code>ComboBoxDemo2.java</code></a> ，创建并设置组合框：</p>
+<div class="codeblock"><pre>
+String[] patternExamples = {
+         "dd MMMMM yyyy",
+         "dd.MM.yy",
+         "MM/dd/yy",
+         "yyyy.MM.dd G 'at' hh:mm:ss z",
+         "EEE, MMM d, ''yy",
+         "h:mm a",
+         "H:mm:ss:SSS",
+         "K:mm a,z",
+         "yyyy.MMMMM.dd GGG hh:mm aaa"
+};
+. . .
+JComboBox patternList = new JComboBox(patternExamples);
+<strong>patternList.setEditable(true);</strong>
+patternList.addActionListener(this);
+</pre></div>
+<p>该代码与前面的示例非常相似，但是需要一些解释。粗体代码行显式打开编辑功能，以允许用户输入值。这是必需的，因为默认情况下，组合框不可编辑。此特定示例允许在组合框上进行编辑，因为其菜单没有提供所有可能的日期格式模式，而只是提供常用模式的快捷方式。</p>
+<p>当用户从菜单中选择一个项目并且用户键入Enter时，可编辑的组合框将触发一个动作事件。请注意，当用户在组合框中输入一个值时，菜单保持不变。如果需要，您可以轻松编写一个动作侦听器，每次用户键入一个唯一值时，该动作侦听器就会在组合框的菜单中添加一个新项。</p>
+<p>请参阅<a class="TutorialLink" href="../../i18n/index.html" target="_top">国际化</a>以了解有关格式化日期和其他类型数据的更多信息。</p>
+<h2><a name="renderer" id="renderer">提供自定义渲染器</a></h2>
+<p><a name="renderer__1" id="renderer__1">组合框使用<em>渲染器</em>在其菜单中显示每个项目。如果组合框不可编辑，则它还会使用渲染器显示当前选定的项目。另一方面，可编辑的组合框使用<em>编辑器</em>显示所选项目。组合框的渲染器必须实现</a> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ListCellRenderer.html" target="_blank"><code>ListCellRenderer</code></a>接口。组合框的编辑器必须实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ComboBoxEditor.html" target="_blank"><code>ComboBoxEditor</code></a> 。本节说明如何为不可编辑的组合框提供自定义渲染器。</p>
+<p>默认渲染器知道如何渲染字符串和图标。如果将其他对象放在组合框中，则默认渲染器将调用<code>toString</code>提供要显示的字符串的方法。您可以通过实现自己的框来自定义组合框呈现自身及其项目的方式<code>ListCellRenderer</code> 。</p>
+<p>这是使用带有自定义渲染器的组合框的应用程序的图片：</p>
+<center><img src="../../figures/uiswing/components/CustomComboBoxDemoMetal.png" width="274" height="211" align="bottom" alt="带有自定义渲染器的组合框"></center><p>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行CustomComboBox演示。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#CustomComboBoxDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/CustomComboBoxDemoProject/CustomComboBoxDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动CustomComboBoxDemo示例"></a><br>
+<p>该示例的完整源代码在<a class="SourceLink" href="../examples/components/CustomComboBoxDemoProject/src/components/CustomComboBoxDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/CustomComboBoxDemoProject/src/components/CustomComboBoxDemo.java'); return false;"><code>CustomComboBoxDemo.java</code></a> 。要获取所需的图像文件，请参考<a href="../examples/components/index.html#CustomComboBoxDemo">示例index</a> 。</p>
+<p>该示例中的以下语句创建一个实例<code>ComboBoxRenderer</code> （自定义类）并将实例设置为组合框的渲染器：</p>
+<div class="codeblock"><pre>
+JComboBox petList = new JComboBox(intArray);
+. . .
+ComboBoxRenderer renderer = new ComboBoxRenderer();
+renderer.setPreferredSize(new Dimension(200, 130));
+petList.setRenderer(renderer);
+petList.setMaximumRowCount(3);
+</pre></div>
+<p>最后一行设置组合框的最大行数，该最大行数确定显示菜单时可见的项目数。如果组合框中的项目数大于其最大行数，则该菜单具有滚动条。图标对于菜单来说相当大，因此我们的代码将行数限制为3。这是实现<code>ComboBoxRenderer</code> ，将图标和文本并排放置的渲染器：</p>
+<div class="codeblock"><pre>
+class ComboBoxRenderer extends JLabel
+                       implements ListCellRenderer {
+    . . .
+    public ComboBoxRenderer() {
+        setOpaque(true);
+        setHorizontalAlignment(CENTER);
+        setVerticalAlignment(CENTER);
+    }
+
+    /*
+     * This method finds the image and text corresponding
+     * to the selected value and returns the label, set up
+     * to display the text and image.
+     */
+    public Component getListCellRendererComponent(
+                                       JList list,
+                                       Object value,
+                                       int index,
+                                       boolean isSelected,
+                                       boolean cellHasFocus) {
+        //Get the selected index. (The index param isn't
+        //always valid, so just use the value.)
+        int selectedIndex = ((Integer)value).intValue();
+
+        if (isSelected) {
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
+        } else {
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+        }
+
+        //Set the icon and text.  If icon was null, say so.
+        ImageIcon icon = images[selectedIndex];
+        String pet = petStrings[selectedIndex];
+        setIcon(icon);
+        if (icon != null) {
+            setText(pet);
+            setFont(list.getFont());
+        } else {
+            setUhOhText(pet + " (no image available)",
+                        list.getFont());
+        }
+
+        return this;
+    }
+    . . .
+}
+</pre></div>
+<p>作为一个<code>ListCellRenderer</code> ， <code>ComboBoxRenderer</code>实现一个称为<code>getListCellRendererComponent</code> ，它返回一个组件，该组件的<code>paintComponent</code>方法用于显示组合框及其每个项目。显示图像和图标的最简单方法是使用标签。所以<code>ComboBoxRenderer</code>是label的子类并返回自身。实施<code>getListCellRendererComponent</code>配置渲染器以显示当前选择的图标及其描述。</p>
+<p>这些参数传递给<code>getListCellRendererComponent</code> ：</p>
+<ul>
+<li><code>JList list</code> —在后台使用的列表对象，用于显示项目。该示例使用该对象的颜色设置前景色和背景色。</li>
+<li><code>Object value</code> —要渲染的对象。一个<code>Integer</code>在这个例子中。</li>
+<li><code>int index</code> —要渲染的对象的索引。</li>
+<li><code>boolean isSelected</code> —指示是否选择要渲染的对象。该示例使用它来确定要使用的颜色。</li>
+<li><code>boolean cellHasFocus</code> —指示要渲染的对象是否具有焦点。</li>
+</ul>
+<p>请注意，组合框和<a href="list.html">列表</a>使用相同类型的渲染器- <code>ListCellRenderer</code> 。如果您的程序有意义，则可以通过在组合框和列表之间共享渲染器来节省一些时间。</p>
+<h2><a name="api" id="api">组合框API</a></h2>
+<p>下表列出了常用的<code>JComboBox</code>构造函数和方法。您最有可能在<code>JComboBox</code>对象是它从其超类继承的对象，例如<code>setPreferredSize</code> 。有关常用继承方法的表，请参见<a href="jcomponent.html#api">JComponent API</a> 。</p>
+<p>使用组合框的API分为两类：</p>
+<ul>
+<li><a href="#list">在组合框菜单中设置或获取项目</a></li>
+<li><a href="#configuring">自定义组合框的操作</a></li>
+</ul>
+<p>
+</p>
+<table border="1" summary="Setting or Getting the Items in the Combo Boxes's Menu">
+<caption><a name="list" id="list">在组合框菜单中设置或获取项目</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#JComboBox--" target="_blank">JComboBox（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#JComboBox-javax.swing.ComboBoxModel-" target="_blank">JComboBox（ComboBoxModel）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#JComboBox-java.lang.Object:A-" target="_blank">JComboBox（Object []）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#JComboBox-java.util.Vector-" target="_blank">JComboBox（向量）</a></td>
+<td>创建一个在其菜单中带有指定项目的组合框。使用默认构造函数创建的组合框最初在菜单中没有任何项目。其他每个构造函数都根据其参数初始化菜单：模型对象，对象数组或<code>Vector</code>对象。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#addItem-java.lang.Object-" target="_blank">void addItem（Object）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#insertItemAt-java.lang.Object-int-" target="_blank">void insertItemAt（Object，int）</a></td>
+<td>将指定的对象添加或插入到组合框的菜单中。insert方法将指定的对象<em>放置</em>在指定的索引处，从而将其插入当前在该索引处的对象之前。这些方法要求组合框的数据模型是以下内容的实例<code>MutableComboBoxModel</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getItemAt-int-" target="_blank">对象getItemAt（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getSelectedItem--" target="_blank">对象getSelectedItem（）</a></td>
+<td>从组合框的菜单中获取一个项目。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#removeAllItems--" target="_blank">无效removeAllItems（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#removeItemAt-int-" target="_blank">无效removeItemAt（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#removeItem-java.lang.Object-" target="_blank">无效removeItem（Object）</a></td>
+<td>从组合框的菜单中删除一个或多个项目。这些方法要求组合框的数据模型是以下内容的实例<code>MutableComboBoxModel</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getItemCount--" target="_blank">int getItemCount（）</a></td>
+<td>获取组合框菜单中的项目数。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#setModel-javax.swing.ComboBoxModel-" target="_blank">无效setModel（ComboBoxModel）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getModel--" target="_blank">ComboBoxModel getModel（）</a></td>
+<td>设置或获取在组合框菜单中提供项目的数据模型。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#setAction-javax.swing.Action-" target="_blank">setAction（Action）无效</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getAction--" target="_blank">动作getAction（）</a></td>
+<td>设置或获取<code>Action</code>与组合框关联。有关更多信息，请参见<a class="TutorialLink" href="../misc/action.html" target="_top">如何使用动作</a> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Customizing the Combo Box's Operation">
+<caption><a name="configuring" id="configuring">自定义组合框的操作</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#addActionListener-java.awt.event.ActionListener-" target="_blank">void addActionListener（ActionListener）</a></td>
+<td>将动作侦听器添加到组合框。听众的<code>actionPerformed</code>当用户从组合框的菜单中选择一个项目时，或者在用户按Enter键时，在可编辑的组合框中选择方法。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#addItemListener-java.awt.event.ItemListener-" target="_blank">void addItemListener（ItemListener）</a></td>
+<td>将项目侦听器添加到组合框。听众的<code>itemStateChanged</code>当组合框的任何一项的选择状态更改时，都会调用方法。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#setEditable-boolean-" target="_blank">void setEditable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#isEditable--" target="_blank">boolean isEditable（）</a></td>
+<td>设置或获取用户是否可以在组合框中键入。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#setRenderer-javax.swing.ListCellRenderer-" target="_blank">无效setRenderer（ListCellRenderer）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getRenderer--" target="_blank">ListCellRenderer getRenderer（）</a></td>
+<td>在组合框中设置或获取负责绘制所选项目的对象。仅当组合框不可编辑时才使用渲染器。如果组合框是可编辑的，则使用编辑器绘制所选项目。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#setEditor-javax.swing.ComboBoxEditor-" target="_blank">无效setEditor（ComboBoxEditor）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComboBox.html#getEditor--" target="_blank">ComboBoxEditor getEditor（）</a></td>
+<td>设置或获取负责绘制和编辑组合框中所选项目的对象。仅当组合框可编辑时才使用编辑器。如果组合框不可编辑，则使用渲染器绘制所选项目。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用组合框的示例</a></h2>
+<p>下表显示了使用的示例<code>JComboBox</code>以及描述这些示例的位置。</p>
+<table summary="Examples that use JComboBox">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ComboBoxDemo"><code>ComboBoxDemo</code></a></td>
+<td>这个部分</td>
+<td>使用不可编辑的组合框。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ComboBoxDemo2"><code>ComboBoxDemo2</code></a></td>
+<td>这个部分</td>
+<td>使用可编辑的组合框。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#CustomComboBoxDemo"><code>CustomComboBoxDemo</code></a></td>
+<td>这个部分</td>
+<td>为组合框提供自定义渲染器。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TableRenderDemo"><code>TableRenderDemo</code></a></td>
+<td>如何使用表格（ <a href="table.html#combobox">使用组合框作为编辑器</a> ）</td>
+<td>显示如何将组合框用作表格单元格编辑器。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="colorchooser.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="dialog.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用选色器<br><b>下一页：</b>如何制作对话框</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

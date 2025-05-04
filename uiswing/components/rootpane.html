@@ -1,0 +1,820 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用根窗格（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="nolinkBHEAD">如何使用根窗格</div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="progress.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="scrollpane.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用根窗格</h1></div>
+            <div id="PageContent">
+
+<p>通常，您不会直接创建一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JRootPane.html" target="_blank"><code>JRootPane</code></a>宾语。相反，您会得到一个<code>JRootPane</code> （是否要！）实例化时<a href="internalframe.html"><code>JInternalFrame</code></a>或顶级Swing容器之一，例如<a href="applet.html"><code>JApplet</code></a> ， <a href="dialog.html"><code>JDialog</code></a>和<a href="frame.html"><code>JFrame</code></a> 。</p>
+<p><a href="toplevel.html">使用顶层容器</a>告诉您使用根窗格的基本知识-获取内容窗格，设置其布局管理器以及向其中添加Swing组件。本节介绍有关根窗格的更多信息，包括组成根窗格的组件以及如何使用它们。</p>
+<center><img src="../../figures/uiswing/components/1layers.gif" width="370" height="127" align="bottom" alt="根窗格管理其他四个窗格：分层窗格，菜单栏，内容窗格和玻璃窗格。"></center><p>如上图所示，根窗格包含四个部分：</p>
+<dl>
+<dt><strong>玻璃窗格</strong></dt>
+<dd>隐藏，默认情况下。如果使玻璃窗格可见，则就像在根窗格的所有其他部分上的一块玻璃一样。除非您实现玻璃窗格的<code>paintComponent</code>方法，以便它可以执行某些操作，并且可以拦截根窗格的输入事件。<a href="#glasspane">在下一部分中</a> ，您将看到一个使用玻璃窗格的示例。</dd>
+<dt><strong>分层窗格</strong></dt>
+<dd>用于放置其内容，该内容由内容窗格和可选菜单栏组成。也可以按指定的Z顺序容纳其他组件。有关信息，请参见<a href="#layeredpane">“分层窗格”</a> 。</dd>
+<dt><strong>内容窗格</strong></dt>
+<dd>根窗格的可见组件的容器，但菜单栏除外。有关使用内容窗格的信息，请参阅《 <a href="toplevel.html">使用顶级容器》</a> 。</dd>
+<dt><strong>可选菜单栏</strong></dt>
+<dd>根窗格的容器菜单的主目录。如果容器具有菜单栏，则通常使用容器的<code>setJMenuBar</code>将菜单栏放置在适当位置的方法。有关使用菜单和菜单栏的更多信息，请参见<a href="menu.html">如何使用菜单</a> 。</dd>
+</dl>
+<h2><a name="glasspane" id="glasspane">玻璃窗格</a></h2>
+<p>当您希望能够捕获事件或在已经包含一个或多个组件的区域上绘画时，玻璃窗格很有用。例如，可以通过使玻璃窗格截获事件来禁用多组件区域的鼠标事件。或者，您可以使用玻璃窗格在多个组件上显示图像。</p>
+<p>这是演示玻璃窗格功能的应用程序的图片。它包含一个复选框，可让您设置玻璃窗格是否“可见”-它是否可以获取事件并在屏幕上进行绘制。当玻璃窗格可见时，它将阻止所有输入事件到达内容窗格中的组件。它还在上次检测到鼠标按下事件的位置绘制了一个红点。</p>
+<center><img src="../../figures/uiswing/components/GlassPaneDemo.png" width="321" height="93" align="bottom" alt="GlassPaneDemo的快照"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行GlassPaneDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#GlassPaneDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/GlassPaneDemoProject/GlassPaneDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动GlassPaneDemo示例"></a><br></li>
+<li>点击按钮1。<br>该按钮的外观更改为显示已被单击。</li>
+<li>单击复选框，使玻璃窗格变为“可见”，然后再次单击按钮1。<br>由于玻璃窗格会拦截所有鼠标事件，因此无法单击该按钮。玻璃窗格在释放鼠标的位置绘制了一个红色的圆圈。</li>
+<li>再次单击复选框，以隐藏玻璃窗格。<br>当玻璃窗格在复选框上检测到事件时，会将其转发到复选框。否则，该复选框将不响应点击。</li>
+</ol>
+<hr></div>
+<p>以下代码来自<a class="SourceLink" href="../examples/components/GlassPaneDemoProject/src/components/GlassPaneDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/GlassPaneDemoProject/src/components/GlassPaneDemo.java'); return false;"><code>GlassPaneDemo.java</code></a>显示和隐藏玻璃窗格。该程序恰好创建自己的玻璃窗格。但是，如果玻璃窗格不做任何绘画，则该程序可能只是将侦听器附加到默认玻璃窗格，如<code>getGlassPane</code> 。</p>
+<div class="codeblock"><pre>
+myGlassPane = new MyGlassPane(...);
+changeButton.addItemListener(myGlassPane);
+frame.setGlassPane(myGlassPane);
+...
+class MyGlassPane extends JComponent
+                  implements ItemListener {
+    ...
+    //React to change button clicks.
+    public void itemStateChanged(ItemEvent e) {
+        <b>setVisible(e.getStateChange() == ItemEvent.SELECTED);</b>
+    }
+...
+}
+</pre></div>
+<p>下一个代码段实现了玻璃窗格的鼠标事件处理。如果在复选框上发生鼠标事件，则玻璃窗格将重新分发该事件，以便复选框接收该事件。</p>
+<div class="codeblock"><pre>
+<em>...//In the implementation of the glass pane's mouse listener:</em>
+public void mouseMoved(MouseEvent e) {
+    redispatchMouseEvent(e, false);
+}
+
+<em>.../* The mouseDragged, mouseClicked, mouseEntered,
+    * mouseExited, and mousePressed methods have the same
+    * implementation as mouseMoved. */...</em>
+
+public void mouseReleased(MouseEvent e) {
+    redispatchMouseEvent(e, true);
+}
+
+private void redispatchMouseEvent(MouseEvent e,
+                                  boolean repaint) {
+    Point glassPanePoint = e.getPoint();
+    Container container = contentPane;
+    Point containerPoint = SwingUtilities.convertPoint(
+                                    glassPane,
+                                    glassPanePoint,
+                                    contentPane);
+
+    if (containerPoint.y &lt; 0) { //we're not in the content pane
+        <em>//Could have special code to handle mouse events over
+        //the menu bar or non-system window decorations, such as
+        //the ones provided by the Java look and feel.</em>
+    } else {
+        //The mouse event is probably over the content pane.
+        //Find out exactly which component it's over.
+        Component component =
+            SwingUtilities.getDeepestComponentAt(
+                                    container,
+                                    containerPoint.x,
+                                    containerPoint.y);
+
+        if ((component != null)
+            &amp;&amp; (component.equals(liveButton))) {
+            //Forward events over the check box.
+            Point componentPoint = SwingUtilities.convertPoint(
+                                        glassPane,
+                                        glassPanePoint,
+                                        component);
+            component.dispatchEvent(new MouseEvent(component,
+                                                 e.getID(),
+                                                 e.getWhen(),
+                                                 e.getModifiers(),
+                                                 componentPoint.x,
+                                                 componentPoint.y,
+                                                 e.getClickCount(),
+                                                 e.isPopupTrigger()));
+        }
+    }
+
+    //Update the glass pane if requested.
+    if (repaint) {
+        glassPane.setPoint(glassPanePoint);
+        glassPane.repaint();
+    }
+}
+</pre></div>
+<p>这是其中的代码<code>MyGlassPane</code>实施绘画。</p>
+<div class="codeblock"><pre>
+protected void paintComponent(Graphics g) {
+    if (point != null) {
+        g.setColor(Color.red);
+        g.fillOval(point.x - 10, point.y - 10, 20, 20);
+    }
+}
+</pre></div>
+<h2><a name="layeredpane" id="layeredpane">分层窗格</a></h2>
+<p>分层窗格是具有一定深度的容器，因此重叠的组件可以一个出现在另一个之上。有关分层窗格的一般信息<a class="TutorialLink" href="layeredpane.html" target="_top">，请</a>参见<a class="TutorialLink" href="layeredpane.html" target="_top">如何使用分层窗格</a> 。本节讨论根窗格如何使用分层窗格的细节。</p>
+<p>每个根窗格将其菜单栏和内容窗格放在以下实例中<code>JLayeredPane</code> 。分层窗格提供的Z排序使行为成为可能，例如在其他组件上方显示弹出菜单。</p>
+<p>您可以选择将组件放在根窗格的分层窗格中。如果这样做，则应注意已将某些深度定义为用于特定功能，并且应按预期使用深度。否则，您的组件可能无法与其他组件很好地配合使用。这是显示功能层及其关系的图：</p>
+<center><img src="../../figures/uiswing/components/layeredPaneLayers.gif" width="239" height="169" align="bottom" alt="由JLayeredPane定义的层"></center><p>下表描述了各层的预期用途，并列出了<code>JLayeredPane</code>对应于每一层的常数：</p>
+<table cellpadding="5" summary="JLayeredPane constant that corresponds to each layer">
+<tbody><tr>
+<th align="left">图层名称</th>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+<tr valign="top">
+<td><code>FRAME_CONTENT_LAYER</code></td>
+<td><code>new Integer(-30000)</code></td>
+<td>根窗格在此深度将菜单栏和内容窗格添加到其分层窗格中。</td>
+</tr>
+<tr valign="top">
+<td><code>DEFAULT_LAYER</code></td>
+<td><code>new Integer(0)</code></td>
+<td>如果在将组件添加到分层窗格中时未指定组件的深度，则分层窗格会将其置于该深度。</td>
+</tr>
+<tr valign="top">
+<td><code>PALETTE_LAYER</code></td>
+<td><code>new Integer(100)</code></td>
+<td>该层对于浮动工具栏和调色板很有用。</td>
+</tr>
+<tr valign="top">
+<td><code>MODAL_LAYER</code></td>
+<td><code>new Integer(200)</code></td>
+<td>模态内部框架对话框将属于此层。</td>
+</tr>
+<tr valign="top">
+<td><code>POPUP_LAYER</code></td>
+<td><code>new Integer(300)</code></td>
+<td>弹出窗口位于这一层，因为它们需要出现在几乎所有内容的上方。</td>
+</tr>
+<tr valign="top">
+<td><code>DRAG_LAYER</code></td>
+<td><code>new Integer(400)</code></td>
+<td>旨在在拖动组件时使用。组件放下后应返回其常规层。</td>
+</tr>
+</tbody></table>
+<p><a name="examplemods" id="examplemods">这里是RootLayeredPaneDemo，这是一个版本的图片</a> <a href="../examples/components/index.html#LayeredPaneDemo">LayeredPaneDemo</a>使用根窗格的分层窗格，而不是创建一个新的分层窗格。</p>
+<center><img src="../../figures/uiswing/components/RootLayeredPaneDemo.png" width="300" height="350" align="bottom" alt="修改LayeredPaneDemo以使用根窗格的分层窗格"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行RootLayeredPaneDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#RootLayeredPaneDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/RootLayeredPaneDemoProject/RootLayeredPaneDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动RootLayeredPaneDemo"></a><br></li>
+<li>在窗口中四处移动光标，以便Duke在其他组件的顶部移动。<br>请注意，当光标位于非标签组件的顶部时（无论是在内容窗格中还是在Java外观提供的标题栏中），Duke的移动都将暂时停止。这是因为鼠标移动事件进入包含层次结构中最深的组件，并且对鼠标事件感兴趣。移动Duke的鼠标移动侦听器已注册在分层窗格中，并且该窗格中的大多数组件（标签除外）都具有鼠标移动侦听器。当鼠标移到分层窗格中的某个感兴趣的组件上时，分层窗格不会获取事件，而感兴趣的组件则会捕获该事件。</li>
+<li>确保选中“在图层中的最高位置”复选框，将Duke的图层更改为黄色（-30000）。<br>和以前一样，他出现在其他组件的顶部，洋红色（0）和青色（301）矩形除外。</li>
+<li>将Duke保留在Yellow层中，单击复选框以将Duke发送到-30000层的背面。<br>Duke之所以消失，是因为内容窗格及其中的所有组件现在都在他上方。</li>
+<li>将Duke的图层更改为Cyan（301），向下移动Duke，使他站在Yellow矩形的顶部边缘，然后按Space弹出组合框的下拉列表。<br>如果外观将下拉列表实现为轻量级弹出窗口，则Duke会出现在下拉列表的顶部。</li>
+</ol>
+<hr></div>
+<h2><a name="api" id="api">根窗格API</a></h2>
+<p>后面的表列出了用于使用根窗格，玻璃窗格和内容窗格的API。有关使用内容窗格的更多信息，请转至<a href="toplevel.html">使用顶级容器</a> 。以下是本节中的表格：</p>
+<ul>
+<li><a href="#rootpaneapi">使用根窗格</a></li>
+<li><a href="#contentapi">设置或获取根窗格的内容</a></li>
+</ul>
+<p>其他部分介绍了使用根窗格其他部分的API：</p>
+<ul>
+<li><a href="layeredpane.html#api">分层窗格API</a></li>
+<li><a href="menu.html#api">菜单API</a></li>
+</ul>
+<table border="1" summary="methods for using a root pane">
+<caption><a name="rootpaneapi" id="rootpaneapi">使用根窗格</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#getRootPane--" target="_blank">JRootPane getRootPane（）</a><br>
+<em>（在<code>JApplet</code> ， <code>JDialog</code> ， <code>JFrame</code> ， <code>JInternalFrame</code>和<code>JWindow</code> ）</em></td>
+<td>获取小程序，对话框，框架，内部框架或窗口的根窗格。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#getRootPane-java.awt.Component-" target="_blank">静态JRootPane getRootPane（Component）</a><br>
+<em>（在<code>SwingUtilities</code> ）</em></td>
+<td>如果组件包含根窗格，请返回该根窗格。否则，返回包含该组件的根窗格（如果有）。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html#getRootPane--" target="_blank">JRootPane getRootPane（）</a><br>
+<em>（在<code>JComponent</code> ）</em></td>
+<td>调用<code>SwingUtilities</code><code>getRootPane</code>方法<code>JComponent</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JRootPane.html#setDefaultButton-javax.swing.JButton-" target="_blank">无效setDefaultButton（JButton）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JRootPane.html#getDefaultButton--" target="_blank">JButton getDefaultButton（）</a></td>
+<td>设置或获取哪个按钮（如果有）是根窗格中的默认按钮。特定于外观的操作（例如按Enter）将导致执行按钮的操作。</td>
+</tr>
+</tbody></table>
+<table border="1" width="100%" summary="methods for setting or getting the root pane">
+<caption><a name="contentapi" id="contentapi">设置或获取根窗格的内容</a><br>
+<em>在以下方法中定义了以下方法<code>JApplet</code> ， <code>JDialog</code> ， <code>JFrame</code> ， <code>JInternalFrame</code> ， <code>JRootPane</code>和<code>JWindow</code> ，除非另有说明。</em></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#setGlassPane-java.awt.Component-" target="_blank">无效setGlassPane（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#getGlassPane--" target="_blank">组件getGlassPane（）</a></td>
+<td>设置或获取玻璃窗格。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#setLayeredPane-javax.swing.JLayeredPane-" target="_blank">无效setLayeredPane（JLayeredPane）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#getLayeredPane--" target="_blank">容器getLayeredPane（）</a></td>
+<td>设置或获取分层窗格。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#setContentPane-java.awt.Container-" target="_blank">setContentPane（容器）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#getContentPane--" target="_blank">容器getContentPane（）</a></td>
+<td>设置或获取内容窗格。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#setJMenuBar-javax.swing.JMenuBar-" target="_blank">无效setJMenuBar（JMenuBar）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html#getJMenuBar--" target="_blank">JMenuBar getJMenuBar（）</a><br>
+<em>（未在<code>JWindow</code> ）</em></td>
+<td>设置或获取菜单栏。</td>
+</tr>
+</tbody></table>
+<p>
+</p>
+<h2><a name="eg" id="eg">使用根窗格的示例</a></h2>
+<p>每个Swing程序都有一个根窗格，但很少有直接引用它。下表中的示例说明了如何使用以下功能： <code>JRootPane</code>或玻璃窗格。另请参阅以下列表：</p>
+<ul>
+<li><a href="layeredpane.html#eg">使用分层窗格的示例</a></li>
+<li><a href="menu.html#eg">使用菜单的示例</a></li>
+<li><a href="frame.html#eg">使用框架</a>的示例（例如使用内容窗格的示例）</li>
+</ul>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#GlassPaneDemo"><code>GlassPaneDemo</code></a></td>
+<td>这个部分</td>
+<td>使用绘制一点并重新调度事件的玻璃窗格。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#RootLayeredPaneDemo"><code>RootLayeredPaneDemo</code></a></td>
+<td>这个部分</td>
+<td>调整LayeredPaneDemo以使用根窗格的分层窗格。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ListDialog"><code>ListDialog</code></a></td>
+<td><a href="list.html">如何使用清单</a></td>
+<td>设置默认按钮<code>JDialog</code> 。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#FrameDemo2"><code>FrameDemo2</code></a></td>
+<td><a href="frame.html">如何制作框架</a></td>
+<td>设置默认按钮<code>JFrame</code> 。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="progress.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="scrollpane.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用进度条<br><b>下一页：</b>如何使用滚动窗格</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

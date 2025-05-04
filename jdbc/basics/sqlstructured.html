@@ -1,0 +1,1081 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>使用结构化对象（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="nolinkAHEAD">使用结构化对象</div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="distinct.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="sqlcustommapping.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用结构化对象</h1></div>
+            <div id="PageContent">
+
+<!-- Creating a SQL Structured Type -->
+<p><strong>注意</strong> ：MySQL和Java DB当前不支持用户定义的类型。因此，没有JDBC教程示例可用来演示本节中描述的功能。</p>
+<p>涵盖以下主题：</p>
+<ul>
+<li><a href="#overview_structured">结构化类型概述</a></li>
+<li><a href="#using_distinct_in_structured">在结构化类型中使用DISTINCT类型</a></li>
+<li><a href="#references_structured">使用对结构化类型的引用</a></li>
+<li><a href="#code_ref">用于创建SQL REF对象的示例代码</a></li>
+<li><a href="#udt_column_values">使用用户定义的类型作为列值</a></li>
+<li><a href="#insert_udt">将用户定义的类型插入表中</a></li>
+</ul>
+<h2><a name="overview_structured" id="overview_structured">结构化类型概述</a></h2>
+<p>SQL结构化类型和<code>DISTINCT</code>类型是用户可以在SQL中定义的两种数据类型。它们通常被称为UDT（用户定义类型），您可以使用SQL创建它们<code>CREATE</code><code>TYPE</code>声明。</p>
+<p>回到“喝咖啡休息时间”的示例，假设所有者已经取得了超出所有预期的成功，并且正在扩展新的分支机构。所有者决定添加一个<code>STORES</code>包含有关每个机构的信息的数据库表。 <code>STORES</code>将有四列：</p>
+<ul>
+<li><code>STORE_NO</code>每个商店的标识号</li>
+<li><code>LOCATION</code>为它的地址</li>
+<li><code>COF_TYPES</code>出售的咖啡</li>
+<li><code>MGR</code>以商店经理的名字</li>
+</ul>
+<p>所有者制作专栏<code>LOCATION</code>是SQL结构化类型，该列<code>COF_TYPES</code>一个SQL <code>ARRAY</code>和列<code>MGR</code>一种<code>REF(MANAGER)</code> ，带有<code>MANAGER</code>是SQL结构化类型。</p>
+<p>所有者必须首先为地址和管理者定义新的结构化类型。SQL结构化类型与Java编程语言中的结构化类型类似，它具有称为<em>属性的</em>成员，该成员可以是任何数据类型。所有者编写以下SQL语句以创建新的数据类型<code>ADDRESS</code> ：</p>
+<div class="codeblock"><pre>
+CREATE TYPE ADDRESS
+(
+    NUM INTEGER,
+    STREET VARCHAR(40),
+    CITY VARCHAR(40),
+    STATE CHAR(2),
+    ZIP CHAR(5)
+);
+</pre></div>
+<p>在此语句中，新类型<code>ADDRESS</code>具有五个属性，类似于Java类中的字段。属性<code>NUM</code>是一个<code>INTEGER</code> ，属性<code>STREET</code>是一个<code>VARCHAR(40)</code> ，属性<code>CITY</code>是一个<code>VARCHAR(40)</code> ，属性<code>STATE</code>是一个<code>CHAR(2)</code> ，以及属性<code>ZIP</code>是一个<code>CHAR(5)</code> 。</p>
+<p>以下摘录，其中<code>con</code>是有效的<code>Connection</code>对象，发送的定义<code>ADDRESS</code>到数据库：</p>
+<div class="codeblock"><pre>
+String createAddress =
+    "CREATE TYPE ADDRESS " +
+    "(NUM INTEGER, STREET VARCHAR(40), " +
+    "CITY VARCHAR(40), STATE CHAR(2), ZIP CHAR(5))";
+Statement stmt = con.createStatement();
+stmt.executeUpdate(createAddress);
+</pre></div>
+<p>现在<code>ADDRESS</code>结构化类型作为数据类型在数据库中注册，所有者可以将其用作表列或结构化类型的属性的数据类型。</p>
+<!-- ************************************************** -->
+<h2><a name="using_distinct_in_structured" id="using_distinct_in_structured">在结构化类型中使用DISTINCT类型</a></h2>
+<p>The Coffee Break所有者计划将其包含在新结构化类型中的属性之一<code>MANAGER</code>是经理的电话号码。由于所有者将电话号码始终列为10位数字（以确保包含区号），并且永远不会将其作为数字来处理，因此所有者决定定义一个新类型，称为<code>PHONE_NO</code>包含10个字符。可以将这种数据类型的SQL定义视为只有一个属性的结构化类型，如下所示：</p>
+
+<div class="codeblock"><pre>
+CREATE TYPE PHONE_NO AS CHAR(10);
+</pre></div>
+
+<p>或者，如前所述，对于某些驱动程序，定义可能如下所示：</p>
+
+<div class="codeblock"><pre>
+CREATE DISTINCT TYPE PHONE_NO AS CHAR(10);
+</pre></div>
+
+<p>一种<code>DISTINCT</code>类型始终基于另一种数据类型，该数据类型必须是预定义的类型。换句话说， <code>DISTINCT</code>类型不能基于用户定义的类型（UDT）。检索或设置一个<code>DISTINCT</code>类型，请对基础类型（基础类型）使用适当的方法。例如，检索<code>PHONE_NO</code> ，它基于<code>CHAR</code>类型，您将使用该方法<code>getString</code>因为那是检索<code>CHAR</code> 。</p>
+<p>假设一个类型的值<code>PHONE_NO</code>在当前行的第四列中<code>ResultSet</code>宾语<code><em>rs</em></code> ，下面的代码行将其检索：</p>
+
+<div class="codeblock"><pre>
+String phoneNumber = rs.getString(4);
+</pre></div>
+
+<p>同样，以下代码行设置了具有以下类型的输入参数： <code>PHONE_NO</code>将准备好的语句发送到数据库：</p>
+
+<div class="codeblock"><pre>
+pstmt.setString(1, phoneNumber);
+</pre></div>
+
+<p>在前面的代码片段上添加以下内容的定义： <code>PHONE_NO</code>将使用以下代码行发送到数据库：</p>
+
+<div class="codeblock"><pre>
+stmt.executeUpdate(
+    "CREATE TYPE PHONE_NO AS CHAR(10)");
+</pre></div>
+
+<p>注册类型后<code>PHONE_NO</code>对于数据库，所有者可以将其用作表中的列类型或结构化类型中的属性的数据类型。的定义<code>MANAGER</code>在下面的SQL语句中使用<code>PHONE_NO</code>作为属性的数据类型<code>PHONE</code> ：</p>
+
+<div class="codeblock"><pre>
+CREATE TYPE MANAGER
+(
+    MGR_ID INTEGER,
+    LAST_NAME VARCHAR(40),
+    FIRST_NAME VARCHAR(40),
+    PHONE PHONE_NO
+);
+</pre></div>
+
+<p>重用<code><em>stmt</em></code> ，如先前所定义，以下代码片段发送结构化类型的定义<code>MANAGER</code>到数据库：</p>
+
+<div class="codeblock"><pre>
+  String createManager =
+    "CREATE TYPE MANAGER " +
+    "(MGR_ID INTEGER, LAST_NAME " +
+    "VARCHAR(40), " +
+    "FIRST_NAME VARCHAR(40), " +
+    "PHONE PHONE_NO)";
+  stmt.executeUpdate(createManager);
+</pre></div>
+<!-- ************************************** -->
+<h2><a name="references_structured" id="references_structured">使用对结构化类型的引用</a></h2>
+<p>The Coffee Break的所有者创建了三种新的数据类型，用作数据库中的列类型或属性类型：结构化类型<code>LOCATION</code>和<code>MANAGER</code>和<code>DISTINCT</code>类型<code>PHONE_NO</code> 。企业家已经使用<code>PHONE_NO</code>作为属性的类型<code>PHONE</code>在新类型<code>MANAGER</code>和<code>ADDRESS</code>作为列的数据类型<code>LOCATION</code>在桌子上<code>STORES</code> 。的<code>MANAGER</code> type可用作列的类型<code>MGR</code> ，但企业家更喜欢使用该类型<code>REF(MANAGER)</code>因为企业家通常只有一个人管理两个或三个商店。使用<code>REF(MANAGER)</code>作为列类型，避免重复所有数据<code>MANAGER</code>当一个人经营一家以上的商店时。</p>
+<p>与结构化类型<code>MANAGER</code>已经创建的所有者现在可以创建一个包含以下实例的表<code>MANAGER</code>可以参考。对一个实例的引用<code>MANAGER</code>将具有类型<code>REF(MANAGER)</code> 。一个SQL <code>REF</code>只不过是指向结构化类型的逻辑指针，因此<code>REF(MANAGER)</code>用作的实例的逻辑指针<code>MANAGER</code> 。</p>
+<p>因为一个SQL <code>REF</code>值需要与它引用的结构化类型的实例永久关联，它与关联的实例一起存储在特殊表中。程序员不创建<code>REF</code>直接创建类型，而是创建一个表，该表将存储可以引用的特定结构化类型的实例。每个要引用的结构化类型都有自己的表。当您将结构类型的实例插入表中时，数据库会自动创建一个<code>REF</code>实例。例如，包含<code>MANAGER</code>可以引用的所有者使用SQL创建了以下特殊表：</p>
+<div class="codeblock"><pre>
+  CREATE TABLE MANAGERS OF MANAGER
+  (OID REF(MANAGER)
+  VALUES ARE SYSTEM GENERATED);
+</pre></div>
+<p>该语句使用特殊列创建一个表<code>OID</code> ，它存储类型的值<code>REF(MANAGER)</code> 。每次<code>MANAGER</code>插入表中后，数据库将生成一个实例<code>REF(MANAGER)</code>并将其存储在列中<code>OID</code> 。隐式地，一个附加列存储了<code>MANAGER</code>也已插入表格中。例如，以下代码片段显示了企业家如何创建三个实例。 <code>MANAGER</code>代表三个经理的结构化类型：</p>
+
+<div class="codeblock"><pre>
+  INSERT INTO MANAGERS (
+    MGR_ID, LAST_NAME,
+    FIRST_NAME, PHONE) VALUES
+  (
+    000001,
+    'MONTOYA',
+    'ALFREDO',
+    '8317225600'
+  );
+
+  INSERT INTO MANAGERS (
+    MGR_ID, LAST_NAME,
+    FIRST_NAME, PHONE) VALUES
+  (
+    000002,
+    'HASKINS',
+    'MARGARET',
+    '4084355600'
+  );
+
+  INSERT INTO MANAGERS (
+    MGR_ID, LAST_NAME,
+    FIRST_NAME, PHONE) VALUES
+  (
+    000003,
+    'CHEN',
+    'HELEN',
+    '4153785600'
+   );
+</pre></div>
+
+<p>桌子<code>MANAGERS</code>现在将有三行，到目前为止，每个经理插入一行。专栏<code>OID</code>将包含三个唯一的类型的对象标识符<code>REF(MANAGER)</code> ，每个实例对应一个<code>MANAGER.</code>这些对象标识符由数据库自动生成，并将永久存储在表中<code>MANAGERS</code> 。隐式地，一个附加列存储了<code>MANAGER</code> 。例如在表格中<code>MANAGERS</code> ，其中一行包含一个<code>REF(MANAGER)</code>引用Alfredo Montoya，另一行包含<code>REF(MANAGER)</code>引用了玛格丽特·哈斯金斯（Margaret Haskins），第三行包含<code>REF(MANAGER)</code>引用了海伦·陈（Helen Chen）。</p>
+<p>要访问<code>REF(MANAGER)</code>实例，则从其表中选择它。例如，所有者使用以下代码片段检索了对ID为000001的Alfredo Montoya的引用：</p>
+<div class="codeblock"><pre>
+  String selectMgr =
+    "SELECT OID FROM MANAGERS " +
+    "WHERE MGR_ID = 000001";
+  ResultSet rs = stmt.executeQuery(selectMgr);
+  rs.next();
+  Ref manager = rs.getRef("OID");
+</pre></div>
+<p>现在变量<code><em>manager</em></code>可用作引用Alfredo Montoya的列值。</p>
+<!-- ************************************** -->
+<h2><a name="code_ref" id="code_ref">用于创建SQL REF对象的示例代码</a></h2>
+<p>以下代码示例创建表<code>MANAGERS</code> ，结构化类型的实例表<code>MANAGER</code>可以被引用，并插入三个实例<code>MANAGER</code>进入桌子。专栏<code>OID</code>在此表中将存储<code>REF(MANAGER)</code> 。执行此代码后， <code>MANAGERS</code>表格中的每三个都会有一行<code>MANAGER</code>插入的对象，以及<code>OID</code>列将是<code>REF(MANAGER)</code>标识实例的类型<code>MANAGER</code>存储在该行中。</p>
+<div class="codeblock"><pre>
+package com.oracle.tutorial.jdbc;
+
+import java.sql.*;
+
+public class CreateRef {
+
+    public static void main(String args[]) {
+
+        JDBCTutorialUtilities myJDBCTutorialUtilities;
+        Connection myConnection = null;
+
+        if (args[0] == null) {
+            System.err.println("Properties file not specified " +
+                               "at command line");
+            return;
+        } else {
+            try {
+                myJDBCTutorialUtilities = new JDBCTutorialUtilities(args[0]);
+            } catch (Exception e) {
+                System.err.println("Problem reading properties " +
+                                   "file " + args[0]);
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            String createManagers =
+                "CREATE TABLE " +
+                "MANAGERS OF MANAGER " +
+                "(OID REF(MANAGER) " +
+                "VALUES ARE SYSTEM " +
+                "GENERATED)";
+
+            String insertManager1 =
+                "INSERT INTO MANAGERS " +
+                "(MGR_ID, LAST_NAME, " +
+                "FIRST_NAME, PHONE) " +
+                "VALUES " +
+                "(000001, 'MONTOYA', " +
+                "'ALFREDO', " +
+                "'8317225600')";
+
+            String insertManager2 =
+                "INSERT INTO MANAGERS " +
+                "(MGR_ID, LAST_NAME, " +
+                "FIRST_NAME, PHONE) " +
+                "VALUES " +
+                "(000002, 'HASKINS', " +
+                "'MARGARET', " +
+                "'4084355600')";
+
+            String insertManager3 =
+                "INSERT INTO MANAGERS " +
+                "(MGR_ID, LAST_NAME, " +
+                "FIRST_NAME, PHONE) " +
+                "VALUES " +
+                "(000003, 'CHEN', 'HELEN', " +
+                "'4153785600')";
+  
+            con = myJDBCTutorialUtilities.getConnection();
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            stmt.executeUpdate(createManagers);
+
+            stmt.addBatch(insertManager1);
+            stmt.addBatch(insertManager2);
+            stmt.addBatch(insertManager3);
+            int [] updateCounts = stmt.executeBatch();
+
+            con.commit();
+
+            System.out.println("Update count for:  ");
+            for (int i = 0; i &lt; updateCounts.length; i++) {
+                System.out.print("    command " + (i + 1) + " = ");
+                System.out.println(updateCounts[i]);
+            }
+        } catch(BatchUpdateException b) {
+            System.err.println("-----BatchUpdateException-----");
+            System.err.println("Message:  " + b.getMessage());
+            System.err.println("SQLState:  " + b.getSQLState());
+            System.err.println("Vendor:  " + b.getErrorCode());
+            System.err.print("Update counts for " + "successful commands:  ");
+            int [] rowsUpdated = b.getUpdateCounts();
+            for (int i = 0; i &lt; rowsUpdated.length; i++) {
+                System.err.print(rowsUpdated[i] + "   ");
+            }
+            System.err.println("");
+        } catch(SQLException ex) {
+            System.err.println("------SQLException------");
+            System.err.println("Error message:  " + ex.getMessage());
+            System.err.println("SQLState:  " + ex.getSQLState());
+            System.err.println("Vendor:  " + ex.getErrorCode());
+        } finally {
+            if (stmt != null) { stmt.close(); }
+              JDBCTutorialUtilities.closeConnection(con);
+        }
+    }
+}
+</pre></div>
+<!-- ************************************** -->
+<h2><a name="udt_column_values" id="udt_column_values">使用用户定义的类型作为列值</a></h2>
+<p>我们的企业家现在拥有创建表所需的UDT <code>STORES</code> 。结构化类型<code>ADDRESS</code>是列的类型<code>LOCATION</code> ，以及类型<code>REF(MANAGER)</code>是列的类型<code>MGR</code> 。</p>
+<p>UDT <code>COF_TYPES</code>基于SQL数据类型<code>ARRAY</code>并且是列的类型<code>COF_TYPES</code> 。以下代码行创建类型<code>COF_ARRAY</code>作为一个<code>ARRAY</code>包含10个元素的值。基本类型<code>COF_ARRAY</code>是<code>VARCHAR(40)</code> 。</p>
+<div class="codeblock"><pre>
+  CREATE TYPE COF_ARRAY AS ARRAY(10) OF VARCHAR(40);
+</pre></div>
+<p>使用定义的新数据类型，以下SQL语句创建表<code>STORES</code> ：</p>
+
+<div class="codeblock"><pre>
+  CREATE TABLE STORES
+  (
+    STORE_NO INTEGER,
+    LOCATION ADDRESS,
+    COF_TYPES COF_ARRAY,
+    MGR REF(MANAGER)
+  );
+</pre></div>
+
+<!-- ************************************** -->
+<h2><a name="insert_udt" id="insert_udt">将用户定义的类型插入表中</a></h2>
+<p>以下代码片段将一行插入<code>STORES</code>表，为列提供值<code>STORE_NO</code> ， <code>LOCATION</code> ， <code>COF_TYPES</code>和<code>MGR</code> ， 以该顺序：</p>
+
+<div class="codeblock"><pre>
+  INSERT INTO STORES VALUES
+  (
+    100001,
+    ADDRESS(888, 'Main_Street',
+      'Rancho_Alegre',
+      'CA', '94049'),
+    COF_ARRAY('Colombian', 'French_Roast',
+      'Espresso', 'Colombian_Decaf',
+      'French_Roast_Decaf'),
+    SELECT OID FROM MANAGERS
+      WHERE MGR_ID = 000001
+  );
+</pre></div>
+
+<p>以下内容遍历每列，并将值插入其中。</p>
+
+<div class="codeblock"><pre>
+  STORE_NO: 100001
+</pre></div>
+
+<p>该列是类型<code>INTEGER</code> ，以及<code>100001</code>是一个<code>INTEGER</code>类型，类似于之前在表中输入的内容<code>COFFEES</code>和<code>SUPPLIERS</code> 。</p>
+<div class="codeblock"><pre>
+  LOCATION: ADDRESS(888, 'Main_Street',
+    'Rancho_Alegre', 'CA', '94049')
+</pre></div>
+<p>该列的类型是结构化类型<code>ADDRESS</code> ，并且此值是的实例的构造函数<code>ADDRESS</code> 。当我们发送的定义<code>ADDRESS</code>被发送到数据库，它要做的一件事情就是为新类型创建一个构造函数。括号中的逗号分隔值是的属性的初始化值。 <code>ADDRESS</code>类型，并且它们的显示顺序必须与属性定义中列出的顺序相同<code>ADDRESS</code>类型。 <code>888</code>是属性的值<code>NUM</code> ，这是<code>INTEGER</code>值。 <code>"Main_Street"</code>是的价值<code>STREET</code>和<code>"Rancho_Alegre"</code>是的价值<code>CITY</code> ，两个属性均为类型<code>VARCHAR(40)</code> 。属性的值<code>STATE</code>是<code>"CA"</code> ，属于<code>CHAR(2)</code> ，以及属性的值<code>ZIP</code>是<code>"94049"</code> ，属于<code>CHAR(5)</code> 。</p>
+
+<div class="codeblock"><pre>
+  COF_TYPES: COF_ARRAY(
+    'Colombian',
+    'French_Roast',
+    'Espresso',
+    'Colombian_Decaf',
+    'French_Roast_Decaf'),
+</pre></div>
+
+<p>专栏<code>COF_TYPES</code>是类型<code>COF_ARRAY</code>基本类型为<code>VARCHAR(40)</code> ，而圆括号之间的逗号分隔值为<code>String</code>是数组元素的对象。所有者定义类型<code>COF_ARRAY</code>最多包含10个元素。这个数组有5个元素，因为企业家只提供了5个元素<code>String</code>它的对象。</p>
+
+<div class="codeblock"><pre>
+  MGR: SELECT OID FROM MANAGERS
+    WHERE MGR_ID = 000001
+</pre></div>
+
+<p>专栏<code>MGR</code>是类型<code>REF(MANAGER)</code> ，这意味着此列中的值必须是对结构化类型的引用<code>MANAGER</code> 。的所有实例<code>MANAGER</code>储存在表格中<code>MANAGERS</code> 。的所有实例<code>REF(MANAGER)</code>也存储在此表的列中<code>OID</code> 。该表行中描述的商店的经理是Alfredo Montoya，他的信息存储在<code>MANAGER</code>有<code>100001</code>对于属性<code>MGR_ID</code> 。为了得到<code>REF(MANAGER)</code>与关联的实例<code>MANAGER</code> Alfredo Montoya的对象，选择列<code>OID</code>在那一行<code>MGR_ID</code>是<code>100001</code>在桌子上<code>MANAGERS</code> 。将存储在<code>MGR</code>的专栏<code>STORES</code>表（ <code>REF(MANAGER)</code>值）是DBMS生成的用于唯一标识此实例的值<code>MANAGER</code>结构化类型。</p>
+<p>使用以下代码片段将前面的SQL语句发送到数据库：</p>
+
+<div class="codeblock"><pre>
+  String insertMgr =
+    "INSERT INTO STORES VALUES " +
+    "(100001, " +
+    "ADDRESS(888, 'Main_Street', " +
+      "'Rancho_Alegre', 'CA', " +
+      "'94049'), " +
+    "COF_ARRAY('Colombian', " +
+      "'French_Roast', 'Espresso', " +
+      "'Colombian_Decaf', " +
+      "'French_Roast_Decaf'}, " +
+    "SELECT OID FROM MANAGERS " +
+    "WHERE MGR_ID = 000001)";
+
+  stmt.executeUpdate(insertMgr);
+</pre></div>
+
+<p>但是，因为您要发送几个<code>INSERT INTO</code>语句，将它们作为批处理更新一起发送将更加有效，如以下代码示例所示：</p>
+<div class="codeblock"><pre>
+package com.oracle.tutorial.jdbc;
+
+import java.sql.*;
+
+public class InsertStores {
+    public static void main(String args[]) {
+
+        JDBCTutorialUtilities myJDBCTutorialUtilities;
+        Connection myConnection = null;
+
+        if (args[0] == null) {
+            System.err.println(
+                "Properties file " +
+                "not specified " +
+                "at command line");
+            return;
+        } else {
+            try {
+                myJDBCTutorialUtilities = new
+                    JDBCTutorialUtilities(args[0]);
+            } catch (Exception e) {
+                System.err.println(
+                    "Problem reading " +
+                    "properties file " +
+                    args[0]);
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = myJDBCTutorialUtilities.getConnection();
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+
+            String insertStore1 =
+                "INSERT INTO STORES VALUES (" +
+                "100001, " +
+                "ADDRESS(888, 'Main_Street', " +
+                    "'Rancho_Alegre', 'CA', " +
+                    "'94049'), " +
+                "COF_ARRAY('Colombian', " +
+                    "'French_Roast', " +
+                    "'Espresso', " +
+                    "'Colombian_Decaf', " +
+                    "'French_Roast_Decaf'), " +
+                "(SELECT OID FROM MANAGERS " +
+                "WHERE MGR_ID = 000001))";
+
+            stmt.addBatch(insertStore1);
+
+            String insertStore2 =
+                "INSERT INTO STORES VALUES (" +
+                "100002, " +
+                "ADDRESS(1560, 'Alder', " +
+                    "'Ochos_Pinos', " +
+                    "'CA', '94049'), " +
+                "COF_ARRAY('Colombian', " +
+                    "'French_Roast', " +
+                    "'Espresso', " +
+                    "'Colombian_Decaf', " +
+                    "'French_Roast_Decaf', " +
+                    "'Kona', 'Kona_Decaf'), " +
+                "(SELECT OID FROM MANAGERS " +
+                "WHERE MGR_ID = 000001))";
+
+            stmt.addBatch(insertStore2);
+
+            String insertStore3 =
+                "INSERT INTO STORES VALUES (" +
+                "100003, " +
+                "ADDRESS(4344, " +
+                    "'First_Street', " +
+                    "'Verona', " +
+                    "'CA', '94545'), " +
+                "COF_ARRAY('Colombian', " +
+                    "'French_Roast', " +
+                    "'Espresso', " +
+                    "'Colombian_Decaf', " +
+                    "'French_Roast_Decaf', " +
+                    "'Kona', 'Kona_Decaf'), " +
+                "(SELECT OID FROM MANAGERS " +
+                "WHERE MGR_ID = 000002))";
+
+            stmt.addBatch(insertStore3);
+
+            String insertStore4 =
+                "INSERT INTO STORES VALUES (" +
+                "100004, " +
+                "ADDRESS(321, 'Sandy_Way', " +
+                    "'La_Playa', " +
+                    "'CA', '94544'), " +
+                "COF_ARRAY('Colombian', " +
+                    "'French_Roast', " +
+                    "'Espresso', " +
+                    "'Colombian_Decaf', " +
+                    "'French_Roast_Decaf', " +
+                    "'Kona', 'Kona_Decaf'), " +
+                "(SELECT OID FROM MANAGERS " +
+                "WHERE MGR_ID = 000002))";
+
+            stmt.addBatch(insertStore4);
+
+            String insertStore5 =
+                "INSERT INTO STORES VALUES (" +
+                "100005, " +
+                "ADDRESS(1000, 'Clover_Road', " +
+                    "'Happyville', " +
+                    "'CA', '90566'), " +
+                "COF_ARRAY('Colombian', " +
+                    "'French_Roast', " +
+                    "'Espresso', " + 
+                    "'Colombian_Decaf', " +
+                    "'French_Roast_Decaf'), " +
+                "(SELECT OID FROM MANAGERS " +
+                "WHERE MGR_ID = 000003))";
+
+            stmt.addBatch(insertStore5);
+
+            int [] updateCounts = stmt.executeBatch();
+
+            ResultSet rs = stmt.executeQuery(
+                "SELECT * FROM STORES");
+            System.out.println("Table STORES after insertion:");
+            System.out.println("STORE_NO   " + "LOCATION   " +
+                "COF_TYPE   " + "MGR");
+
+            while (rs.next()) {
+                int storeNo = rs.getInt("STORE_NO");
+                Struct location = (Struct)rs.getObject("LOCATION");
+                Object[] locAttrs = location.getAttributes();
+                Array coffeeTypes = rs.getArray("COF_TYPE");
+                String[] cofTypes = (String[])coffeeTypes.getArray();
+
+                Ref managerRef = rs.getRef("MGR");
+                PreparedStatement pstmt = con.prepareStatement(
+                    "SELECT MANAGER " +
+                    "FROM MANAGERS " +
+                    "WHERE OID = ?");
+  
+                pstmt.setRef(1, managerRef);
+                ResultSet rs2 = pstmt.executeQuery();
+                rs2.next();
+                Struct manager = (Struct)rs2.getObject("MANAGER");
+                Object[] manAttrs = manager.getAttributes();
+      
+                System.out.print(storeNo + "   ");
+                System.out.print(
+                    locAttrs[0] + " " +
+                    locAttrs[1] + " " +
+                    locAttrs[2] + ", " +
+                    locAttrs[3] + " " +
+                    locAttrs[4] + " ");
+
+                for (int i = 0; i &lt; cofTypes.length; i++)
+                    System.out.print( cofTypes[i] + " ");
+          
+                System.out.println(
+                    manAttrs[1] + ", " +
+                    manAttrs[2]);
+        
+                rs2.close();
+                pstmt.close();
+            }
+
+            rs.close();
+
+        } catch(BatchUpdateException b) {
+            System.err.println("-----BatchUpdateException-----");
+            System.err.println("SQLState:  " + b.getSQLState());
+            System.err.println("Message:  " + b.getMessage());
+            System.err.println("Vendor:  " + b.getErrorCode());
+            System.err.print("Update counts:  ");
+            int [] updateCounts = b.getUpdateCounts();
+
+            for (int i = 0; i &lt; updateCounts.length; i++) {
+                System.err.print(updateCounts[i] + "   ");
+            }
+            System.err.println("");
+
+        } catch(SQLException ex) {
+            System.err.println("SQLException: " + ex.getMessage());
+            System.err.println("SQLState:  " + ex.getSQLState());
+            System.err.println("Message:  " + ex.getMessage());
+            System.err.println("Vendor:  " + ex.getErrorCode());
+        } finally {
+            if (stmt != null) { stmt.close(); }
+                JDBCTutorialUtilities.closeConnection(con);
+            }
+        }
+    }
+}
+</pre></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="distinct.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="sqlcustommapping.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>使用DISTINCT数据类型<br><b>下一页：</b>使用自定义类型映射</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

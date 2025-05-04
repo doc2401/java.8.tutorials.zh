@@ -1,0 +1,813 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>Java到模式的示例（Java™教程> XML绑定的Java体系结构（JAXB）> JAXB简介）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXB tutorial describes Java Architecture for XML Binding (jaxb), and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxb, xml">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JAXB简介</a></div>
+<div class="linkAHEAD"><a href="arch.html">JAXB体系结构</a></div>
+<div class="linkAHEAD"><a href="repcon.html">表示XML内容</a></div>
+<div class="linkAHEAD"><a href="bind.html">绑定XML模式</a></div>
+<div class="linkAHEAD"><a href="customize.html">自定义生成的类和Java程序元素</a></div>
+<div class="linkAHEAD"><a href="examples.html">JAXB示例</a></div>
+<div class="linkAHEAD"><a href="basic.html">基本范例</a></div>
+<div class="linkAHEAD"><a href="custom.html">自定义JAXB绑定</a></div>
+<div class="nolinkAHEAD">Java到模式的示例</div>
+<div class="linkAHEAD"><a href="info.html">想要查询更多的信息</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> XML绑定的Java体系结构（JAXB）<br><b>课程：</b> JAXB简介</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">XML绑定的Java体系结构（JAXB）</a> > <a href="index.html" target="_top">JAXB简介</a>
+            </div>
+            <div class="NavBit">
+                <a href="custom.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="info.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>Java到模式的示例</h1></div>
+            <div id="PageContent">
+
+<p>Java-to-Schema示例显示了如何使用注释将Java类映射到XML模式。</p>
+
+<h2><a name="bnbcw"></a> j2s-create-marshal示例</h2>
+<p>j2s-create-marshal示例说明了Java到模式的数据绑定。它演示了JAXB带注释的类的编组和解组，还展示了如何使用从JAXB映射的类生成的模式文件在解组时启用JAXP 1.3验证。</p>
+<p>模式文件<tt>bc.xsd</tt>是使用以下命令生成的：</p>
+<div class="codeblock"><pre>
+<tt>schemagen src/cardfile/*.java</tt>
+<tt>cp schema1.xsd bc.xsd</tt>
+</pre></div>
+<p>请注意， <tt>已将schema1.xsd</tt>复制到<tt>bc.xsd</tt> ; <tt>schemagen</tt>不允许您指定选择的架构名称。</p>
+<h3><a name="bnbcy"></a>使用Ant构建和运行j2s-create-marshal示例</h3>
+<p>要使用Ant编译并运行j2s-create-marshal示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-create-marshal /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant 
+</pre></div>
+
+<h2><a name="bnbcz"></a> j2s-xmlAccessorOrder示例</h2>
+<p>j2s-xmlAccessorOrder示例显示了如何使用<tt>@XmlAccessorOrder</tt>和<tt>@ XmlType.propOrder</tt>批注来指示Java内容对XML内容进行编组<tt>和解组</tt>的顺序。</p>
+
+<p>通过Java到架构的映射，JavaBean的属性和字段被映射为XML Schema类型。类元素被映射到XML Schema复杂类型或XML Schema简单类型。当前未指定生成模式类型的默认元素顺序，因为Java反射不强加返回顺序。缺少可靠的元素排序会对应用程序的可移植性产生负面影响。您可以使用两个注释<tt>@XmlAccessorOrder</tt>和<tt>@ XmlType.propOrder</tt>来定义必须在JAXB提供程序之间可移植的应用程序的架构元素排序。</p>
+
+<h3><a name="bnbda"></a>使用<tt>@XmlAccessorOrder</tt>批注定义架构元素顺序</h3>
+<p><tt>@XmlAccessorOrder</tt>注释强加两个元素排序算法之一，即<tt>AccessorOrder。未定义</tt>或<tt>AccessorOrder。字母表</tt> 。 <tt>AccessorOrder。默认设置为UNDEFINED</tt> 。顺序取决于系统的反射实现。<tt>AccessorOrder。ALPHABETICAL</tt>算法按<tt>java.lang确定的字典顺序对元素进行排序<tt>。串。CompareTo（String anotherString）</tt> 。</tt></p><tt>
+
+<p>您可以为注释类型<tt>ElementType定义<tt>@XmlAccessorOrder</tt>注释<tt>。在类对象上的包</tt> 。在包上定义<tt>@XmlAccessorOrder</tt>批注时，格式规则的范围对于包中的每个类都是活动的。在类上定义时，该规则在该类的内容上有效。</tt></p><tt>
+<p>一个包中可以有多个<tt>@XmlAccessorOrder</tt>批注。最里面的（类）注释优先于外面的注释。例如，如果<tt>@XmlAccessorOrder（AccessorOrder。ALPHABETICAL）</tt>是在包装和<tt>@XmlAccessorOrder（AccessorOrder ）</tt>上定义的<tt>。UNDEFINED）</tt>在该包中的类上定义，该类的生成模式类型的内容将以未指定的顺序，而该包中其他所有类的生成模式类型的内容将按字母顺序。</p>
+
+<h3><a name="bnbdb"></a>使用<tt>@XmlType</tt>批注定义架构元素顺序</h3>
+<p>可以为类定义<tt>@XmlType</tt>批注。注释元件<tt>propOrder（）</tt>在<tt>@XmlType</tt>注释，可以指定在生成的模式类型的内容的顺序。在类上使用<tt>@ XmlType.propOrder</tt>批注指定内容顺序时，必须在参数列表中指定该类中的所有公共属性和公共字段。您要保留在参数列表之外的任何公共属性或字段都必须使用<tt>@XmlAttribute</tt>或<tt>@XmlTransient</tt>注释进行注释。</p>
+
+<p><tt>@ XmlType.propOrder</tt>的默认内容顺序为<tt>{}</tt>或<tt>{“”}</tt> ，未激活。在这种情况下，活动的<tt>@XmlAccessorOrder</tt>注释优先。当<tt>@ XmlType.propOrder</tt>批注指定了类内容顺序时，它优先于该类或包上任何活动的<tt>@XmlAccessorOrder</tt>批注。如果在类上指定了<tt>@XmlAccessorOrder</tt>和<tt>@ XmlType.propOrder（A，B，...）</tt>批注，则无论批注语句的顺序如何， <tt>propOrder</tt>始终优先。例如，在下面的代码段中<tt>，@XmlAccessorOrder</tt>注释先于<tt>@ XmlType.propOrder</tt>注解。</p>
+<div class="codeblock"><pre>
+@XmlAccessorOrder(AccessorOrder.ALPHABETICAL)
+@XmlType(propOrder={&quot;name&quot;, &quot;city&quot;})
+
+public class USAddress {
+    // ...
+    public String getCity() {return city;}
+    public void setCity(String city) {this.city = city;}
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+    // ...
+}
+</pre></div>
+<p>在下面的代码段中<tt>，@ XmlType.propOrder</tt>注释先于<tt>@XmlAccessorOrder</tt>注解。</p>
+
+<div class="codeblock"><pre>
+@XmlType(propOrder={&quot;name&quot;, &quot;city&quot;})
+@XmlAccessorOrder(AccessorOrder.ALPHABETICAL)
+public class USAddress {
+    // ...
+    public String getCity() {return city;}
+    public void setCity(String city) {this.city = city;}
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+    // ...
+}
+</pre></div>
+
+<p>在这两种情况下， <tt>propOrder</tt>都优先，并生成以下相同的架构内容：</p>
+<div class="codeblock"><pre>
+&lt;xs:complexType name=&quot;usAddress&quot;&gt;
+    &lt;xs:sequence&gt;
+        &lt;xs:element 
+            name=&quot;name&quot; 
+            type=&quot;xs:string&quot; 
+            minOccurs=&quot;0&quot;/&gt;
+        &lt;xs:element 
+            name=&quot;city&quot; 
+            type=&quot;xs:string&quot; 
+            minOccurs=&quot;0&quot;/&gt;
+    &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre></div>
+
+<h3><a name="bnbdc"></a>示例中的架构内容排序</h3>
+<p>采购订单代码示例使用包和类级别的<tt>@XmlAccessorOrder</tt>注释以及类的<tt>@ XmlType.propOrder</tt>注释演示架构内容排序的效果。</p>
+<p><tt>package-info.java</tt>类将<tt>@XmlAccessorOrder</tt>定义<tt>为该</tt>包的<tt>ALPHABETICAL</tt> 。此规则在生成的架构内容顺序中影响类<tt>PurchaseOrderType</tt>中的公共字段<tt>shipTo</tt>和<tt>billTo</tt> 。<tt>USAddress</tt>类在<tt>该类上</tt>定义<tt>@ XmlType.propOrder</tt>批注，该批注演示了用户定义的属性顺序取代了生成模式中的<tt>ALPHABETICAL</tt>顺序。</p>
+<p>可以在<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlAccessorOrder / build / schemas /</tt>目录中找到生成的模式文件。</p>
+<h3><a name="bnbde"></a>使用Ant构建和运行j2s-xmlAccessorOrder示例</h3>
+<p>要使用Ant编译并运行j2s-xmlAccessorOrder示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlAccessorOrder /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant 
+</pre></div>
+
+<h2><a name="bnbdf"></a> j2s-xmlAdapter示例</h2>
+<p>j2s-xmlAdapter示例演示了如何使用<tt>XmlAdapter</tt>接口和<tt>@XmlJavaTypeAdapter</tt>批注提供XML内容到<tt>HashMap</tt> （字段）的自定义映射，该映射使用<tt>int</tt>作为键，并使用<tt>String</tt>作为值。</p>
+<p>接口<tt>XmlAdapter</tt>和注释<tt>@XmlJavaTypeAdapter</tt>用于在解组和编组期间对数据类型进行特殊处理。有多种XML数据类型无法将其表示形式轻松映射到Java中（例如<tt>xs：DateTime</tt>和<tt>xs：Duration</tt> ），而Java类型无法正确地映射到XML表示形式中。例如， <tt>java.util的实现<tt>。集合</tt> （例如<tt>List</tt> ）和<tt>java.util。Map</tt> （例如<tt>HashMap</tt> ）或非JavaBean类。</tt></p><tt>
+<p>针对此类情况，提供了<tt>XmlAdapter</tt>接口和<tt>@XmlJavaTypeAdapter</tt>批注。这种组合提供了一种可移植的机制，用于将XML内容读入和写入Java应用程序。</p>
+<p><tt>XmlAdapter</tt>接口定义用于数据读取和写入的方法。</p>
+<div class="codeblock"><pre>
+/*
+ *  ValueType - Java class that provides an 
+ *  XML representation of the data. 
+ *  It is the object that is used for marshalling and 
+ *  unmarshalling.
+ *
+ *  BoundType - Java class that is used to 
+ *  process XML content.
+ */
+ 
+public abstract class XmlAdapter&lt;ValueType,BoundType&gt; {
+
+    // Do-nothing constructor for the derived classes.
+    protected XmlAdapter() {}
+    
+    // Convert a value type to a bound type.
+    public abstract BoundType unmarshal(ValueType v);
+    
+    // Convert a bound type to a value type.
+    public abstract ValueType marshal(BoundType v);
+}
+</pre></div>
+<p>您可以使用<tt>@XmlJavaTypeAdapter</tt>批注将特定的<tt>XmlAdapter</tt>实现与<tt>Target</tt>类型， <tt>PACKAGE</tt> ， <tt>FIELD</tt> ， <tt>METHOD</tt> ， <tt>TYPE</tt>或<tt>PARAMETER相关联</tt> 。</p>
+
+<p>j2s-xmlAdapter示例显示了如何使用<tt>XmlAdapter</tt>将XML内容映射到（自定义） <tt>HashMap中</tt>和<tt>从中</tt>映射出来。类<tt>KitchenWorldBasket中</tt>的<tt>HashMap</tt>对象<tt>basket</tt>是使用<tt>int</tt>类型的键和<tt>String</tt>类型的值。这些数据类型应反映在读写的XML内容中，因此XML内容应如下例所示：</p>
+<div class="codeblock"><pre>
+&lt;basket&gt;
+    &lt;entry key=&quot;9027&quot;&gt;glasstop stove in black&lt;/entry&gt;
+    &lt;entry key=&quot;288&quot;&gt;wooden spoon&lt;/entry&gt;
+&lt;/basket&gt;
+</pre></div>
+<p>为Java类型<tt>HashMap</tt>生成的默认架构不能反映所需的格式。</p>
+<div class="codeblock"><pre>
+&lt;xs:element name=&quot;basket&quot;&gt;
+    &lt;xs:complexType&gt;
+        &lt;xs:sequence&gt;
+            &lt;xs:element 
+                name=&quot;entry&quot; 
+                minOccurs=&quot;0&quot; 
+                maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:complexType&gt;
+                    &lt;xs:sequence&gt;
+                        &lt;xs:element 
+                            name=&quot;key&quot; 
+                            minOccurs=&quot;0&quot;
+                            type=&quot;xs:anyType&quot;/&gt;
+                        &lt;xs:element 
+                            name=&quot;value&quot; 
+                            minOccurs=&quot;0&quot; 
+                            type=&quot;xs:anyType&quot;/&gt;
+                    &lt;/xs:sequence&gt;
+                &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+        &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre></div>
+<p>在默认的<tt>HashMap</tt>模式中，key和value都是元素，数据类型为<tt>anyType</tt> 。XML内容如下所示：</p>
+<div class="codeblock"><pre>
+&lt;basket&gt;
+    &lt;entry&gt;
+        &lt;key&gt;9027&lt;/key&gt;
+        &lt;value&gt;glasstop stove in black&lt;/value&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+        &lt;key&gt;288&lt;/key&gt;
+        &lt;value&gt;wooden spoon&lt;/value&gt;
+    &lt;/entry&gt;
+&lt;/basket&gt;
+</pre></div>
+<p>要解决此问题，该示例使用两个Java类<tt>PurchaseList</tt>和<tt>PartEntry</tt> ，它们反映了解组和编组内容所需的架构格式。为这些类生成的XML模式如下：</p>
+<div class="codeblock"><pre>
+&lt;xs:complexType name=&quot;PurchaseListType&quot;&gt;
+    &lt;xs:sequence&gt;
+        &lt;xs:element 
+            name=&quot;entry&quot; 
+            type=&quot;partEntry&quot;
+            nillable=&quot;true&quot; 
+            maxOccurs=&quot;unbounded&quot;
+            minOccurs=&quot;0&quot;/&gt;
+    &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:complexType name=&quot;partEntry&quot;&gt;
+    &lt;xs:simpleContent&gt;
+        &lt;xs:extension base=&quot;xs:string&quot;&gt;
+            &lt;xs:attribute
+                name=&quot;key&quot; 
+                type=&quot;xs:int&quot;
+                use=&quot;required&quot;/&gt;
+        &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+&lt;/xs:complexType&gt;
+</pre></div>
+<p><tt>AdapterPurchaseListToHashMap</tt>类实现<tt>XmlAdapter</tt>接口。在类<tt>KitchenWorldBasket</tt>中<tt>，@XmlJavaTypeAdapter</tt>注解用于配对<tt>AdapterPurchaseListToHashMap</tt>与现场<tt>HashMap中</tt> <tt>篮</tt> 。这种配对导致编组或<tt>AdapterPurchaseListToHashMap</tt>的解组方法被调用对<tt>KitchenWorldBasket</tt>任何相应的编组或解组动作。</p>
+
+<h3><a name="bnbdh"></a>使用Ant构建和运行j2s-xmlAdapter示例</h3>
+<p>要使用Ant编译并运行j2s-xmlAdapter示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlAdapter /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant
+</pre></div>
+
+<h2><a name="bnbdi"></a> j2s-xmlAttribute示例</h2>
+<p>j2s-xmlAttribute示例显示了如何使用<tt>@XmlAttribute</tt>批注定义要被视为XML属性的属性或字段。</p>
+<p><tt>@XmlAttribute</tt>批注将字段或JavaBean属性映射到XML属性。施加以下规则：</p>
+<ul>
+	<li>静态final字段映射到XML固定属性。</li>
+	<li>当字段或属性是集合类型时，该集合类型的项必须映射到架构简单类型。</li>
+	<li>当字段或属性不是集合类型时，该类型必须映射为架构简单类型。</li>
+</ul>
+<p>当遵循JavaBean编程范例时，属性由字段名称上的<tt>get</tt>和<tt>set</tt>前缀定义。</p>
+<div class="codeblock"><pre>
+int zip;
+public int getZip(){return zip;}
+public void setZip(int z){zip=z;}
+</pre></div>
+<p>在bean类中，可以选择在以下三个组件之一上设置<tt>@XmlAttribute</tt>批注：字段，setter方法或getter方法。如果在字段上设置<tt>@XmlAttribute</tt>批注，则必须重命名setter方法，否则在编译时会发生命名冲突。如果在其中一种方法上设置<tt>@XmlAttribute</tt>批注，则必须在setter或getter方法上都设置它，但不能在两者上都设置。</p>
+<p>XmlAttribute示例显示了如何在静态的final字段上，在字段上而不是在相应的bean方法之一上，在bean属性（方法）上以及在集合类型以外的字段上使用<tt>@XmlAttribute</tt>批注。在类<tt>USAddress中</tt> ，字段，国家和邮政编码被标记为属性。禁用<tt>setZip</tt>方法以避免编译错误。属性状态在setter方法上被标记为属性。您可以改用getter方法。在类<tt>PurchaseOrderType中</tt> ，字段<tt>cCardVendor</tt>是非集合类型。满足成为简单类型的要求；它是一个<tt>枚举</tt>类型。</p>
+
+
+<h3><a name="bnbdk"></a>使用Ant构建和运行j2s-xmlAttribute示例</h3>
+<p>要使用Ant编译并运行j2s-xmlAttribute示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlAttribute /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant
+</pre></div>
+
+<h2><a name="bnbdl"></a> j2s-xmlRootElement示例</h2>
+<p>j2s-xmlRootElement示例演示了如何使用<tt>@XmlRootElement</tt>批注为相应类的XML模式类型定义XML元素名称。</p>
+<p><tt>@XmlRootElement</tt>批注将类或<tt>枚举</tt>类型映射到XML元素。用于解组和编组的每种顶级Java类型至少需要一个元素定义。如果没有元素定义，则没有XML内容处理的起始位置。</p>
+<p><tt>@XmlRootElement</tt>批注使用类名称作为默认元素名称。您可以使用批注属性<tt>名称</tt>更改默认<tt>名称</tt> 。如果这样做，则将指定的名称用作元素名称和类型名称。元素和类型名称不同是一种常见的方案实践。您可以使用<tt>@XmlType</tt>批注设置元素类型名称。</p>
+<p><tt>@XmlRootElement</tt>批注的namespace属性用于定义元素的命名空间。</p>
+
+
+<h3><a name="bnbdn"></a>使用Ant构建和运行j2s-xmlRootElement示例</h3>
+<p>要使用Ant编译并运行j2s-xmlRootElement示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlRootElement /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant
+</pre></div>
+
+<h2><a name="bnbdo"></a> j2s-xmlSchemaType示例</h2>
+<p>j2s-xmlSchemaType示例演示了如何使用注释<tt>@XmlSchemaType</tt>来定制属性或字段到XML内置类型的映射。</p>
+
+<p><tt>@XmlSchemaType</tt>批注可用于将Java类型映射到XML内置类型之一。在将Java类型映射到九种日期/时间原始数据类型之一时，此批注最有用。</p>
+<p>当在包级别定义<tt>@XmlSchemaType</tt>批注时，标识既需要XML内置类型名称，又需要相应的Java类型类。字段或属性上的<tt>@XmlSchemaType</tt>定义优先于包定义。</p>
+<p>XmlSchemaType类示例显示了如何在包级别，字段和属性上使用<tt>@XmlSchemaType</tt>批注。文件<tt>TrackingOrder</tt>具有两个字段<tt>orderDate</tt>和<tt>deliveryDate</tt> ，它们被定义为<tt>XMLGregorianCalendar</tt>类型。生成的模式会将这些元素定义为XML内置类型<tt>gMonthDay</tt> 。此关系在文件<tt>package-info.java</tt>的包中定义。文件<tt>TrackingOrder中的</tt>字段<tt>shipDate</tt>也被定义为<tt>XMLGregorianCalendar</tt>类型，但是<tt>@XmlSchemaType</tt>注释语句将覆盖程序包定义，并将该字段指定为<tt>date</tt>类型。属性方法<tt>getTrackingDuration</tt>将模式元素定义为原始类型的<tt>持续时间，</tt>而不是Java类型的<tt>String</tt> 。</p>
+<h3><a name="bnbdq"></a>使用Ant构建和运行j2s-xmlSchemaType示例</h3>
+<p>要使用Ant编译并运行j2s-xmlSchemaType示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlSchemaType /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant 
+</pre></div>
+
+<h2><a name="bnbdr"></a> j2s-xmlType示例</h2>
+<p>j2s-xmlType示例演示了<tt>@XmlType</tt>批注的<tt>用法</tt> 。<tt>@XmlType</tt>批注将类或<tt>枚举</tt>类型映射到XML Schema类型。</p>
+
+<p>一个类必须具有公共零参数构造函数或静态零参数工厂方法，才能被此注释映射。解组期间使用这些方法之一来创建类的实例。工厂方法可以位于工厂类或现有类中。</p>
+
+<p>使用哪种方法进行编组有一个优先顺序：</p>
+<ul>
+	<li>如果注释中标识了工厂类，则还必须标识该类中的相应工厂方法，并将使用该方法。</li>
+	<li>如果注释中标识了工厂方法，但未标识工厂类，则工厂方法必须位于当前类中。即使存在公共零参数构造函数方法，也将使用factory方法。</li>
+	<li>如果注释中未标识任何工厂方法，则该类必须包含公共零参数构造函数方法。</li>
+</ul>
+<p>在此示例中，工厂类为多个类提供了零arg工厂方法。阶级<tt>OrderContext</tt>引用<tt>@XmlType</tt>注释工厂类。解组器在此类中使用已标识的工厂方法。</p>
+<div class="codeblock"><pre>
+public class OrderFormsFactory {
+
+    public OrderContext newOrderInstance() {
+        return new OrderContext()
+    }
+
+    public PurchaseOrderType {
+        newPurchaseOrderType() {
+            return new newPurchaseOrderType();
+        }
+    }
+    
+    @XmlType(name=&quot;oContext&quot;,
+        factoryClass=&quot;OrderFormsFactory&quot;,
+        factoryMethod=&quot;newOrderInstance&quot;)
+    public class OrderContext {
+        public OrderContext() {
+            // ...
+        }
+    }
+}
+</pre></div>
+<p>在此示例中，在类中定义了工厂方法，该类还包含标准的类构造。因为定义了<tt>factoryMethod</tt>值并且未定义<tt>factoryClass</tt> ，所以在解组期间将使用工厂方法<tt>newOrderInstance</tt> 。</p>
+<div class="codeblock"><pre>
+@XmlType(name=&quot;oContext&quot;, 
+    factoryMethod=&quot;newOrderInstance&quot;)
+public class OrderContext {
+
+    public OrderContext() {
+        // ...
+    }
+
+    public OrderContext newOrderInstance() {
+        return new OrderContext();
+    }
+}
+</pre></div>
+
+
+<h3><a name="bnbdt"></a>使用Ant构建和运行j2s-xmlType示例</h3>
+<p>要使用Ant编译并运行j2s-xmlType示例，请在终端窗口中，转到<i>jaxb-ri-install</i> <tt>/ samples / j2s-xmlType /</tt>目录并键入以下内容：</p>
+<div class="codeblock"><pre>
+ant
+</pre></div>
+
+        </tt></tt></tt></div><tt><tt>
+        <div class="NavBit">
+            <a href="custom.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="info.html" target="_top">下一个»</a>
+        </div>
+    </tt></tt></div><tt><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>自定义JAXB绑定<br><b>下一页：</b>有关更多信息</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></tt></body></html>

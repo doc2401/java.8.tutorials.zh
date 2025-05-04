@@ -1,0 +1,1002 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用滚动窗格（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="nolinkBHEAD">如何使用滚动窗格</div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="rootpane.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="separator.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用滚动窗格</h1></div>
+            <div id="PageContent">
+
+<p>一种<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html" target="_blank"><code>JScrollPane</code></a>提供组件的可滚动视图。当屏幕空间有限时，请使用滚动窗格显示较大的组件，或者其大小可以动态更改的组件。用于节省屏幕空间的其他容器包括<a href="splitpane.html">拆分窗格</a>和<a href="tabbedpane.html">选项卡式窗格</a> 。</p>
+<p>创建滚动窗格的代码可能最少。例如，下面是一个演示程序的图片，该示例程序将文本区域放在滚动窗格中，因为文本区域的大小会随着文本的追加而动态增长：</p><center><img src="../../figures/uiswing/components/ToolBarDemo.png" width="458" height="164" align="bottom" alt="ToolBarDemo的快照"></center><p></p>
+<p>以下是用于创建文本区域，使其成为滚动窗格的客户端以及将滚动窗格添加到容器的代码：</p>
+<div class="codeblock"><pre>
+<em>//In a container that uses a BorderLayout:</em>
+textArea = new JTextArea(5, 30);
+...
+<b>JScrollPane scrollPane = new JScrollPane(textArea);</b>
+...
+setPreferredSize(new Dimension(450, 110));
+...
+add(scrollPane, BorderLayout.CENTER);
+</pre></div>
+<p>粗体代码行创建了<code>JScrollPane</code> ，将文本区域指定为滚动窗格的客户端。该程序不会在上调用任何方法<code>JScrollPane</code>对象，因为滚动窗格会自动处理所有事情：在必要时创建滚动条，在用户移动滚动旋钮时重新绘制客户端，依此类推。</p>
+<p>您可能已经注意到，前面的代码设置了滚动窗格容器的首选大小。在Java外观中，此首选大小恰好比文本区域显示我们创建时要求的5行所需的高度要小一些，因此滚动条最初会显示一个垂直滚动条。如果我们不限制滚动窗格的容器的大小，则滚动窗格将足够大，以使文本区域可以显示由指定的全部5行和30列<code>JTextArea</code>构造函数。请参阅<a href="#sizing">调整</a>滚动窗格的大小，以获取有关使滚动窗格达到所需大小的技术的信息。</p>
+<p>本节的其余部分讨论以下主题：</p>
+<ul>
+<li><a href="#operation">滚动窗格如何工作</a></li>
+<li><a href="#scrollbars">设置滚动条策略</a></li>
+<li><a href="#decorations">提供定制装饰</a></li>
+<li><a href="#scrollable">实施精通滚动客户端</a></li>
+<li><a href="#sizing">调整滚动窗格的大小</a></li>
+<li><a href="#update">动态改变客户规模</a></li>
+<li><a href="#api">滚动窗格API</a></li>
+<li><a href="#eg">使用滚动窗格的示例</a></li>
+</ul>
+<p><a name="operation" id="operation"></a></p>
+<h2><a name="operation__1" id="operation__1">滚动窗格如何工作</a></h2>
+<p>这是使用自定义滚动窗格查看照片的应用程序的快照：</p>
+<center><img src="../../figures/uiswing/components/ScrollDemo.png" width="343" height="315" align="bottom" alt="ScrollDemo的快照"></center><p>该应用程序中的滚动窗格看起来与上一个演示程序中的滚动窗格完全不同。该滚动窗格不显示文本，而是包含图像。滚动窗格还具有两个滚动条，一个行标题，一个列标题和四个角，其中三个角已自定义。<!-- ***************** boilerplate stuff **************** --></p>
+<div class="note"><hr><strong>尝试这个：：</strong> <ol>
+<li>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a>运行ScrollDemo（ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#ScrollDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ScrollDemoProject/ScrollDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ScrollDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  -->
+ <!-- ======================================== -->
+ <!-- 
+
+<div class="note"><hr /><strong>Try this:</strong> 
+<ol>
+<li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ScrollDemoProject/ScrollDemo.jnlp">Run ScrollDemo</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#ScrollDemo">example index</a>.
+--></p>
+</li>
+<li>移动滚动条上的旋钮。观看图像滚动以及水平和垂直标尺一起滚动。</li>
+<li>如果您的鼠标带有滚轮（通常位于鼠标按钮之间），请使用鼠标滚轮垂直滚动图像。</li>
+<li>单击滚动窗格左上角的<strong>cm</strong>切换。行和列标题上的单位更改为英寸（或重新转换为厘米）。</li>
+<li>单击滚动条上的箭头按钮。另外，尝试单击垂直滚动条上的旋钮上方或下方的轨道，或单击水平滚动条的左侧或右侧的轨道。</li>
+<li>将光标移到图像上，然后按光标。继续按光标，将其拖动到图像外的一点并暂停。图像的可见区域向光标移动。此滚动拖动功能是通过滚动窗格以及通过<code>JComponent</code> API，但由显示图像的自定义组件实现。</li>
+<li>调整窗口大小。请注意，当滚动窗格足够大以显示整个图像时，滚动条会消失；而当滚动窗格太小而无法显示整个图像时，滚动条会再次出现。</li>
+</ol>
+<hr></div>
+<p>ScrollDemo程序在创建滚动窗格时建立滚动窗格的客户端：</p>
+<div class="codeblock"><pre>
+//<em>Where the member variables are declared:</em>
+private ScrollablePicture picture;
+...
+//<em>Where the GUI is created:</em>
+picture = new ScrollablePicture(<em> ... </em>);
+JScrollPane pictureScrollPane = new JScrollPane(picture);
+</pre></div>
+<p>滚动窗格的客户端也称为<em>view</em>或<em>viewport view</em> 。您可以通过调用<code>setViewportView</code>方法。注意<code>JScrollPane</code>没有对应的<code>getViewportView</code>方法。如果需要再次引用客户端对象，则可以将其缓存在变量中或调用<code>getViewport().getViewportView()</code>在滚动窗格上。</p>
+<p>当用户操作滚动窗格中的滚动条时，可见的客户端区域会相应更改。此图显示了滚动窗格及其客户端之间的关系，并指示了滚动窗格委托提供的类：</p>
+<center><img src="../../figures/uiswing/components/scrollarchitecture.png" width="580" height="434" align="bottom" alt="滚动窗格的体系结构"></center><p>滚动窗格使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JViewport.html" target="_blank"><code>JViewport</code></a>实例来管理客户端的可见区域。视口负责根据滚动条的位置定位和调整客户端的大小并显示它。</p>
+<p>滚动窗格可以使用两个单独的实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollBar.html" target="_blank"><code>JScrollBar</code></a>用于滚动条。滚动条为用户提供了操纵可见区域的界面。下图显示了滚动条的三个区域：旋钮（有时称为<em>thumb</em> ），（箭头）按钮和轨道。</p>
+<center><img src="../../figures/uiswing/components/scrollbarparts.png" width="253" height="144" align="bottom" alt="滚动条的各个部分"></center><p>当用户上下移动垂直滚动条上的旋钮时，客户端的可见区域也会上下移动。类似地，当用户左右移动水平滚动条上的旋钮时，客户端的可见区域会相应地来回移动。旋钮相对于其轨迹的位置与可见区域相对于客户的位置成比例地相等。在Java外观和其他外观中，旋钮的大小为可见的客户端可见性提供了视觉提示。</p>
+<p>通过单击箭头按钮，用户可以按<em>单位增量</em>滚动。通过在轨道内单击，用户可以按<em>块增量</em>滚动。如果用户使用带有滚轮的鼠标，则用户可以使用鼠标滚轮垂直滚动。鼠标滚轮滚动的数量取决于平台。例如，在Windows XP上，默认情况下，鼠标滚轮滚动三个单位增量；鼠标滚动时，滚动增量为三个单位。鼠标控制面板允许您指定不同数量的单位增量，或者改为使用块增量。有关单位增量和块增量的更多信息，请参见《 <a href="#scrollable">实现滚动熟练的客户端》</a> 。</p>
+<p>典型的程序不会直接在视口或滚动条上实例化或调用方法。相反，程序可以使用来实现其滚动行为。 <code>JScrollPane</code> API和<a href="#scrollable">实现滚动理解客户端中</a>讨论的API。一些精通滚动的组件，例如<code>JList</code> ， <code>JTable</code>和<code>JTree</code>还提供<a href="#otherAPI">其他API，</a>以帮助您影响其滚动行为。</p>
+<h2><a name="scrollbars" id="scrollbars">设置滚动条策略</a></h2>
+<p>启动时， <code>ScrollDemo</code>应用程序有两个滚动条。如果将窗口放大，则两个滚动条都会消失，因为不再需要它们。如果然后在不更改其宽度的情况下缩小窗口的高度，则垂直滚动条会重新出现。进一步的实验将显示，在此应用程序中，两个滚动条都会消失并根据需要重新出现。此行为是由滚动窗格的<em>滚动条策略控制的</em> ，实际上，这是两个策略：每个滚动条都有自己的策略。</p>
+<p><code>ScrollDemo</code>没有显式设置滚动窗格的滚动条策略-它使用默认值。您可以在创建滚动窗格或动态更改它们时设置策略。</p>
+<p>由提供的构造函数<code>JScrollPane</code> ，这两个选项可让您在创建滚动窗格时设置滚动条策略：</p>
+<div class="codeblock"><pre>
+JScrollPane(Component, int, int)
+JScrollPane(int, int)
+</pre></div>
+<p>首先<code>int</code>指定垂直滚动条的策略；第二个指定水平滚动条的策略。您也可以使用<code>setHorizontalScrollBarPolicy</code>和<code>setVerticalScrollBarPolicy</code>方法。对于构造函数和方法，请使用在<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ScrollPaneConstants.html" target="_blank"><code>ScrollPaneConstants</code></a>接口（由<code>JScrollPane</code> ）：</p>
+<table summary="ScrollPane Constants">
+<tbody><tr>
+<th align="left">政策</th>
+<th align="left">描述</th>
+</tr>
+<tr>
+<td valign="top"><code>VERTICAL_SCROLLBAR_AS_NEEDED</code><br>
+<code>HORIZONTAL_SCROLLBAR_AS_NEEDED</code></td>
+<td valign="top">默认值。滚动条在视口小于客户端时显示，而在视口大于客户端时消失。</td>
+</tr>
+<tr>
+<td valign="top"><code>VERTICAL_SCROLLBAR_ALWAYS</code><br>
+<code>HORIZONTAL_SCROLLBAR_ALWAYS</code></td>
+<td valign="top">始终显示滚动条。如果视口足够大以显示整个客户端，则该旋钮消失。</td>
+</tr>
+<tr>
+<td valign="top"><code>VERTICAL_SCROLLBAR_NEVER</code><br>
+<code>HORIZONTAL_SCROLLBAR_NEVER</code></td>
+<td valign="top">切勿显示滚动条。如果您不希望用户直接控制显示客户端的哪一部分，或者您希望他们仅使用非滚动条技术（例如拖动），请使用此选项。</td>
+</tr>
+</tbody></table>
+<h2><a name="decorations" id="decorations">提供定制装饰</a></h2>
+<p>滚动窗格绘制的区域最多包括九个部分：中心，四个侧面和四个角。中心是所有滚动窗格中始终存在的唯一组件。除了滚动条，侧面还可以包含列标题和行标题。仅当在该拐角处相交的两侧都包含可见分量时，拐角分量才可见。</p>
+<center><img src="../../figures/uiswing/components/scrollpanedecorations.png" width="370" height="301" align="bottom" alt="滚动窗格上的装饰"></center><p>如图所示，滚动窗格位于<code>ScrollDemo</code>具有自定义的行和列标题。此外，由于所有四个边都已填充，因此存在所有四个角。该程序自定义了三个角-两个角仅用与<code>Rule</code> s，另一个包含切换按钮。右下角是第四个角，是滚动窗格提供的默认值。注意，由于在此示例中行标题和列标题始终存在，因此切换按钮也始终存在。</p>
+<p>如果拐角处包含用户始终需要访问的控件，请确保始终在拐角处相交的边始终存在。例如，如果此应用程序将切换开关放置在滚动条相交的右下角，则如果用户调整窗口大小甚至滚动条之一都消失了，则切换开关将消失。</p>
+<p>滚动窗格的行标题和列标题由自定义提供<code>JComponent</code>子类， <a class="SourceLink" href="../examples/components/ScrollDemoProject/src/components/Rule.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ScrollDemoProject/src/components/Rule.java'); return false;"><code>Rule</code></a> ，以厘米或英寸为单位绘制标尺。这是创建和设置滚动窗格的行和列标题的代码：</p>
+<div class="codeblock"><pre>
+<em>//Where the member variables are defined:</em>
+private Rule columnView;
+private Rule rowView;
+...
+<em>//Where the GUI is initialized:</em>
+ImageIcon bee = createImageIcon("images/flyingBee.jpg");
+...
+//Create the row and column headers.
+columnView = new Rule(Rule.HORIZONTAL, true);
+rowView = new Rule(Rule.VERTICAL, true);
+
+...
+<strong>pictureScrollPane.setColumnHeaderView(columnView);</strong>
+<strong>pictureScrollPane.setRowHeaderView(rowView);</strong>
+</pre></div>
+<p>您可以将任何组件用于滚动窗格的行标题和列标题。滚动窗格将行标题和列标题放入<code>JViewPort</code>自己的。因此，在水平滚动时，列标题跟随，而在垂直滚动时，行标题跟随。确保行和列与视图具有相同的宽度和高度，因为JScrollPane不会将这些值强制具有相同的大小。如果一个与另一个不同，则您可能无法获得所需的行为。</p>
+<p>作为一个<code>JComponent</code>子类，我们的习惯<code>Rule</code>类将其呈现代码放入其<code>paintComponent</code>方法。的<code>Rule</code>渲染代码只在当前的裁剪范围内绘制，以确保快速滚动。您的自定义行标题和列标题应执行相同操作。</p>
+<p>您也可以将任何组件用于滚动窗格的角。 <code>ScrollDemo</code>通过在左上角放置一个切换按钮来说明这一点， <a class="SourceLink" href="../examples/components/ScrollDemoProject/src/components/Corner.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ScrollDemoProject/src/components/Corner.java'); return false;"><code>Corner</code></a>右上角和左下角的对象。这是创建代码的代码<code>Corner</code>对象和电话<code>setCorner</code>放置它们：</p>
+<div class="codeblock"><pre>
+//Create the corners.
+JPanel buttonCorner = new JPanel(); //use FlowLayout
+isMetric = new JToggleButton("cm", true);
+isMetric.setFont(new Font("SansSerif", Font.PLAIN, 11));
+isMetric.setMargin(new Insets(2,2,2,2));
+isMetric.addItemListener(this);
+buttonCorner.add(isMetric);
+...
+//Set the corners.
+<strong>pictureScrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+                            buttonCorner);
+pictureScrollPane.setCorner(JScrollPane.LOWER_LEFT_CORNER,
+                            new Corner());
+pictureScrollPane.setCorner(JScrollPane.UPPER_RIGHT_CORNER,
+                            new Corner());</strong>
+</pre></div>
+<p>请记住，每个角的大小取决于相交的边的大小。对于某些组件，您必须注意组件的特定实例适合其角落。例如，该程序在切换按钮上设置字体和边距，以使其适合由标题建立的空间。这不是问题<code>Corner</code>类，因为该类会用纯色为整个边界着色，无论它们碰巧是什么。</p>
+<p>从代码中可以看到，常数指示角位置。该图显示了每个位置的常数：</p>
+<center><img src="../../figures/uiswing/components/6corverns.gif" width="508" height="132" align="bottom" alt="角常数"></center><p>常量在<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ScrollPaneConstants.html" target="_blank"><code>ScrollPaneConstants</code></a>接口，其中<code>JScrollPane</code>实施。</p>
+<h2><a name="scrollable" id="scrollable">实施精通滚动客户端</a></h2>
+<p>要自定义客户端组件与其滚动窗格进行交互的方式，可以使该组件实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html" target="_blank"><code>Scrollable</code></a>接口。通过实施<code>Scrollable</code> ，客户端既可以指定用于查看它的视口的大小，也可以指定在滚动条上单击不同控件时所需要滚动的量。您还可以指定视图是否应跟踪视口的大小。通常在视口大于视图时使用，但视图应填充可用空间。</p>
+<div class="note"><hr><strong>注意：</strong>如果您无法或不想实现可滚动客户端，则可以使用来指定单位和块增量<code>setUnitIncrement</code>和<code>setBlockIncrement</code>方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollBar.html" target="_blank"><code>JScrollBar</code></a> 。例如，以下代码将垂直滚动的单位增量设置为10个像素：<div class="codeblock"><pre>
+scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+</pre></div>
+<hr></div>
+<p>这里还是滚动条的三个控制区域：旋钮，按钮和轨道。</p>
+<center><img src="../../figures/uiswing/components/scrollbarparts.png" width="253" height="144" align="bottom" alt="滚动条的各个部分"></center><p>您可能在操作中的滚动条时已经注意到<code>ScrollDemo</code>单击按钮会将图像滚动到刻度线边界。您可能还已经注意到，单击音轨将图片滚动显示为“全屏”。更一般地，按钮以单位增量滚动可见区域，并且轨道以块增量滚动可见区域。在示例中看到的行为不是滚动窗格的默认行为，而是由客户端在其实现中指定的。 <code>Scrollable</code>接口。</p>
+<p>的客户<code>ScrollDemo</code>程序是<a class="SourceLink" href="../examples/components/ScrollDemoProject/src/components/ScrollablePicture.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ScrollDemoProject/src/components/ScrollablePicture.java'); return false;"><code>ScrollablePicture</code></a> 。 <code>ScrollablePicture</code>是的子类<code>JLabel</code>提供所有五个的实现<code>Scrollable</code>方法：</p>
+<ul>
+<li><code>getScrollableBlockIncrement</code></li>
+<li><code>getScrollableUnitIncrement</code></li>
+<li><code>getPreferredScrollableViewportSize</code></li>
+<li><code>getScrollableTracksViewportHeight</code></li>
+<li><code>getScrollableTracksViewportWidth</code></li>
+</ul>
+<p><code>ScrollablePicture</code>实现<code>Scrollable</code>界面主要影响单位和块的增量。但是，它必须提供所有五种方法的实现。因此，它为您可能想为精通滚动类的其他三种方法提供了合理的默认值。</p>
+<p>滚动窗格调用客户端的<code>getScrollableUnitIncrement</code>每当用户单击滚动条上的按钮之一时的方法。只要客户端实现Scrollable，这就是事实。此方法返回要滚动的像素数。此方法的一个明显实现是返回标头标尺上刻度线之间的像素数。 <code>ScrollablePicture</code> ，但是，它做了一些不同的事情：它返回将图像放置在刻度线边界上所需的值。这是实现：</p>
+<div class="codeblock"><pre>
+public int getScrollableUnitIncrement(Rectangle visibleRect,
+                                      int orientation,
+                                      int direction) {
+    //Get the current position.
+    int currentPosition = 0;
+    if (orientation == SwingConstants.HORIZONTAL) {
+        currentPosition = visibleRect.x;
+    } else {
+        currentPosition = visibleRect.y;
+    }
+
+    //Return the number of pixels between currentPosition
+    //and the nearest tick mark in the indicated direction.
+    if (direction &lt; 0) {
+        int newPosition = currentPosition -
+                         (currentPosition / maxUnitIncrement)
+                          * maxUnitIncrement;
+        return (newPosition == 0) ? maxUnitIncrement : newPosition;
+    } else {
+        return ((currentPosition / maxUnitIncrement) + 1)
+                 * maxUnitIncrement
+                 - currentPosition;
+    }
+}
+</pre></div>
+<p>如果图像已经在刻度线边界上，则此方法返回刻度线之间的像素数。否则，它将返回从当前位置到最近的刻度的像素数。</p>
+<p>同样，滚动窗格会调用客户端的<code>getScrollableBlockIncrement</code>每次用户单击轨道时都可使用此方法，但前提是客户端实现Scrollable。这是<code>ScrollablePicture</code>方法的实现：</p>
+<div class="codeblock"><pre>
+public int getScrollableBlockIncrement(Rectangle visibleRect,
+                                       int orientation,
+                                       int direction) {
+    if (orientation == SwingConstants.HORIZONTAL)
+        return visibleRect.width - maxUnitIncrement;
+    else
+        return visibleRect.height - maxUnitIncrement;
+}
+</pre></div>
+<p>此方法返回可见矩形的高度减去刻度线。此行为很典型，但垂直滚动则为true，否则为宽度。块增量应略小于视口，以保留上下文的一些先前可见区域。例如，一个文本区域可能会保留一两行文本作为上下文，而一个表则可能会保留一行或一列（取决于滚动方向）。</p>
+<p><code>ScrollablePicture.java</code>有更多的代码不是<code>Scrollable</code>界面，但在可滚动组件中很常见：鼠标移动侦听器，使用户可以通过拖动来滚动图片。以下代码段中的粗体代码通过拖动来实现滚动：</p>
+<div class="codeblock"><pre>
+public class ScrollablePicture extends JLabel
+                               implements Scrollable,
+                                          <b>MouseMotionListener</b> {
+    ...
+    public ScrollablePicture(...) {
+        ...
+        <b>setAutoscrolls(true);</b> //enable synthetic drag events
+        <b>addMouseMotionListener(this);</b> //handle mouse drags
+    }
+    ...
+    <b>public void mouseDragged(MouseEvent e) {</b>
+        //The user is dragging us, so scroll!
+        <b>Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);
+        scrollRectToVisible(r);
+    }</b>
+...
+}
+</pre></div>
+<p>每当用户从图片拖动到图片之外的位置并暂停时，此代码片段便会滚动图片。的<code>setAutoscrolls</code>方法由<code>JComponent</code>为了协助（但不实施）拖动来滚动。将autoscrolls属性设置为<code>true</code>使组件即使在鼠标不动时也会触发合成的，由鼠标拖拽的事件（因为它停止了，在组件外部拖动，中间拖动）。由组件的鼠标运动侦听器侦听这些事件并做出相应的响应。</p>
+<h2><a name="sizing" id="sizing">调整滚动窗格的大小</a></h2>
+<p>除非您明确设置滚动窗格的首选大小，否则滚动窗格将基于其九个组件（视口以及两个滚动条，行标题和列标题以及四个角）的首选大小对其进行计算。程序员最关心的最大因素是用于显示客户端的视口的大小。</p>
+<p>如果客户端不是精通滚动，则滚动窗格会自行调整大小，以便客户端以其首选大小显示。对于典型的精明客户端，这会使滚动窗格变得多余。也就是说，滚动窗格没有滚动条，因为客户端的首选大小足以显示整个客户端。在这种情况下，如果客户端不能动态更改大小，则可能应通过设置其首选大小或容器的首选大小来限制滚动窗格的大小。</p>
+<p>如果客户端精通滚动，则滚动窗格将使用客户端的返回值<code>getPreferredScrollableViewportSize</code>计算其视口大小的方法。此方法的实现通常报告滚动的首选大小，该大小小于组件的标准首选大小。例如，默认情况下， <code>JList</code>的实现<code>getPreferredScrollableViewportSize</code>足以显示八行。</p>
+<p>精通滚动的类（例如<a href="list.html">列表</a> ， <a href="table.html">表</a> ， <a href="text.html">文本组件</a>和<a href="tree.html">树</a> ）通常提供一种或多种方法，这些方法可让程序员影响从中返回的大小<code>getPreferredScrollableViewportSize</code> 。例如，您可以通过调用以下命令来设置列表或树中可见行的数量： <code>setVisibleRowCount</code>方法。列表或树负责确定显示该行数所需的大小。</p>
+<p>有关除滚动以外的其他类提供的与滚动相关的方法的信息，请参阅“ <a href="#otherAPI">其他与滚动</a>相关的类中的方法”。 <code>JScrollPane</code> 。记住-如果您不喜欢那种价值<code>getPreferredScrollableViewportSize</code>返回时，您始终可以设置滚动窗格或其容器的首选大小。</p>
+<h2><a name="update" id="update">动态改变客户规模</a></h2>
+<p>更改滚动窗格的客户端大小是一个两步过程。首先，设置客户的首选大小。然后打电话<code>revalidate</code>在客户端上使滚动窗格知道它应该更新自身及其滚动条。让我们看一个例子。</p>
+<p>这是一张应用程序的图片，每当用户放置一个边界超出客户当前边界的圆圈时，该应用程序都会更改客户的大小。当用户清除绘图区域时，该程序还会更改客户端的大小：</p>
+<center><img src="../../figures/uiswing/components/ScrollDemo2.png" width="262" height="266" align="bottom" alt="ScrollDemo2的快照"></center><p style="text-align:center">您可以在以下位置找到此示例的完整源代码<a class="SourceLink" href="../examples/components/ScrollDemo2Project/src/components/ScrollDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ScrollDemo2Project/src/components/ScrollDemo2.java'); return false;"><code>ScrollDemo2.java</code></a> ，该教程基于教程阅读器John Vella提供的示例。您可以<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ScrollDemo2Project/ScrollDemo2.jnlp" style="font-weight:bold">运行ScrollDemo2</a> （ <a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">下载JDK 7或更高版本</a> ）。</p>
+<p>以下是在必要时更改绘图区域大小的代码：</p>
+<div class="codeblock"><pre>
+if (changed) {
+    //Update client's preferred size because
+    //the area taken up by the graphics has
+    //gotten larger or smaller (if cleared).
+    drawingArea.setPreferredSize(<em>/* the new size */</em>);
+
+    //Let the scroll pane know to update itself
+    //and its scroll bars.
+    drawingArea.revalidate();
+}
+</pre></div>
+<p>请注意，当客户端更改大小时，滚动条会调整。滚动窗格不会调整大小，视口也不会调整大小。</p>
+<p>参考<a href="../examples/components/index.html#SplitPaneDemo"><code>SplitPaneDemo</code></a>对于另一个示例，其中客户端对象更改了大小。</p>
+<h2><a name="api" id="api">滚动窗格API</a></h2>
+<p>下表列出了常用的与滚动相关的构造函数和方法。您最有可能在<code>JScrollPane</code>对象是诸如<code>setPreferredSize</code>它的超类提供的。有关常用继承方法的表，请参见<a href="jcomponent.html#api">JComponent API</a> 。</p>
+<p>使用滚动窗格的API分为以下几类：</p>
+<ul>
+<li><a href="#setup">设置滚动窗格</a></li>
+<li><a href="#decorationsAPI">装饰滚动窗格</a></li>
+<li><a href="#scrollableAPI">实施精通滚动客户端</a></li>
+<li><a href="#otherAPI">其他与滚动相关的类中的方法</a></li>
+</ul>
+<table border="1" summary="methods for setting up the scroll pane">
+<caption><a name="setup" id="setup">设置滚动窗格</a><br>（ <code>JScrollPane</code>构造函数和方法）</caption>
+<tbody><tr>
+<th align="left">方法或构造函数</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#JScrollPane--" target="_blank">JScrollPane（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#JScrollPane-java.awt.Component-" target="_blank">JScrollPane（组件）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#JScrollPane-int-int-" target="_blank">JScrollPane（int，int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#JScrollPane-java.awt.Component-int-int-" target="_blank">JScrollPane（Component，int，int）</a></td>
+<td>创建一个滚动窗格。的<code>Component</code>参数（如果存在）设置滚动窗格的客户端。他们俩<code>int</code>参数（如果存在）分别设置垂直和水平滚动条策略。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setViewportView-java.awt.Component-" target="_blank"><code>void setViewportView(Component)</code></a></td>
+<td>设置滚动窗格的客户端。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setVerticalScrollBarPolicy-int-" target="_blank"><code>void setVerticalScrollBarPolicy(int)</code></a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#getVerticalScrollBarPolicy--" target="_blank"><code>int getVerticalScrollBarPolicy()</code></a></td>
+<td>设置或获取垂直滚动策略。 <code>ScrollPaneConstants</code>定义了三个用于指定此策略的值： <code>VERTICAL_SCROLLBAR_AS_NEEDED</code> （默认）， <code>VERTICAL_SCROLLBAR_ALWAYS</code>和<code>VERTICAL_SCROLLBAR_NEVER</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setHorizontalScrollBarPolicy-int-" target="_blank">setHorizontalScrollBarPolicy（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#getHorizontalScrollBarPolicy--" target="_blank">int getHorizontalScrollBarPolicy（）</a></td>
+<td>设置或获取水平滚动策略。 <code>ScrollPaneConstants</code>定义了三个用于指定此策略的值： <code>HORIZONTAL_SCROLLBAR_AS_NEEDED</code> （默认）， <code>HORIZONTAL_SCROLLBAR_ALWAYS</code>和<code>HORIZONTAL_SCROLLBAR_NEVER</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setViewportBorder-javax.swing.border.Border-" target="_blank">无效setViewportBorder（Border）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#getViewportBorder--" target="_blank">边框getViewportBorder（）</a></td>
+<td>设置或获取视口周围的边框。这优于在组件上设置边框。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#isWheelScrollingEnabled--" target="_blank">boolean isWheelScrollingEnabled（）</a></td>
+<td>设置或获取是否响应鼠标滚轮进行滚动。默认情况下启用鼠标滚轮滚动。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for decorating the scroll pane">
+<caption><a name="decorationsAPI" id="decorationsAPI">装饰滚动窗格</a><br>（ <code>JScrollPane</code>方法）</caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setColumnHeaderView-java.awt.Component-" target="_blank">void setColumnHeaderView（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setRowHeaderView-java.awt.Component-" target="_blank">void setRowHeaderView（Component）</a></td>
+<td>设置滚动窗格的列或行标题。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#setCorner-java.lang.String-java.awt.Component-" target="_blank">void setCorner（String，Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html#getCorner-java.lang.String-" target="_blank">组件getCorner（String）</a></td>
+<td>设置或获取指定的角。的<code>int</code>参数指定哪个角，并且必须是以下定义的常量之一<code>ScrollPaneConstants</code> ： <code>UPPER_LEFT_CORNER</code> ， <code>UPPER_RIGHT_CORNER</code> ， <code>LOWER_LEFT_CORNER</code> ， <code>LOWER_RIGHT_CORNER</code> ， <code>LOWER_LEADING_CORNER</code> ， <code>LOWER_TRAILING_CORNER</code> ， <code>UPPER_LEADING_CORNER</code>和<code>UPPER_TRAILING_CORNER</code> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for implementing a scrolling-savvy client">
+<caption><a name="scrollableAPI" id="scrollableAPI">实施精通滚动客户端</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html#getScrollableUnitIncrement-java.awt.Rectangle-int-int-" target="_blank">int getScrollableUnitIncrement（矩形，整数，整数）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html#getScrollableBlockIncrement-java.awt.Rectangle-int-int-" target="_blank">int getScrollableBlockIncrement（Rectangle，int，int）</a><br>
+<em>（由<code>Scrollable</code>接口）</em></td>
+<td>获取以像素为单位的单位或块增量。的<code>Rectangle</code>参数是当前可见矩形的边界。首先<code>int</code>参数为<code>SwingConstants.HORIZONTAL</code>要么<code>SwingConstants.VERTICAL</code>取决于用户单击的滚动条。第二<code>int</code>参数指示要滚动的方向。小于0的值表示向上或向左。大于0的值表示向下或向右。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html#getPreferredScrollableViewportSize--" target="_blank">维度getPreferredScrollableViewportSize（）</a><br>
+<em>（由<code>Scrollable</code>接口）</em></td>
+<td>获取视口的首选大小。这使客户端可以影响显示它的视口的大小。如果视口大小不重要，请实施此方法以返回<code>getPreferredSize</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html#getScrollableTracksViewportWidth--" target="_blank">布尔值getScrollableTracksViewportWidth（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Scrollable.html#getScrollableTracksViewportHeight--" target="_blank">布尔值getScrollableTracksViewportHeight（）</a><br>
+<em>（由<code>Scrollable</code>接口）</em></td>
+<td>获取滚动窗格是否应强制客户端与视口相同的宽度或高度。返回值为<code>true</code>这些方法中的任何一种有效地禁止水平或垂直滚动（分别）。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html#setAutoscrolls-boolean-" target="_blank">无效setAutoscrolls（boolean）</a><br>
+<em>（在<code>JComponent</code> ）</em></td>
+<td>设置当用户将鼠标拖动到组件外部并停止时是否应生成合成鼠标拖动事件；这些事件是通过拖动滚动所必需的。默认情况下，值为<code>false</code> ，但许多可滚动组件，例如<code>JTable</code>和自定义组件将值设置为<code>true</code> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods in other classes related to scrolling">
+<caption><a name="otherAPI" id="otherAPI">其他与滚动相关的类中的方法</a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html#scrollRectToVisible-java.awt.Rectangle-" target="_blank">void scrollRectToVisible（Rectangle）</a><br>
+<em>（在<code>JComponent</code> ）</em></td>
+<td>如果组件位于支持滚动的容器（例如滚动窗格）中，则调用此方法将滚动滚动窗格，以使指定的矩形可见。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#setVisibleRowCount-int-" target="_blank">无效setVisibleRowCount（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#getVisibleRowCount--" target="_blank">int getVisibleRowCount（）</a><br>
+<em>（在<code>JList</code> ）</em></td>
+<td>设置或获取列表中有多少行可见。的<code>getPreferredScrollableViewportSize</code>方法使用可见行计数来计算其返回值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-" target="_blank">void sureIndexIsVisible（int）</a><br>
+<em>（在<code>JList</code> ）</em></td>
+<td>滚动，使指定索引处的行可见。该方法调用<code>scrollRectToVisible</code>并且仅在列表位于支持滚动的容器（例如，滚动窗格）中时才有效。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setVisibleRowCount-int-" target="_blank">无效setVisibleRowCount（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getVisibleRowCount--" target="_blank">int getVisibleRowCount（）</a><br>
+<em>（在<code>JTree</code> ）</em></td>
+<td>设置或获取树的可见行数。的<code>getPreferredScrollableViewportSize</code>方法使用可见行计数来计算其返回值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#scrollPathToVisible-javax.swing.tree.TreePath-" target="_blank">void scrollPathToVisible（TreePath）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#scrollRowToVisible-int-" target="_blank">void scrollRowToVisible（int）</a><br>
+<em>（在<code>JTree</code> ）</em></td>
+<td>滚动以使在指定索引处的指定树路径或行可见。这些方法调用<code>scrollRectToVisible</code>并且仅在树位于支持滚动的容器（例如，滚动窗格）中时才起作用。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setScrollsOnExpand-boolean-" target="_blank">void setScrollsOnExpand（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getScrollsOnExpand--" target="_blank">布尔值getScrollsOnExpand（）</a><br>
+<em>（在<code>JTree</code> ）</em></td>
+<td>设置或获取用户扩展节点时是否自动发生滚动。默认为True。仅当树位于支持滚动的容器（例如，滚动窗格）中时，此功能才起作用。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setPreferredScrollableViewportSize-java.awt.Dimension-" target="_blank">void setPreferredScrollableViewportSize（Dimension）</a><br>
+<em>（在<code>JTable</code> ）</em></td>
+<td>设置要返回的值<code>getPreferredScrollableViewportSize</code> 。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用滚动窗格的示例</a></h2>
+<p>下表显示了使用的示例<code>JScrollPane</code>以及描述这些示例的位置。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ToolBarDemo"><code>ToolBarDemo</code></a></td>
+<td>这个部分，<br>
+<a href="toolbar.html">如何使用工具栏</a></td>
+<td>显示滚动窗格的简单但典型的用法。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ScrollDemo"><code>ScrollDemo</code></a></td>
+<td>这个部分</td>
+<td>使用滚动窗格的许多钟声。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ScrollDemo2"><code>ScrollDemo2</code></a></td>
+<td>这个部分</td>
+<td>显示如何更改客户端的大小。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#SplitPaneDemo"><code>SplitPaneDemo</code></a></td>
+<td><a href="splitpane.html">如何使用分割窗格</a><br>
+<a href="list.html">如何使用清单</a></td>
+<td>将列表和标签放在滚动窗格中。此外，还显示了如何处理滚动窗格的客户端更改大小时的情况。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TableDemo"><code>TableDemo</code></a></td>
+<td><a href="table.html">如何使用表格</a></td>
+<td>将表放在滚动窗格中。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TextSamplerDemo"><code>TextSamplerDemo</code></a></td>
+<td><a href="text.html">使用文字组件</a></td>
+<td>在滚动窗格中放置一个文本区域，一个编辑器窗格和一个文本窗格。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeDemo"><code>TreeDemo</code></a></td>
+<td><a href="tree.html">如何使用树木</a></td>
+<td>将树放在滚动窗格中。</td>
+</tr>
+</tbody></table>
+
+<p>如果您使用JavaFX编程，请参见<a class="OutsideLink" href="https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/scrollpane.htm" target="_blank">滚动窗格</a> 。</p>
+
+
+<!-- 
+-->
+
+
+        </div>
+        <div class="NavBit">
+            <a href="rootpane.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="separator.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用根窗格<br><b>下一页：</b>如何使用分隔符</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

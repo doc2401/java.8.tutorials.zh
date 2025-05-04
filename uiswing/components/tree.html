@@ -1,0 +1,1263 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用树（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="nolinkBHEAD">如何使用树木</div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="tooltip.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="html.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用树木</h1></div>
+            <div id="PageContent">
+
+<p>随着<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html" target="_blank"><code>JTree</code></a>类，则可以显示分层数据。一种<code>JTree</code>对象实际上并不包含您的数据；它只是提供数据视图。像任何非平凡的Swing组件一样，树通过查询其数据模型来获取数据。这是一棵树的图片：</p>
+<center><img src="../../figures/uiswing/components/tree.gif" width="128" height="113" align="bottom" alt="一颗树"></center><p>如上图所示， <code>JTree</code>垂直显示其数据。树显示的每一行仅包含一项数据，称为<em>节点</em> 。每棵树都有一个<em>根节点</em> ，所有节点都从该根节点下降。默认情况下，树显示根节点，但您可以另外决定。节点可以有子节点，也可以没有子节点。我们将可以有子节点的节点（无论它们当前是否<em>有</em>子节点）称为<em>分支</em>节点。不能有子节点的节点是<em>叶</em>节点。</p>
+<p>分支节点可以具有任意数量的子代。通常，用户可以通过单击分支节点来展开和折叠分支节点，从而使子节点可见或不可见。默认情况下，除根节点外的所有分支节点都开始折叠。程序可以通过侦听树扩展或树将扩展事件来检测分支节点扩展状态的变化，如<a class="TutorialLink" href="../events/treeexpansionlistener.html" target="_top">如何编写树扩展侦听器</a>和<a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">如何编写树将扩展侦听器中所述</a> 。</p>
+<p>树中的特定节点可以通过TreePath（封装节点及其所有祖先的对象）或显示行（在显示区域中的每一行显示一个节点）来标识。</p>
+<ul>
+<li>展开节点是非叶子节点，当其所有祖先都展开时将显示其子节点。</li>
+<li>折叠的节点是隐藏它们的节点。</li>
+<li>一个隐藏的节点是在一个崩溃的祖先下的节点。</li>
+</ul>
+<p>本节的其余部分讨论以下主题：</p>
+<ul>
+<li><a href="#create">创建一棵树</a></li>
+<li><a href="#select">响应节点选择</a></li>
+<li><a href="#display">自定义树的显示</a></li>
+<li><a href="#dynamic">动态改变树</a></li>
+<li><a href="#data">创建数据模型</a></li>
+<li><a href="#api">树API</a></li>
+<li><a href="#eg">使用树的示例</a></li>
+</ul>
+<h2><a name="create" id="create">创建一棵树</a></h2>
+<p>这是一个应用程序的图片，其上半部分在滚动窗格中显示一棵树。</p>
+<center><img src="../../figures/uiswing/components/TreeDemo.png" width="508" height="280" align="bottom" alt="树形演示"></center><!-- ***************** boilerplate stuff **************** -->
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a>运行树演示（ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TreeDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TreeDemoProject/TreeDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TreeDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  -->
+ <!--
+<div class="note"><hr /><strong>Try this:</strong> <li> <a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TreeDemoProject/TreeDemo.jnlp">Run TreeDemo</a> (
+<a class="OutsideLink" target="_blank" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">download JDK 7 or later</a>).    Or, to compile and run the example yourself,
+     consult the
+     <a href="../examples/components/index.html#TreeDemo">example index</a>.
+
+--></p>
+</li>
+<li>展开一个或多个节点。<br>您可以通过单击项目左侧的圆圈来做到这一点。</li>
+<li>折叠节点。<br>通过单击扩展节点左侧的圆圈来执行此操作。</li>
+</ol>
+<hr></div>
+<p>以下代码摘自<a class="SourceLink" href="../examples/components/TreeDemoProject/src/components/TreeDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TreeDemoProject/src/components/TreeDemo.java'); return false;"><code>TreeDemo.java</code></a> ，创建<code>JTree</code>对象并将其放在滚动窗格中：</p>
+<div class="codeblock"><pre>
+<em>//Where instance variables are declared:</em>
+private JTree tree;
+...
+public TreeDemo() {
+    ...
+    DefaultMutableTreeNode top =
+        new DefaultMutableTreeNode("The Java Series");
+    createNodes(top);
+    tree = new JTree(top);
+    ...
+    JScrollPane treeView = new JScrollPane(tree);
+    ...
+}
+</pre></div>
+<p>该代码创建了一个实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html" target="_blank"><code>DefaultMutableTreeNode</code></a>充当树的根节点。然后，它在树中创建其余节点。之后，它将创建树，并指定根节点作为<code>JTree</code>构造函数。最后，它将树放在滚动窗格中，这是一种常见的策略，因为要显示完整的展开树，否则将需要太多空间。</p>
+<p>以下是在根节点下创建节点的代码：</p>
+<div class="codeblock"><pre>
+private void createNodes(DefaultMutableTreeNode top) {
+    DefaultMutableTreeNode category = null;
+    DefaultMutableTreeNode book = null;
+    
+    category = new DefaultMutableTreeNode("Books for Java Programmers");
+    top.add(category);
+    
+    //original Tutorial
+    book = new DefaultMutableTreeNode(new BookInfo
+        ("The Java Tutorial: A Short Course on the Basics",
+        "tutorial.html"));
+    category.add(book);
+    
+    //Tutorial Continued
+    book = new DefaultMutableTreeNode(new BookInfo
+        ("The Java Tutorial Continued: The Rest of the JDK",
+        "tutorialcont.html"));
+    category.add(book);
+    
+    //Swing Tutorial
+    book = new DefaultMutableTreeNode(new BookInfo
+        ("The Swing Tutorial: A Guide to Constructing GUIs",
+        "swingtutorial.html"));
+    category.add(book);
+
+    <em>//...add more books for programmers...</em>
+
+    category = new DefaultMutableTreeNode("Books for Java Implementers");
+    top.add(category);
+
+    //VM
+    book = new DefaultMutableTreeNode(new BookInfo
+        ("The Java Virtual Machine Specification",
+         "vm.html"));
+    category.add(book);
+
+    //Language Spec
+    book = new DefaultMutableTreeNode(new BookInfo
+        ("The Java Language Specification",
+         "jls.html"));
+    category.add(book);
+}
+</pre></div>
+<p>的论点<code>DefaultMutableTreeNode</code>构造函数是<em>用户对象</em> ，它是一个包含或指向与树节点关联的数据的对象。用户对象可以是字符串，也可以是自定义对象。如果实现自定义对象，则应实现其<code>toString</code>方法，以便它返回要为该节点显示的字符串。默认情况下，JTree使用从toString返回的值呈现每个节点，因此重要的是<code>toString</code>返回有意义的东西。有时，覆盖是不可行的<code>toString</code> ;在这种情况下，您可以覆盖JTree的convertValueToText以将模型中的对象映射到要显示的字符串中。</p>
+<p>例如， <code>BookInfo</code>上一个代码片段中使用的类是一个自定义类，其中包含两段数据：一本书的名称和描述该书的HTML文件的URL。的<code>toString</code>实现方法以返回书名。因此，与<code>BookInfo</code>对象显示书名。</p>
+<div class="note"><hr><strong>注意：</strong>可以通过在树节点中的字符串中放置HTML标记来指定文本格式。有关详细信息，请参见<a href="html.html">在Swing组件中使用HTML</a> 。
+<hr></div>
+<p>总而言之，您可以通过调用<code>JTree</code>构造函数，指定将TreeNode实现为参数的类。您可能应该将树放置在滚动窗格中，以便树不会占用太多空间。您无需执行任何操作即可使树节点响应用户单击而展开和折叠。但是，您确实必须添加一些代码以使树在用户选择节点时做出响应-例如，通过单击节点。</p>
+<h2><a name="select" id="select">响应节点选择</a></h2>
+<p>响应树节点选择很简单。您实现一个树选择侦听器并将其注册在树上。以下代码显示了<code>TreeDemo</code>程序：</p>
+<div class="codeblock"><pre>
+<em>//Where the tree is initialized:</em>
+    tree.getSelectionModel().setSelectionMode
+            (TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+    //Listen for when the selection changes.
+    tree.addTreeSelectionListener(this);
+...
+public void valueChanged(TreeSelectionEvent e) {
+<em>//Returns the last path element of the selection.</em>
+<em>//This method is useful only when the selection model allows a single selection.</em>
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+                       tree.getLastSelectedPathComponent();
+
+    if (node == null)
+    <em>//Nothing is selected.</em>     
+    return;
+
+    Object nodeInfo = node.getUserObject();
+    if (node.isLeaf()) {
+        BookInfo book = (BookInfo)nodeInfo;
+        displayURL(book.bookURL);
+    } else {
+        displayURL(helpURL); 
+    }
+}
+</pre></div>
+<p>前面的代码执行以下任务：</p>
+<ul>
+<li>获取默认值<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html" target="_blank"><code>TreeSelectionModel</code></a>树，然后进行设置，以便一次最多选择一个树节点。</li>
+<li>在树上注册事件处理程序。事件处理程序是一个实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeSelectionListener.html" target="_blank"><code>TreeSelectionListener</code></a>接口。</li>
+<li>在事件处理程序中，通过调用树的树来确定选择了哪个节点<code>getLastSelectedPathComponent</code>方法。</li>
+<li>使用<code>getUserObject</code>获取与节点关联的数据的方法。</li>
+</ul>
+<p>有关处理树选择事件的更多详细信息，请参见<a class="TutorialLink" href="../events/treeselectionlistener.html" target="_top">如何编写树选择监听器</a> 。</p>
+<h2><a name="display" id="display">自定义树的显示</a></h2>
+<p>这是由Java，Windows和Mac OS外观实现绘制的一些树节点的图片。</p>
+<p style="text-align:center"></p>
+<table cellspacing="10" align="center" summary="">
+<tbody><tr align="center">
+<td>
+<img src="../../figures/uiswing/components/TreeDemo-lsAngled.gif" width="125" height="96" alt="带有斜线的TreeDemo"></td>
+<td>
+<img src="../../figures/uiswing/components/TreeDemo-windows.gif" width="124" height="82" alt="Windows外观中的一棵树"></td>
+<td>
+<img src="../../figures/uiswing/components/TreeDemo-macos.gif" width="136" height="93" alt="MacOS外观中的一棵树"></td>
+</tr>
+<tr align="center">
+<td>Java外观</td>
+<td>Windows外观</td>
+<td>Mac OS外观</td>
+</tr>
+</tbody></table>
+<p>如前面的图所示，树通常为每个节点显示一个图标和一些文本。您可以自定义这些，我们将在稍后显示。</p>
+<p>通常，树还执行一些特定于外观的绘画以指示节点之间的关系。您可以通过有限的方式自定义这幅画。首先，您可以使用<code>tree.setRootVisible(true)</code>显示根节点或<code>tree.setRootVisible(false)</code>隐藏它。二，可以使用<code>tree.setShowsRootHandles(true)</code>要求树的顶级节点（根节点（如果可见）或其子节点（如果不可见））具有使它们能够展开或折叠的句柄。</p>
+<p>如果使用Java外观，则可以自定义是否绘制线条以显示树节点之间的关系。默认情况下，Java外观在节点之间绘制倾斜的线条。通过设置<code>JTree.lineStyle</code>树的client属性，可以指定其他约定。例如，要请求Java外观仅使用水平线对节点进行分组，请使用以下代码：</p>
+<div class="codeblock"><pre>
+tree.putClientProperty("JTree.lineStyle", "Horizontal");
+</pre></div>
+<p>要指定Java外观不应画线，请使用以下代码：</p>
+<div class="codeblock"><pre>
+tree.putClientProperty("JTree.lineStyle", "None");
+</pre></div>
+<p>以下快照显示了设置<code>JTree.lineStyle</code>属性，使用Java外观时。</p>
+<p style="text-align:center"></p>
+<table cellspacing="10" align="center" summary="">
+<tbody><tr align="center">
+<td>
+<img src="../../figures/uiswing/components/TreeDemo-lsAngled.gif" width="125" height="96" alt="带有斜线的TreeDemo"></td>
+<td>
+<center><img src="../../figures/uiswing/components/TreeDemo-lsHoriz.gif" width="125" height="96" align="bottom" alt="带有水平线的TreeDemo"></center></td>
+<td>
+<center><img src="../../figures/uiswing/components/TreeDemo-lsNone.gif" width="125" height="96" align="bottom" alt="没有行的TreeDemo"></center></td>
+</tr>
+<tr align="center" valign="bottom">
+<td><code>"Angled"</code> （默认）</td>
+<td><code>"Horizontal"</code></td>
+<td><code>"None"</code></td>
+</tr>
+</tbody></table>
+<p>不管外观如何，节点显示的默认图标都取决于该节点是否为叶子，如果不是，则是否扩展。例如，在Windows和Motif外观实现中，每个叶节点的默认图标是一个点。在Java外观中，默认的叶子图标是纸状符号。在我们展示的所有外观实现中，分支节点都用类似于文件夹的符号标记。对于扩展分支和收缩分支，某些外观可能具有不同的图标。</p>
+<p>您可以轻松更改用于叶节点，扩展分支节点或折叠分支节点的默认图标。为此，您首先创建一个实例<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html" target="_blank"><code>DefaultTreeCellRenderer</code></a> 。您始终可以从头开始创建自己的TreeCellRenderer实现，从而重用所需的任何组件。接下来，通过在渲染器上调用以下一种或多种方法来指定要使用的图标： <code>setLeafIcon</code> （对于叶节点）， <code>setOpenIcon</code> （对于扩展的分支节点）， <code>setClosedIcon</code> （用于折叠的分支节点）。如果您希望树不显示任何类型的节点的图标，请指定<code>null</code>用于图标。设置完图标后，请使用树形图标<code>setCellRenderer</code>指定该方法的方法<code>DefaultTreeCellRenderer</code>绘制其节点。这是一个例子，取自<a class="SourceLink" href="../examples/components/TreeIconDemoProject/src/components/TreeIconDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TreeIconDemoProject/src/components/TreeIconDemo.java'); return false;"><code>TreeIconDemo.java</code></a> ：</p>
+<div class="codeblock"><pre>
+ImageIcon leafIcon = createImageIcon("images/middle.gif");
+if (leafIcon != null) {
+    DefaultTreeCellRenderer renderer = 
+        new DefaultTreeCellRenderer();
+    renderer.setLeafIcon(leafIcon);
+    tree.setCellRenderer(renderer);
+}
+</pre></div>
+<p>这是TreeIconDemo的屏幕截图：</p>
+<center><img src="../../figures/uiswing/components/TreeIconDemo.png" width="508" height="243" align="bottom" alt="TreeIconDemo"></center><!-- ***************** boilerplate stuff **************** -->
+<div class="note"><hr><strong>尝试这个：</strong> <ul>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行TreeIconDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TreeIconDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TreeIconDemoProject/TreeIconDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TreeIconDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  --></p>
+</li>
+</ul>
+<hr></div>
+<p>如果您想更好地控制节点图标或要提供工具提示，可以通过创建以下子类来实现： <code>DefaultTreeCellRenderer</code>并覆盖<code>getTreeCellRendererComponent</code>方法。因为<code>DefaultTreeCellRenderer</code>是的子类<code>JLabel</code> ，您可以使用任何<code>JLabel</code>方法-如<code>setIcon</code> —自定义<code>DefaultTreeCellRenderer</code> 。</p>
+<p>以下代码来自<a class="SourceLink" href="../examples/components/TreeIconDemo2Project/src/components/TreeIconDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/TreeIconDemo2Project/src/components/TreeIconDemo2.java'); return false;"><code>TreeIconDemo2.java</code></a>会创建一个单元渲染器，该渲染器根据节点的文本数据中是否包含“ Tutorial”一词来改变叶子图标。渲染器还指定工具提示文本，如粗线所示。<!-- ***************** boilerplate stuff **************** --></p>
+<div class="note"><hr><strong>尝试这个：</strong> <ul>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行TreeIconDemo2。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#TreeIconDemo2">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/TreeIconDemo2Project/TreeIconDemo2.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TreeDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  --></p>
+</li>
+</ul>
+<hr></div>
+<div class="codeblock"><pre>
+<em>//...where the tree is initialized:</em>
+    <b>//Enable tool tips.
+    ToolTipManager.sharedInstance().registerComponent(tree);</b>
+    
+    ImageIcon tutorialIcon = createImageIcon("images/middle.gif");
+    if (tutorialIcon != null) {
+        tree.setCellRenderer(new MyRenderer(tutorialIcon));
+    }
+...
+class MyRenderer extends DefaultTreeCellRenderer {
+    Icon tutorialIcon;
+
+    public MyRenderer(Icon icon) {
+        tutorialIcon = icon;
+    }
+
+    public Component getTreeCellRendererComponent(
+                        JTree tree,
+                        Object value,
+                        boolean sel,
+                        boolean expanded,
+                        boolean leaf,
+                        int row,
+                        boolean hasFocus) {
+
+        super.getTreeCellRendererComponent(
+                        tree, value, sel,
+                        expanded, leaf, row,
+                        hasFocus);
+        if (leaf &amp;&amp; isTutorialBook(value)) {
+            setIcon(tutorialIcon);
+            <b>setToolTipText("This book is in the Tutorial series.");</b>
+        <b>} else {
+            setToolTipText(null); //no tool tip</b>
+        } 
+
+        return this;
+    }
+
+    protected boolean isTutorialBook(Object value) {
+        DefaultMutableTreeNode node =
+                (DefaultMutableTreeNode)value;
+        BookInfo nodeInfo =
+                (BookInfo)(node.getUserObject());
+        String title = nodeInfo.bookName;
+        if (title.indexOf("Tutorial") &gt;= 0) {
+            return true;
+        }
+
+        return false;
+    }
+}
+</pre></div>
+<p>结果如下：</p>
+<center><img src="../../figures/uiswing/components/TreeIconDemo2.png" width="508" height="241" align="bottom" alt="TreeIconDemo2"></center><p>您可能想知道单元格渲染器如何工作。当一棵树绘制每个节点时， <code>JTree</code>它的特定于外观的实现实际上也没有包含绘制节点的代码。相反，树使用单元渲染器的绘制代码来绘制节点。例如，要绘制具有字符串“ Java编程语言”的叶子节点，树将要求其单元格渲染器返回一个可以用该字符串绘制叶子节点的组件。如果单元格渲染器是<code>DefaultTreeCellRenderer</code> ，然后返回一个标签，该标签描绘了默认的叶子图标和字符串。</p>
+<p>单元格渲染器仅绘制；它无法处理事件。如果要向树添加事件处理，则需要在树上注册处理程序，或者如果仅在选择节点时才进行处理，则需要在树的<em>单元格编辑器</em>上注册处理程序。有关单元格编辑器的信息，请参见<a href="table.html#editrender">概念：编辑器和渲染器</a> 。该部分讨论表单元格编辑器和渲染器，它们与树单元格编辑器和渲染器相似。</p>
+<h2><a name="dynamic" id="dynamic">动态改变树</a></h2>
+<p>下图显示了一个名为DynamicTreeDemo的应用程序，该应用程序使您可以向可见树中添加节点或从可见树中删除节点。您还可以在每个节点中编辑文本。</p>
+<center><img src="../../figures/uiswing/components/DynamicTreeDemo.png" width="304" height="304" align="bottom" alt="动态树演示"></center><p>该应用程序基于教程读者Richard Stanford提供的示例。<!-- ***************** boilerplate stuff **************** --></p>
+<div class="note"><hr><strong>尝试这个：</strong> <ul>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行DynamicTreeDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#DynamicTreeDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/DynamicTreeDemoProject/DynamicTreeDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TreeDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  --></p>
+</li>
+</ul>
+<hr></div>
+<p>这是初始化树的代码：</p>
+<div class="codeblock"><pre>
+rootNode = new DefaultMutableTreeNode("Root Node");
+treeModel = new DefaultTreeModel(rootNode);
+treeModel.addTreeModelListener(new MyTreeModelListener());
+
+tree = new JTree(treeModel);
+tree.setEditable(true);
+tree.getSelectionModel().setSelectionMode
+        (TreeSelectionModel.SINGLE_TREE_SELECTION);
+tree.setShowsRootHandles(true);
+</pre></div>
+<p>通过显式创建树的模型，代码可确保树的模型是的实例。 <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeModel.html" target="_blank"><code>DefaultTreeModel</code></a> 。这样，我们知道树模型支持的所有方法。例如，我们知道我们可以调用模型的<code>insertNodeInto</code>方法，即使该方法不是<code>TreeModel</code>接口。</p>
+<p>为了使树节点中的文本可编辑，我们调用<code>setEditable(true)</code>在树上。当用户完成节点编辑后，模型会生成一个树模型事件，该事件告诉所有侦听器-包括<code>JTree</code> -树节点已更改。请注意，尽管<code>DefaultMutableTreeNode</code>具有更改节点内容的方法，更改应通过<code>DefaultTreeModel</code>掩盖方法。否则，将不会生成树模型事件，并且树之类的侦听器将不了解更新。</p>
+<p>要通知节点更改，我们可以实施<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeModelListener.html" target="_blank"><code>TreeModelListener</code></a> 。这是一个树模型侦听器的示例，它可以检测用户何时输入树节点的新名称：</p>
+<div class="codeblock"><pre>
+class MyTreeModelListener implements TreeModelListener {
+    public void treeNodesChanged(TreeModelEvent e) {
+        DefaultMutableTreeNode node;
+        node = (DefaultMutableTreeNode)
+                 (e.getTreePath().getLastPathComponent());
+
+        /*
+         * If the event lists children, then the changed
+         * node is the child of the node we have already
+         * gotten.  Otherwise, the changed node and the
+         * specified node are the same.
+         */
+        try {
+            int index = e.getChildIndices()[0];
+            node = (DefaultMutableTreeNode)
+                   (node.getChildAt(index));
+        } catch (NullPointerException exc) {}
+
+        System.out.println("The user has finished editing the node.");
+        System.out.println("New value: " + node.getUserObject());
+    }
+    public void treeNodesInserted(TreeModelEvent e) {
+    }
+    public void treeNodesRemoved(TreeModelEvent e) {
+    }
+    public void treeStructureChanged(TreeModelEvent e) {
+    }
+}
+</pre></div>
+<p>这是“ <b>添加”</b>按钮的事件处理程序用来向树中添加新节点的代码：</p>
+<div class="codeblock"><pre>
+treePanel.addObject("New Node " + newNodeSuffix++);
+...
+public DefaultMutableTreeNode addObject(Object child) {
+    DefaultMutableTreeNode parentNode = null;
+    TreePath parentPath = tree.getSelectionPath();
+
+    if (parentPath == null) {
+        //There is no selection. Default to the root node.
+        parentNode = rootNode;
+    } else {
+        parentNode = (DefaultMutableTreeNode)
+                     (parentPath.getLastPathComponent());
+    }
+
+    return addObject(parentNode, child, true);
+}
+...
+public DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent,
+                                        Object child,
+                                        boolean shouldBeVisible) {
+    DefaultMutableTreeNode childNode =
+            new DefaultMutableTreeNode(child);
+    ...
+    treeModel.insertNodeInto(childNode, parent,
+                             parent.getChildCount());
+
+    //Make sure the user can see the lovely new node.
+    if (shouldBeVisible) {
+        tree.scrollPathToVisible(new TreePath(childNode.getPath()));
+    }
+    return childNode;
+}
+</pre></div>
+<p>该代码创建一个节点，将其插入到树模型中，然后在适当时请求扩展它上面的节点，并滚动树以使新节点可见。要将节点插入模型，代码使用<code>insertNodeInto</code>提供的方法<code>DefaultTreeModel</code>类。</p>
+<h2><a name="data" id="data">创建数据模型</a></h2>
+<p>如果<code>DefaultTreeModel</code>不能满足您的需求，那么您将需要编写一个自定义数据模型。您的数据模型必须实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeModel.html" target="_blank"><code>TreeModel</code></a>接口。 <code>TreeModel</code>指定用于获取树的特定节点，获取特定节点的子代数，确定节点是否为叶，向模型通知树中的更改以及添加和删除树模型侦听器的方法。</p>
+<p>有趣的是， <code>TreeModel</code>接口接受任何类型的对象作为树节点。它不要求节点用<code>DefaultMutableTreeNode</code>对象，甚至节点实现<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeNode.html" target="_blank"><code>TreeNode</code></a>接口。因此，如果<code>TreeNode</code>界面不适用于您的树模型，请随时为树节点设计自己的表示形式。例如，如果您已有一个分层数据结构，则无需复制它或将其强制放入<code>TreeNode</code>模子。您只需要实现树模型，以便它使用现有数据结构中的信息。</p>
+<p>下图显示了一个名为GenealogyExample的应用程序，该应用程序显示特定人的后代或祖先。（感谢教程读者Olivier Berlanger提供了此示例。）<!-- ***************** boilerplate stuff **************** --></p>
+<div class="note"><hr><strong>尝试这个：</strong> <ul>
+<li>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a>运行家谱示例（ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#GenealogyExample">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/GenealogyExampleProject/GenealogyExample.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动TreeDemo示例"></a><br>
+<p><!--  ******* end boilerplate stuff  *******  --></p>
+</li>
+</ul>
+<hr></div>
+<center><img src="../../figures/uiswing/components/GenealogyExample.png" width="268" height="191" align="bottom" alt="家谱事例"></center><p>您可以在以下位置找到自定义树模型实现<a class="SourceLink" href="../examples/components/GenealogyExampleProject/src/components/GenealogyModel.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/GenealogyExampleProject/src/components/GenealogyModel.java'); return false;"><code>GenealogyModel.java</code></a> 。因为该模型是作为<code>Object</code>子类，而不是<code>DefaultTreeModel</code> ，则必须实施<code>TreeModel</code>直接接口。这需要实现用于获取有关节点的信息的方法，例如特定节点的根是什么，子节点是什么。如果是<code>GenealogyModel</code> ，每个节点由一个类型的对象表示<code>Person</code> ，一个未实现的自定义类<code>TreeNode</code> 。</p>
+<p>树模型还必须实现添加和删除树模型侦听器的方法，并且必须触发<code>TreeModelEvent</code>当树的结构或数据发生更改时，向那些侦听器发送消息。例如，当用户指示GenealogyExample从显示祖先切换为显示后代时，树模型进行更改，然后触发事件以通知其侦听器（例如树组件）。</p>
+<h2><a name="lazyload" id="lazyload">如何懒惰地装载孩子</a></h2>
+<p>当类的实际加载和实例化被延迟到实际使用该实例之前的时间点时，延迟加载是应用程序的特征。</p>
+<p>懒惰地加载它们能获得任何收益吗？是的，这肯定会增加应用程序的性能。通过延迟加载，可以将内存资源专用于仅在对象实际使用时加载和实例化该对象。您还可以加快应用程序的初始加载时间。</p>
+<p>延迟加载Tree子级的方法之一是利用TreeWillExpandListener接口。例如，您可以声明并加载Tree的根，祖父母和父项以及应用程序，如以下代码所示：</p>
+<p>让我们声明根，祖父母和父母，如下所示：</p>
+<div class="codeblock"><pre>
+
+class DemoArea extends JScrollPane
+                   implements TreeWillExpandListener {
+        .......
+        .......
+
+        private TreeNode createNodes() {
+            DefaultMutableTreeNode root;
+            DefaultMutableTreeNode grandparent;
+            DefaultMutableTreeNode parent;
+
+            root = new DefaultMutableTreeNode("San Francisco");
+
+            grandparent = new DefaultMutableTreeNode("Potrero Hill");
+            root.add(grandparent);
+
+            parent = new DefaultMutableTreeNode("Restaurants");
+            grandparent.add(parent);
+            
+            dummyParent = parent;
+            return root;
+        }
+
+</pre></div>
+<p>您可以将以上声明的节点加载到树中，如以下代码所示：</p>
+<div class="codeblock"><pre>
+TreeNode rootNode = createNodes();
+tree = new JTree(rootNode);
+tree.addTreeExpansionListener(this);
+tree.addTreeWillExpandListener(this);
+.......
+.......
+setViewportView(tree);
+</pre></div>
+<p>现在，您可以在父节点每当将子节点延迟加载到应用程序时<code>Restaurants</code>在应用程序中可见。为此，让我们在一个单独的方法中声明两个子代，然后调用该方法，如以下代码所示：</p>
+<div class="codeblock"><pre>
+private void LoadLazyChildren(){
+            DefaultMutableTreeNode child;
+            child = new DefaultMutableTreeNode("Thai Barbeque");
+            dummyParent.add(child);
+            child = new DefaultMutableTreeNode("Goat Hill Pizza");
+            dummyParent.add(child);
+            textArea.append(" Thai Barbeque and Goat Hill Pizza are loaded lazily");
+        }
+
+        .......
+        .......
+
+public void treeWillExpand(TreeExpansionEvent e) 
+                    throws ExpandVetoException {
+            saySomething("You are about to expand node ", e);
+            int n = JOptionPane.showOptionDialog(
+                this, willExpandText, willExpandTitle,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                willExpandOptions,
+                willExpandOptions[1]);
+           
+        LoadLazyChildren();
+        }
+</pre></div>
+<p>请参阅<a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">如何编写Tree-Will-Expand侦听器</a> ， <a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">以获取Tree-Will-Expand侦听器</a>的描述。</p>
+<h2><a name="api" id="api">树API</a></h2>
+<p>树API相当广泛。下表仅列出了一些API，重点介绍以下类别：</p>
+<ul>
+<li><a href="#overviewapi">与树相关的类和接口</a></li>
+<li><a href="#creatingapi">创建和设置树</a> 
+</li>
+<li><a href="#selectionapi">实施选择</a></li>
+<li><a href="#expandapi">显示和隐藏节点</a></li>
+</ul>
+<p>有关树API的更多信息，请参见API文档。 <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html" target="_blank"><code>JTree</code></a>对于<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/package-summary.html" target="_blank">树包中</a>的各种类和接口。另请参阅<a href="jcomponent.html">JComponent类</a>以获取有关API的信息。 <code>JTree</code>从其超类继承。</p>
+<table border="1" summary="tree-related classes and interfaces">
+<caption><a name="overviewapi" id="overviewapi"><strong>与树相关的类和接口</strong></a></caption>
+<tbody><tr>
+<th align="left">类或接口</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html" target="_blank">树</a></td>
+<td>向用户展示树的组件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreePath.html" target="_blank">树路径</a></td>
+<td>表示节点的路径。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeNode.html" target="_blank">树节点</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/MutableTreeNode.html" target="_blank">MutableTreeNode</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html" target="_blank">DefaultMutableTreeNode</a></td>
+<td>默认树模型期望其树节点实现的接口，以及默认树模型使用的实现。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeModel.html" target="_blank">树模型</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeModel.html" target="_blank">DefaultTreeModel</a></td>
+<td>树模型必须实现的接口和所使用的通常实现分别。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeCellRenderer.html" target="_blank">TreeCellRenderer</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html" target="_blank">DefaultTreeCellRenderer</a></td>
+<td>树单元渲染器必须实现的接口和所使用的通常实现分别。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeCellEditor.html" target="_blank">TreeCellEditor</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeCellEditor.html" target="_blank">DefaultTreeCellEditor</a></td>
+<td>树单元编辑器必须实现的接口和所使用的通常实现分别。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html" target="_blank">TreeSelectionModel</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeSelectionModel.html" target="_blank">DefaultTreeSelectionModel</a></td>
+<td>分别是树的选择模型必须实现的接口和常用的实现。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeSelectionListener.html" target="_blank">TreeSelectionListener</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeSelectionEvent.html" target="_blank">TreeSelectionEvent</a></td>
+<td>用于检测树选择更改的接口和事件类型。有关更多信息，请参见《 <a class="TutorialLink" href="../events/treeselectionlistener.html" target="_top">入门指南》</a> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeModelListener.html" target="_blank">TreeModelListener</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeModelEvent.html" target="_blank">TreeModelEvent</a></td>
+<td>用于检测树模型更改的接口和事件类型。有关更多信息，请参见<a class="TutorialLink" href="../events/treemodellistener.html" target="_top">如何编写树模型侦听器</a> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeExpansionListener.html" target="_blank">TreeExpansionListener</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeWillExpandListener.html" target="_blank">TreeWillExpandListener</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TreeExpansionEvent.html" target="_blank">TreeExpansionEvent</a></td>
+<td>用于检测树扩展和崩溃的接口和事件类型。有关更多信息，请参见<a class="TutorialLink" href="../events/treeexpansionlistener.html" target="_top">如何编写树扩展侦听器</a>和<a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">如何编写树扩展侦听器</a> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/ExpandVetoException.html" target="_blank">ExpandVetoException</a></td>
+<td>一个例外<code>TreeWillExpandListener</code>可能抛出该错误指示即将发生的扩展/崩溃。有关更多信息，请参见<a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">如何编写树状扩展侦听器</a> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for creating and setting up a tree">
+<caption><a name="creatingapi" id="creatingapi"><strong>创建和设置树</strong></a></caption>
+<tbody><tr>
+<th align="left">构造函数或方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-javax.swing.tree.TreeNode-" target="_blank">JTree（树节点）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-javax.swing.tree.TreeNode-boolean-" target="_blank">JTree（TreeNode，布尔值）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-javax.swing.tree.TreeModel-" target="_blank">JTree（树模型）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree--" target="_blank">JTree（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-java.util.Hashtable-" target="_blank">JTree（哈希表）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-java.lang.Object:A-" target="_blank">JTree（Object []）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#JTree-java.util.Vector-" target="_blank">JTree（向量）</a></td>
+<td>创建一棵树。的<code>TreeNode</code>参数指定由默认树模型管理的根节点。的<code>TreeModel</code>参数指定将数据提供给表的模型。此构造函数的无参数版本供构建器使用。它创建了一个包含一些样本数据的树。如果您指定一个<code>Hashtable</code> ，对象数组或<code>Vector</code>作为参数，则将参数视为根节点下的节点列表（未显示），并相应地构建模型和树节点。
+<p>的<code>boolean</code>自变量（如果存在）指定树应如何确定是否应将节点显示为叶。如果参数为false（默认值），则任何没有子节点的节点都将显示为叶。如果参数为true，则仅当节点是叶子时<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeNode.html#getAllowsChildren--" target="_blank"><code>getAllowsChildren</code></a>方法返回false。</p>
+</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setCellRenderer-javax.swing.tree.TreeCellRenderer-" target="_blank">无效setCellRenderer（TreeCellRenderer）</a></td>
+<td>设置绘制每个节点的渲染器。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setEditable-boolean-" target="_blank">void setEditable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setCellEditor-javax.swing.tree.TreeCellEditor-" target="_blank">无效setCellEditor（TreeCellEditor）</a></td>
+<td>第一种方法设置用户是否可以编辑树节点。默认情况下，树节点不可编辑。第二套用于定制的编辑器。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setRootVisible-boolean-" target="_blank">void setRootVisible（boolean）</a></td>
+<td>设置树是否显示根节点。如果使用使用数据结构的构造函数之一创建树，则默认值为false，否则为true。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-" target="_blank">void setShowsRootHandles（boolean）</a></td>
+<td>设置树是否显示其最左侧节点的句柄，以便您展开和折叠节点。默认为false。如果树未显示根节点，则应调用<code>setShowsRootHandles(true)</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setDragEnabled-boolean-" target="_blank">void setDragEnabled（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getDragEnabled--" target="_blank">布尔值getDragEnabled（）</a></td>
+<td>设置或获取<code>dragEnabled</code>属性，必须为true才能在此组件上启用拖动处理。默认值为false。有关更多详细信息，请参见<a class="TutorialLink" href="../dnd/index.html" target="_top">拖放和数据传输</a> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for implementing selection in a tree">
+<caption><a name="selectionapi" id="selectionapi"><strong>实施选择</strong></a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#addTreeSelectionListener-javax.swing.event.TreeSelectionListener-" target="_blank">void addTreeSelectionListener（TreeSelectionListener）</a></td>
+<td>注册侦听器以检测何时选择或取消选择节点。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setSelectionModel-javax.swing.tree.TreeSelectionModel-" target="_blank">void setSelectionModel（TreeSelectionModel）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getSelectionModel--" target="_blank">TreeSelectionModel getSelectionModel（）</a></td>
+<td>设置或获取用于控制节点选择的模型。您可以使用以下命令完全关闭节点选择<code>setSelectionModel(null)</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html#setSelectionMode-int-" target="_blank">void setSelectionMode（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html#getSelectionMode--" target="_blank">int getSelectionMode（）</a><br>
+<em>（在<code>TreeSelectionModel</code> ）</em></td>
+<td>设置或获取选择模式。该值可以是<code>CONTIGUOUS_TREE_SELECTION</code> ， <code>DISCONTIGUOUS_TREE_SELECTION</code> ， 要么<code>SINGLE_TREE_SELECTION</code> （全部在<code>TreeSelectionModel</code> ）。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getLastSelectedPathComponent--" target="_blank">对象getLastSelectedPathComponent（）</a></td>
+<td>获取代表当前选定节点的对象。这相当于调用<code>getLastPathComponent</code>关于返回的值<code>tree.getSelectionPath()</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setSelectionPath-javax.swing.tree.TreePath-" target="_blank">无效setSelectionPath（TreePath）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getSelectionPath--" target="_blank">TreePath getSelectionPath（）</a></td>
+<td>设置或获取当前所选节点的路径。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setSelectionPaths-javax.swing.tree.TreePath:A-" target="_blank">void setSelectionPaths（TreePath []）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getSelectionPaths--" target="_blank">TreePath [] getSelectionPaths（）</a></td>
+<td>设置或获取当前选定节点的路径。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setSelectionPath-javax.swing.tree.TreePath-" target="_blank">无效setSelectionPath（TreePath）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getSelectionPath--" target="_blank">TreePath getSelectionPath（）</a></td>
+<td>设置或获取当前所选节点的路径。</td>
+</tr>
+</tbody></table>
+<p>
+</p>
+<table border="1" summary="methods for showing and hiding nodes">
+<caption><a name="expandapi" id="expandapi"><strong>显示和隐藏节点</strong></a></caption>
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#addTreeExpansionListener-javax.swing.event.TreeExpansionListener-" target="_blank">void addTreeExpansionListener（TreeExpansionListener）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#addTreeWillExpandListener-javax.swing.event.TreeWillExpandListener-" target="_blank">void addTreeWillExpandListener（TreeWillExpandListener）</a></td>
+<td>注册一个侦听器，以检测树节点何时<em>分别</em>展开或折叠，或<em>何时</em>展开或折叠。为了否决即将发生的扩张或崩溃， <code>TreeWillExpandListener</code>可以扔一个<code>ExpandVetoException</code> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#expandPath-javax.swing.tree.TreePath-" target="_blank">void expandPath（TreePath）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#collapsePath-javax.swing.tree.TreePath-" target="_blank">void crashPath（TreePath）</a></td>
+<td>展开或折叠指定的树路径。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#scrollPathToVisible-javax.swing.tree.TreePath-" target="_blank">void scrollPathToVisible（TreePath）</a></td>
+<td>确保路径指定的节点是可见的-指向该路径的路径已展开，并且该节点在滚动窗格的查看区域中。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#makeVisible-javax.swing.tree.TreePath-" target="_blank">无效makeVisible（TreePath）</a></td>
+<td>确保路径指定的节点是可见的-指向该路径的路径已展开。该节点可能不会在查看区域内结束。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setScrollsOnExpand-boolean-" target="_blank">void setScrollsOnExpand（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getScrollsOnExpand--" target="_blank">布尔值getScrollsOnExpand（）</a></td>
+<td>设置或获取树是否尝试滚动以显示先前的隐藏节点。默认值是true。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setToggleClickCount-int-" target="_blank">void setToggleClickCount（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getToggleClickCount--" target="_blank">int getToggleClickCount（）</a></td>
+<td>设置或获取节点展开或关闭之前的鼠标单击次数。默认值为两个。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#getNextMatch-java.lang.String-int-javax.swing.text.Position.Bias-" target="_blank">TreePath getNextMatch（String，int，Position。偏压）</a></td>
+<td>返回<code>TreePath</code>到以特定前缀开头的下一个树元素。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用树的示例</a></h2>
+<p>下表列出了使用<code>JTree</code>以及描述这些示例的位置。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeDemo">树形演示</a></td>
+<td><a href="#create">创建树</a> ， <a href="#select">响应节点选择</a> ， <a href="#display">自定义树的显示</a></td>
+<td>创建一个响应用户选择的树。它还具有用于自定义Java外观的线条样式的代码。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeIconDemo">TreeIconDemo</a></td>
+<td><a href="#display">自定义树的显示</a></td>
+<td>将自定义叶子图标添加到TreeDemo。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeIconDemo2">TreeIconDemo2</a></td>
+<td><a href="#display">自定义树的显示</a></td>
+<td>自定义某些叶子图标，并提供某些树节点的工具提示。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#DynamicTreeDemo">动态树演示</a></td>
+<td><a href="#dynamic">动态改变树</a></td>
+<td>说明从树中添加和删除节点。还允许编辑节点文本。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#GenealogyExample">家谱事例</a></td>
+<td><a href="#data">创建数据模型</a></td>
+<td>实现自定义树模型和自定义节点类型。</td>
+</tr>
+<tr>
+<td><a href="../examples/events/index.html#TreeExpandEventDemo">TreeExpandEventDemo</a></td>
+<td>
+<a class="TutorialLink" href="../events/treeexpansionlistener.html" target="_top">如何编写树扩展侦听器</a></td>
+<td>显示如何检测节点的膨胀和收缩。</td>
+</tr>
+<tr>
+<td><a href="../examples/events/index.html#TreeExpandEventDemo2">TreeExpandEventDemo2</a></td>
+<td>
+<a class="TutorialLink" href="../events/treewillexpandlistener.html" target="_top">如何编写一个树状扩展侦听器</a></td>
+<td>显示如何否决节点扩展。</td>
+</tr>
+</tbody></table>
+
+<p>如果您使用JavaFX编程，请参见<a class="OutsideLink" href="https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/tree-view.htm" target="_blank">Tree View</a> 。</p>
+
+
+
+        </div>
+        <div class="NavBit">
+            <a href="tooltip.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="html.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用工具提示<br><b>下一页：</b>如何在Swing组件中使用HTML</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

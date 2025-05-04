@@ -1,0 +1,654 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>转换现有应用程序（Java™教程>部署>部署自包含应用程序）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This deployment Java tutorial describes development and deployment of applets, Java Web Start applications, rich Internet applications, and JAR related tools">
+     <meta name="keywords" content="java programming, learn java, java sample code, java applet, java web start, rich internet application, RIA, jar, plugin, plug-in">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">部署独立的应用程序</a></div>
+<div class="linkAHEAD"><a href="prereqs.html">包装独立应用的先决条件</a></div>
+<div class="nolinkAHEAD">转换现有的应用程序</div>
+<div class="linkAHEAD"><a href="fileassociation.html">使用文件关联</a></div>
+<div class="linkBHEAD"><a href="addlibrary.html">添加外部库</a></div>
+<div class="linkBHEAD"><a href="defaultarg.html">提供默认参数</a></div>
+<div class="linkBHEAD"><a href="commonbuild.html">对所有平台使用通用的构建文件</a></div>
+<div class="linkAHEAD"><a href="multiplelaunchers.html">使用多个入口点</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>追踪：</b>部署<br><b>课程：</b>部署独立的应用程序</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">部署</a> > <a href="index.html" target="_top">部署自包含应用程序</a>
+            </div>
+            <div class="NavBit">
+                <a href="prereqs.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="fileassociation.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>转换现有的应用程序</h1></div>
+            <div id="PageContent">
+
+<p>任何独立的Java应用程序或Java Web Start应用程序都可以打包为独立的应用程序。如果您有Java小程序，请参阅将Java小程序<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/applet_dev_guide.html#JSDPG1036" target="_blank">重写为Java Web Start应用程序，</a>以获取有关将Applet覆盖到Java Web Start应用程序的信息，该Java Web Start应用程序可以打包为独立的应用程序。</p> 
+ 
+<p>在转换应用程序之前，请确保已为平台安装了必需的先决条件。有关信息，请参见<a class="TutorialLink" href="../selfContainedApps/prereqs.html" target="_top">包装自包含应用程序的先决</a>条件。</p>
+
+<p>本节将动态树演示从<a class="TutorialLink" href="../webstart/deploying.html" target="_top">部署Java Web Start应用程序</a>转换为独立的应用程序。您可以从“独立<a class="TutorialLink" href="../selfContainedApps/examplesIndex.html" target="_top">应用程序示例”中</a>下载此演示的源文件。</p>
+
+<h2>设置目录</h2>
+<p>识别和组织应用程序所需的文件。一个简单的应用程序可能只需要一个JAR文件。一个更复杂的应用程序可能还需要其他库或资源。自定义资源（例如图标或配置文件）也可以由独立的应用程序使用。</p>
+
+<p>动态树演示仅需要<code>DynamicTreeDemo.jar</code>文件，该文件位于<code>/dist</code>项目目录。不需要Java Web Start版本的应用程序所需的HTML和JNLP文件，并且对于独立应用程序，捆绑程序将忽略它们。</p>
+
+<p>为了为动态树演示提供自定义图标，当用户将其安装在用户桌面上时，它代表了应用程序，为此为每个受支持的平台提供了一个图标。这些图标位于<code>/src/package/<var>platform</var></code>目录。对于每个受支持的平台，图标以不同的格式提供： <code>.ico</code> Windows格式， <code>.png</code> Linux的格式，以及<code>.icns</code> OS X的格式。</p>
+
+<p>以下示例显示了创建独立的捆绑包之前Dynamic Tree Demo项目的目录结构：</p>
+<div class="codeblock"><pre>
+/packager_DynamicTreeDemo     &lt;--- application project
+   /dist
+      DynamicTreeDemo.jar
+      ...
+   /src
+      /package                &lt;--- custom resources
+         /linux
+         /macosx
+         /windows
+      /webstartComponentArch  &lt;--- application source files
+      ...
+</pre></div>
+
+<h2>设置构建文件</h2>
+<p>为所需的打包任务设置Ant任务。这些任务可以添加到<code>build.xml</code>项目的文件，或放置在由项目导入的单独文件中<code>build.xml</code>文件。</p>
+<p>对于动态树演示， <code>packager.xml</code>项目根目录中的文件包含用于生成自包含应用程序捆绑包的Ant任务。的来源<code>packager.xml</code>文件在以下示例中显示：</p>
+
+<div class="codeblock"><pre>
+&lt;project name="DynamicTreePackaging" default="default" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant"&gt;
+    &lt;echo&gt;${java.home}/../lib/ant-javafx.jar&lt;/echo&gt;
+    &lt;target name="package" depends="jar"&gt;
+        &lt;taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+                 uri="javafx:com.sun.javafx.tools.ant"
+                 classpath="${java.home}/../lib/ant-javafx.jar;src"/&gt;
+
+        &lt;fx:deploy outdir="${basedir}/build/packager" 
+                   outfile="DynamicTreeDemo"
+                   nativeBundles="all"
+                   verbose="false"&gt;
+
+            &lt;fx:application name="Dynamic Tree Demo"
+                        mainClass="webstartComponentArch.DynamicTreeApplication"
+                        version="1.0"
+            /&gt;
+
+            &lt;fx:resources&gt;
+                &lt;fx:fileset dir="dist" includes="DynamicTreeDemo.jar"/&gt;
+            &lt;/fx:resources&gt;
+
+            &lt;fx:info title="Dynamic Tree Demo"
+                     vendor="My Company"
+                     description="A Demo of a Dynamic Swing Tree"
+                     category="Demos"
+                     copyright="(c) 2014 My Company"
+                     license="3 Clause BSD"
+            /&gt;
+
+            &lt;fx:bundleArgument arg="linux.bundleName" value="dynamic-tree-demo"/&gt;
+            &lt;fx:bundleArgument arg="email" value="maintainer@example.com"/&gt;
+            &lt;fx:bundleArgument arg="mac.CFBundleName" value="Java Tree Demo"/&gt;
+            &lt;fx:bundleArgument arg="win.menuGroup" value="Java Demos"/&gt;
+
+        &lt;/fx:deploy&gt;
+    &lt;/target&gt;
+&lt;/project&gt;
+</pre></div>
+
+<p>使用以下信息来设置Ant任务：</p>
+
+<ul>
+  <li><p>使用<code>xmlns:fx="javafx:com.sun.javafx.tools.ant</code>用于名称空间。</p></li>
+  
+  <li><p>的<code>taskdef</code>必须先执行任务<code>fx:deploy</code>任务。的<code>classpath</code>属性包含<code>ant-javafx.jar</code> JDK中的文件和包含自定义资源的目录。对于动态树演示， <code>classpath</code>属性包括<code>/src</code>目录，其中包含自定义图标。</p>
+  </li>
+  
+   <li><p>放置<code>fx:deploy</code>在所需目标内的任务。指定放置本机二进制文件的输出目录，并指定要生成的本机二进制文件。</p>
+   <p>如果<code>all</code>如果为本机二进制文件指定了“二进制文件”，则将生成用于执行此任务文件的平台的所有可能的二进制文件，包括磁盘映像。所有平台的有效值为<code>all</code> ; <code>image</code> ，它会在Windows和Linux上生成文件目录， <code>.app</code>在OSX上存档；和<code>installer</code> ，仅为平台生成可安装的捆绑包，而不生成磁盘映像。特定于平台的二进制文件的有效值为<code>exe</code>和<code>msi</code>对于Windows； <code>deb</code>和<code>rpm</code>对于Linux； <code>deb</code> ， <code>pkg</code>和<code>mac.appStore</code>对于OSX。必须安装必需的工具才能构建所选的二进制文件。</p>
+  <p>对于动态树演示， <code>outdir</code>属性设置为<code>${basedir}/build/packager</code> 。 <code>basedir</code>在中定义<code>project</code>元素，在这种情况下，它被设置为当前目录。的<code>nativeBundles</code>属性设置为<code>all</code>因此，将为运行打包任务的平台构建所有格式。</p>
+  </li>
+  
+  <li><p>的<code>verbose</code>属性是可选的。使用此属性可以提供诊断信息。</p></li>
+  
+  <li><p>提供有关应用程序的信息。在中设置应用程序的名称<code>name</code>的属性<code>fx:application</code>元素和<code>title</code>的属性<code>fx:info</code>元件。在页面中设置应用程序的版本<code>version</code>的属性<code>fx:application</code>元件。使用<code>fx:info</code>元素，以提供对应用程序的描述，供应商名称，许可证信息和其他元数据。</p></li>
+  
+  <li><p>有关JAR文件和其他资源的信息在<code>fx:resources</code>元件。</p></li>
+  
+  <li><p>启动信息在<code>mainclass</code>的属性<code>fx:application</code>元件。</p>
+  <p>对于动态树演示，使用了一个简单的单个启动器， <code>webstartComponentArch.DynamicTreeApplication</code> ，这是应用程序的主要类。</p></li>
+  
+  <li><p>其他特定于平台的自定义设置在<code>fx:bundleArgument</code>元素。捆绑程序无法识别的参数将被忽略，因此一个构建文件可以包含所有平台的打包信息。</p>
+  <p>对于动态树演示，将应用以下定制：</p>
+  <ul>
+    <li>Linux的捆绑包名称设置为<code>dynamic-tree-demo</code> 。</li>
+    <li>提供了一个电子邮件地址。</li>
+    <li>OS X菜单栏中显示的名称设置为<code>Java Tree Demo</code> 。</li>
+    <li>Windows上存储应用程序的菜单组的名称设置为<code>Java Demos</code> 。</li>
+  </ul>
+  </li>
+</ul>
+
+<h2>产生捆绑</h2>
+<p>运行要在其上为自包含应用程序构建捆绑软件的平台上创建的打包任务。</p>
+<p>对于动态树演示，请从项目的根文件夹中运行以下命令：</p>
+<div class="codeblock"><pre>
+     ant package
+</pre></div>
+<p>包装任务完成后， <code>build/packager/bundles</code>应用程序项目中的目录包含生成的本机二进制文件。</p>
+
+<p>以下示例显示了为Windows生成独立的捆绑包之后的Dynamic Tree Demo项目的目录结构：</p>
+<div class="codeblock"><pre>
+/packager_DynamicTreeDemo     &lt;--- application project
+   /build
+      /packager
+         /bundles
+            Dynamic Tree Demo         &lt;---folder image
+            Dynamic Tree Demo-1.0.exe &lt;---EXE installer
+            Dynamic Tree Demo-1.0.msi &lt;---MSI installer
+      ...   
+   /dist
+      DynamicTreeDemo.jar
+      ...
+   /src
+      /package                &lt;--- custom resources
+         /linux
+         /macosx
+         /windows
+      /webstartComponentArch  &lt;--- application source files
+      ...
+</pre></div>
+
+<p>请注意，除了自包含的包之外，打包工具还始终为应用程序生成JAR，JNLP和HTML文件。这些文件提供了用于分发应用程序的其他选项。</p> 
+
+<h2>其他参考</h2>
+<p>有关自包含应用程序的更多信息，请参见<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html" target="_blank">自包含应用程序打包</a> 。</p>
+<p>有关Java打包工具的Ant任务的更多信息，请参阅<macroinline><a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/javafx_ant_tasks.html" target="_blank">JavaFX Ant Tasks</a> ，它们用于Java和JavaFX应用程序。</macroinline>
+</p>
+
+        </div>
+        <div class="NavBit">
+            <a href="prereqs.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="fileassociation.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>包装自包含应用程序的先决条件<br><b>下一页：</b>使用文件关联</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

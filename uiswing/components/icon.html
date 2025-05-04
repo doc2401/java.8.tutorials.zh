@@ -1,0 +1,1042 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用图标（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="nolinkAHEAD">如何使用图标</div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="model.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="border.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用图标</h1></div>
+            <div id="PageContent">
+
+<!-- How to Use Icons -->
+<p>许多Swing组件，例如标签，按钮和选项卡式窗格，都可以用<em>图标</em> （固定尺寸的图片）装饰。图标是附着在<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Icon.html" target="_blank"><code>Icon</code></a>接口。Swing提供了一个特别有用的实现<code>Icon</code>接口： <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html" target="_blank"><code>ImageIcon</code></a> ，它从GIF，JPEG或PNG图像绘制图标。</p>
+<p>这是带有三个标签的应用程序的快照，其中两个标签带有图标：</p>
+<center><img src="../../figures/uiswing/components/LabelDemoMetal.png" width="181" height="160" align="bottom" alt="使用图像图标装饰标签的示例。"></center><p>该程序使用一个图像图标包含并绘制黄色图示。一个语句创建图像图标，另外两个语句在两个标签上分别包含图像图标：</p>
+<div class="codeblock"><pre>
+ImageIcon icon = createImageIcon("images/middle.gif",
+                                 "a pretty but meaningless splat");
+label1 = new JLabel("Image and Text", icon, JLabel.CENTER);
+...
+label3 = new JLabel(icon);
+</pre></div>
+<p>的<code>createImageIcon</code>方法（在前面的代码段中使用）是我们在许多代码示例中使用的方法。它找到指定的文件并返回一个<code>ImageIcon</code>该文件，或<code>null</code>如果找不到该文件。这是一个典型的实现：</p>
+<div class="codeblock"><pre>
+/** Returns an ImageIcon, or null if the path was invalid. */
+protected ImageIcon createImageIcon(String path,
+                                           String description) {
+    java.net.URL imgURL = getClass().getResource(path);
+    if (imgURL != null) {
+        return new ImageIcon(imgURL, description);
+    } else {
+        System.err.println("Couldn't find file: " + path);
+        return null;
+    }
+}
+</pre></div>
+<p>在前面的代码段中， <code>ImageIcon</code>构造函数是相对于当前类的位置的，并将解析为绝对URL。的<code>description</code>参数是一个字符串，它允许<a href="../misc/access.html">辅助技术</a>帮助视觉障碍的用户了解图标传达的信息。</p>
+<p>通常，应用程序提供自己的图像集作为应用程序的一部分，就像我们许多演示所使用的图像一样。您应该使用<code>Class</code><code>getResource</code>方法来获取图像的路径。这使应用程序可以验证图像是否可用，如果没有，则提供合理的错误处理。如果图片不属于应用程序， <code>getResource</code>不应该使用<code>ImageIcon</code>构造函数直接使用。例如：</p>
+<div class="codeblock"><pre>
+ImageIcon icon = new ImageIcon("images/middle.gif",
+                               "a pretty but meaningless splat");
+</pre></div>
+<p>当您指定文件名或URL到<code>ImageIcon</code>构造函数，直到图像数据完全加载或数据位置证明无效之后，处理才被阻塞。如果数据位置无效（但非空），则<code>ImageIcon</code>仍成功创建；它只是没有大小，因此不画任何东西。如图所示<code>createImageIcon</code>方法，建议先验证URL指向现有文件，然后再将其传递给<code>ImageIcon</code>构造函数。当文件不存在时，这可以进行优雅的错误处理。如果要在加载图像时获得更多信息，可以通过调用图像图标来注册观察者<code>setImageObserver</code>方法。</p>
+<p>在封面下，每个图像图标都使用一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Image.html" target="_blank"><code>Image</code></a>用于保存图像数据的对象。</p>
+<p>本节的其余部分包括以下主题：</p>
+<ul>
+<li><a href="#example">一个更复杂的图像图标示例</a></li>
+<li><a href="#getresource">使用getResource加载图像</a></li>
+<li><a href="#applet">将图像加载到小程序中</a></li>
+<li><a href="#efficiency">加载图像图标时提高感知性能</a></li>
+<li><a href="#custom">创建自定义图标实现</a></li>
+<li><a href="#api">图像图标API</a></li>
+<li><a href="#eg">使用图标的示例</a></li>
+</ul>
+<p><a name="example" id="example"></a></p>
+<h2><a name="example__1" id="example__1">一个更复杂的图像图标示例</a></h2>
+<p>这是一个使用六个图像图标的应用程序。其中五个显示缩略图，第六个则显示完整尺寸的照片。</p>
+<center><img src="../../figures/uiswing/components/IconDemoApp.png" width="400" height="300" align="bottom" alt="IconDemo应用程序的初始视图。"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>
+<p>单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行IconDemo。或者，要自己编译并运行示例，请参考<a href="../examples/components/index.html#IconDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/IconDemoProject/IconDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动IconDemo示例"></a><br></li>
+<li>
+<p>单击任意缩略图图像以查看完整尺寸的照片。</p>
+</li>
+<li>将鼠标悬停在照片上。出现一个工具提示，显示照片标题。</li>
+</ol>
+<hr></div>
+<p><strong>IconDemoApp</strong>演示了通过以下方式使用的图标：</p>
+<ul>
+<li>作为附加在按钮上的GUI元素（按钮上的缩略图）。</li>
+<li>显示图像（五张照片）。</li>
+</ul>
+<p>照片通过以下方式装入单独的线程中： <code>loadimages.execute</code> 。的<code>loadimages</code>代码将在本节稍后部分显示。</p>
+<p>的<code>ThumbnailAction</code>类，在内部类<a class="SourceLink" href="../examples/components/IconDemoProject/src/components/IconDemoApp.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/IconDemoProject/src/components/IconDemoApp.java'); return false;"><code>IconDemoApp.java</code></a> ，是的后代<code>AbstractAction</code>管理我们的全尺寸图片图标，缩略图版本及其说明。当。。。的时候<code>actionPerformed</code>该方法称为全尺寸图像，被加载到主显示区域。每个按钮都有其自己的实例<code>ThumbnailAction</code>它指定要显示的其他图像。</p>
+<div class="codeblock"><pre>
+/**
+ * Action class that shows the image specified in it's constructor.
+ */
+private class ThumbnailAction extends AbstractAction{
+
+    /**
+     *The icon if the full image we want to display.
+     */
+    private Icon displayPhoto;
+
+    /**
+     * @param Icon - The full size photo to show in the button.
+     * @param Icon - The thumbnail to show in the button.
+     * @param String - The descriptioon of the icon.
+     */
+    public ThumbnailAction(Icon photo, Icon thumb, String desc){
+        displayPhoto = photo;
+
+        // The short description becomes the tooltip of a button.
+        putValue(SHORT_DESCRIPTION, desc);
+
+        // The LARGE_ICON_KEY is actually the key for setting the
+        // icon when an Action is applied to a button.
+        putValue(LARGE_ICON_KEY, thumb);
+    }
+
+    /**
+     * Shows the full image in the main area and sets the application title.
+     */
+    public void actionPerformed(ActionEvent e) {
+        photographLabel.setIcon(displayPhoto);
+        setTitle("Icon Demo: " + getValue(SHORT_DESCRIPTION).toString());
+    }
+}
+</pre></div>
+<p><a name="getresource" id="getresource"></a></p>
+<h2><a name="getresource__1" id="getresource__1">使用getResource加载图像</a></h2>
+<p>通常，图像图标的数据来自图像文件。可以在文件服务器上配置应用程序的类和图像文件的多种有效方法。您可能将类文件放在JAR文件中，或者将图像文件放在JAR文件中；它们可能在同一个JAR文件中，或者可能在不同的JAR文件中。下图说明了这些文件的几种配置方式：</p>
+<table cellpadding="5" summary="">
+<tbody><tr align="center">
+<td width="325">
+<img src="../../figures/uiswing/components/default.png" width="231" height="53" alt="该图显示了父目录下的MyDemo.class和images / myImage.png"></td>
+<td width="325">
+<img src="../../figures/uiswing/components/defaultImageJar.png" width="262" height="71" alt="该图显示了父目录下的MyDemo.class和image.jar"></td>
+</tr>
+<tr valign="top">
+<td>包含图像文件的图像目录旁边的类文件，格式为PNG。</td>
+<td>类文件与JAR文件位于同一目录中。JAR文件是使用所有图片创建的<code>images</code>目录。</td>
+</tr>
+<tr align="center">
+<td>
+<img src="../../figures/uiswing/components/defaultTwoJars.png" width="262" height="89" alt="该图显示了父目录下的MyDemo.jar和image.jar"></td>
+<td>
+<img src="../../figures/uiswing/components/megaJar.png" width="280" height="71" alt="该图在同一JAR文件中显示MyDemo.class和images / myImage.png"></td>
+</tr>
+<tr valign="top">
+<td>一个JAR文件中的类文件，另一个JAR文件中的图像。</td>
+<td>类和图像文件在同一JAR文件中。</td>
+</tr>
+</tbody></table>
+<p>如果您正在编写真实的应用程序，则可能（并建议）将文件放入包中。有关包的更多信息，请参阅“ <a class="TutorialLink" href="../../java/" target="_top">学习Java语言”</a>路径中的“ <a class="TutorialLink" href="../../java/package/packages.html" target="_top">创建和使用包</a> ”。这是使用名为“ omega”的软件包的一些可能的配置：</p>
+<table cellpadding="5" summary="">
+<tbody><tr align="center">
+<td width="325">
+<img src="../../figures/uiswing/components/omega.png" width="285" height="62" alt="该图显示了带有MyDemo.class和image / myImage.png的omega包"></td>
+<td width="325">
+<img src="../../figures/uiswing/components/omegaImageJar.png" width="294" height="80" alt="该图显示了带有MyDemo.class和image.jar的omega包"></td>
+</tr>
+<tr valign="top">
+<td>目录文件中的类文件<code>omega</code> 。图片中<code>omega/images</code>目录。</td>
+<td>类文件在<code>omega</code>目录。JAR文件中的图像不在内部<code>omega</code>目录，但使用<code>omega/images</code>层次结构。</td>
+</tr>
+<tr align="center">
+<td>
+<img src="../../figures/uiswing/components/megaOmegaJar.png" width="307" height="80" alt="该图显示了包含omega / MyDemo.class和omega / images / myImage.png的omega.jar"></td>
+</tr>
+<tr valign="top">
+<td>一个大的JAR文件，其中包含类文件<code>omega</code>目录和图像文件在<code>omega/images</code>目录。</td>
+</tr>
+</tbody></table>
+<p>显示的所有七个配置均有效，并且相同的代码读取该图像：</p>
+<div class="codeblock"><pre>
+java.net.URL imageURL = myDemo.class.getResource("images/myImage.gif");
+...
+if (imageURL != null) {
+    ImageIcon icon = new ImageIcon(imageURL);
+}
+</pre></div>
+<p>的<code>getResource</code>方法使类加载器浏览程序的类路径中的目录和JAR文件，并在找到所需文件后立即返回URL。在示例中，MyDemo程序尝试加载<code>images/myImage.png</code>来自的文件<code>omega</code>类。类加载器通过程序的类路径中的目录和JAR文件查找<code>/omega/images/myImage.png</code> 。如果类加载器找到该文件，则它将返回JAR文件的URL或包含该文件的目录。如果类路径中的另一个JAR文件或目录包含<code>images/myImage.png</code>文件，类加载器返回包含该文件的第一个实例。</p>
+<p>以下是指定类路径的三种方法：</p>
+<ul>
+<li>
+<p>使用<code>-cp</code>要么<code>-classpath</code>命令行参数。例如，在图像位于名为的JAR文件中的情况下<code>images.jar</code>该类文件位于当前目录中：</p>
+<div class="codeblock"><pre>
+java -cp  .;images.jar  MyDemo  [Microsoft Windows]
+java -cp ".;images.jar" MyDemo  [UNIX-emulating shell on Microsoft
+                                Windows &#151; you must quote the path]
+java -cp  .:images.jar  MyDemo  [UNIX]
+</pre></div>
+<p>如果图像和类文件位于单独的JAR文件中，则命令行将类似于：</p>
+<div class="codeblock"><pre>
+java -cp .;MyDemo.jar;images.jar MyDemo  [Microsoft Windows]
+</pre></div>
+<p>如果所有文件都在一个JAR文件中，则可以使用以下命令之一：</p>
+<div class="codeblock"><pre>
+java -jar MyAppPlusImages.jar
+java -cp .;MyAppPlusImages.jar MyApp  [Microsoft Windows]
+</pre></div>
+<p>有关更多信息，请参见<a class="TutorialLink" href="../../deployment/jar/" target="_top">JAR Files</a>路径。</p>
+</li>
+<li>
+<p>在程序的JNLP文件中（由Java Web Start使用）。例如，这是供以下人员使用的JNLP文件： <code>DragPictureDemo</code> ：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!-- JNLP File for DragPictureDemo --&gt;
+&lt;jnlp
+  spec="1.0+"
+  codebase="https://docs.oracle.com/javase/tutorialJWS/src/uiswing/misc/examples"
+  href="DragPictureDemo.jnlp"&gt;
+  &lt;information&gt;
+    &lt;title&gt;DragPictureDemo&lt;/title&gt;
+    &lt;vendor&gt;The Java(tm) Tutorial: Sun Microsystems, Inc.&lt;/vendor&gt;
+    &lt;homepage href="https://docs.oracle.com/javase/tutorial/uiswing/misc/examples/index.html#DragPictureDemo"/&gt;
+    &lt;description&gt;DragPictureDemo&lt;/description&gt;
+    &lt;description kind="short"&gt;A demo showing how to install
+        data transfer on a custom component.&lt;/description&gt;
+    &lt;offline-allowed/&gt;
+  &lt;/information&gt;
+  &lt;resources&gt;
+    &lt;j2se version="1.6+"/&gt;
+    <b>&lt;jar href="allClasses.jar"/&gt;</b>
+    <b>&lt;jar href="images.jar"/&gt;</b>
+  &lt;/resources&gt;
+  &lt;application-desc main-class="DragPictureDemo"/&gt;
+&lt;/jnlp&gt;
+</pre></div>
+<p>在此示例中，类文件和图像文件位于单独的JAR文件中。使用XML指定JAR文件<code>jar</code>标签。</p>
+</li>
+<li>
+<p>设置<code>CLASSPATH</code>环境变量。<em>不建议使用</em>最后一种方法。如果<code>CLASSPATH</code>如果未设置，则默认使用当前目录（“。”）以及JRE随附的系统类的位置。</p>
+</li>
+</ul>
+<p>大多数Swing教程示例都将图像放在一个<code>images</code>目录包含示例的类文件的目录下。在为示例创建JAR文件时，尽管通常将类文件放置在与图像JAR文件不同的JAR文件中，但我们保持相同的相对位置。无论类和图像文件在文件系统中的哪个位置（一个JAR文件，多个JAR文件，一个命名程序包或默认程序包中），相同的代码都会使用<code>getResource</code> 。</p>
+<p>有关更多信息，请参见<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html" target="_blank">以与位置无关的方式访问资源</a>和<a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/javaws/developersguide/development.html" target="_blank">应用程序开发注意事项</a> 。</p>
+<h2><a name="applet" id="applet">将图像加载到小程序中</a></h2>
+<p>小程序通常从提供该小程序的计算机加载图像数据。的<code>APPLET</code>标签是您指定有关小程序中使用的图像的信息的位置。有关的更多信息<code>APPLET</code>标签，请参阅<a class="TutorialLink" href="../../deployment/applet/html.html" target="_top">使用APPLET标签</a></p>
+<h2><a name="efficiency" id="efficiency">加载图像图标时提高感知性能</a></h2>
+<p>由于照片图像的访问速度可能很慢， <a class="SourceLink" href="../examples/components/IconDemoProject/src/components/IconDemoApp.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/IconDemoProject/src/components/IconDemoApp.java'); return false;"><code>IconDemoApp.java</code></a>使用一个<code>SwingWorker</code>以提高用户所感知的程序性能。</p>
+<p><strong>加载背景图像</strong> -程序使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingWorker.html" target="_blank">javax.swing。SwingWorker</a>对象可加载每个照片图像并在后台线程中计算其缩略图。用一个<code>SwingWorker</code>防止程序在加载和缩放图像时显得冻结。</p>
+<p>这是处理每个图像的代码：</p>
+<div class="codeblock"><pre>
+/**
+ * SwingWorker class that loads the images a background thread and calls publish
+ * when a new one is ready to be displayed.
+ *
+ * We use Void as the first SwingWorker param as we do not need to return
+ * anything from doInBackground().
+ */
+private SwingWorker&lt;Void, ThumbnailAction&gt; loadimages = new SwingWorker&lt;Void, ThumbnailAction&gt;() {
+
+    /**
+     * Creates full size and thumbnail versions of the target image files.
+     */
+    @Override
+    protected Void doInBackground() throws Exception {
+        for (int i = 0; i &lt; imageCaptions.length; i++) {
+            ImageIcon icon;
+            icon = createImageIcon(imagedir + imageFileNames[i], imageCaptions[i]);
+
+            ThumbnailAction thumbAction;
+            if(icon != null){
+
+                ImageIcon thumbnailIcon = new
+                     ImageIcon(getScaledImage(icon.getImage(), 32, 32));
+
+
+                thumbAction = new ThumbnailAction(icon, thumbnailIcon, imageCaptions[i]);
+
+            } else {
+                // the image failed to load for some reason
+                // so load a placeholder instead
+                thumbAction = new ThumbnailAction(placeholderIcon, placeholderIcon, imageCaptions[i]);
+            }
+            publish(thumbAction);
+        }
+        // unfortunately we must return something, and only null is valid to
+        // return when the return type is void.
+        return null;
+    }
+
+    /**
+     * Process all loaded images.
+     */
+    @Override
+    protected void process(List&lt;ThumbnailAction&gt; chunks) {
+        for (ThumbnailAction thumbAction : chunks) {
+            JButton thumbButton = new JButton(thumbAction);
+            // add the new button BEFORE the last glue
+            // this centers the buttons in the toolbar
+            buttonBar.add(thumbButton, buttonBar.getComponentCount() - 1);
+        }
+    }
+};
+</pre></div>
+<p>SwingWorker调用<code>doInBackground</code>后台线程中的方法。该方法将全尺寸图片，缩略图尺寸图片和标题放入<code>ThumbnailAction</code>宾语。然后，SwingWorker交付<code>ThumbnailAction</code>到<code>process</code>方法。的<code>process</code>方法在事件分发线程上执行，并通过向工具栏添加按钮来更新GUI。 <code>JButton</code>有一个带操作对象的构造函数。动作对象确定按钮的许多属性。在我们的案例中，按钮图标，标题和按下按钮时要执行的操作均由<code>ThumbnailAction</code> 。</p>
+<p><strong>开销</strong> —该程序最终将所有源图像加载到内存中。这并非在所有情况下都是理想的。加载许多非常大的文件可能会导致程序分配非常大的数量或内存。应小心管理加载的图像的数量和大小。</p>
+<p>与所有与性能相关的问题一样，此技术适用于某些情况，而不适用于其他情况。同样，此处描述的技术旨在提高程序的感知性能，但不一定会影响其实际性能。</p>
+<h2><a name="custom" id="custom">创建自定义图标实现</a></h2>
+<p>的<code>createImageIcon</code>当找不到图像时，该方法返回null，但是程序应该怎么办？一种可能性是忽略该图像并继续前进。另一种选择是提供某种默认图标，以在无法加载实际图标时显示。再次拨打<code>createImageIcon</code>可能会导致另一个null，因此使用它不是一个好主意。相反，让我们创建一个自定义<code>Icon</code>实施。</p>
+<center><img src="../../figures/uiswing/components/MissingIconDemo.png" width="400" height="300" align="bottom" alt="MissingIcon的示例。"></center><p>您可以在以下位置找到自定义图标类的实现<a class="SourceLink" href="../examples/components/IconDemoProject/src/components/MissingIcon.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/IconDemoProject/src/components/MissingIcon.java'); return false;"><code>MissingIcon.java</code></a> 。以下是其代码中有趣的部分：</p>
+<div class="codeblock"><pre>
+/**
+ * The "missing icon" is a white box with a black border and a red x.
+ * It's used to display something when there are issues loading an
+ * icon from an external location.
+ *
+ * @author Collin Fagan
+ */
+public class MissingIcon implements Icon{
+
+    private int width = 32;
+    private int height = 32;
+
+    private BasicStroke stroke = new BasicStroke(4);
+
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(x +1 ,y + 1,width -2 ,height -2);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(x +1 ,y + 1,width -2 ,height -2);
+
+        g2d.setColor(Color.RED);
+
+        g2d.setStroke(stroke);
+        g2d.drawLine(x +10, y + 10, x + width -10, y + height -10);
+        g2d.drawLine(x +10, y + height -10, x + width -10, y + 10);
+
+        g2d.dispose();
+    }
+
+    public int getIconWidth() {
+        return width;
+    }
+
+    public int getIconHeight() {
+        return height;
+    }
+}
+</pre></div>
+<p>的<code>paintIcon</code>方法通过了<code>Graphics</code>宾语。的<code>Graphics</code>对象给<code>paintIcon</code>方法访问整个Java2D API。有关绘画和Java2D的更多信息，请参见<a class="TutorialLink" href="../painting/index.html" target="_top">执行自定义绘画</a> 。</p>
+<p>以下代码演示了<code>MissingIcon</code>类用于<code>SwingWorker</code><code>doInBackground</code>方法。</p>
+<div class="codeblock"><pre>
+private MissingIcon placeholderIcon = new MissingIcon();
+
+...
+if(icon != null) {
+    ...
+
+} else {
+    // the image failed to load for some reason
+    // so load a placeholder instead
+    thumbAction = new ThumbnailAction(placeholderIcon, placeholderIcon, imageCaptions[i]);
+}
+</pre></div>
+<p>使用自定义图标有一些含义：</p>
+<ul>
+<li>
+<p>因为图标的外观是动态确定的，所以图标绘制代码可以使用任何信息（例如，组件和应用程序状态）来确定要绘制的内容。</p>
+</li>
+<li>根据平台和图像类型的不同，使用自定义图标可能会提高性能，因为绘制简单形状有时会比复制图像更快。</li>
+<li>
+<p>因为<code>MissingIcon</code>不执行任何文件I / O，不需要单独的线程来加载映像。</p>
+</li>
+</ul>
+<h2><a name="api" id="api">图像图标API</a></h2>
+<p>下表列出了常用的<code>ImageIcon</code>构造函数和方法。注意<code>ImageIcon</code>不是...的后代<code>JComponent</code>甚至<code>Component</code> 。</p>
+<p>使用图像图标的API分为以下几类：</p>
+<ul>
+<li><a href="#contents">设置，获取和绘制图像图标的图像</a></li>
+<li><a href="#info">设置或获取有关图像图标的信息</a></li>
+<li><a href="#loadstatus">观看图像图标的图像加载</a></li>
+</ul>
+<table border="1" summary="Setting, Getting, and Painting the Image Icon's Image">
+<caption><a name="contents" id="contents">设置，获取和绘制图像图标的图像</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon--" target="_blank">ImageIcon（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-byte:A-" target="_blank">ImageIcon（byte []）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-byte:A-java.lang.String-" target="_blank">ImageIcon（byte []，字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.awt.Image-" target="_blank">ImageIcon（图片）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.awt.Image-java.lang.String-" target="_blank">ImageIcon（图像，字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-" target="_blank">ImageIcon（字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-java.lang.String-" target="_blank">ImageIcon（字符串，字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.net.URL-" target="_blank">ImageIcon（URL）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.net.URL-java.lang.String-" target="_blank">ImageIcon（URL，字符串）</a></td>
+<td>创建一个<code>ImageIcon</code>实例，对其进行初始化以包含指定的图像。第一个参数指示源（图像，字节数组，文件名或URL），应从中加载图像图标的图像。来源必须采用受支持的格式<code>java.awt.Image</code>类别：GIF，JPEG或PNG。当出现第二个参数时，将为图像提供描述。描述也可以通过<code>setDescription</code>并为<a href="../misc/access.html">辅助技术</a>提供有用的文字信息。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#setImage-java.awt.Image-" target="_blank">无效setImage（Image）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getImage--" target="_blank">图片getImage（）</a></td>
+<td>设置或获取图像图标显示的图像。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#paintIcon-java.awt.Component-java.awt.Graphics-int-int-" target="_blank">void paintIcon（Component，Graphics，int，int）</a></td>
+<td>在指定的图形上下文中绘制图像图标的图像。仅当实现要执行自己绘制的自定义图标时，才可以覆盖此设置。的<code>Component</code>对象用作图像观察器。您可以依靠提供的默认行为<code>Component</code>类，并传入任何组件。他们俩<code>int</code>参数指定绘制图标的左上角。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html#getResource-java.lang.String-" target="_blank">URL getResource（String）</a><br>在（ <em>java.lang。ClassLoader</em> ）</td>
+<td>查找具有给定名称的资源。有关更多信息，请参见<a href="#getresource">使用getResource加载图像</a> 。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html#getResourceAsStream-java.lang.String-" target="_blank">InputStream getResourceAsStream（String）</a><br>在（ <em>java.lang。ClassLoader</em> ）</td>
+<td>查找具有给定名称的资源，并返回输入流以读取资源。有关更多信息，请参见将<a href="#applet">图像加载到小程序中</a> 。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Setting or Getting Information about the Image Icon">
+<caption><a name="info" id="info">设置或获取有关图像图标的信息</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#setDescription-java.lang.String-" target="_blank">无效setDescription（String）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getDescription--" target="_blank">字符串getDescription（）</a></td>
+<td>设置或获取图像描述。本说明旨在供<a href="../misc/access.html">辅助技术</a>使用。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getIconWidth--" target="_blank">int getIconWidth（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getIconHeight--" target="_blank">int getIconHeight（）</a></td>
+<td>获取图像图标的宽度或高度（以像素为单位）。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="Watching the Image Icon's Image Load">
+<caption><a name="loadstatus" id="loadstatus">观看图像图标的图像加载</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#setImageObserver-java.awt.image.ImageObserver-" target="_blank">无效setImageObserver（ImageObserver）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getImageObserver--" target="_blank">ImageObserver getImageObserver（）</a></td>
+<td>设置或获取图像图标的图像观察器。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#getImageLoadStatus--" target="_blank">int getImageLoadStatus（）</a></td>
+<td>获取图像图标图像的加载状态。此方法返回的值由<code>MediaTracker</code> 。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用图标的示例</a></h2>
+<p>下表仅列出了许多使用的示例<code>ImageIcon</code> 。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#LabelDemo"><code>LabelDemo</code></a></td>
+<td>本节和<br>
+<a href="../components/label.html">如何使用标签</a></td>
+<td>演示如何在应用程序的标签中使用图标，并附带或不附带文本。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#IconDemo"><code>IconDemo</code></a></td>
+<td>这个部分</td>
+<td>使用标签显示大图像；使用同时具有图像和文本的按钮。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#CustomIconDemo"><code>CustomIconDemo</code></a></td>
+<td>这个部分</td>
+<td>使用由实现的自定义图标类<a class="SourceLink" href="../examples/components/CustomIconDemoProject/src/components/ArrowIcon.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/CustomIconDemoProject/src/components/ArrowIcon.java'); return false;"><code>ArrowIcon.java</code></a> 。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TumbleItem"><code>TumbleItem</code></a></td>
+<td><a href="../components/applet.html">如何制作小程序</a></td>
+<td>一个小程序。在动画中使用图像图标。显示如何呼叫<code>ImageIcon</code>的<code>paintIcon</code>方法。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ButtonDemo"><code>ButtonDemo</code></a></td>
+<td><a href="../components/button.html">如何使用按钮，复选框和单选按钮</a></td>
+<td>显示如何在应用程序的按钮中使用图标。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#CheckBoxDemo"><code>CheckBoxDemo</code></a></td>
+<td><a href="../components/button.html#checkbox">如何使用复选框</a></td>
+<td>使用多个GIF图像。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TabbedPaneDemo"><code>TabbedPaneDemo</code></a></td>
+<td><a href="../components/tabbedpane.html">如何使用选项卡式窗格</a></td>
+<td>演示向选项卡式窗格中的选项卡添加图标。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#DialogDemo"><code>DialogDemo</code></a></td>
+<td><a href="../components/dialog.html">如何制作对话框</a></td>
+<td>显示如何在对话框中使用标准图标。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeIconDemo"><code>TreeIconDemo</code></a></td>
+<td><a href="../components/tree.html">如何使用树木</a></td>
+<td>显示如何更改树节点显示的图标。</td>
+</tr>
+<tr>
+<td><a href="../examples/misc/index.html#ActionDemo"><code>ActionDemo</code></a></td>
+<td><a href="../misc/action.html">如何使用动作</a></td>
+<td>显示如何使用工具栏来指定工具栏按钮或菜单项中的图标<code>Action</code> 。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#FileChooserDemo2"><code>FileChooserDemo2</code></a></td>
+<td><a href="../components/filechooser.html">如何使用文件选择器</a></td>
+<td>使用一个<code>PNG</code>图片。显示如何在文件选择器中实现图像预览器和图像过滤器。</td>
+</tr>
+</tbody></table>
+<div class="note"><hr><strong>注意：</strong> <a href="../examples/components/index.html#IconDemo"><code>IconDemo</code></a>拥有©2006 <a class="OutsideLink" href="http://photos.spriggs.net/" target="_blank">spriggs.net的</a>版权，并已获得<a class="OutsideLink" href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">知识共享许可</a> 。
+<hr></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="model.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="border.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用模型<br><b>下一页：</b>如何使用边框</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

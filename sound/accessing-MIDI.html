@@ -1,0 +1,603 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>访问MIDI系统资源（Java™教程>声音）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="java programming, learn java, java sample code, ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkAHEAD"><a href="sampled-overview.html">采样包概述</a></div>
+<div class="linkAHEAD"><a href="accessing.html">访问音频系统资源</a></div>
+<div class="linkAHEAD"><a href="playing.html">播放音频</a></div>
+<div class="linkAHEAD"><a href="capturing.html">捕捉音频</a></div>
+<div class="linkAHEAD"><a href="controls.html">使用控件处理音频</a></div>
+<div class="linkAHEAD"><a href="converters.html">使用文件和格式转换器</a></div>
+<div class="linkAHEAD"><a href="overview-MIDI.html">MIDI包概述</a></div>
+<div class="nolinkAHEAD">访问MIDI系统资源</div>
+<div class="linkAHEAD"><a href="MIDI-messages.html">传输和接收MIDI信息</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-intro.html">音序器简介</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-methods.html">使用定序器方法</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-adv.html">使用高级音序器功能</a></div>
+<div class="linkAHEAD"><a href="MIDI-synth.html">合成声音</a></div>
+<div class="linkAHEAD"><a href="SPI-intro.html">服务提供商接口简介</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-sampled.html">提供音频采样服务</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-MIDI.html">提供MIDI服务</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>踪迹：</b>声音</div>
+            <div id="BreadCrumbs">
+                <a href="../index.html" target="_top">主页</a> > <a href="./index.html" target="_top">声音</a>
+            </div>
+            <div class="NavBit">
+                <a href="overview-MIDI.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="MIDI-messages.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>访问MIDI系统资源</h1></div>
+            <div id="PageContent">
+
+<p>Java Sound API为MIDI系统配置提供了一个灵活的模型，就像它对采样音频系统的配置一样。Java Sound API的实现本身可以提供不同种类的MIDI设备，其他的可以由服务提供商提供并由用户安装。您可以以这样的方式编写程序，即无需对计算机上安装了哪些特定MIDI设备做出任何假设。相反，该程序可以利用MIDI系统的默认值，也可以允许用户从碰巧可用的任何设备中进行选择。</p>
+<p><a name="119705"></a>本节说明程序如何了解已安装了哪些MIDI资源，以及如何访问所需的MIDI资源。访问并打开设备后，可以将它们彼此连接，如稍后在<a class="TutorialLink" href="MIDI-messages.html" target="_top">发送和接收MIDI消息中所述</a> 。</p>
+<h2>MidiSystem类</h2>
+<p><a name="119713"></a>的作用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/MidiSystem.html" target="_blank"><code>MidiSystem</code></a> Java Sound API的MIDI包中的类直接类似于<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/AudioSystem.html" target="_blank"><code>AudioSystem</code></a>在采样音频包中。 <code>MidiSystem</code>充当访问已安装的MIDI资源的票据交换所。</p>
+<p><a name="119718"></a>您可以查询<code>MidiSystem</code>了解安装的设备类型，然后可以遍历可用设备并访问所需的设备。例如，应用程序可能会通过询问<code>MidiSystem</code>哪些可用的合成器，然后显示它们的列表，用户可以从中选择一个。一个更简单的应用程序可能只使用系统的默认合成器。</p>
+<p><a name="119726"></a>的<code>MidiSystem</code>该类还提供了在MIDI文件和<code>Sequences</code> 。它可以报告MIDI文件的文件格式，并可以写入不同类型的文件。</p>
+<p>应用程序可以从以下位置获取以下资源： <code>MidiSystem</code> ：</p>
+<ul>
+<li>音序器</li>
+<li>合成器</li>
+<li>发射机（例如与MIDI输入端口关联的发射机）</li>
+<li>接收器（例如与MIDI输出端口关联的接收器）</li>
+<li>来自标准MIDI文件的数据</li>
+<li>声音库文件中的数据</li>
+</ul>
+<p>此页面重点介绍这些资源的前四种。其他的将在本教程的后面讨论。<a name="119749"></a></p>
+<h2>获取默认设备</h2>
+<p><a name="119751"></a>使用Java Sound API的典型MIDI应用程序首先获取所需的设备，这些设备可以包含一个或多个音序器，合成器，输入端口或输出端口。</p>
+<p><a name="121015"></a>有一个默认的合成器设备，一个默认的音序器设备，一个默认的发送设备和一个默认的接收设备。如果系统上有可用设备，则后两个设备通常分别代表MIDI输入和输出端口。（很容易对这里的方向性感到困惑。考虑与软件有关的端口发送或接收，而不是与连接到物理端口的任何外部物理设备有关的端口。MIDI输入端口将数据从外部设备<em>传输</em>到Java Sound API <code>Receiver</code> ，并且MIDI输出端口同样从软件对象<em>接收</em>数据并将数据中继到外部设备。）</p>
+<p><a name="121012"></a>一个简单的应用程序可能只使用默认值，而不是浏览所有已安装的设备。的<code>MidiSystem</code>该类包括以下用于检索默认资源的方法：</p>
+<div class="codeblock"><pre>
+static Sequencer getSequencer()
+static Synthesizer getSynthesizer()
+static Receiver getReceiver()
+static Transmitter getTransmitter()
+</pre></div>
+<p><a name="120991"></a>这些方法中的前两种获得系统的默认排序和综合资源，这些资源代表物理设备或全部用软件实现。的<code>getReceiver</code>方法获得一个<code>Receiver</code>接收发送给它的MIDI消息并将其中继到默认接收设备的对象。同样，getTransmitter方法获得一个Transmitter对象，该对象可以代表默认的传输设备将MIDI消息发送到某些接收器。</p>
+<p><a name="119787"></a></p>
+<h2>了解安装了哪些设备</h2>
+<p><a name="119789"></a>代替使用默认设备，一种更彻底的方法是从系统上安装的整套设备中选择所需的设备。应用程序可以通过编程方式选择所需的设备，也可以显示可用设备的列表，并让用户选择要使用的设备。的<code>MidiSystem</code>类提供了一种学习安装哪些设备的方法，以及一种获取给定类型的设备的相应方法。</p>
+<p><a name="119794"></a>这是了解已安装设备的方法：</p>
+<div class="codeblock"><pre>
+ tatic MidiDevice.Info[] getMidiDeviceInfo()
+</pre></div>
+<p>如您所见，它返回一个信息对象数组。每个返回<code>MidiDevice.Info</code>对象标识一种类型的音序器，合成器，端口或已安装的其他设备。（通常，一个系统最多具有一个给定类型的实例。例如，某厂商的给定型号的合成器将只安装一次。）的<code>MidiDevice.Info</code>包含以下字符串来描述设备：</p>
+<ul>
+<li>名称</li>
+<li>版本号</li>
+<li>供应商（创建设备的公司）</li>
+<li>设备说明</li>
+</ul>
+<p>您可以在用户界面中显示这些字符串，以使用户从设备列表中进行选择。</p>
+<p>但是，要以编程方式使用字符串来选择设备（与向用户显示字符串相反），您需要事先知道它们可能是什么。提供每种设备的公司应在其文档中包含此信息。需要或偏爱特定设备的应用程序可以使用此信息来定位该设备。这种方法的缺点是将程序限制在它事先知道的设备实现上。</p>
+<p>另一种更通用的方法是继续迭代<code>MidiDevice.Info</code>对象，获取每个相应的设备，并以编程方式确定是否适合使用（或至少适合包含在用户可以选择的列表中）。下一节将介绍如何执行此操作。</p>
+<h2>获取所需的设备</h2>
+<p>找到合适的设备的信息对象后，应用程序将调用以下内容<code>MidiSystem</code>获取相应设备本身的方法：</p>
+<div class="codeblock"><pre>
+static MidiDevice getMidiDevice(MidiDevice.Info info)
+</pre></div>
+<p><a name="120804"></a>如果您已经找到描述所需设备的信息对象，则可以使用此方法。但是，如果您无法解释由返回的信息对象<code>getMidiDeviceInfo</code>确定所需的设备，以及如果不想向用户显示有关所有设备的信息，则可以执行以下操作：遍历所有<code>MidiDevice.Info</code>传回的物件<code>getMidiDeviceInfo</code> ，使用上述方法获取相应的设备，然后测试每个设备是否合适。换句话说，您可以在将每个设备包括在显示给用户的列表中之前，查询每个设备的类及其功能，或者作为一种以编程方式决定设备的方式而无需用户参与。例如，如果您的程序需要合成器，则可以获取每个已安装的设备，看看哪些实例可以实现<code>Synthesizer</code>界面，然后在列表中显示它们，用户可以从中选择一个，如下所示：</p>
+<div class="codeblock"><pre>
+// Obtain information about all the installed synthesizers.
+Vector synthInfos;
+MidiDevice device;
+MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
+for (int i = 0; i &lt; infos.length; i++) {
+    try {
+        device = MidiSystem.getMidiDevice(infos[i]);
+    } catch (MidiUnavailableException e) {
+          // Handle or throw exception...
+    }
+    if (device instanceof Synthesizer) {
+        synthInfos.add(infos[i]);
+    }
+}
+// Now, display strings from synthInfos list in GUI.    
+</pre></div>
+<p><a name="119876"></a>再举一个例子，您可以通过编程方式选择设备，而无需用户参与。假设您想获得可以同时演奏最多音符的合成器。您遍历所有MidiDevice。信息对象，如上所述，但是在确定设备是合成器之后，您可以通过调用<code>getMaxPolyphony</code>的方法<code>Synthesizer</code> 。您将保留复音最大的合成器，如下一节所述。即使您不要求用户选择合成器，您仍然可以显示所选字符串。 <code>MidiDevice.Info</code>对象，仅供用户参考。</p>
+<p><a name="119891"></a></p>
+<h2>开启装置</h2>
+<p><a name="119893"></a>上一节显示了如何获取已安装的设备。但是，设备可能已安装但不可用。例如，另一个应用程序可能会专有使用它。要为程序实际保留设备，您需要使用<code>MidiDevice</code>方法<code>open</code> ：</p>
+<div class="codeblock"><pre>
+if (!(device.isOpen())) {
+    try {
+      device.open();
+  } catch (MidiUnavailableException e) {
+          // Handle or throw exception...
+  }
+}
+</pre></div>
+<p><a name="119916"></a>访问设备并通过打开设备进行保留后，您可能需要将其连接到一个或多个其他设备，以使MIDI数据在它们之间流动。稍后在<a class="TutorialLink" href="MIDI-messages.html" target="_top">发送和接收MIDI消息中</a>介绍了此过程。</p>
+<p><a name="121197"></a>用完设备后，您可以通过调用以下命令释放它以供其他程序使用<code>close</code>的方法<code>MidiDevice</code> 。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="overview-MIDI.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="MIDI-messages.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> MIDI程序包概述<br><b>下一页：</b>传输和接收MIDI消息</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,738 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何编写键侦听器（Java™教程>使用JFC / Swing创建GUI>编写事件侦听器）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">编写事件监听器</a></div>
+<div class="linkAHEAD"><a href="intro.html">事件侦听器简介</a></div>
+<div class="linkAHEAD"><a href="generalrules.html">有关编写事件侦听器的一般信息</a></div>
+<div class="linkAHEAD"><a href="eventsandcomponents.html">Swing组件支持的侦听器</a></div>
+<div class="linkAHEAD"><a href="handling.html">为常见事件实现侦听器</a></div>
+<div class="linkBHEAD"><a href="actionlistener.html">如何编写动作监听器</a></div>
+<div class="linkBHEAD"><a href="caretlistener.html">如何编写插入符侦听器</a></div>
+<div class="linkBHEAD"><a href="changelistener.html">如何编写变更监听器</a></div>
+<div class="linkBHEAD"><a href="componentlistener.html">如何编写组件侦听器</a></div>
+<div class="linkBHEAD"><a href="containerlistener.html">如何编写容器侦听器</a></div>
+<div class="linkBHEAD"><a href="documentlistener.html">如何编写文档监听器</a></div>
+<div class="linkBHEAD"><a href="focuslistener.html">如何编写焦点侦听器</a></div>
+<div class="linkBHEAD"><a href="internalframelistener.html">如何编写内部框架侦听器</a></div>
+<div class="linkBHEAD"><a href="itemlistener.html">如何编写项目监听器</a></div>
+<div class="nolinkBHEAD">如何编写密钥侦听器</div>
+<div class="linkBHEAD"><a href="listdatalistener.html">如何编写列表数据侦听器</a></div>
+<div class="linkBHEAD"><a href="listselectionlistener.html">如何编写列表选择监听器</a></div>
+<div class="linkBHEAD"><a href="mouselistener.html">如何编写鼠标侦听器</a></div>
+<div class="linkBHEAD"><a href="mousemotionlistener.html">如何编写鼠标动作侦听器</a></div>
+<div class="linkBHEAD"><a href="mousewheellistener.html">如何编写鼠标轮侦听器</a></div>
+<div class="linkBHEAD"><a href="propertychangelistener.html">如何编写属性更改侦听器</a></div>
+<div class="linkBHEAD"><a href="tablemodellistener.html">如何编写表模型侦听器</a></div>
+<div class="linkBHEAD"><a href="treeexpansionlistener.html">如何编写树扩展侦听器</a></div>
+<div class="linkBHEAD"><a href="treemodellistener.html">如何编写树模型侦听器</a></div>
+<div class="linkBHEAD"><a href="treeselectionlistener.html">如何编写树选择侦听器</a></div>
+<div class="linkBHEAD"><a href="treewillexpandlistener.html">如何编写一个树状扩展侦听器</a></div>
+<div class="linkBHEAD"><a href="undoableeditlistener.html">如何编写不可撤销的编辑侦听器</a></div>
+<div class="linkBHEAD"><a href="windowlistener.html">如何编写窗口侦听器</a></div>
+<div class="linkAHEAD"><a href="api.html">侦听器API表</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见的事件处理问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>编写事件侦听器<br><b>本节：</b>实现常见事件的侦听器</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">编写事件监听器</a>
+            </div>
+            <div class="NavBit">
+                <a href="itemlistener.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="listdatalistener.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何编写密钥侦听器</h1></div>
+            <div id="PageContent">
+
+<p>按键事件指示用户何时在键盘上键入。具体来说，当用户按下或释放键盘按键时，按键事件由具有键盘焦点的组件触发。有关焦点的详细信息，请参阅<a class="TutorialLink" href="../misc/focus.html" target="_top">如何使用焦点子系统</a> 。</p>
+<div class="note"><hr><strong>注意：</strong> <p>要定义对特定键的特殊反应，请使用键绑定而不是键侦听器。有关更多信息，请参见<a class="TutorialLink" href="../misc/keybinding.html" target="_top">如何使用键绑定</a> 。</p>
+<hr></div>
+<p>发送有关两种基本事件的通知：</p>
+<ul>
+<li>键入Unicode字符</li>
+<li>按下或释放键盘上的键</li>
+</ul>
+<p>第一种事件称为<em>键类型</em>事件。第二类是某个<em>键按下</em>或<em>释放键</em>事件。</p>
+<p>通常，除非您需要知道用户何时按下与字符不对应的键，否则您仅对键键入的事件做出反应。例如，要知道用户何时键入Unicode字符（无论是通过按一个键（例如“ a”）还是按顺序按几个键），就可以处理键类型的事件。另一方面，要知道用户何时按下F1键，或者用户是否按下数字键盘上的“ 3”键，可以处理按键事件。</p>
+<div class="note"><hr><strong>注意：</strong> <p>要触发键盘事件，组件<em>必须</em>具有键盘焦点。</p>
+<hr></div>
+<p>要使组件获得键盘焦点，请按照下列步骤操作：</p>
+<ol>
+<li>确保组件的<code>isFocusable</code>方法返回<code>true</code> 。此状态允许组件接收焦点。例如，您可以为键盘启用键盘焦点<code>JLabel</code>通过调用<code>setFocusable(true)</code>标签上的方法。</li>
+<li>确保适当时组件请求焦点。对于自定义组件，请实现一个鼠标侦听器，该侦听器调用<code>requestFocusInWindow</code>单击组件时的方法。</li>
+</ol>
+<div class="note"><hr><strong>版本说明：</strong> <p>焦点子系统使用焦点遍历键，例如Tab和Shift Tab。如果需要防止消耗焦点遍历键，可以致电</p>
+<div class="codeblock"><pre>
+component.setFocusTraversalKeysEnabled(false)
+</pre></div>
+<p>在触发关键事件的组件上。然后，您的程序必须自行处理焦点遍历。或者，您可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/KeyEventDispatcher.html" target="_blank"><code>KeyEventDispatcher</code></a>上课以预听所有关键事件。<a class="TutorialLink" href="../misc/focus.html" target="_top">焦点页面</a>包含有关焦点子系统的详细信息。</p>
+<hr></div>
+<p>您可以获取有关特定按键事件的详细信息。例如，您可以查询按键事件，以确定是否从操作键中触发了该事件。操作键的示例包括复制，粘贴，向上翻页，撤消以及箭头键和功能键。您还可以查询按键或释放键的事件，以确定触发该事件的键的位置。大多数键事件是从标准键盘上触发的，但是某些键的事件（例如Shift）具有有关用户是否按下了键盘左侧或右侧的Shift键的信息。同样，可以从标准键盘或数字键盘输入数字“ 2”。</p>
+<p>对于键类型的事件，您可以获得键字符值以及使用的所有修饰符。</p>
+<div class="note"><hr><strong>注意：</strong> <p>您不应该依赖从返回的关键字符值<code>getKeyChar</code>除非它涉及键类型的事件。</p>
+<hr></div>
+<p>下面的示例演示关键事件。它由一个您可以键入的文本字段组成，其后是一个文本区域，该文本区域在每次触发键事件时都会显示一条消息。窗口底部的按钮可让您同时清除文本字段和文本区域。</p>
+<center><img src="../../figures/uiswing/events/KeyEventDemo.png" width="383" height="251" align="bottom" alt="KeyEventDemo.html"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行KeyEventDemo。另外，要自己编译并运行示例，请参考<a href="../examples/events/index.html#KeyEventDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/KeyEventDemoProject/KeyEventDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" align="bottom" alt="启动KeyEventDemo应用程序"></a><br></li>
+<li>按下并释放键盘上的A键，输入小写字母“ a”。<br>文本字段会触发三个事件：一个按键事件，一个按键类型事件和一个按键释放事件。请注意，键类型事件没有键代码信息，键按下事件和键释放事件没有键字符信息。到目前为止，所有事件都不来自修饰键或动作键，并且在按键和释放键的事件上报告的键位置很可能是标准的。</li>
+<li>按清除按钮。<br>您可能要在以下每个步骤之后执行此操作。</li>
+<li>按下并释放Shift键。<br>文本字段会触发两个事件：按下一个键和释放一个键。文本字段不会触发键类型的事件，因为Shift本身不对应任何字符。</li>
+<li>通过按Shift和A键输入大写的“ A”。<br>您将看到以下事件，尽管可能不是按此顺序：键按下（Shift），键按下（A），键键入（'A'），键释放（A），键释放（Shift） 。请注意，Shift键被列为按键类型和按键事件的修改键。</li>
+<li>按下并释放Caps Lock键，然后按A键，输入一个大写字母“ A”。<br>您应该看到以下事件：按下（Caps Lock），按下（A），键入（'A'），释放（A）。请注意，Caps Lock <em>未</em>列为修饰键。</li>
+<li>按Tab键。按键事件侦听器未接收到Tab键的按键事件或按键释放事件。这是因为焦点子系统使用焦点遍历键，例如Tab和Shift Tab。再按两次Tab键可将焦点返回到文本区域。</li>
+<li>按功能键，例如F3。您会看到功能键是一个动作键。</li>
+<li>按左Shift键，然后按右Shift键。键按下和键释放的事件指示键入了哪个Shift键。</li>
+<li>如果您的键盘有数字键盘，请按Num Lock键。<br>对于Caps Lock，有一个按键事件，但没有按键释放事件。</li>
+<li>按数字键盘上的“ 2”键。您会看到数字“ 2”的键按下，键键入和键释放事件。</li>
+<li>按标准键盘上的“ 2”键。同样，您会看到三个事件消息。两个2号键的键类型事件是相同的。但是按键和按键释放事件表示不同的按键代码和不同的按键位置。</li>
+<li>再按一次Num Lock键。触发键释放事件。</li>
+</ol>
+<hr></div>
+<p>您可以在以下位置找到示例的代码<a class="SourceLink" href="../examples/events/KeyEventDemoProject/src/events/KeyEventDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/events/KeyEventDemoProject/src/events/KeyEventDemo.java'); return false;"><code>KeyEventDemo.java</code></a> 。这是演示的关键事件处理代码：</p>
+<div class="codeblock"><pre>
+public class KeyEventDemo ...  implements KeyListener ... {
+    <em>...//where initialization occurs:</em>
+        typingArea = new JTextField(20);
+        typingArea.addKeyListener(this);
+
+        //Uncomment this if you wish to turn off focus
+        //traversal.  The focus subsystem consumes
+        //focus traversal keys, such as Tab and Shift Tab.
+        //If you uncomment the following line of code, this
+        //disables focus traversal and the Tab events 
+        //become available to the key event listener.
+        //typingArea.setFocusTraversalKeysEnabled(false);
+    ...
+    /** Handle the key typed event from the text field. */
+    public void keyTyped(KeyEvent e) {
+        displayInfo(e, "KEY TYPED: ");
+    }
+
+    /** Handle the key-pressed event from the text field. */
+    public void keyPressed(KeyEvent e) {
+        displayInfo(e, "KEY PRESSED: ");
+    }
+
+    /** Handle the key-released event from the text field. */
+    public void keyReleased(KeyEvent e) {
+        displayInfo(e, "KEY RELEASED: ");
+    }
+    ...
+    private void displayInfo(KeyEvent e, String keyStatus){
+        
+        //You should only rely on the key char if the event
+        //is a key typed event.
+        int id = e.getID();
+        String keyString;
+        if (id == KeyEvent.KEY_TYPED) {
+            char c = e.getKeyChar();
+            keyString = "key character = '" + c + "'";
+        } else {
+            int keyCode = e.getKeyCode();
+            keyString = "key code = " + keyCode
+                    + " ("
+                    + KeyEvent.getKeyText(keyCode)
+                    + ")";
+        }
+        
+        int modifiersEx = e.getModifiersEx();
+        String modString = "extended modifiers = " + modifiersEx;
+        String tmpString = KeyEvent.getModifiersExText(modifiersEx);
+        if (tmpString.length() > 0) {
+            modString += " (" + tmpString + ")";
+        } else {
+            modString += " (no extended modifiers)";
+        }
+        
+        String actionString = "action key? ";
+        if (e.isActionKey()) {
+            actionString += "YES";
+        } else {
+            actionString += "NO";
+        }
+        
+        String locationString = "key location: ";
+        int location = e.getKeyLocation();
+        if (location == KeyEvent.KEY_LOCATION_STANDARD) {
+            locationString += "standard";
+        } else if (location == KeyEvent.KEY_LOCATION_LEFT) {
+            locationString += "left";
+        } else if (location == KeyEvent.KEY_LOCATION_RIGHT) {
+            locationString += "right";
+        } else if (location == KeyEvent.KEY_LOCATION_NUMPAD) {
+            locationString += "numpad";
+        } else { // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
+            locationString += "unknown";
+        }
+        
+        <em>...//Display information about the KeyEvent...</em>
+    }
+}
+</pre></div>
+<h2><a name="api" id="api">密钥侦听器API</a></h2>
+<p style="text-align:center"><a name="keylistener" id="keylistener">KeyListener接口</a></p>
+<p><em>相应的适配器类是<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyAdapter.html" target="_blank"><code>KeyAdapter</code></a> 。</em></p>
+<table border="1" summary="The KeyListener Interface">
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyListener.html#keyTyped-java.awt.event.KeyEvent-" target="_blank">keyTyped（KeyEvent）</a></td>
+<td>在用户将Unicode字符输入到侦听组件中后立即调用。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyListener.html#keyPressed-java.awt.event.keyPressed-" target="_blank">keyPressed（KeyEvent）</a></td>
+<td>在被监听的组件具有焦点时，用户按下按键后立即调用。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyListener.html#keyReleased-java.awt.event.KeyEvent-" target="_blank">keyReleased（KeyEvent）</a></td>
+<td>在用户释放键之后，当侦听的组件具有焦点时调用。</td>
+</tr>
+</tbody></table>
+<p style="text-align:center"><a name="keyevent" id="keyevent">KeyEvent类</a></p>
+<p>的<code>KeyEvent</code>类从继承了许多有用的方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html" target="_blank"><code>InputEvent</code></a>类，例如<code>getModifiersEx</code> ，以及两种有用的方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/ComponentEvent.html" target="_blank"><code>ComponentEvent</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/AWTEvent.html" target="_blank"><code>AWTEvent</code></a>类。有关完整列表，请参见<a href="mouselistener.html">鼠标侦听器</a>页面中的<a href="mouselistener.html#inputevent">InputEvent Class</a>表。</p>
+<table border="1" summary="The KeyEvent Class">
+<tbody><tr>
+<th align="left">方法</th>
+<th align="left">目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#getKeyChar--" target="_blank">int getKeyChar（）</a></td>
+<td>获取与此事件关联的Unicode字符。对于键类型事件，仅依赖此值。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#getKeyCode--" target="_blank">int getKeyCode（）</a></td>
+<td>获取与此事件关联的键控代码。键码标识用户按下或释放的键盘上的特定键。的<code>KeyEvent</code>类为常见的键定义了许多键代码常量。例如， <code>VK_A</code>指定标有<b>A</b>的密钥，并且<code>VK_ESCAPE</code>指定退出键。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#getKeyText-int-" target="_blank">字符串getKeyText（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#getKeyModifiersText-int-" target="_blank">字符串getKeyModifiersText（int）</a></td>
+<td>分别返回事件的键代码和修饰键的文本描述。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html#getModifiersEx--" target="_blank">int getModifiersEx（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html#getModifiersExText-int-" target="_blank">字符串getModifiersExText（int修饰符）</a></td>
+<td>返回此事件的扩展修饰符掩码。有一些方法是从<code>InputEvent</code>类。扩展修饰符表示所有模式键的状态。的<code>getModifiersExText</code>方法返回描述扩展的修饰键和鼠标按钮的字符串。自从<code>getModifiersEx</code>和<code>getModifiersExText</code>方法可提供有关关键事件的更多信息，它们比<code>getKeyText</code>要么<code>getKeyModifiersText</code>方法。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#isActionKey--" target="_blank">boolean isActionKey（）</a></td>
+<td>如果触发事件的键是操作键，则返回true。操作键的示例包括剪切，复制，粘贴，向上翻页，大写锁定，箭头键和功能键。此信息仅对按键和按键释放事件有效。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html#getKeyLocation--" target="_blank">int getKeyLocation（）</a></td>
+<td>返回触发此事件的键的位置。这提供了一种区分键盘上多次出现的键（例如两个Shift键）的方法。可能的值为<code>KEY_LOCATION_STANDARD</code> ， <code>KEY_LOCATION_LEFT</code> ， <code>KEY_LOCATION_RIGHT</code> ， <code>KEY_LOCATION_NUMPAD</code> ， 要么<code>KEY_LOCATION_UNKNOWN</code> 。此方法总是返回<code>KEY_LOCATION_UNKNOWN</code>用于键类型的事件。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用键侦听器的示例</a></h2>
+<p>下表列出了使用键侦听器的示例。</p>
+<table summary="Examples that Use KeyListener">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr valign="top">
+<td><a href="../examples/events/index.html#KeyEventDemo"><code>KeyEventDemo</code></a></td>
+<td>这个部分</td>
+<td>报告在文本字段上发生的所有关键事件，以演示触发关键事件的情况。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="itemlistener.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="listdatalistener.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何编写项目监听器<br><b>下一页：</b>如何编写列表数据侦听器</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

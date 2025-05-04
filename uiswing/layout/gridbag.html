@@ -1,0 +1,790 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用GridBagLayout（Java™教程>使用JFC / Swing创建GUI>在容器中布置组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">布置容器中的组件</a></div>
+<div class="linkAHEAD"><a href="visual.html">布局管理器的可视指南</a></div>
+<div class="linkAHEAD"><a href="using.html">使用布局管理器</a></div>
+<div class="linkAHEAD"><a href="howLayoutWorks.html">布局管理如何工作</a></div>
+<div class="linkAHEAD"><a href="layoutlist.html">如何使用各种布局管理器</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用BorderLayout</a></div>
+<div class="linkAHEAD"><a href="box.html">如何使用BoxLayout</a></div>
+<div class="linkAHEAD"><a href="card.html">如何使用CardLayout</a></div>
+<div class="linkAHEAD"><a href="flow.html">如何使用FlowLayout</a></div>
+<div class="nolinkAHEAD">如何使用GridBagLayout</div>
+<div class="linkAHEAD"><a href="grid.html">如何使用GridLayout</a></div>
+<div class="linkAHEAD"><a href="group.html">如何使用GroupLayout</a></div>
+<div class="linkBHEAD"><a href="groupExample.html">一个GroupLayout示例</a></div>
+<div class="linkAHEAD"><a href="spring.html">如何使用SpringLayout</a></div>
+<div class="linkAHEAD"><a href="custom.html">创建自定义布局管理器</a></div>
+<div class="linkAHEAD"><a href="none.html">在没有布局管理器的情况下进行操作（绝对定位）</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见的布局问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>在容器中布置组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">在容器中布置组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="flow.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="grid.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用GridBagLayout</h1></div>
+            <div id="PageContent">
+
+
+<div class="note"><hr><strong>注意：</strong>本课程涵盖手工编写布局代码，这可能会很困难。如果您对学习布局管理的所有细节都不感兴趣，则可以使用<code>GroupLayout</code>布局管理器与构建器工具相结合，以布置您的GUI。 <a class="TutorialLink" href="../learn/index.html" target="_top">NetBeans IDE</a>就是这样一种构建器工具。否则，如果您想手工编码而又不想使用<code>GroupLayout</code> ， 然后<code>GridBagLayout</code>建议将其作为下一个最灵活，功能最强大的布局管理器。
+<hr></div> 
+
+<p>如果您对使用JavaFX创建GUI感兴趣，请参阅使用JavaFX中的<a class="OutsideLink" href="https://docs.oracle.com/javase/8/javafx/layout-tutorial/index.html" target="_blank">布局</a> 。</p>
+
+
+<p>这是使用示例的图片<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/GridBagLayout.html" target="_blank"><code>GridBagLayout</code></a> 。</p>
+<center><img src="../../figures/uiswing/layout/GridBagLayoutDemo.png" width="250" height="164" align="bottom" alt="GridBagLayoutDemo的快照"></center><p>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行GridBagLayoutDemo。另外，要自己编译并运行示例，请参考<a href="../examples/layout/index.html#GridBagLayoutDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/GridBagLayoutDemoProject/GridBagLayoutDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动GridBagLayoutDemo示例"></a><br>
+<p>GridBagDemo的代码在<a class="SourceLink" href="../examples/layout/GridBagLayoutDemoProject/src/layout/GridBagLayoutDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/layout/GridBagLayoutDemoProject/src/layout/GridBagLayoutDemo.java'); return false;"><code>GridBagLayoutDemo.java</code></a> 。</p>
+<p><code>GridBagLayout</code>是Java平台提供的最灵活（也是最复杂）的布局管理器之一。一种<code>GridBagLayout</code>将组件放置在行和列的网格中，从而允许指定的组件跨越多个行或列。并非所有行都必须具有相同的高度。同样，并非所有列都必须具有相同的宽度。实质上， <code>GridBagLayout</code>将组件放置在网格中的矩形（单元）中，然后使用组件的首选大小来确定单元的大小。</p>
+<p>下图显示了前面小程序的网格。如您所见，网格具有三行三列。第二行中的按钮跨所有列；第三行中的按钮跨越右两列。</p>
+<center><img src="../../figures/uiswing/layout/GridBagLayoutDemoGrid.jpg" width="250" height="164" align="bottom" alt="GridBagLayoutDemo及其网格的快照"></center><p>如果您放大窗口，如下图所示，您将注意到包含Button 5的最下面一行获得了所有新的垂直空间。新的水平空间在所有列之间平均分配。调整大小的行为基于程序分配给程序中各个组件的权重。 <code>GridBagLayout</code> 。您还将注意到，每个组件都占据了所有可用的水平空间，但是（如按钮5所示）却没有占据所有可用的垂直空间。该行为也由程序指定。</p>
+<center><img src="../../figures/uiswing/layout/gridbagbigA.png" width="388" height="182" align="bottom" alt="用户放大后显示的GridBagLayout。"></center><p>程序指定其组件的大小和位置特征的方式是通过为每个组件指定<em>约束</em> 。在组件上设置约束的首选方法是使用<code>Container.add</code>变体，将其传递给<code>GridBagConstraints</code>对象，如以下各节所示。</p>
+<p>以下各节说明可以设置的约束并提供示例。</p>
+<h2><a name="gridbagConstraints" id="gridbagConstraints">指定约束</a></h2>
+
+<p>以下代码是使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/GridBagLayout.html" target="_blank"><code>GridBagLayout</code></a> 。您将在下一节中看到更详细的示例。</p>
+<div class="codeblock"><pre>
+JPanel pane = new JPanel(new GridBagLayout());
+GridBagConstraints c = new GridBagConstraints();
+
+<em>//For each component to be added to this container:</em>
+<em>//...Create the component...</em>
+<em>//...Set instance variables in the GridBagConstraints instance...</em>
+pane.add(theComponent, c);
+</pre></div>
+<p>您可能从上面的示例中猜到了，可以重复使用相同的示例<code>GridBagConstraints</code>实例具有多个组件，即使组件具有不同的约束。但是，建议您不要重复使用<code>GridBagConstraints</code> ，因为如果您忘记为每个新实例重置字段，则很容易导致引入细微的错误。</p>
+<div class="note"><hr><strong>注意：</strong>以下讨论假定<code>GridBagLayout</code>控制具有从左到右组件方向的容器。
+<hr></div>
+<p>您可以设置以下内容<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/GridBagConstraints.html" target="_blank"><code>GridBagConstraints</code></a>实例变量：</p>
+<dl>
+<dt><strong><code>gridx</code></strong> ，<strong><code>gridy</code></strong></dt>
+<dd>在组件的左上方指定行和列。最左边的列有地址<code>gridx=0</code>第一行有地址<code>gridy=0</code> 。使用<code>GridBagConstraints.RELATIVE</code> （默认值）以指定将组件放置在（对于<code>gridx</code> ）或正下方（ <code>gridy</code> ）即将添加到容器中的组件。我们建议指定<code>gridx</code>和<code>gridy</code>每个组件的值，而不仅仅是使用<code>GridBagConstraints.RELATIVE</code> ;这往往会导致更可预测的布局。</dd>
+<dt><strong><code>gridwidth</code></strong> ，<strong><code>gridheight</code></strong></dt>
+<dd>指定列数（对于<code>gridwidth</code> ）或行（用于<code>gridheight</code> ）在组件的显示区域中。这些约束指定组件使用的单元数量， <em>而不是</em>组件使用的像素数量。预设值为1。使用<code>GridBagConstraints.REMAINDER</code>指定组件是其行中的最后一个（用于<code>gridwidth</code> ）或列（用于<code>gridheight</code> ）。使用<code>GridBagConstraints.RELATIVE</code>指定该组件是其行中倒数第二个组件（对于<code>gridwidth</code> ）或列（用于<code>gridheight</code> ）。我们建议指定<code>gridwidth</code>和<code>gridheight</code>每个组件的值，而不仅仅是使用<code>GridBagConstraints.RELATIVE</code>和<code>GridBagConstraints.REMAINDER</code> ;这往往会导致更可预测的布局。
+<p><strong>注意：</strong> <code>GridBagLayout</code>不允许组件跨越多行，除非组件位于最左列或您指定了正数<code>gridx</code>和<code>gridy</code>组件的值。</p>
+</dd>
+<dt><strong><code>fill</code></strong></dt>
+<dd>当组件的显示区域大于组件的请求大小时使用，以确定是否以及如何调整组件的大小。有效值（定义为<code>GridBagConstraints</code>常量）包括<code>NONE</code> （默认）， <code>HORIZONTAL</code> （使组件足够宽，可以水平填充其显示区域，但不要更改其高度）， <code>VERTICAL</code> （使组件足够高以垂直填充其显示区域，但不要更改其宽度），以及<code>BOTH</code> （使组件完全填充其显示区域）。</dd>
+<dt><strong><code>ipadx</code></strong> ，<strong><code>ipady</code></strong></dt>
+<dd>指定内部填充：要添加到组件大小的数量。默认值为零。组件的宽度将至少为其最小宽度加上<code>ipadx*2</code>像素，因为填充适用于组件的两侧。同样，组件的高度将至少为其最小高度加<code>ipady*2</code>像素。</dd>
+<dt><strong><code>insets</code></strong></dt>
+<dd>指定组件的外部填充-组件与其显示区域的边缘之间的最小空间。该值指定为<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Insets.html" target="_blank"><code>Insets</code></a>宾语。默认情况下，每个组件都没有外部填充。</dd>
+<dt><strong><code>anchor</code></strong></dt>
+<dd>当组件小于其显示区域时使用，以确定放置组件的位置（在区域内）。有效值（定义为<code>GridBagConstraints</code>常数）是<code>CENTER</code> （默认）， <code>PAGE_START</code> ， <code>PAGE_END</code> ， <code>LINE_START</code> ， <code>LINE_END</code> ， <code>FIRST_LINE_START</code> ， <code>FIRST_LINE_END</code> ， <code>LAST_LINE_END</code>和<code>LAST_LINE_START</code> 。
+<p>这是在默认的从左到右组件方向的容器中如何解释这些值的图片。<!--[PENDING: A real figure will go here.
+     It will put a hint of a button border around each constant,
+     so that it's obvious that the component is hugging the 
+     specified part of its display area.]--></p>
+<table cellpadding="10" summary="">
+<tbody><tr>
+<td>FIRST_LINE_START</td>
+<td>PAGE_START</td>
+<td align="right">FIRST_LINE_END</td>
+</tr>
+<tr>
+<td>LINE_START</td>
+<td align="center">中央</td>
+<td align="right">LINE_END</td>
+</tr>
+<tr>
+<td>LAST_LINE_START</td>
+<td>PAGE_END</td>
+<td align="right">LAST_LINE_END</td>
+</tr>
+</tbody></table>
+<div class="note"><hr><strong>版本说明：</strong> <code>PAGE_*</code>和<code>*LINE_*</code>常量在1.4中引入。以前的版本需要以罗盘点命名的值。例如， <code>NORTHEAST</code>指示显示区域的右上部分。我们建议您改用新的常量，因为它们使本地化更容易。
+<hr></div>
+</dd>
+<dt><strong><code>weightx</code></strong> ，<strong><code>weighty</code></strong></dt>
+<dd>指定权重是一门艺术，可能会对组件的外观产生重大影响<code>GridBagLayout</code>控件。权重用于确定如何在列之间分配空间（ <code>weightx</code> ）和行之间（ <code>weighty</code> ）;这对于指定调整大小的行为很重要。
+<p>除非您至少指定一个非零值<code>weightx</code>要么<code>weighty</code> ，所有组件都在其容器的中央聚集在一起。这是因为当权重为0.0（默认值）时， <code>GridBagLayout</code>在其单元格网格和容器边缘之间放置任何多余的空间。</p>
+<p>通常，权重的极限值设置为0.0和1.0：必要时使用中间的数字。较大的数字表示组件的行或列应获得更多的空间。对于每一列，权重与最高<code>weightx</code>为该列中的某个组件指定的值，每个多列组件的权重都会以某种方式在该组件所在的列之间分配。同样，每一行的权重与最高<code>weighty</code>为该行中的组件指定。多余的空间倾向于流向最右边的列和最下面的行。</p>
+</dd>
+</dl>
+<p>下一部分将在解释示例程序如何工作的上下文中深入讨论约束。</p>
+
+
+<h2><a name="gridbagExample" id="gridbagExample">范例说明</a></h2>
+
+<p>这里还是GridBagLayoutDemo应用程序的图片。</p>
+<center><img src="../../figures/uiswing/layout/GridBagLayoutDemo.png" width="250" height="164" align="bottom" alt="GridBagLayoutDemo的快照"></center><p>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行GridBagLayoutDemo。另外，要自己编译并运行示例，请参考<a href="../examples/layout/index.html#GridBagLayoutDemo">示例索引</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/GridBagLayoutDemoProject/GridBagLayoutDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动GridBagLayoutDemo示例"></a><br>
+<p>以下代码创建了<code>GridBagLayout</code>及其管理的组件您可以在以下位置找到整个源文件<a class="SourceLink" href="../examples/layout/GridBagLayoutDemoProject/src/layout/GridBagLayoutDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/layout/GridBagLayoutDemoProject/src/layout/GridBagLayoutDemo.java'); return false;"><code>GridBagLayoutDemo.java</code></a> 。</p>
+<div class="codeblock"><pre>
+JButton button;
+pane.setLayout(new GridBagLayout());
+GridBagConstraints c = new GridBagConstraints();
+if (shouldFill) {
+                //natural height, maximum width
+                c.fill = GridBagConstraints.HORIZONTAL;
+}
+
+button = new JButton("Button 1");
+if (shouldWeightX) {
+                   c.weightx = 0.5;
+}
+c.fill = GridBagConstraints.HORIZONTAL;
+c.gridx = 0;
+c.gridy = 0;
+pane.add(button, c);
+
+button = new JButton("Button 2");
+c.fill = GridBagConstraints.HORIZONTAL;
+c.weightx = 0.5;
+c.gridx = 1;
+c.gridy = 0;
+pane.add(button, c);
+
+button = new JButton("Button 3");
+c.fill = GridBagConstraints.HORIZONTAL;
+c.weightx = 0.5;
+c.gridx = 2;
+c.gridy = 0;
+pane.add(button, c);
+
+button = new JButton("Long-Named Button 4");
+c.fill = GridBagConstraints.HORIZONTAL;
+c.ipady = 40;      //make this component tall
+c.weightx = 0.0;
+c.gridwidth = 3;
+c.gridx = 0;
+c.gridy = 1;
+pane.add(button, c);
+
+button = new JButton("5");
+c.fill = GridBagConstraints.HORIZONTAL;
+c.ipady = 0;       //reset to default
+c.weighty = 1.0;   //request any extra vertical space
+c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+c.insets = new Insets(10,0,0,0);  //top padding
+c.gridx = 1;       //aligned with button 2
+c.gridwidth = 2;   //2 columns wide
+c.gridy = 2;       //third row
+pane.add(button, c);
+</pre></div>
+<p>本示例使用一个<code>GridBagConstraints</code>所有组件的实例<code>GridBagLayout</code>可以管理，但是在现实生活中，建议您不要重复使用<code>GridBagConstraints</code> ，因为如果您忘记为每个新实例重置字段，则很容易导致引入细微的错误。在将每个组件添加到容器之前，代码会在代码集中设置（或重置为默认值）适当的实例变量。 <code>GridBagConstraints</code>宾语。然后，将组件添加到其容器中，并指定<code>GridBagConstraints</code>对象作为第二个参数<code>add</code>方法。</p>
+<p>例如，使按钮4更高，该示例具有以下代码：</p>
+<div class="codeblock"><pre>
+c.ipady = 40;
+</pre></div>
+<p>在设置下一个组件的约束之前，代码将重置<code>ipady</code>设为默认值：</p>
+<div class="codeblock"><pre>
+c.ipady = 0;
+</pre></div>
+<p>如果组件的显示区域大于组件本身，那么您可以使用来指定组件在显示区域中的下落。 <code>GridBagConstraints.anchor</code>约束。的<code>anchor</code>约束的值可以是绝对值（北，南，东，西等），也可以是相对方向的（在页面开头，行尾，第一行开头等等），或相对于组件的基线。有关的可能值的完整列表<code>anchor</code>约束，包括相对基线值，请参阅API文档以获取<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/GridBagConstraints.html#anchor" target="_blank"><code>GridBagConstraints.anchor</code></a> 。您可以在上面的代码摘录中看到，按钮5通过在以下位置设置锚点来指定应将其显示在显示区域的末尾<code>GridBagConstraints.PAGE_END</code> 。</p>
+<div class="note"><hr><strong>注意：</strong>本教程的示例用于以不同的方式指定约束对象，您可能也会在其他程序中看到这种方式。而不是使用<code>add</code>方法，我们的示例用于调用<code>setConstraints</code>上的方法<code>GridBagLayout</code>宾语。例如：<div class="codeblock"><pre>
+GridBagLayout gridbag = new GridBagLayout();
+pane.setLayout(gridbag);
+...
+gridbag.setConstraints(button, c);
+pane.add(button);
+</pre></div>但是，我们建议您使用<code>Container.add</code>方法，因为它比您使用的代码更干净<code>setConstraints</code> 。
+<hr></div>
+
+<p>下表显示了GridBagLayoutDemo的内容窗格中每个组件的所有约束。非默认值以<b>粗体</b>标记。与上一个表条目不同的值以<i>斜体</i>标记。</p>
+<table summary="constraints for each component">
+<tbody><tr>
+<th align="left">零件</th>
+<th align="left">约束条件</th>
+</tr>
+<tr>
+<td>所有组件</td>
+<td>
+<div class="codeblock"><pre>
+ipadx = 0
+<b>fill = GridBagConstraints.HORIZONTAL</b>
+</pre></div>
+</td>
+</tr>
+<tr>
+<td>按钮1</td>
+<td>
+<div class="codeblock"><pre>
+ipady = 0 <b>weightx = 0.5</b> weighty = 0.0 gridwidth = 1 anchor = GridBagConstraints.CENTER insets = new Insets(0,0,0,0) <b>gridx = 0</b> <b>gridy = 0</b>
+</pre></div>
+</td>
+</tr>
+<tr>
+<td>按钮2</td>
+<td>
+<div class="codeblock"><pre>
+<b>weightx = 0.5</b>
+<i><b>gridx = 1</b></i>
+<b>gridy = 0</b>
+</pre></div>
+</td>
+</tr>
+<tr>
+<td>按钮3</td>
+<td>
+<div class="codeblock"><pre>
+<b>weightx = 0.5</b>
+<i><b>gridx = 2</b></i>
+<b>gridy = 0</b>
+</pre></div>
+</td>
+</tr>
+<tr>
+<td>按钮4</td>
+<td>
+<div class="codeblock"><pre>
+<i><b>ipady = 40</b></i>
+<i>weightx = 0.0</i>
+<i><b>gridwidth = 3</b></i>
+<i><b>gridx = 0</b></i>
+<i><b>gridy = 1</b></i>
+</pre></div>
+</td>
+</tr>
+<tr>
+<td>按钮5</td>
+<td>
+<div class="codeblock"><pre>
+<i>ipady = 0</i>
+weightx = 0.0
+<i><b>weighty = 1.0</b></i>
+<i><b>anchor = GridBagConstraints.PAGE_END</b></i>
+<i><b>insets = new Insets(10,0,0,0)</b></i>
+<i><b>gridwidth = 2</b></i>
+<i><b>gridx = 1</b></i>
+<i><b>gridy = 2</b></i>
+</pre></div>
+</td>
+</tr>
+</tbody></table>
+<p>GridBagLayoutDemo具有两个跨多列的组件（按钮4和5）。为了使按钮4高，我们添加了内部填充（ <code>ipady</code> ）。为了在按钮4和5之间留出空间，我们使用了嵌入在按钮5上方添加至少10个像素，并使按钮5拥抱其单元格的底部边缘。</p>
+<p>中的所有组件<code>pane</code>给定容器所占据的空间，容器应尽可能宽。该程序通过设置<code>GridBagConstraints</code><code>fill</code>实例变量<code>GridBagConstraints.HORIZONTAL</code> ，将其保留为所有组件的该设置。如果程序未指定填充，则按钮将处于其自然宽度，如下所示：</p>
+<center><img src="../../figures/uiswing/layout/GridBagLayoutDemo-nofill.png" width="253" height="161" align="bottom" alt="具有默认填充值的GridBagLayoutDemo。"></center><p>放大GridBagLayoutDemo的窗口时，列将按比例增长。这是因为第一行中的每个组件（其中每个组件都是一列宽）具有<code>weightx = 0.5</code> 。这些组件的实际价值<code>weightx</code>不重要。重要的是所有组件（因此所有列）的权重均大于0。如果没有组件由<code>GridBagLayout</code>有<code>weightx</code>设置，然后将组件的容器变宽时，组件将在容器的中心保持聚集在一起，如下所示：</p>
+<center><img src="../../figures/uiswing/layout/GridBagLayoutDemo-noweightx.png" width="320" height="161" align="bottom" alt="具有默认weightx值并由用户放大的GridBagLayoutDemo。"></center><p>如果容器的大小小于或大于首选大小，则根据<code>GridBagContainer</code>重量。</p>
+<p>请注意，如果放大窗口，则最后一行是唯一变高的行。这是因为只有按钮5具有<code>weighty</code>大于零。</p>
+
+
+<h2><a name="api" id="api">GridBagLayout API</a></h2>
+<!--
+[PENDING: This section will be changed to use standard API tables.]
+-->
+<p>的<code>GridBagLayout</code>和<code>GridBagConstraints</code>每个类只有一个构造函数，没有参数。而不是在<code>GridBagConstraints</code>对象，您可以按照<a href="#gridbagConstraints">指定约束中</a>所述操作其实例变量。通常，您在<code>GridBagLayout</code>对象是<code>setConstraints</code>如<a href="#gridbagExample">示例说明中所示</a> 。</p>
+<h2><a name="eg" id="eg">使用GridBagLayout的示例</a></h2>
+<p>您可以找到使用示例<code>GridBagLayout</code>在本教程中。下表列出了一些。</p>
+<table summary="Examples that use GridBagLayout">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td valign="top"><a href="../examples/layout/index.html#GridBagLayoutDemo"><code>GridBagLayoutDemo</code></a></td>
+<td valign="top">这个部分</td>
+<td valign="top">使用许多功能-权重，插图，内部填充，水平填充，精确的单元格位置，多列单元格和锚定（单元格内的组件定位）。</td>
+</tr>
+<tr>
+<td valign="top">
+<a class="TutorialLink" href="../components/../examples/components/index.html#TextSamplerDemo" target="_top"><code>TextSamplerDemo</code></a></td>
+<td valign="top">
+<a class="TutorialLink" href="../components/text.html" target="_top">使用文字组件</a></td>
+<td valign="top">对齐两对标签和文本字段，并在容器的整个宽度上添加标签。</td>
+</tr>
+<tr>
+<td valign="top">
+<a class="TutorialLink" href="../events/../examples/events/index.html#ContainerEventDemo" target="_top"><code>ContainerEventDemo</code></a></td>
+<td valign="top">
+<a class="TutorialLink" href="../events/containerlistener.html" target="_top">如何编写容器侦听器</a></td>
+<td valign="top">使用重量，填充和相对位置在容器内放置五个组件。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="flow.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="grid.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用FlowLayout<br><b>下一页：</b>如何使用GridLayout</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

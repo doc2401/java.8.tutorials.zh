@@ -1,0 +1,618 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>播放音频（Java™教程>声音）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="java programming, learn java, java sample code, ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkAHEAD"><a href="sampled-overview.html">采样包概述</a></div>
+<div class="linkAHEAD"><a href="accessing.html">访问音频系统资源</a></div>
+<div class="nolinkAHEAD">播放音频</div>
+<div class="linkAHEAD"><a href="capturing.html">捕捉音频</a></div>
+<div class="linkAHEAD"><a href="controls.html">使用控件处理音频</a></div>
+<div class="linkAHEAD"><a href="converters.html">使用文件和格式转换器</a></div>
+<div class="linkAHEAD"><a href="overview-MIDI.html">MIDI包概述</a></div>
+<div class="linkAHEAD"><a href="accessing-MIDI.html">访问MIDI系统资源</a></div>
+<div class="linkAHEAD"><a href="MIDI-messages.html">传输和接收MIDI信息</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-intro.html">音序器简介</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-methods.html">使用定序器方法</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-adv.html">使用高级音序器功能</a></div>
+<div class="linkAHEAD"><a href="MIDI-synth.html">合成声音</a></div>
+<div class="linkAHEAD"><a href="SPI-intro.html">服务提供商接口简介</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-sampled.html">提供音频采样服务</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-MIDI.html">提供MIDI服务</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>踪迹：</b>声音</div>
+            <div id="BreadCrumbs">
+                <a href="../index.html" target="_top">主页</a> > <a href="./index.html" target="_top">声音</a>
+            </div>
+            <div class="NavBit">
+                <a href="accessing.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="capturing.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>播放音频</h1></div>
+            <div id="PageContent">
+
+<p>回放有时称为<em>演示</em>或<em>渲染</em> 。这些是通用术语，适用于声音以外的其他类型的媒体。基本特征是将数据序列传递到某个地方，以供用户最终感知。如果数据是基于时间的（如声音一样），则必须以正确的速率传送。声音甚至比视频还要多，因此，保持数据流的速率非常重要，因为声音播放的中断通常会产生很大的喀哒声或令人讨厌的失真。Java Sound API旨在帮助应用程序平稳连续播放声音，甚至是很长的声音。</p>
+<p><a name="113599"></a>之前，您了解了如何从音频系统或调音台获得线路。在这里，您将学习如何通过一条线播放声音。</p>
+<p><a name="113601"></a>如您所知，可以使用两种线路来播放声音： <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/Clip.html" target="_blank"><code>Clip</code></a>和一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/sampled/SourceDataLine.html" target="_blank"><code>SourceDataLine</code></a> 。两者之间的主要区别在于<code>Clip</code>您可以一次指定所有声音数据，然后再播放，而使用<code>SourceDataLine</code>您可以在播放过程中持续不断地写入新的数据缓冲区。尽管在很多情况下您都可以使用<code>Clip</code>或<code>SourceDataLine</code> ，以下条件可帮助您确定哪种线更适合特定情况：</p>
+<ul>
+<li><a name="113603"></a>用一个<code>Clip</code>当您具有可以实时加载到内存中的非实时声音数据时。<a name="115889"></a>
+<p>例如，您可能将短声音文件读入剪辑。如果您想播放声音不止一次， <code>Clip</code>比一个更方便<code>SourceDataLine</code> ，尤其是如果您希望播放循环播放（反复循环播放全部或部分声音）。如果您需要在声音中的任意位置开始播放， <code>Clip</code>界面提供了一种轻松实现此目的的方法。最后，从<code>Clip</code>一般而言，其延迟时间要少于从<code>SourceDataLine</code> 。换句话说，由于声音已预加载到剪辑中，因此可以立即开始播放，而不必等待缓冲区被填满。</p>
+</li>
+<li><a name="113605"></a>用一个<code>SourceDataLine</code>用于流式传输数据，例如不能一次全部容纳在内存中的长声音文件，或者在播放之前无法得知其数据的声音。<a name="115858"></a>
+<p>作为后一种情况的示例，假设您正在监视声音输入-即在捕获声音时播放声音。如果您没有可以直接从输出端口发送输入音频的混音器，则您的应用程序将必须获取捕获的数据并将其发送到音频输出混音器。在这种情况下， <code>SourceDataLine</code>比一个更合适<code>Clip</code> 。当您响应用户的输入以交互方式合成或操纵声音数据时，会发生另一个无法预先知道的声音示例。例如，想象一个游戏，当用户移动鼠标时，通过将声音从一种声音“变形”到另一种声音来给出听觉反馈。声音转换的动态性质要求应用程序在播放期间不断更新声音数据，而不是在播放开始之前全部提供声音数据。</p>
+</li>
+</ul>
+<p><a name="113609"></a></p>
+<h2>使用剪辑</h2>
+<p><a name="117625"></a>您获得一个<code>Clip</code>如前面在<a class="TutorialLink" href="accessing.html#113154" target="_top">获得所需类型的线下所述</a> ;构造一个<code>DataLine.Info</code>与对象<code>Clip.class</code>对于第一个参数，并传递此参数<code>DataLine.Info</code>作为对<code>getLine</code>的方法<code>AudioSystem</code>要么<code>Mixer</code> 。</p>
+<p><a name="113615"></a>获得一条线只是意味着您已经有了一种引用它的方式。 <code>getLine</code>实际上并没有为您预留线路。由于混合器可能只有有限数量的所需类型的行，因此调用后可能会发生这种情况<code>getLine</code>要获取剪辑，另一个应用程序会跳入并抓取剪辑，然后准备开始播放。要实际使用该剪辑，您需要通过调用以下方法之一来保留它以供程序专用： <code>Clip</code>方法：</p>
+<div class="codeblock"><pre>
+void open(AudioInputStream stream)
+void open(AudioFormat format, byte[] data, int offset, int bufferSize)
+</pre></div>
+<p>尽管<code>bufferSize</code>第二个论点<code>open</code>上面的方法<code>Clip</code> （与<code>SourceDataLine</code> ）不包含将新数据写入缓冲区的方法。的<code>bufferSize</code>这里的参数仅指定要加载到剪辑中的字节数组的数量。它不是一个缓冲区，您可以随后将更多数据加载到该缓冲区中，就像使用<code>SourceDataLine's</code>缓冲。</p>
+<p><a name="113623"></a>打开剪辑后，您可以使用以下命令指定应在数据的哪一点开始播放<code>Clip's</code><code>setFramePosition</code>要么<code>setMicroSecondPosition</code>方法。否则，它将从头开始。您也可以使用<code>setLoopPoints</code>方法。</p>
+<p><a name="113628"></a>准备开始播放时，只需调用<code>start</code>方法。要停止或暂停剪辑，请调用<code>stop</code>方法，并继续播放，调用<code>start</code>再次。剪辑会记住停止播放的媒体位置，因此不需要明确的暂停和恢复方法。如果您不希望它从停下来的地方继续播放，则可以使用上述的帧或微秒定位方法将剪辑“倒回”到开始处（或回退到任何其他位置）。</p>
+<p><a name="113630"></a>一种<code>Clip's</code>音量水平和活动状态（活动与不活动）可以通过调用<code>DataLine</code>方法<code>getLevel</code>和<code>isActive</code> ， 分别。一个活跃的<code>Clip</code>是当前正在播放声音的一种。</p>
+<p><a name="113634"></a></p>
+<h2>使用SourceDataLine</h2>
+<p><a name="116360"></a>获得一个<code>SourceDataLine</code>类似于获得一个<code>Clip</code> 。 <a name="116365"></a> 打开<code>SourceDataLine</code>也类似于打开一个<code>Clip</code> ，目的是再次保留线路。但是，您使用了另一种方法，从<code>DataLine</code> ：</p>
+<div class="codeblock"><pre>
+void open(AudioFormat format)
+</pre></div>
+<p>请注意，当您打开一个<code>SourceDataLine</code> ，您尚未将任何声音数据与线路关联，这与打开<code>Clip</code> 。相反，您只需指定要播放的音频数据的格式。系统选择默认缓冲区长度。</p>
+<p><a name="113646"></a>您还可以使用此变体规定一定的缓冲区长度（以字节为单位）：</p>
+<p><a name="113648"></a></p>
+<div class="codeblock"><pre>
+void open(AudioFormat format, int bufferSize)
+</pre></div>
+<p>为了与类似方法保持一致， <code>bufferSize</code>参数以字节表示，但必须与整数个帧相对应。</p>
+<p><a name="113660"></a>除了使用上述的open方法，还可以打开一个<code>SourceDataLine</code>使用<code>Line's</code><code>open()</code>方法，不带参数。在这种情况下，将以其默认音频格式和缓冲区大小打开该行。但是，您以后将无法更改它们。如果您想知道线路的默认音频格式和缓冲区大小，可以调用<code>DataLine's</code><code>getFormat</code>和<code>getBufferSize</code>方法，甚至在尚未打开生产线之前。</p>
+<p><a name="113663"></a>一旦<code>SourceDataLine</code>打开后，就可以开始播放声音了。您可以通过调用来实现<code>DataLine's</code> start方法，然后将数据重复写入该行的回放缓冲区。</p>
+<p><a name="113667"></a> start方法允许线路在缓冲区中有任何数据后立即开始播放声音。您可以通过以下方法将数据放入缓冲区：</p>
+<div class="codeblock"><pre>
+int write(byte[] b, int offset, int length)
+</pre></div>
+<p>数组的偏移量以字节表示，数组的长度也是如此。</p>
+<p><a name="113673"></a>该行开始尽快将数据发送到其混合器。当混合器本身将数据传递到其目标时， <code>SourceDataLine</code>产生一个<code>START</code>事件。（在Java Sound API的典型实现中，源代码行将数据提供给混合器的那一刻与混合器将数据提供给其目标的那一刻之间的延迟可以忽略不计，即，这远远小于一个时间。样品。）这个<code>START</code>事件将发送到线路的侦听器，如下面在<a href="#113711">监视线路的状态下所述</a> 。该线路现在被认为是活动的，因此<code>isActive</code>的方法<code>DataLine</code>将返回<code>true</code> 。注意，所有这些仅在缓冲区包含要播放的数据时发生，而不一定在调用start方法时正确。如果您调用<code>start</code>在新的<code>SourceDataLine</code>但从未将数据写入缓冲区，因此该行永远不会处于活动状态，并且<code>START</code>事件将永远不会发送。（但是，在这种情况下， <code>isRunning</code>的方法<code>DataLine</code>会回来<code>true</code> ）</p>
+<p><a name="113675"></a>那么，您如何知道要向缓冲区写入多少数据以及何时发送第二批数据呢？幸运的是，您无需计时第二次写入操作即可与第一个缓冲区的末尾同步！相反，您可以利用<code>write</code>方法的阻止行为：</p>
+<ul>
+<li><a name="113676"></a>一旦将数据写入缓冲区，该方法即返回。它不会等到缓冲区中的所有数据播放完毕。（如果这样做，您可能没有时间编写下一个缓冲区而不会在音频中造成不连续。）</li>
+<li><a name="113677"></a>可以尝试写入比缓冲区更多的数据。在这种情况下，该方法将阻塞（不返回），直到您实际请求的所有数据都已放入缓冲区中为止。换句话说，一次将一个缓冲区中有价值的数据写入缓冲区并进行播放，直到剩余的数据全部放入缓冲区中为止，此时该方法返回。无论该方法是否阻塞，只要可以写入此调用中最后一个缓冲区的数据，它将立即返回。同样，这意味着您的代码极有可能在最后一个缓冲区的数据播放完成之前重新获得控制。</li>
+<li><a name="113678"></a>虽然在许多情况下可以写入比缓冲区更多的数据，但是如果要确定下一次写入不会阻塞，可以将写入的字节数限制为<code>DataLine's</code><code>available</code>方法返回。</li>
+</ul>
+<p><a name="113680"></a>这是一个示例，它遍历从流中读取的数据块，一次将一个块写入到<code>SourceDataLine</code>播放：</p>
+<div class="codeblock"><pre>
+// read chunks from a stream and write them to a source data 
+line 
+line.start();
+while (total &lt; totalToRead &amp;&amp; !stopped)}
+    numBytesRead = stream.read(myData, 0, numBytesToRead);
+    if (numBytesRead == -1) break;
+    total += numBytesRead; 
+    line.write(myData, 0, numBytesRead);
+
+}
+</pre></div>
+<p>如果您不想<code>write</code>要阻止的方法，您可以先调用<code>available</code>方法（在循环内部）以找出可以写入多少个字节而不会阻塞，然后限制<code>numBytesToRead</code>从流中读取之前，将变量设置为该数字。不过，在给定的示例中，阻塞并不重要，因为write方法是在一个循环内调用的，直到在最后一次循环迭代中写入最后一个缓冲区后该循环才会完成。无论是否使用阻塞技术，您都可能希望在与应用程序其余部分不同的线程中调用此播放循环，以使您的程序在播放长声音时不会冻结。在循环的每次迭代中，您可以测试用户是否已请求停止播放。此类请求需要设置<code>stopped</code>上面的代码中使用的布尔值<code>true</code> 。</p>
+<p><a name="113696"></a>以来<code>write</code>在所有数据播放完毕之前返回，您如何学习播放实际完成的时间？一种方法是调用<code>drain</code>的方法<code>DataLine</code>写入最后一个缓冲区的数据后。此方法将阻塞，直到播放完所有数据为止。当控制权返回程序时，如果需要，您可以释放该行，而不必担心过早中断任何音频样本的播放：</p>
+<div class="codeblock"><pre>
+line.write(b, offset, numBytesToWrite); 
+//this is the final invocation of write
+line.drain();
+line.stop();
+line.close();
+line = null;
+</pre></div>
+<p>当然，您可以故意过早停止播放。例如，应用程序可能会向用户提供“停止”按钮。调用<code>DataLine's stop</code>立即停止播放的方法，即使在缓冲区中间也是如此。这会将所有未播放的数据留在缓冲区中，以便随后调用<code>start</code> ，播放将从上次中断的地方继续。如果那不是您想要的，您可以通过调用丢弃缓冲区中剩余的数据<code>flush</code> 。</p>
+<p><a name="113708"></a>一种<code>SourceDataLine</code>产生一个<code>STOP</code>每当数据流停止时发生此事件，此停止是通过消耗方法，停止方法还是刷新方法启动的，或者是由于在调用应用程序之前已达到播放缓冲区的末尾<code>write</code>再次提供新数据。一种<code>STOP</code>事件并不一定意味着<code>stop</code>方法已被调用，并不一定意味着随后的调用<code>isRunning</code>将返回<code>false</code> 。但是，这确实意味着<code>isActive</code>将返回<code>false</code> 。（当。。。的时候<code>start</code>方法已被调用， <code>isRunning</code>方法将返回<code>true</code> ，即使<code>STOP</code>事件生成，它将开始返回<code>false</code>只有一次<code>stop</code>方法被调用。）重要的是要意识到<code>START</code>和<code>STOP</code>事件对应<code>isActive</code> ，而不是<code>isRunning</code> 。</p>
+<p><a name="113711"></a></p>
+<h2>监控线路状态</h2>
+<p><a name="113713"></a>开始播放声音后，如何查找结束时间？我们在上面看到了一种解决方案， <code>drain</code>写入数据的最后一个缓冲区后的方法，但是该方法仅适用于<code>SourceDataLine</code> 。两种方法都适用<code>SourceDataLines</code>和<code>Clips</code> ，用于注册以在线路更改状态时接收来自线路的通知。这些通知以以下形式生成： <code>LineEvent</code>对象，其中有四种类型： <code>OPEN</code> ， <code>CLOSE</code> ， <code>START</code>和<code>STOP</code> 。</p>
+<p><a name="113715"></a>程序中实现了<code>LineListener</code>界面可以注册以接收此类通知。实施<code>LineListener</code>接口，该对象只需要一个采用<code>LineEvent</code>论点。要将这个对象注册为该行的侦听器之一，请调用以下命令<code>Line</code>方法：</p>
+<p><a name="113717"></a></p>
+<div class="codeblock"><pre>
+public void addLineListener(LineListener listener)
+</pre></div>
+<p>每当线路打开，关闭，开始或停止时，它都会发送一条<code>update</code>给所有听众的信息。您的对象可以查询<code>LineEvent</code>它收到的。首先，您可能会调用<code>LineEvent.getLine</code>确保停止的那一行是您关心的那一行。在这里我们要讨论的情况下，您想知道声音是否结束，因此请查看是否<code>LineEvent</code>是类型<code>STOP</code> 。如果是，则可以检查声音的当前位置，该位置也存储在<code>LineEvent</code>对象，然后将其与声音的长度（如果知道）进行比较，以查看声音是否到达终点并且是否通过其他方式（例如，用户单击“停止”按钮）没有停止，尽管您可能能够确定原因代码中的其他位置）。</p>
+<p><a name="113721"></a>同样，如果您需要知道何时打开，关闭或启动该行，则可以使用相同的机制。 <code>LineEvents</code>是由不同种类的线产生的，而不仅仅是<code>Clips</code>和<code>SourceDataLines</code> 。但是，在<code>Port</code>您不能指望获得一个事件来了解线路的打开或关闭状态。例如，一个<code>Port</code>在创建时可能最初处于打开状态，因此您无需调用<code>open</code>方法和<code>Port</code>永远不会产生<code>OPEN</code>事件。（请参阅前面有关<a class="TutorialLink" href="accessing.html#113216" target="_top">选择输入和输出端口的</a>讨论。）</p>
+<p><a name="113725"></a></p>
+<h2>同步多行播放</h2>
+<p><a name="113727"></a>如果要同时播放多个音频轨道，则可能要使它们全部在同一时间开始和停止。一些混音器通过其混音器来促进这种行为<code>synchronize</code>方法，可让您应用诸如<code>open</code> ， <code>close</code> ， <code>start</code>和<code>stop</code>使用单个命令即可将数据传输到一组数据线，而不必分别控制每条数据线。此外，将操作应用于线路的精确度是可控制的。</p>
+<p><a name="113729"></a>要找出特定的混音器是否为指定的一组数据线提供此功能，请调用<code>Mixer</code>接口的<code>isSynchronizationSupported</code>方法：</p>
+<p><a name="113731"></a></p>
+<div class="codeblock"><pre>
+boolean isSynchronizationSupported(Line[] lines, boolean  maintainSync)
+</pre></div>
+<p>第一个参数指定一组特定的数据线，第二个参数表示必须保持同步的精度。如果第二个参数是<code>true</code>中，查询是要求混合器是否能够保持<em>在任何时候</em>将指定行控制采样精确的精度;否则，仅在开始和停止操作期间需要精确的同步，而在整个播放过程中则不需要。</p>
+<p><a name="113736"></a></p>
+<h2>处理输出音频</h2>
+<p><a name="113738"></a>某些源数据线具有信号处理控件，例如增益，声相，混响和采样率控件。类似的控件，尤其是增益控件，也可能出现在输出端口上。有关如何确定线路是否具有此类控件以及如何使用它们的更多信息，请参阅<a class="TutorialLink" href="controls.html" target="_top">使用控件处理音频</a> 。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="accessing.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="capturing.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>访问音频系统资源<br><b>下一页：</b>捕获音频</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

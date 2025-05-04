@@ -1,0 +1,1179 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>设置表（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="nolinkAHEAD">设置表格</div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="sqlexception.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="retrieving.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>设置表格</h1></div>
+            <div id="PageContent">
+
+<p>本页描述了JDBC教程中使用的所有表以及如何创建它们：</p>
+<ul>
+<li><a href="#coffees">咖啡桌</a></li>
+<li><a href="#suppliers">供应商表</a></li>
+<li><a href="#cof_inventory">COF_INVENTORY表</a></li>
+<li><a href="#merch_inventory">MERCH_INVENTORY表</a></li>
+<li><a href="#coffee_houses">COFFEE_HOUSES表</a></li>
+<li><a href="#data_repository">DATA_REPOSITORY表</a></li>
+<li><a href="#create">建立表格</a></li>
+<li><a href="#populate">填充表</a></li>
+</ul>
+<h2><a name="coffees" id="coffees">咖啡桌</a></h2>
+<p>的<code>COFFEES</code>表格存储有关在The Coffee Break出售的咖啡的信息：</p>
+<table border="1" summary="COFFEES table">
+<tbody><tr>
+<th><code>COF_NAME</code></th>
+<th><code>SUP_ID</code></th>
+<th><code>PRICE</code></th>
+<th><code>SALES</code></th>
+<th><code>TOTAL</code></th>
+</tr>
+<tr>
+<td>哥伦比亚</td>
+<td>101</td>
+<td>7.99</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>法式烤</td>
+<td>49</td>
+<td>8.99</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>浓咖啡</td>
+<td>150</td>
+<td>9.99</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Colombian_Decaf</td>
+<td>101</td>
+<td>8.99</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>French_Roast_Decaf</td>
+<td>49</td>
+<td>9.99</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>下面介绍了<code>COFFEES</code>表：</p>
+<ul>
+<li><code>COF_NAME</code> ：存储咖啡名称。保留SQL类型为<code>VARCHAR</code>最大长度为32个字符。由于每种出售的咖啡的名称都不同，因此该名称唯一地标识特定的咖啡并用作主键。</li>
+<li><code>SUP_ID</code> ：存储标识咖啡供应商的编号。保留SQL类型为<code>INTEGER</code> 。它定义为引用该列的外键<code>SUP_ID</code>在里面<code>SUPPLIERS</code>表。因此，DBMS将强制此列中的每个值都与该列中相应列中的值之一相匹配。 <code>SUPPLIERS</code>表。</li>
+<li><code>PRICE</code> ：存储每磅咖啡的成本。保留SQL类型为<code>FLOAT</code>因为它需要保留带小数点的值。（请注意，货币值通常会存储在SQL类型中<code>DECIMAL</code>要么<code>NUMERIC</code> ，但是由于DBMS之间存在差异，并且为了避免与JDBC的早期版本不兼容，本教程使用了更标准的类型<code>FLOAT</code> ）</li>
+<li><code>SALES</code> ：存储当前一周出售的咖啡磅数。保留SQL类型为<code>INTEGER</code> 。</li>
+<li><code>TOTAL</code> ：存储迄今为止出售的咖啡磅数。保留SQL类型为<code>INTEGER</code> 。</li>
+</ul>
+<h2><a name="suppliers" id="suppliers">供应商表</a></h2>
+<p>的<code>SUPPLIERS</code>存储有关每个供应商的信息：</p>
+<table border="1" summary="SUPPLIERS table">
+<tbody><tr>
+<th><code>SUP_ID</code></th>
+<th><code>SUP_NAME</code></th>
+<th><code>STREET</code></th>
+<th><code>CITY</code></th>
+<th><code>STATE</code></th>
+<th><code>ZIP</code></th>
+</tr>
+<tr>
+<td>101</td>
+<td>Acme，Inc.</td>
+<td>市场街99号</td>
+<td>Groundsville</td>
+<td>认证机构</td>
+<td>95199</td>
+</tr>
+<tr>
+<td>49</td>
+<td>优质咖啡</td>
+<td>1晚会</td>
+<td>门多西诺</td>
+<td>认证机构</td>
+<td>95460</td>
+</tr>
+<tr>
+<td>150</td>
+<td>高地</td>
+<td>咖啡巷100号</td>
+<td>草地</td>
+<td>认证机构</td>
+<td>93966</td>
+</tr>
+</tbody></table>
+<p>下面介绍了<code>SUPPLIERS</code>表：</p>
+<ul>
+<li><code>SUP_ID</code> ：存储标识咖啡供应商的编号。保留SQL类型为<code>INTEGER</code> 。它是此表中的主键。</li>
+<li><code>SUP_NAME</code> ：存储咖啡供应商的名称。</li>
+<li><code>STREET</code> ， <code>CITY</code> ， <code>STATE</code>和<code>ZIP</code> ：这些列存储咖啡供应商的地址。</li>
+</ul>
+<h2><a name="cof_inventory" id="cof_inventory">COF_INVENTORY表</a></h2>
+<p>桌子<code>COF_INVENTORY</code>存储有关每个仓库中存储的咖啡量的信息：</p>
+<table border="1" summary="COF_INVENTORY table">
+<tbody><tr>
+<th><code>WAREHOUSE_ID</code></th>
+<th><code>COF_NAME</code></th>
+<th><code>SUP_ID</code></th>
+<th><code>QUAN</code></th>
+<th><code>DATE_VAL</code></th>
+</tr>
+<tr>
+<td>1234</td>
+<td>House_Blend</td>
+<td>49</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>1234</td>
+<td>House_Blend_Decaf</td>
+<td>49</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>1234</td>
+<td>哥伦比亚</td>
+<td>101</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>1234</td>
+<td>法式烤</td>
+<td>49</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>1234</td>
+<td>浓咖啡</td>
+<td>150</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>1234</td>
+<td>Colombian_Decaf</td>
+<td>101</td>
+<td>0</td>
+<td>2006_04_01</td>
+</tr>
+</tbody></table>
+<p>下面介绍了<code>COF_INVENTORY</code>表：</p>
+<ul>
+<li><code>WAREHOUSE_ID</code> ：存储标识仓库的编号。</li>
+<li><code>COF_NAME</code> ：存储特定类型的咖啡的名称。</li>
+<li><code>SUP_ID</code> ：存储标识供应商的编号。</li>
+<li><code>QUAN</code> ：存储指示可用商品数量的数字。</li>
+<li><code>DATE</code> ：存储时间戳值，该值指示该行的上次更新时间。</li>
+</ul>
+<h2><a name="merch_inventory" id="merch_inventory">MERCH_INVENTORY表</a></h2>
+<p>桌子<code>MERCH_INVENTORY</code>存储有关库存中非咖啡商品数量的信息：</p>
+<table border="1" summary="MERCH_INVETORY table">
+<tbody><tr>
+<th><code>ITEM_ID</code></th>
+<th><code>ITEM_NAME</code></th>
+<th><code>SUP_ID</code></th>
+<th><code>QUAN</code></th>
+<th><code>DATE</code></th>
+</tr>
+<tr>
+<td>00001234</td>
+<td>大杯</td>
+<td>00456</td>
+<td>28</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00001235</td>
+<td>小杯</td>
+<td>00456</td>
+<td>36</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00001236</td>
+<td>飞碟</td>
+<td>00456</td>
+<td>64</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00001287</td>
+<td>玻璃水瓶</td>
+<td>00456</td>
+<td>12</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00006931</td>
+<td>玻璃水瓶</td>
+<td>00927</td>
+<td>3</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00006935</td>
+<td>PotHolder</td>
+<td>00927</td>
+<td>88</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00006977</td>
+<td>餐巾</td>
+<td>00927</td>
+<td>108</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00006979</td>
+<td>毛巾</td>
+<td>00927</td>
+<td>24</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00004488</td>
+<td>CofMaker</td>
+<td>08732</td>
+<td>5</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00004490</td>
+<td>磨豆机</td>
+<td>08732</td>
+<td>9</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00004495</td>
+<td>EspMaker</td>
+<td>08732</td>
+<td>4</td>
+<td>2006_04_01</td>
+</tr>
+<tr>
+<td>00006914</td>
+<td>菜谱</td>
+<td>00927</td>
+<td>12</td>
+<td>2006_04_01</td>
+</tr>
+</tbody></table>
+<p>下面介绍了<code>MERCH_INVENTORY</code>表：</p>
+<ul>
+<li><code>ITEM_ID</code> ：存储标识项目的数字。</li>
+<li><code>ITEM_NAME</code> ：存储项目的名称。</li>
+<li><code>SUP_ID</code> ：存储标识供应商的编号。</li>
+<li><code>QUAN</code> ：存储一个数字，指示该物品的可用数量。</li>
+<li><code>DATE</code> ：存储时间戳值，该值指示该行的上次更新时间。</li>
+</ul>
+<h2><a name="coffee_houses" id="coffee_houses">COFFEE_HOUSES表</a></h2>
+<p>桌子<code>COFFEE_HOUSES</code>存放咖啡馆的位置：</p>
+<table border="1" summary="COFFEE_HOUSES table">
+<tbody><tr>
+<th><code>STORE_ID</code></th>
+<th><code>CITY</code></th>
+<th><code>COFFEE</code></th>
+<th><code>MERCH</code></th>
+<th><code>TOTAL</code></th>
+</tr>
+<tr>
+<td>10023</td>
+<td>门多西诺</td>
+<td>3450</td>
+<td>2005年</td>
+<td>5455</td>
+</tr>
+<tr>
+<td>33002</td>
+<td>西雅图</td>
+<td>4699</td>
+<td>3109</td>
+<td>7808</td>
+</tr>
+<tr>
+<td>10040</td>
+<td>SF</td>
+<td>5386</td>
+<td>2841</td>
+<td>8227</td>
+</tr>
+<tr>
+<td>32001</td>
+<td>波特兰</td>
+<td>3147</td>
+<td>3579</td>
+<td>6726</td>
+</tr>
+<tr>
+<td>10042</td>
+<td>SF</td>
+<td>2863</td>
+<td>1874年</td>
+<td>4710</td>
+</tr>
+<tr>
+<td>10024</td>
+<td>沙加缅度</td>
+<td>1987年</td>
+<td>2341</td>
+<td>4328</td>
+</tr>
+<tr>
+<td>10039</td>
+<td>卡梅尔</td>
+<td>2691</td>
+<td>1121</td>
+<td>3812</td>
+</tr>
+<tr>
+<td>10041</td>
+<td>洛杉矶</td>
+<td>1533</td>
+<td>1007</td>
+<td>2540</td>
+</tr>
+<tr>
+<td>33005</td>
+<td>奥林匹亚</td>
+<td>2733</td>
+<td>1550</td>
+<td>4283</td>
+</tr>
+<tr>
+<td>33010</td>
+<td>西雅图</td>
+<td>3210</td>
+<td>2177</td>
+<td>5387</td>
+</tr>
+<tr>
+<td>10035</td>
+<td>SF</td>
+<td>1922年</td>
+<td>1056</td>
+<td>2978</td>
+</tr>
+<tr>
+<td>10037</td>
+<td>洛杉矶</td>
+<td>2143</td>
+<td>1876年</td>
+<td>4019</td>
+</tr>
+<tr>
+<td>10034</td>
+<td>圣荷西</td>
+<td>1234</td>
+<td>1032</td>
+<td>2266</td>
+</tr>
+<tr>
+<td>32004</td>
+<td>尤金</td>
+<td>1356</td>
+<td>1112</td>
+<td>2468</td>
+</tr>
+</tbody></table>
+<p>下面介绍了<code>COFFEE_HOUSES</code>表：</p>
+<ul>
+<li><code>STORE_ID</code> ：存储标识咖啡馆的数字。除其他事项外，它指示咖啡馆所在的状态。例如，以10开头的值表示该州为加利福尼亚州。 <code>STORE_ID</code>以32开头的值表示俄勒冈州，以33开头的值表示华盛顿州。</li>
+<li><code>CITY</code> ：存储咖啡馆所在城市的名称。</li>
+<li><code>COFFEE</code> ：存储一个数字，指示出售的咖啡量。</li>
+<li><code>MERCH</code> ：存储一个数字，指示已售商品的数量。</li>
+<li><code>TOTAL</code> ：存储一个数字，指示出售的咖啡和商品的总量。</li>
+</ul>
+<h2><a name="data_repository" id="data_repository">DATA_REPOSITORY表</a></h2>
+<p>表DATA_REPOSITORY存储URL，这些URL引用了The Coffee Break的文档和其他感兴趣的数据。剧本<code>populate_tables.sql</code>不会向该表添加任何数据。下面介绍了此表中的每个列：</p>
+<ul>
+<li><code>DOCUMENT_NAME</code> ：存储标识URL的字符串。</li>
+<li><code>URL</code> ：存储URL。</li>
+</ul>
+<h2><a name="create" id="create">建立表格</a></h2>
+<p>您可以使用Apache Ant或JDBC API创建表。</p>
+<h3>使用Apache Ant创建表</h3>
+<p>要创建与教程示例代码一起使用的表，请在目录中运行以下命令<code><em><JDBC tutorial directory></em></code> ：</p>
+<div class="codeblock"><pre>
+ant setup
+</pre></div>
+<p>此命令运行多个Ant目标，包括以下目标， <code>build-tables</code> （来自<code>build.xml</code>文件）：</p>
+<div class="codeblock"><pre>
+&lt;target name="build-tables"
+  description="Create database tables">
+  &lt;sql
+    driver="${DB.DRIVER}"
+    url="${DB.URL}"
+    userid="${DB.USER}"
+    password="${DB.PASSWORD}"
+    classpathref="CLASSPATH"
+    delimiter="${DB.DELIMITER}"
+    autocommit="false" onerror="abort">
+    &lt;transaction src=
+  "./sql/${DB.VENDOR}/create-tables.sql"/>
+  &lt;/sql>
+&lt;/target>
+</pre></div>
+<p>该示例指定以下值<code>sql</code> Ant任务参数：</p>
+<table border="1" summary="Ant parameters">
+<tbody><tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+<tr>
+<td><code>driver</code></td>
+<td>JDBC驱动程序的全限定类名。该示例使用<code>org.apache.derby.jdbc.EmbeddedDriver</code>对于Java DB和<code>com.mysql.jdbc.Driver</code>适用于MySQL Connector / J。</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>DBMS JDBC驱动程序用来连接数据库的数据库连接URL。</td>
+</tr>
+<tr>
+<td><code>userid</code></td>
+<td>DBMS中有效用户的名称。</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>在中指定的用户密码<code>userid</code></td>
+</tr>
+<tr>
+<td><code>classpathref</code></td>
+<td>包含在中指定的类的JAR文件的完整路径名<code>driver</code></td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td>分隔SQL语句的字符串或字符。本示例使用分号（ <code>;</code> ）。</td>
+</tr>
+<tr>
+<td><code>autocommit</code></td>
+<td>布尔值；如果设置为<code>false</code> ，所有SQL语句都作为一个事务执行。</td>
+</tr>
+<tr>
+<td><code>onerror</code></td>
+<td>语句失败时执行的操作；可能的值是<code>continue</code> ， <code>stop</code>和<code>abort</code> 。价值<code>abort</code>指定如果发生错误，则事务中止。</td>
+</tr>
+</tbody></table>
+<p>该示例将这些参数的值存储在单独的文件中。生成文件<code>build.xml</code>使用以下命令检索这些值<code>import</code>任务：</p>
+<div class="codeblock"><pre>
+&lt;import file="${ANTPROPERTIES}"/>
+</pre></div>
+<p>的<code>transaction</code>元素指定一个包含要执行的SQL语句的文件。文件<code>create-tables.sql</code>包含创建此页面上描述的所有表的SQL语句。例如，此文件的以下摘录创建表<code>SUPPLIERS</code>和<code>COFFEES</code> ：</p>
+<div class="codeblock"><pre>
+create table SUPPLIERS
+    (SUP_ID integer NOT NULL,
+    SUP_NAME varchar(40) NOT NULL,
+    STREET varchar(40) NOT NULL,
+    CITY varchar(20) NOT NULL,
+    STATE char(2) NOT NULL,
+    ZIP char(5),
+    PRIMARY KEY (SUP_ID));
+
+create table COFFEES
+    (COF_NAME varchar(32) NOT NULL,
+    SUP_ID int NOT NULL,
+    PRICE numeric(10,2) NOT NULL,
+    SALES integer NOT NULL,
+    TOTAL integer NOT NULL,
+    PRIMARY KEY (COF_NAME),
+    FOREIGN KEY (SUP_ID)
+        REFERENCES SUPPLIERS (SUP_ID));
+</pre></div>
+<p><strong>注意</strong> ：文件<code>build.xml</code>包含另一个名为<code>drop-tables</code>删除本教程使用的表。的<code>setup</code>目标运行<code>drop-tables</code>在运行之前<code>build-tables</code>目标。</p>
+<h3>使用JDBC API创建表</h3>
+<p>以下方法， <code><a href="gettingstarted.html">SuppliersTable.createTable</a></code> ，创建<code>SUPPLIERS</code>表：</p>
+<div class="codeblock"><pre>
+public void createTable() throws SQLException {
+    String createString =
+        "create table " + dbName +
+        ".SUPPLIERS " +
+        "(SUP_ID integer NOT NULL, " +
+        "SUP_NAME varchar(40) NOT NULL, " +
+        "STREET varchar(40) NOT NULL, " +
+        "CITY varchar(20) NOT NULL, " +
+        "STATE char(2) NOT NULL, " +
+        "ZIP char(5), " +
+        "PRIMARY KEY (SUP_ID))";
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement();
+        stmt.executeUpdate(createString);
+    } catch (SQLException e) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>以下方法， <code><a href="gettingstarted.html">CoffeesTable.createTable</a></code> ，创建<code>COFFEES</code>表：</p>
+<div class="codeblock"><pre>
+  public void createTable() throws SQLException {
+    String createString =
+        "create table " + dbName +
+        ".COFFEES " +
+        "(COF_NAME varchar(32) NOT NULL, " +
+        "SUP_ID int NOT NULL, " +
+        "PRICE float NOT NULL, " +
+        "SALES integer NOT NULL, " +
+        "TOTAL integer NOT NULL, " +
+        "PRIMARY KEY (COF_NAME), " +
+        "FOREIGN KEY (SUP_ID) REFERENCES " +
+        dbName + ".SUPPLIERS (SUP_ID))";
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement();
+        stmt.executeUpdate(createString);
+    } catch (SQLException e) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>在这两种方法中<code>con</code>是一个<code>Connection</code>对象和<code>dbName</code>是您要在其中创建表的数据库的名称。</p>
+<p>执行SQL查询，例如由<code>String</code><code>createString</code> ， 用一个<code>Statement</code>宾语。创建一个<code>Statement</code>对象，调用方法<code>Connection.createStatement</code>从现有的<code>Connection</code>宾语。要执行SQL查询，请调用方法<code>Statement.executeUpdate</code> 。</p>
+<p>所有<code>Statement</code>当创建对象的连接关闭时，这些对象也将关闭。但是，明确关闭<code>Statement</code>完成操作后立即删除对象。这允许立即释放该语句使用的任何外部资源。通过调用方法关闭语句<code>Statement.close</code> 。将此语句放在<code>finally</code>确保即使由于异常（例如<code>SQLException</code> ）被抛出。</p>
+<p><strong>注意</strong> ：您必须创建<code>SUPPLIERS</code>前表<code>COFFEES</code>因为<code>COFFEES</code>包含外键， <code>SUP_ID</code>那引用<code>SUPPLIERS</code> 。</p>
+<h2><a name="populate" id="populate">填充表</a></h2>
+<p>同样，您可以使用Apache Ant或JDBC API将数据插入表中。</p>
+<h3>用Apache Ant填充表</h3>
+
+<p>除了创建本教程使用的表之外，该命令<code>ant setup</code>也填充这些表。此命令运行Ant目标<code>populate-tables</code> ，它运行SQL脚本<code>populate-tables.sql</code> 。</p>
+
+<p>以下是摘录<code>populate-tables.sql</code>填充表格<code>SUPPLIERS</code>和<code>COFFEES</code> ：</p>
+<div class="codeblock"><pre>
+insert into SUPPLIERS values(
+    49, 'Superior Coffee', '1 Party Place',
+    'Mendocino', 'CA', '95460');
+insert into SUPPLIERS values(
+    101, 'Acme, Inc.', '99 Market Street',
+    'Groundsville', 'CA', '95199');
+insert into SUPPLIERS values(
+    150, 'The High Ground',
+    '100 Coffee Lane', 'Meadows', 'CA', '93966');
+insert into COFFEES values(
+    'Colombian', 00101, 7.99, 0, 0);
+insert into COFFEES values(
+    'French_Roast', 00049, 8.99, 0, 0);
+insert into COFFEES values(
+    'Espresso', 00150, 9.99, 0, 0);
+insert into COFFEES values(
+    'Colombian_Decaf', 00101, 8.99, 0, 0);
+insert into COFFEES values(
+    'French_Roast_Decaf', 00049, 9.99, 0, 0);
+</pre></div>
+<h3>使用JDBC API填充表</h3>
+<p>以下方法， <code>SuppliersTable.populateTable</code> ，将数据插入表中：</p>
+<div class="codeblock"><pre>
+public void populateTable() throws SQLException {
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement();
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".SUPPLIERS " +
+            "values(49, 'Superior Coffee', " +
+            "'1 Party Place', " +
+            "'Mendocino', 'CA', '95460')");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".SUPPLIERS " +
+            "values(101, 'Acme, Inc.', " +
+            "'99 Market Street', " +
+            "'Groundsville', 'CA', '95199')");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".SUPPLIERS " +
+            "values(150, " +
+            "'The High Ground', " +
+            "'100 Coffee Lane', " +
+            "'Meadows', 'CA', '93966')");
+    } catch (SQLException e) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) { stmt.close(); }
+    }
+}
+</pre></div>
+<p>以下方法， <code>CoffeesTable.populateTable</code> ，将数据插入表中：</p>
+<div class="codeblock"><pre>
+public void populateTable() throws SQLException {
+
+    Statement stmt = null;
+    try {
+        stmt = con.createStatement();
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".COFFEES " +
+            "values('Colombian', 00101, " +
+            "7.99, 0, 0)");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".COFFEES " +
+            "values('French_Roast', " +
+            "00049, 8.99, 0, 0)");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".COFFEES " +
+            "values('Espresso', 00150, 9.99, 0, 0)");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".COFFEES " +
+            "values('Colombian_Decaf', " +
+            "00101, 8.99, 0, 0)");
+
+        stmt.executeUpdate(
+            "insert into " + dbName +
+            ".COFFEES " +
+            "values('French_Roast_Decaf', " +
+            "00049, 9.99, 0, 0)");
+    } catch (SQLException e) {
+        JDBCTutorialUtilities.printSQLException(e);
+    } finally {
+        if (stmt != null) {
+          stmt.close();
+        }
+    }
+}
+</pre></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="sqlexception.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="retrieving.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>处理SQLExceptions<br><b>下一页：</b>从结果集中检索和修改值</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

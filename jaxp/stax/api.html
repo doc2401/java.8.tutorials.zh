@@ -1,0 +1,941 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>StAX API（Java™教程>用于XML处理的Java API（JAXP）>用于XML的流API）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">XML的流API</a></div>
+<div class="linkAHEAD"><a href="why.html">为什么选择StAX？</a></div>
+<div class="nolinkAHEAD">StAX API</div>
+<div class="linkAHEAD"><a href="using.html">使用StAX</a></div>
+<div class="linkAHEAD"><a href="parser.html">Oracle的流XML解析器实现</a></div>
+<div class="linkAHEAD"><a href="example.html">范例程式码</a></div>
+<div class="linkAHEAD"><a href="info.html">更多信息</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>用于XML的流API</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">用于XML的流API</a>
+            </div>
+            <div class="NavBit">
+                <a href="why.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="using.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>StAX API</h1></div>
+            <div id="PageContent">
+
+<!-- StAX API -->
+<p><a name="indexterm-13" id="indexterm-13"></a></p>
+<p>StAX API公开了用于XML文档的基于事件的迭代处理的方法。XML文档被视为经过过滤的一系列事件，并且信息集状态可以以过程方式存储。此外，与SAX不同，StAX API是双向的，可以读取和写入XML文档。</p>
+<p>StAX API实际上是两个截然不同的API集： <b>游标</b> API和<b>迭代器</b> API。本课程稍后将详细解释这两个API集，但下面将简要介绍它们的主要功能。</p>
+<p><a name="bnbed" id="bnbed"></a></p>
+<h2>游标API</h2>
+<p><a name="indexterm-14" id="indexterm-14"></a><a name="indexterm-15" id="indexterm-15"></a></p>
+<p>顾名思义，StAX <b>游标</b> API代表一个游标，您可以使用它从头到尾遍历XML文档。该光标一次可以指向一件事，并且总是向前移动，而从不向后移动，通常一次一次指向一个信息集元素。</p>
+<p>两个主要的游标接口是<tt>XMLStreamReader</tt>和<tt>XMLStreamWriter</tt> 。<tt>XMLStreamReader</tt>包括用于从XML信息模型检索的所有可能信息的访问器方法，包括文档编码，元素名称，属性，名称空间，文本节点，开始标签，注释，处理指令，文档边界等；例如：</p>
+<div class="codeblock"><pre>
+public interface XMLStreamReader {
+    public int next() throws XMLStreamException;
+    public boolean hasNext() throws XMLStreamException;
+
+    public String getText();
+    public String getLocalName();
+    public String getNamespaceURI();
+    // ... other methods not shown
+}
+</pre></div>
+<p>您可以在<tt>XMLStreamReader</tt>上调用诸如<tt>getText</tt>和<tt>getName之类的方法</tt> ，以在当前光标位置获取数据。<tt>XMLStreamWriter</tt>提供与<tt>StartElement</tt>和<tt>EndElement</tt>事件类型相对应的方法。例如：</p>
+<div class="codeblock"><pre>
+public interface XMLStreamWriter {
+    public void writeStartElement(String localName) throws XMLStreamException;
+    public void writeEndElement() throws XMLStreamException;
+    public void writeCharacters(String text) throws XMLStreamException;
+    // ... other methods not shown
+}
+</pre></div>
+<p>游标API以多种方式镜像SAX。例如，方法可用于直接访问字符串和字符信息，整数索引可用于访问属性和名称空间信息。与SAX一样，游标API方法将XML信息作为字符串返回，从而最大程度地减少了对象分配要求。</p>
+<p><a name="bnbee" id="bnbee"></a></p>
+<h2>迭代器API</h2>
+<p><a name="indexterm-16" id="indexterm-16"></a><a name="indexterm-17" id="indexterm-17"></a></p>
+<p>StAX <b>迭代器</b> API将XML文档流表示为一组离散事件对象。这些事件由应用程序提取，并由解析器按在源XML文档中读取它们的顺序提供。</p>
+<p>基本的迭代器接口称为<tt>XMLEvent</tt> ， <a href="#indexterm-18">XMLEvent表中</a>列出了每种事件类型的子接口。用于读取迭代器事件的主要分析器接口是<tt>XMLEventReader</tt> ，而用于写入迭代器事件的主要接口是<tt>XMLEventWriter</tt> 。<tt>XMLEventReader</tt>接口包含五个方法，其中最重要的是<tt>nextEvent</tt> ，它返回XML流中的下一个事件。<tt>XMLEventReader</tt>实现<tt>java.util。Iterator</tt> ，这意味着可以将<tt>XMLEventReader的</tt>返回值缓存或传递到可以与标准Java Iterator一起使用的例程中；例如：</p>
+<div class="codeblock"><pre>
+public interface XMLEventReader extends Iterator {
+    public XMLEvent nextEvent() throws XMLStreamException;
+    public boolean hasNext();
+    public XMLEvent peek() throws XMLStreamException;
+    // ...
+}
+</pre></div>
+<p>同样，在迭代器API的输出端，您具有：</p>
+<div class="codeblock"><pre>
+public interface XMLEventWriter {
+    public void flush() throws XMLStreamException;
+    public void close() throws XMLStreamException;
+    public void add(XMLEvent e) throws XMLStreamException;
+    public void add(Attribute attribute) throws XMLStreamException;
+    // ...
+}
+</pre></div>
+<p><a name="bnbef" id="bnbef"></a></p>
+<h3>迭代器事件类型</h3>
+<p><a name="indexterm-18" id="indexterm-18"></a></p>
+<table border="1" summary="XMLEvent Types">
+<caption>在事件迭代器API中定义的<tt>XMLEvent</tt>类型</caption>
+<colgroup><col width="25%">
+<col width="74%">
+</colgroup><tbody><tr>
+<th align="left" valign="top" scope="col">
+<p>事件类型</p>
+</th>
+<th align="left" valign="top" scope="col">
+<p>描述</p>
+</th>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>起始文件</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告一组XML事件的开始，包括编码，XML版本和独立属性。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告元素的开始，包括所有属性和名称空间声明；还提供对前缀，名称空间URI和开始标记的本地名称的访问。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告元素的结束标签。如果已经在其对应的<tt>StartElement</tt>上显式设置了超出范围的命名空间，则可以在此处重新调用它们。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>对应于XML <tt>CData</tt>部分和<tt>CharacterData</tt>实体。请注意，可忽略的空白和显着的空白也被报告为<tt>字符</tt>事件。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>实体参考</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>字符实体可以报告为离散事件，应用程序开发人员可以选择将其解析或传递未解析的事件。默认情况下，实体是解析的。或者，如果您不想将实体报告为事件，则可以替换替换文本并将其报告为<tt>Characters</tt> 。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>加工说明</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告基础处理指令的目标和数据。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>评论</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>返回评论文本。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>结束文件</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告一组XML事件的结束。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>DTD</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>报告为<tt>java.lang。有关与流相关的DTD的字符串</tt>信息（如果有的话），并提供了一种返回DTD中的自定义对象的方法。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>属性</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>通常将属性报告为<tt>StartElement</tt>事件的一部分。但是，有时需要将属性作为独立的<tt>Attribute</tt>事件返回；例如，当<tt>XQuery</tt>或<tt>XPath</tt>表达式的结果返回名称空间时。</p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p><tt>命名空间</tt></p>
+</td>
+<td align="left" valign="top" scope="row">
+<p>与属性一样，名称空间通常报告为<tt>StartElement的</tt>一部分，但有时需要将名称空间报告为离散的<tt>名称空间</tt>事件。</p>
+</td>
+</tr>
+</tbody></table>
+<p>请注意，仅当要处理的文档包含DTD时才创建<tt>DTD</tt> ， <tt>EntityDeclaration</tt> ， <tt>EntityReference</tt> ， <tt>NotationDeclaration</tt>和<tt>ProcessingInstruction</tt>事件。</p>
+<p><a name="bnbeh" id="bnbeh"></a></p>
+<h3>事件映射示例</h3>
+<p><a name="indexterm-19" id="indexterm-19"></a><a name="indexterm-20" id="indexterm-20"></a></p>
+<p>作为事件迭代器API如何映射XML流的示例，请考虑以下XML文档：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0"?>
+&lt;BookCatalogue xmlns="http://www.publishing.org">
+    &lt;Book>
+        &lt;Title>Yogasana Vijnana: the Science of Yoga&lt;/Title>
+        &lt;ISBN>81-40-34319-4&lt;/ISBN>
+        &lt;Cost currency="INR">11.50&lt;/Cost>
+    &lt;/Book>
+&lt;/BookCatalogue>
+</pre></div>
+<p>该文档将被解析为18个主要事件和次要事件，如下表所示。请注意，以大括号（ <tt>{}</tt> ）显示的次要事件通常是从主要事件而不是直接访问的。</p>
+<p><a name="bnbei" id="bnbei"></a></p>
+<table border="1" summary="Example of Iterator API Event Mapping">
+<caption>Iterator API事件映射的示例</caption>
+<colgroup><col width="6%">
+<col width="72%">
+<col width="21%">
+</colgroup><tbody><tr>
+<th align="left" valign="top" scope="col">
+<p>＃</p>
+</th>
+<th align="left" valign="top" scope="col">
+<p>元素/属性</p>
+</th>
+<th align="left" valign="top" scope="col">
+<p>事件</p>
+</th>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>1个</p>
+</td>
+<td align="left" valign="top" scope="row"><code>version="1.0"</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始文件</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>2</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "\n" IsWhiteSpace = true</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>3</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = BookCatalogue:http://www.publishing.org attributes = null namespaces = {BookCatalogue" -> http://www.publishing.org"}</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>4</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Book attributes = null namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>5</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Title attributes = null namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>6</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "Yogasana Vijnana: the Science of Yoga\n\t" IsWhiteSpace = false</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>7</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Title namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>8</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = ISBN attributes = null namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>9</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "81-40-34319-4\n\t" IsWhiteSpace = false</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>10</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = ISBN namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>11</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Cost attributes = {"currency" -> INR} namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>起始元素</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>12</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "11.50\n\t" IsWhiteSpace = false</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>13</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Cost namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>14</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "\n" IsWhiteSpace = true</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>15</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = Book namespaces = null</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>16</p>
+</td>
+<td align="left" valign="top" scope="row"><code>isCData = false data = "\n" IsWhiteSpace = true</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>性格</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>17</p>
+</td>
+<td align="left" valign="top" scope="row"><code>qname = BookCatalogue:http://www.publishing.org namespaces = {BookCatalogue" -> http://www.publishing.org"}</code></td>
+<td align="left" valign="top" scope="row">
+<p><tt>EndElement</tt></p>
+</td>
+</tr>
+<tr>
+<td align="left" valign="top" scope="row">
+<p>18岁</p>
+</td>
+<td align="left" valign="top" scope="row"></td>
+<td align="left" valign="top" scope="row">
+<p><tt>结束文件</tt></p>
+</td>
+</tr>
+</tbody></table>
+<p>此示例中有几件重要的事情要注意：</p>
+<ul>
+<li>
+<p>这些事件是按照在文档中遇到相应XML元素的顺序创建的，包括元素的嵌套，元素的打开和关闭，属性顺序，文档开始和文档结束等等。</p>
+</li>
+<li>
+<p>与正确的XML语法一样，所有容器元素都具有相应的开始和结束事件。例如，每个<tt>StartElement</tt>都有一个对应的<tt>EndElement</tt> ，即使对于空元素也是如此。</p>
+</li>
+<li>
+<p><tt>属性</tt>事件被视为辅助事件，并且可以从其对应的<tt>StartElement</tt>事件进行访问。</p>
+</li>
+<li>
+<p>与<tt>Attribute</tt>事件类似， <tt>Namespace</tt>事件被视为次要事件，但在事件流中出现两次，并且可以两次访问，首先从它们对应的<tt>StartElement</tt>然后从它们对应的<tt>EndElement中进行访问</tt> 。</p>
+</li>
+<li>
+<p>即使所有元素都没有字符数据，也会为所有元素指定<tt>字符</tt>事件。同样， <tt>角色</tt>事件可以拆分为多个事件。</p>
+</li>
+<li>
+<p>StAX解析器维护一个名称空间堆栈，其中包含有关为当前元素及其祖先定义的所有XML名称空间的信息。命名空间堆栈，通过<tt>javax.xml.namespace公开<tt>。NamespaceContext</tt>接口，可以通过名称空间前缀或URI访问。</tt></p><tt>
+</tt></li><tt>
+</tt></ul><tt>
+<p><a name="bnbej" id="bnbej"></a></p>
+<h2>在游标和迭代器API之间进行选择</h2>
+<p><a name="indexterm-21" id="indexterm-21"></a></p>
+<p>在这一点上合理的问：“我应该选择哪种API？我应该创建<tt>XMLStreamReader</tt>或<tt>XMLEventReader的</tt>实例吗？为什么仍然有两种API？”</p>
+<p><a name="bnbek" id="bnbek"></a></p>
+<h3>发展目标</h3>
+<p>StAX规范的作者针对三种类型的开发人员：</p>
+<ul>
+<li>
+<p><b>库和基础结构开发人员</b> ：创建应用程序服务器，JAXM，JAXB，JAX-RPC和类似的实现；需要具有最低扩展要求的高效，低级API。</p>
+</li>
+<li>
+<p><b>Java ME开发人员</b> ：需要小的，简单的拉式解析库，并且具有最小的可扩展性需求。</p>
+</li>
+<li>
+<p><b>Java平台企业版（Java EE）和Java平台标准版（Java SE）开发人员</b> ：需要干净，高效的拉解析库，还需要灵活的读写XML流，创建新的事件类型以及扩展XML文档元素和属性。</p>
+</li>
+</ul>
+<p>考虑到这些广泛的开发类别，StAX作者认为定义两个小型高效的API比重载一个更大且必然更复杂的API更为有用。</p>
+<p><a name="bnbel" id="bnbel"></a></p>
+<h3>比较游标和迭代器API</h3>
+<p>在游标和迭代器API之间进行选择之前，应注意一些可以使用迭代器API进行，而不能用游标API进行的事情：</p>
+<ul>
+<li>
+<p>从<tt>XMLEvent</tt>子类创建的对象是不可变的，可以在数组，列表和映射中使用，并且即使在解析器移至后续事件之后也可以在应用程序中传递。</p>
+</li>
+<li>
+<p>您可以创建<tt>XMLEvent的</tt>子类型，这些子类型可以是全新的信息项，也可以是现有项的扩展，但可以使用其他方法。</p>
+</li>
+<li>
+<p>您可以使用比游标API更简单的方法在XML事件流中添加和删除事件。</p>
+</li>
+</ul>
+<p>同样，在选择时，请记住一些一般性建议：</p>
+<ul>
+<li>
+<p>如果要针对特别受内存限制的环境（例如Java ME）进行编程，则可以使用游标API编写更小巧，更有效的代码。</p>
+</li>
+<li>
+<p>如果将性能放在首位（例如，在创建低级库或基础结构时），则游标API会更高效。</p>
+</li>
+<li>
+<p>如果要创建XML处理管道，请使用迭代器API。</p>
+</li>
+<li>
+<p>如果要修改事件流，请使用迭代器API。</p>
+</li>
+<li>
+<p>如果希望您的应用程序能够处理事件流的可插入处理，请使用迭代器API。</p>
+</li>
+<li>
+<p>通常，如果您没有一种或另一种强烈的偏好，建议您使用迭代器API，因为它更加灵活和可扩展，从而可以“面向未来”应用程序。</p>
+</li>
+</ul>
+
+
+        </tt></div><tt>
+        <div class="NavBit">
+            <a href="why.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="using.html" target="_top">下一个»</a>
+        </div>
+    </tt></div><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>为什么选择StAX？
+        <br><b>下一页：</b>使用StAX</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></body></html>

@@ -1,0 +1,886 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>使用双向文本（Java™教程> 2D图形>使用文本API）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This 2d Java tutorial describes 2d graphics, geometry, text APIs, images, printing, advanced 2d topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, java 2d">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用文本API</a></div>
+<div class="linkAHEAD"><a href="fontconcepts.html">字体概念</a></div>
+<div class="linkAHEAD"><a href="textlayoutconcepts.html">文字版面设计概念</a></div>
+<div class="linkAHEAD"><a href="fonts.html">物理和逻辑字体</a></div>
+<div class="linkAHEAD"><a href="measuringtext.html">测量文字</a></div>
+<div class="linkAHEAD"><a href="advanced.html">高级文字显示</a></div>
+<div class="linkBHEAD"><a href="renderinghints.html">使用渲染提示显示抗锯齿文本</a></div>
+<div class="linkBHEAD"><a href="textattributes.html">使用文本属性设置文本样式</a></div>
+<div class="linkBHEAD"><a href="drawmulstring.html">绘制多行文本</a></div>
+<div class="nolinkBHEAD">使用双向文字</div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> 2D图形<br><b>课程：</b>使用文本API<br><b>部分：</b>高级文本显示</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">2D图形</a> > <a href="index.html" target="_top">使用文本API</a>
+            </div>
+            <div class="NavBit">
+                <a href="drawmulstring.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../images/index.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用双向文字</h1></div>
+            <div id="PageContent">
+
+<!-- ********************************************** -->
+
+<p>本节讨论如何使用带有<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html" target="_blank"><code>java.awt</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/package-summary.html" target="_blank"><code>java.awt.font</code></a>包。这些类使您可以使用Unicode标准支持的任何语言或脚本绘制样式化的文本：Unicode标准用于处理各种现代，古典和历史语言的全局字符编码系统。绘制文本时，必须考虑文本的读取方向，以便正确显示字符串中的所有单词。这些类保持文本的方向并正确绘制文本，而不管字符串是从左到右，从右到左还是同时（双向）运行。双向文本提出了一些有趣的问题，用于正确定位插入符号，准确定位选择内容以及正确显示多行。双向文本和从右至左文本也存在类似的问题，这些问题是响应于左右箭头按键向正确方向移动插入符号。</p>
+
+<p>涵盖以下主题：</p>
+
+<ul>
+  <li><a href="#ordering_text">订购文字</a></li>
+  <li><a href="#manipulating_bidirectional_text">处理双向文字</a>
+    <ul>
+      <li><a href="#displaying_carets">展示球</a></li>
+      <li><a href="#moving_carets">动弹</a></li>
+      <li><a href="#hit_testing">命中测试</a></li>
+      <li><a href="#highlighting_selections">突出显示选择</a></li>
+    </ul>
+  </li>
+
+  <li><a href="#performing_text_layout_in_a_java_application">在Java应用程序中执行文本布局</a></li>
+
+  <li><a href="#managing_text_layout">使用TextLayout类管理文本布局</a>
+  <ul>
+    <li><a href="#laying_out_text">使用TextLayout类布置文本</a></li>
+    <li><a href="#displaying_dual_carets">用TextLayout类显示双班</a></li>
+    <li><a href="#moving_the_caret">使用TextLayout类移动插入符号</a></li>
+    <li><a href="#textlayout_hit_testing">使用TextLayout类进行命中测试</a></li>
+    <li><a href="#textlayout_highlighting_selections">使用TextLayout类突出显示选择</a>
+  </li>
+  </ul>
+  </li>
+</ul>
+
+<p>如果计划使用Swing组件，请参阅<a class="TutorialLink" href="../../uiswing/components/text.html" target="_top">使用</a> <a class="TutorialLink" href="../../i18n/text/bidi.html" target="_top">JTextComponent类</a> <a class="TutorialLink" href="../../uiswing/components/text.html" target="_top">使用</a> <a class="TutorialLink" href="../../i18n/text/bidi.html" target="_top">双向文本</a>和<a class="TutorialLink" href="../../uiswing/components/text.html" target="_top">使用文本组件</a>了解更多信息。</p>
+
+
+<!-- ************************************************************* -->
+
+<h2><a name="ordering_text">订购文字</a></h2>
+
+<p>Java SE以逻辑顺序将文本存储在内存中，逻辑顺序是读取和写入字符和单词的顺序。逻辑顺序不一定与视觉顺序相同，视觉顺序是显示相应字形的顺序。</p>
+
+<p>即使语言混合在一起，书写系统的视觉顺序也必须保持在双向文本中。下图对此进行了说明，该图显示了嵌入英语句子中的阿拉伯语短语。</p>
+
+<p><b>注意：</b>在本示例及后续示例中，阿拉伯语和希伯来语文本由大写字母表示，空格由下划线表示。每个插图包括两个部分：代表存储在存储器中的字符（按逻辑顺序排列的字符），其后代表这些字符的显示方式（按视觉顺序排列的字符）。字符框下面的数字表示插入偏移量。</p>
+
+<center><img src="../../figures/2d/text/fig44.gif" width="582" height="167" align="bottom" alt="嵌入英语句子中的阿拉伯语短语"></center>
+<p>即使它们是英语句子的一部分，阿拉伯语单词也按照从右到左的阿拉伯语脚本顺序显示。因为斜体阿拉伯字在逻辑上在纯文本中在阿拉伯语之后，所以它在视觉上在纯文本的左侧。</p>
+
+<p>当显示包含从左到右和从右到左的混合文本的行时， <em>基本方向</em>很重要。基本方向是主要书写系统的脚本顺序。例如，如果文本主要是英语，并带有一些嵌入的阿拉伯语，则基本方向是从左到右。如果文本主要是阿拉伯语，带有一些嵌入的英语或数字，则基本方向是从右到左。</p>
+
+<p>基本方向确定具有共同方向的文本段的显示顺序。在上图所示的示例中，基本方向是从左到右。在此示例中，有三个定向运行：句子开头的英语文本从左至右运行，阿拉伯语文本从右至左运行，句号从左至右运行。</p>
+
+<p>图形通常嵌入文本流中。就它们如何影响文本流和换行而言，这些内联图形的行为类似于字形。需要使用相同的双向布局算法来定位此类内联图形，以便它们出现在字符流中的正确位置。</p>
+
+<p>Java SE使用<a class="OutsideLink" href="http://unicode.org/reports/tr9/" target="_blank">Unicode双向算法</a> ，该算法用于对一行中的字形进行排序，从而确定双向文本的方向性。在大多数情况下，您无需包括任何其他信息即可使该算法获得正确的显示顺序。</p>
+
+<!-- **************************************************************************** -->
+
+<h2><a name="manipulating_bidirectional_text">处理双向文字</a></h2>
+
+<p>要允许用户编辑双向文本，您必须能够执行以下操作：</p>
+
+<ul><li><a href="#displaying_carets">展示球</a></li>
+<li><a href="#moving_carets">动弹</a></li>
+<li><a href="#hit_testing">命中测试</a></li>
+<li><a href="#highlighting_selections">突出显示选择</a></li>
+</ul>
+
+<!-- ********************************************** -->
+
+<h3><a name="displaying_carets">展示球</a></h3>
+
+<p>在可编辑文本中， <em>尖号</em>用于图形表示当前插入点，即文本中将插入新字符的位置。通常，插入符号显示为两个字形之间闪烁的垂直条。新字符将插入并显示在插入符号的位置。</p>
+
+<p>计算插入符的位置可能会很复杂，尤其是对于双向文本而言。方向边界上的插入偏移具有两个可能的插入标记位置，因为对应于字符偏移的两个字形没有彼此相邻显示。下图对此进行了说明。在此图中，插入符号显示为方括号，以指示插入符号所对应的字形。
+</p>
+
+<center><img src="../../figures/2d/text/fig79.gif" width="582" height="143" align="bottom" alt="双尖号"></center>
+<p>字符偏移量8对应于下划线之后和<em>A</em>之前的位置。如果用户输入阿拉伯字符，则其字形显示在<em>A</em>的右侧（之前）；如果用户输入英文字符，则其字形显示在下划线（之后）的右侧。</p>
+
+<p>为了处理这种情况，某些系统显示双插入号，强（主）插入号和弱（辅助）插入号。尖号表示当插入的字符方向与文本的基本方向相同时，该字符将在哪里显示。当字符的方向与基本方向相反时，弱插入符号显示将在何处显示插入的字符<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>自动支持双插入符。</p>
+
+<p>使用双向文本时，不能简单地在字符偏移量之前添加字形的宽度来计算插入符号的位置。如果这样做，则插入符将被绘制在错误的位置，如下图所示：</p>
+
+<center><img src="../../figures/2d/text/fig610.gif" width="582" height="143" align="bottom" alt="插入符号绘制错误"></center>
+<p>为了使插入符号正确定位，需要添加偏移量左侧的字形宽度，并考虑当前上下文。除非考虑上下文，否则字形指标不一定会与显示匹配。（上下文会影响所使用的字形。）</p>
+
+<!-- ********************************************** -->
+
+<h3><a name="moving_carets">动弹</a></h3>
+
+<p>所有文本编辑器都允许用户使用箭头键移动插入符号。用户希望插入符号沿按下的箭头键的方向移动。在从左到右的文本中，移动插入偏移很简单：右箭头键将插入偏移量增加1，而左箭头键将插入偏移量减少1。在双向文本或带有连字的文本中，此行为将导致插入符号在方向边界处跨字形跳跃并在不同的方向行中以相反的方向移动。</p>
+
+<p>为了使插入符在双向文本中平滑移动，您需要考虑文本运行的方向。您不能简单地在按下右箭头键时增加插入偏移量，而在按下左箭头键时减少插入偏移量。如果当前插入偏移量在从右到左的字符范围内，则右箭头键应减小插入偏移量，而左箭头键应增大插入偏移量。</p>
+
+<p>跨方向插入符号的插入更加复杂。下图说明了当用户使用箭头键导航时超过方向边界时发生的情况。在显示的文本中向右移动三个位置对应于移动到字符偏移量7、19和18。
+</p>
+
+<center><img src="../../figures/2d/text/fig1211.gif" width="582" height="162" align="bottom" alt="插入运动"></center>
+<p>某些字形之间绝对不应带有尖号；取而代之的是，插入符号应移动，就像字形代表单个字符一样。例如，如果<em>o</em>和变音符号由两个单独的字符表示，则它们之间绝对不应出现脱字符号。</p>
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>类提供方法（ <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#getNextRightHit-int-" target="_blank"><code>getNextRightHit</code></a>和<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#getNextLeftHit-int-" target="_blank"><code>getNextLeftHit</code></a> ），使您可以轻松地通过双向文本平滑地插入插入符号。</p>
+
+<!-- ********************************************** -->
+
+<h3><a name="hit_testing">命中测试</a></h3>
+
+<p>通常，设备空间中的位置必须转换为文本偏移量。例如，当用户在可选文本上单击鼠标时，鼠标的位置将转换为文本偏移，并用作选择范围的一端。从逻辑上讲，这是插入符号的相反方向。</p>
+
+<p>当使用双向文本时，显示中的单个视觉位置可以对应于源文本中的两个不同偏移量，如下图所示：</p>
+
+<center><img src="../../figures/2d/text/fig912.gif" width="582" height="142" align="bottom" alt="命中测试双向文本"></center>
+<p>由于单个视觉位置可以对应于两个不同的偏移量，因此命中测试双向文本不仅仅是测量字形宽度，直到找到正确位置的字形，然后将该位置映射回字符偏移量为止。检测击球所在的一侧有助于区分这两种选择。</p>
+
+<p>您可以使用进行命中测试<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#hitTestChar-float-float-" target="_blank"><code>TextLayout.hitTestChar</code></a> 。匹配信息封装在<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextHitInfo.html" target="_blank"><code>TextHitInfo</code></a>对象，并包含有关匹配所在一侧的信息。</p>
+
+<!-- ********************************************** -->
+
+<h3><a name="highlighting_selections">突出显示选择</a></h3>
+
+<p>选定的字符范围由突出显示区域图形表示，突出显示区域是显示字形的区域，该字形带有反视频或针对不同的背景色显示。
+</p>
+
+<p>高亮区域（如插入符号）对于双向文本而言要比单向文本复杂得多。在双向文本中，连续字符范围在显示时可能没有连续的高亮区域。相反，显示视觉上连续的字形范围的突出显示区域可能不对应于单个连续的字符范围。</p>
+
+<p>这将导致两种策略来突出显示双向文本中的选择：</p>
+
+<ul>
+
+<li><p><em>逻辑突出显示</em> ：使用逻辑突出显示时，所选字符在文本模型中始终是连续的，并且突出显示区域允许是不连续的。以下是逻辑突出显示的示例：</p>
+
+<center><img src="../../figures/2d/text/fig1013.gif" width="582" height="162" align="bottom" alt="逻辑突出显示的插图（连续字符）"></center>
+</li>
+
+<li><p><em>视觉突出显示</em> ：通过视觉突出显示，可能会有不止一个范围的选定字符，但是突出显示区域始终是连续的。以下是视觉突出显示的示例：</p>
+
+<center><img src="../../figures/2d/text/fig1114.gif" width="582" height="162  " align="bottom" alt="视觉突出显示的插图（连续的突出显示区域）"></center>
+</li></ul>
+
+<p>逻辑突出显示更易于实现，因为所选字符在文本中始终是连续的。</p>
+
+<p>这个样本<a class="SourceLink" href="examples/SelectionSample.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/SelectionSample.java'); return false;"><code><code>SelectionSample.java</code></code></a>演示逻辑突出显示：</p>
+
+<center><img src="../../figures/2d/text/selection-sample.jpg" width="400" height="250" align="bottom" alt="选择样品；逻辑突出显示"></center>
+<!-- ********************************************** -->
+
+<h2><a name="performing_text_layout_in_a_java_application">在Java应用程序中执行文本布局</a></h2>
+
+<p>根据您使用的Java API，可以根据需要对文本布局进行尽可能少的控制：</p>
+
+<ul><li><p>如果您只想显示一段文字或需要一个可编辑的文字控件，则可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html" target="_blank"><code>JTextComponent</code></a> ，它将为您执行文本布局。
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html" target="_blank"><code>JTextComponent</code></a>专为满足大多数国际应用程序的需求而设计，并支持双向文本。有关更多信息<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html" target="_blank"><code>JTextComponent</code></a> ，请参阅<a class="TutorialLink" href="../../i18n/text/bidi.html" target="_top">使用带有JTextComponent类的双向文本</a>和<a class="TutorialLink" href="../../uiswing/components/text.html" target="_top">使用文本组件</a>了解更多信息。</p></li>
+
+<li><p>如果要显示一个简单的文本字符串，可以调用该方法<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html#drawString-java.text.AttributedCharacterIterator-int-int-" target="_blank"><code>Graphics2D.drawString</code></a>然后让Java 2D为您布置字符串。您也可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html#drawString-java.text.AttributedCharacterIterator-int-int-" target="_blank"><code>Graphics2D.drawString</code></a>呈现样式化的字符串和包含双向文本的字符串。有关通过渲染文本的更多信息<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html" target="_blank"><code>Graphics2D</code></a> ，请参阅<a class="TutorialLink" href="index.html" target="_top">使用文本API</a> 。</p></li>
+
+<li><p>如果要实现自己的文本编辑例程，则可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>管理文本布局，突出显示和匹配检测。提供的设施<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>处理最常见的情况，包括带有混合字体，混合语言和双向文本的文本字符串。有关使用TextLayout的更多信息，请参见“ <a href="#managing_text_layout">管理文本布局”</a> 。</p></li>
+
+<li><p>如果要完全控制文本的形状和位置，则可以构建自己的文本<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/GlyphVector.html" target="_blank"><code>GlyphVector</code></a>实例使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Font.html" target="_blank"><code>Font</code></a>类，然后通过<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html" target="_blank"><code>Graphics2D</code></a>类。</p></li>
+
+</ul>
+
+<p>通常，您不需要自己执行文本布局操作。对于大多数应用， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html" target="_blank"><code>JTextComponent</code></a>是显示静态和可编辑文本的最佳解决方案。然而， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html" target="_blank"><code>JTextComponent</code></a>不支持在双向文本中显示双尖号或不连续选择。如果您的应用程序需要这些功能，或者您希望实现自己的文本编辑例程，则可以使用Java 2D文本布局API。</p>
+
+<!-- ********************************************** -->
+
+<h2><a name="managing_text_layout">使用TextLayout类管理文本布局</a></h2>
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>类支持包含来自不同书写系统（包括阿拉伯语和希伯来语）的多种样式和字符的文本。（阿拉伯语和希伯来语特别难以显示，因为您必须重塑形状和重新排列文本才能获得可接受的表示形式。）</p>
+
+<p>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>即使使用纯英文文本，也可以简化显示和测量文本的过程。通过使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a> ，您可以毫不费力地实现高质量的排版。</p>
+
+<p>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>设计用于在显示简单的单向文本时不会对性能产生重大影响。当<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>用于显示阿拉伯语或希伯来语文本。但是，通常每个字符大约为微秒，并且以执行常规绘图代码为主。</p>
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>类为您管理字形的位置和顺序。您可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>执行以下操作：</p>
+
+<ul><li><a href="#laying_out_text">使用TextLayout类布置文本</a></li>
+<li><a href="#displaying_dual_carets">用TextLayout类显示双班</a></li>
+<li><a href="#moving_the_caret">使用TextLayout类移动插入符号</a></li>
+<li><a href="#textlayout_hit_testing">使用TextLayout类进行命中测试</a></li>
+<li><a href="#textlayout_highlighting_selections">使用TextLayout类突出显示选择</a></li>
+
+</ul>
+
+<!-- ********************************************** -->
+
+<h3><a name="laying_out_text">使用TextLayout类布置文本</a></h3>
+
+<p>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>自动以正确的形状和顺序对文本进行布局，包括双向文本。为了正确地塑造和排列代表一行文字的字形， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>必须了解文本的完整上下文：</p>
+
+<ul>
+<li>如果文本适合一行，例如按钮的单个单词标签或对话框中的一行，则可以构造一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>直接来自文本。</li>
+
+<li>如果您的文字超出一行的容量，或者想将一行的文字分成多个选项卡式段，则无法构造一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>直。您必须使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/LineBreakMeasurer.html" target="_blank"><code>LineBreakMeasurer</code></a>提供足够的环境。有关更多信息，请参见<a class="TutorialLink" href="drawmulstring.html" target="_top">绘制多行文本</a> 。</li>
+</ul>
+
+<p>文本的基本方向通常由文本上的属性（样式）设置。如果缺少该属性， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>遵循Unicode双向算法，并从段落中的初始字符得出基本方向。</p>
+
+<!-- ********************************************** -->
+
+<h3><a name="displaying_dual_carets">用TextLayout类显示双班</a></h3>
+
+<p>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>维护插入符号信息，例如插入符号<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a> ，位置和角度。您可以使用此信息轻松地在单向和双向文本中显示插入符号。当绘制双向文本的插入符号时，使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>确保插入标记的位置正确。</p>
+
+<p>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>提供默认的插入符号<code>Shapes</code>并自动支持双插入符。对于斜体和斜字形， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>产生成角度的插入符号，如下图所示。这些插入符号位置还用作突出显示和命中测试的字形之间的边界，这有助于产生一致的用户体验。</p>
+
+<center><img src="../../figures/2d/text/fig85.gif" width="250" height="77" align="bottom" alt="斜角插入符"></center>
+<p>给定插入偏移量， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#getCaretShapes-int-" target="_blank"><code>getCaretShapes</code></a>方法返回一个包含两个元素的数组<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a>对象：元素0包含强插入符，元素1包含弱插入符（如果存在）。要显示双尖号，只需绘制两个尖号<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a>对象;插入符号将自动呈现在正确的位置。
+</p>
+
+<p>如果要使用自定义插入符号，则可以从以下位置检索插入符号的位置和角度<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>自己画画</p>
+
+<p>这个样本<a class="SourceLink" href="examples/HitTestSample.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/HitTestSample.java'); return false;"><code><code>HitTestSample.java</code></code></a>演示双重插入符号。</p>
+
+<p>在<em>○</em>点击向希伯来文本记录最终用户的<em>O，</em>这是英文文本的一部分后点击的<em>邻</em>边。这会将弱插入符号（黑色）置于<em>o</em>旁边，将强插入符号（红色）置于<em>H的</em>前面：</p>
+
+<center><img src="../../figures/2d/text/hit-test-sample-before-o.jpg" width="400" height="250" align="bottom" alt="命中测试样本，单击希伯来语文本一侧的“ o”"></center>
+<p>单击<em>o</em>右边的空格会记录最终用户单击了该空格，这是希伯来语文本的一部分。这会将强（红色）插入符号放在<em>o</em>旁边，将弱插入号（黑色）放在<em>H的</em>前面：</p>
+
+<center><img src="../../figures/2d/text/hit-test-sample-after-o.jpg" width="400" height="250" align="bottom" alt="点击测试样本，单击“ o”右边的空格"></center>
+<!-- ********************************************** -->
+
+<h3><a name="moving_the_caret">使用TextLayout类移动插入符号</a></h3>
+
+<p>您也可以使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>类，以确定当用户按下向左或向右箭头键时产生的插入偏移量。给定一个<code>TextHitInfo</code>代表当前插入偏移量的对象， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#getNextRightHit-java.awt.font.TextHitInfo-" target="_blank"><code>getNextRightHit</code></a>方法返回一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextHitInfo.html" target="_blank"><code>TextHitInfo</code></a>如果按下向右箭头键，则表示正确的插入偏移量的对象。的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#getNextLeftHit-java.awt.font.TextHitInfo-" target="_blank"><code>getNextLeftHit</code></a>方法为左箭头键提供相同的信息。
+</p>
+
+<p>以下摘录自样本<a class="SourceLink" href="examples/ArrowKeySample.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/ArrowKeySample.java'); return false;"><code><code>ArrowKeySample.java</code></code></a>演示了如何确定当用户按下向左或向右箭头键时产生的插入偏移量：</p>
+
+<div class="codeblock"><pre>
+public class ArrowKeySample extends JPanel implements KeyListener {
+
+  // ...
+
+  private static void createAndShowGUI() {
+    // Create and set up the window.
+    ArrowKey demo = new ArrowKey();
+    frame = new JFrame("Arrow Key Sample");
+    frame.addKeyListener(demo);
+    // ...
+  }
+
+  private void handleArrowKey(boolean rightArrow) {
+    TextHitInfo newPosition;
+    if (rightArrow) {
+      newPosition = textLayout.getNextRightHit(insertionIndex);
+    } else {
+      newPosition = textLayout.getNextLeftHit(insertionIndex);
+    }
+
+    // getNextRightHit() / getNextLeftHit() will return null if
+    // there is not a caret position to the right (left) of the
+    // current position.
+    if (newPosition != null) {
+      // Update insertionIndex.
+      insertionIndex = newPosition.getInsertionIndex();
+      // Repaint the Component so the new caret(s) will be displayed.
+      frame.repaint();
+    }
+  }
+
+  // ...
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    int keyCode = e.getKeyCode();
+    if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT) {
+      handleArrowKey(keyCode == KeyEvent.VK_RIGHT);
+    }
+  }
+}
+</pre></div>
+
+<!-- ********************************************** -->
+
+<h3><a name="textlayout_hit_testing">使用TextLayout类进行命中测试</a></h3>
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>类提供了一种用于命中测试文本的简单机制。的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html#hitTestChar-float-float-" target="_blank"><code>hitTextChar</code></a>方法将鼠标的<em>x</em>和<em>y</em>坐标作为参数并返回一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextHitInfo.html" target="_blank"><code>TextHitInfo</code></a>宾语。的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextHitInfo.html" target="_blank"><code>TextHitInfo</code></a>包含指定位置的插入偏移量和命中所在的一侧。插入偏移量是最接近匹配点的偏移量：如果匹配点超过了行尾，则返回行尾的偏移量。</p>
+
+<p>以下摘录自<a class="SourceLink" href="examples/HitTestSample.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/HitTestSample.java'); return false;"><code><code>HitTestSample.java</code></code></a>从鼠标单击中获取偏移量：</p>
+
+<div class="codeblock"><pre>
+private class HitTestMouseListener extends MouseAdapter {
+    public void mouseClicked(MouseEvent e) {
+      Point2D origin = computeLayoutOrigin();
+      // Compute the mouse click location relative to
+      // textLayout's origin.
+      float clickX = (float) (e.getX() - origin.getX());
+      float clickY = (float) (e.getY() - origin.getY());
+      // Get the character position of the mouse click.
+      TextHitInfo currentHit = textLayout.hitTestChar(clickX, clickY);
+      insertionIndex = currentHit.getInsertionIndex();
+      // Repaint the Component so the new caret(s) will be displayed.
+      repaint();
+    }
+  }
+</pre></div>
+
+<!-- ********************************************** -->
+
+<h3><a name="textlayout_highlighting_selections">使用TextLayout类突出显示选择</a></h3>
+
+<p>你可以得到一个<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a>代表从<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a> 。
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>计算突出显示区域的尺寸时，会自动考虑上下文。
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/font/TextLayout.html" target="_blank"><code>TextLayout</code></a>支持逻辑和视觉突出显示。</p>
+
+<p>以下摘录自<a class="SourceLink" href="examples/SelectionSample.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/SelectionSample.java'); return false;"><code><code>SelectionSample.java</code></code></a>演示一种显示突出显示的文本的方法：</p>
+
+<div class="codeblock"><pre>
+public void paint(Graphics g) {
+
+    // ...
+
+    boolean haveCaret = anchorEnd == activeEnd;
+
+    if (!haveCaret) {
+      // Retrieve highlight region for selection range.
+      Shape highlight = 
+          textLayout.getLogicalHighlightShape(anchorEnd, activeEnd);
+      // Fill the highlight region with the highlight color.
+      graphics2D.setColor(HIGHLIGHT_COLOR);
+      graphics2D.fill(highlight);
+    }
+
+    // ...
+
+  }
+
+  // ...
+
+  private class SelectionMouseMotionListener extends MouseMotionAdapter {
+    public void mouseDragged(MouseEvent e) {
+      Point2D origin = computeLayoutOrigin();
+      // Compute the mouse location relative to
+      // textLayout's origin.
+      float clickX = (float) (e.getX() - origin.getX());
+      float clickY = (float) (e.getY() - origin.getY());
+      // Get the character position of the mouse location.
+      TextHitInfo position = textLayout.hitTestChar(clickX, clickY);
+      int newActiveEnd = position.getInsertionIndex();
+      // If newActiveEnd is different from activeEnd, update activeEnd
+      // and repaint the Panel so the new selection will be displayed.
+      if (activeEnd != newActiveEnd) {
+        activeEnd = newActiveEnd;
+        frame.repaint();
+      }
+    }
+  }
+
+  private class SelectionMouseListener extends MouseAdapter {
+    public void mousePressed(MouseEvent e) {
+      Point2D origin = computeLayoutOrigin();
+      // Compute the mouse location relative to
+      // TextLayout's origin.
+      float clickX = (float) (e.getX() - origin.getX());
+      float clickY = (float) (e.getY() - origin.getY());
+      // Set the anchor and active ends of the selection
+      // to the character position of the mouse location.
+      TextHitInfo position = textLayout.hitTestChar(clickX, clickY);
+      anchorEnd = position.getInsertionIndex();
+      activeEnd = anchorEnd;
+      // Repaint the Panel so the new selection will be displayed.
+      frame.repaint();
+    }
+  }
+
+</pre></div>
+
+<p>方法<code>SelectionMouseListener.mousePressed</code>指定变量<code>anchorEnd</code> ，这是单击文本的位置。方法<code>SelectionMouseMotionListener.mouseDragged</code>指定变量<code>activeEnd</code> ，这是文本在其中被拖动到鼠标的位置。的<code>paint</code>方法检索<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a>代表所选文本的对象（位置之间的文本<code>anchorEnd</code>和<code>activeEnd</code> ）。的<code>paint</code>方法然后填充<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Shape.html" target="_blank"><code>Shape</code></a>具有突出显示颜色的对象。</p>
+
+        </div>
+        <div class="NavBit">
+            <a href="drawmulstring.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../images/index.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>绘制多行文本<br><b>下一页：</b>处理图像</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

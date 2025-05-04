@@ -1,0 +1,523 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>课程：常见问题（及其解决方案）（Java™教程>入门）</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This beginner Java tutorial describes getting started with Java and setting up your Netbeans IDE">
+     <meta name="keywords" content="java programming, learn java, java sample code, getting started with java, development environment setup">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body >
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+    <!-- ixheader -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr"> <div id="TopBar_tl"> <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                    <div id="TopBar_right"> 
+                    </div> 
+      </div> </div> </div> </div> </div>
+
+    <div class="MainFlow_wide">
+        <div class="PrintHeaders">
+            <b>追踪：</b>入门</div>
+        <div id="BreadCrumbs">
+            <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">入门</a>
+        </div>
+        <div class="NavBit">
+                <a href="../application/index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../end.html" target="_top">下一个»</a>
+        </div>
+        <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+        <div id="PageTitle"><h1>课程：常见问题（及其解决方案）</h1></div>
+        <div id="PageContent">
+
+<h2><a name="compiler" id="compiler">编译器问题</a></h2>
+<p><strong>Microsoft Windows系统上的常见错误消息</strong></p>
+<p><code><strong>'javac' is not recognized as an internal or external command, operable program or batch file</strong></code></p>
+<p>如果收到此错误，则Windows无法找到编译器（ <code>javac</code> ）。</p>
+<p>这是告诉Windows在哪里找到的一种方法<code>javac</code> 。假设您将JDK安装在<code>C:\jdk1.8.0</code> 。在提示符下，键入以下命令，然后按Enter：</p>
+<div class="codeblock"><pre>
+C:\jdk1.8.0\bin\javac HelloWorldApp.java
+</pre></div>
+<p>如果选择此选项，则必须先<code>javac</code>和<code>java</code>命令与<code>C:\jdk1.8.0\bin\</code>每次您编译或运行程序时。为了避免这种额外的输入，请参阅JDK 8安装说明中的“ <a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jdk_install.html#BABGDJFH" target="_blank">更新PATH变量</a> ”部分。</p>
+<p><code><strong>Class names, 'HelloWorldApp', are only accepted if annotation processing is explicitly requested</strong></code></p>
+<p>如果您收到此错误，则忘记包含<code>.java</code>后缀编译程序。记住，命令是<code>javac HelloWorldApp.java</code>不<code>javac HelloWorldApp</code> 。</p>
+<p><strong>UNIX系统上的常见错误消息</strong></p>
+<p style="font-weight:bold"><code>javac: Command not found</code></p>
+<p>如果收到此错误，则UNIX无法找到编译器， <code>javac</code> 。</p>
+<p>这是告诉UNIX在哪里找到的一种方法<code>javac</code> 。假设您将JDK安装在<code>/usr/local/jdk1.8.0</code> 。在提示符下，您将键入以下命令，然后按回车键：</p>
+<div class="codeblock"><pre>
+/usr/local/jdk1.8.0/javac HelloWorldApp.java
+</pre></div>
+<p><b>注意：</b>如果选择此选项，则每次编译或运行程序时，都必须先进行<code>javac</code>和<code>java</code>命令与<code>/usr/local/jdk1.8.0/</code> 。为了避免这种额外的输入，您可以将此信息添加到PATH变量中。这样做的步骤将根据您当前正在运行的Shell而有所不同。</p>
+<p><code><strong>Class names, 'HelloWorldApp', are only accepted if annotation processing is explicitly requested</strong></code></p>
+<p>如果您收到此错误，则忘记包含<code>.java</code>后缀编译程序。记住，命令是<code>javac HelloWorldApp.java</code>不<code>javac HelloWorldApp</code> 。</p>
+<p><strong>语法错误（所有平台）</strong></p>
+<p>如果您键入错误的程序部分，则编译器可能会发出<em>语法</em>错误。该消息通常显示错误的类型，检测到错误的行号，该行上的代码以及错误在代码中的位置。这是由于省略分号（ <code>;</code> ）在声明的末尾：</p>
+<div class="codeblock"><pre>
+testing.java:14: `;' expected.
+System.out.println("Input has " + count + " chars.")
+                                                     ^
+1 error
+</pre></div>
+<p>有时，编译器无法猜出您的意图，并且如果错误在多行中层叠，则会打印出令人困惑的错误消息或多个错误消息。例如，以下代码段省略了分号（ <code>;</code> ）从粗体行：</p>
+<div class="codeblock"><pre>
+while (System.in.read() != -1)
+    <b>count++</b>
+System.out.println("Input has " + count + " chars."); 
+</pre></div>
+<p>处理此代码时，编译器会发出两个错误消息：</p>
+<div class="codeblock"><pre>
+testing.java:13: Invalid type expression.
+        count++
+                 ^
+testing.java:14: Invalid declaration.
+    System.out.println("Input has " + count + " chars.");
+                      ^
+2 errors
+</pre></div>
+<p>编译器发出两个错误消息，因为在处理之后<code>count++</code> ，则编译器的状态表明它位于表达式的中间。没有分号，编译器将无法知道该语句是完整的。</p>
+<p>如果看到任何编译器错误，则说明您的程序未成功编译，并且编译器未创建<code>.class</code>文件。仔细验证程序，修复检测到的所有错误，然后重试。</p>
+<p><strong>语义错误</strong></p>
+<p>除了验证程序在语法上是正确的之外，编译器还会检查其他基本正确性。例如，每次您使用未初始化的变量时，编译器都会警告您：</p>
+<div class="codeblock"><pre>
+testing.java:13: Variable count may not have been initialized.
+        count++
+        ^
+testing.java:14: Variable count may not have been initialized.
+    System.out.println("Input has " + count + " chars.");
+                                       ^
+2 errors
+</pre></div>
+<p>同样，您的程序未成功编译，并且编译器未创建<code>.class</code>文件。解决错误，然后重试。</p>
+<h2><a name="interpreter" id="interpreter">运行时问题</a></h2>
+<p style="font-weight:bold">Microsoft Windows系统上的错误消息</p>
+<p style="font-weight:bold"><code>Exception in thread "main" java.lang.NoClassDefFoundError: HelloWorldApp</code></p>
+<p>如果您收到此错误， <code>java</code>找不到您的字节码文件， <code>HelloWorldApp.class</code> 。</p>
+<p>地方之一<code>java</code>试图找到你的<code>.class</code>文件是您的当前目录。所以如果你<code>.class</code>文件在<code>C:\java</code> ，您应该将当前目录更改为该目录。要更改目录，请在提示符下键入以下命令，然后按Enter：</p>
+<div class="codeblock"><pre>
+cd c:\java
+</pre></div>
+<p>提示应更改为<code>C:\java></code> 。如果输入<code>dir</code>在提示符下，您应该看到<code>.java</code>和<code>.class</code>文件。现在输入<code>java HelloWorldApp</code>再次。</p>
+<p>如果仍然有问题，则可能必须更改CLASSPATH变量。要查看是否有必要，请尝试使用以下命令破坏类路径。</p>
+<div class="codeblock"><pre>
+set CLASSPATH=
+</pre></div>
+<p>现在输入<code>java HelloWorldApp</code>再次。如果程序现在可以运行，则必须更改CLASSPATH变量。要设置此变量，请参阅JDK 8安装说明中的“ <a class="OutsideLink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jdk_install.html#BABGDJFH" target="_blank">更新PATH变量”</a>部分。CLASSPATH变量的设置方式相同。</p>
+<p><code><strong> Could not find or load main class HelloWorldApp.class</strong></code></p>
+<p>初学者程序员常犯的一个错误是尝试运行<code>java</code>发射器<code>.class</code>编译器创建的文件。例如，如果尝试使用以下命令运行程序，则会出现此错误<code>java HelloWorldApp.class</code>代替<code>java HelloWorldApp</code> 。请记住，参数是您要使用<em>的类</em>的<em>名称</em> ， <em>而不是</em>文件名。</p>
+<p><strong><code>Exception in thread "main" java.lang.NoSuchMethodError: main</code></strong></p>
+<p>Java VM要求您执行的类具有一个<code>main</code>开始执行应用程序的方法。
+<a class="TutorialLink" href="../application/index.html" target="_top">仔细看看“ Hello World！”应用程序</a>讨论<code>main</code>详细的方法。</p>
+<p><strong>UNIX系统上的错误消息</strong></p>
+<p style="font-weight:bold"><code>Exception in thread "main" java.lang.NoClassDefFoundError: HelloWorldApp</code></p>
+<p>如果您收到此错误， <code>java</code>找不到您的字节码文件， <code>HelloWorldApp.class</code> 。</p>
+<p>地方之一<code>java</code>试图找到您的字节码文件是您当前的目录。因此，例如，如果您的字节码文件位于<code>/home/jdoe/java</code> ，您应该将当前目录更改为该目录。要更改目录，请在提示符下键入以下命令，然后按Return键：</p>
+<div class="codeblock"><pre>
+cd /home/jdoe/java
+</pre></div>
+<p>如果输入<code>pwd</code>在提示符下，您应该看到<code>/home/jdoe/java</code> 。如果输入<code>ls</code>在提示符下，您应该看到<code>.java</code>和<code>.class</code>文件。现在输入<code>java HelloWorldApp</code>再次。</p>
+<p>如果仍然有问题，则可能必须更改CLASSPATH环境变量。要查看是否有必要，请尝试使用以下命令破坏类路径。</p>
+<div class="codeblock"><pre>
+unset CLASSPATH
+</pre></div>
+<p>现在输入<code>java HelloWorldApp</code>再次。如果程序现在可以运行，则必须以与上述PATH变量相同的方式更改CLASSPATH变量。</p>
+<p><code><strong>Exception in thread "main" java.lang.NoClassDefFoundError: HelloWorldApp/class</strong></code></p>
+<p>初学者程序员常犯的一个错误是尝试运行<code>java</code>发射器<code>.class</code>编译器创建的文件。例如，如果尝试使用以下命令运行程序，则会出现此错误<code>java HelloWorldApp.class</code>代替<code>java HelloWorldApp</code> 。请记住，参数是您要使用<em>的类</em>的<em>名称</em> ， <em>而不是</em>文件名。</p>
+<p><strong><code>Exception in thread "main" java.lang.NoSuchMethodError: main</code></strong></p>
+<p>Java VM要求您执行的类具有一个<code>main</code>开始执行应用程序的方法。
+<a class="TutorialLink" href="../application/index.html" target="_top">仔细看看“ Hello World！”应用程序</a>讨论<code>main</code>详细的方法。</p>
+ 
+<p><strong>Applet或Java Web Start应用程序被阻止</strong></p>
+<p>如果您正在通过浏览器运行应用程序，并收到表示该应用程序被阻止的安全警告，请检查以下各项：</p>
+<ul>
+<li><p>验证是否针对运行应用程序的环境正确设置了JAR文件清单中的属性。Permissions属性是必需的。在NetBeans项目，您可以通过扩展项目文件夹，双击打开<tt>MANIFEST.MF</tt>从NetBeans IDE中的文件选项卡清单文件。</p></li>
+<li><p>验证应用程序是否由有效证书签名，并且该证书位于Signer CA密钥库中。</p></li>
+<li><p>如果您正在运行本地小程序，请设置Web服务器以进行测试。您还可以将应用程序添加到例外站点列表中，该列表在Java控制面板的“安全性”选项卡中进行管理。</p></li>
+</ul>
+
+
+        </div>
+    <div class="NavBit">
+        <a href="../application/index.html">«上一个</a> • <a href="../TOC.html">追踪</a> • <a href="../end.html">下一个»</a>
+    </div>
+    </div>
+   
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>   
+    <div class="PrintHeaders">
+        <b>上一页：</b>上一课<br><b>下一页：</b>小路尽头</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

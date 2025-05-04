@@ -1,0 +1,2186 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>JNLP文件的结构（Java™教程>部署>深度部署）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This deployment Java tutorial describes development and deployment of applets, Java Web Start applications, rich Internet applications, and JAR related tools">
+     <meta name="keywords" content="java programming, learn java, java sample code, java applet, java web start, rich internet application, RIA, jar, plugin, plug-in">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">深度部署</a></div>
+<div class="linkAHEAD"><a href="userAcceptance.html">RIA的用户接受度</a></div>
+<div class="linkAHEAD"><a href="depltoolkit_index.html">部署工具包</a></div>
+<div class="linkBHEAD"><a href="runAppletFunction.html">部署小程序</a></div>
+<div class="linkCHEAD"><a href="customizeLoadingScreen.html">自定义加载屏幕</a></div>
+<div class="linkCHEAD"><a href="embeddingJNLPFileInWebPage.html">在Applet标签中嵌入JNLP文件</a></div>
+<div class="linkBHEAD"><a href="createWebStartLaunchButtonFunction.html">部署Java Web Start应用程序</a></div>
+<div class="linkCHEAD"><a href="changeLaunchButtonOfJWS.html">更改启动按钮</a></div>
+<div class="linkCHEAD"><a href="deployingWithoutCodebase.html">不使用代码库进行部署</a></div>
+<div class="linkBHEAD"><a href="jreVersionCheck.html">检查客户端JRE软件版本</a></div>
+<div class="linkAHEAD"><a href="jnlp.html">Java网络启动协议</a></div>
+<div class="nolinkBHEAD">JNLP文件的结构</div>
+<div class="linkAHEAD"><a href="bestPractices.html">部署最佳实践</a></div>
+<div class="linkBHEAD"><a href="reducingDownloadTime.html">减少下载时间</a></div>
+<div class="linkBHEAD"><a href="avoidingUnnecessaryUpdateChecks.html">避免不必要的更新检查</a></div>
+<div class="linkBHEAD"><a href="ensuringJRE.html">确保JRE软件的存在</a></div>
+<div class="linkQUESTIONS"><a href="QandE/questions.html">问题与练习</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>追踪：</b>部署<br><b>课程：</b>深度部署<br><b>部分：</b> Java网络启动协议</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">部署</a> > <a href="index.html" target="_top">深度部署</a>
+            </div>
+            <div class="NavBit">
+                <a href="jnlp.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="bestPractices.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>JNLP文件的结构</h1></div>
+            <div id="PageContent">
+
+<p>本主题描述了用于富Internet应用程序（RIA）的Java网络启动协议（JNLP）文件的语法。</p>
+<p>以下代码片段显示了Java Web Start应用程序的样本JNLP文件：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;jnlp spec="1.0+" codebase="" href=""&gt;
+    &lt;information&gt;
+        &lt;title&gt;Dynamic Tree Demo&lt;/title&gt;
+        &lt;vendor&gt;Dynamic Team&lt;/vendor&gt;
+        &lt;icon href="sometree-icon.jpg"/&gt;
+        &lt;offline-allowed/&gt;
+    &lt;/information&gt;
+    &lt;resources&gt;
+        &lt;!-- Application Resources --&gt;
+        &lt;j2se version="1.6+" href=
+           "http://java.sun.com/products/autodl/j2se"/&gt;
+        &lt;jar href="DynamicTreeDemo.jar"
+            main="true" /&gt;
+
+    &lt;/resources&gt;
+    &lt;application-desc
+         name="Dynamic Tree Demo Application"
+         main-class="webstartComponentArch.DynamicTreeApplication"
+         width="300"
+         height="300"&gt;
+     &lt;/application-desc&gt;
+     &lt;update check="background"/&gt;
+&lt;/jnlp&gt;
+</pre></div>
+<p>下表描述了JNLP文件中常用的元素和属性。单击父级链接以查看元素的父级。</p>
+<div class="note"><hr><strong>注意：</strong>此表未包含JNLP文件的所有可能的内容。有关更多信息，请参阅<a class="APILink" href="http://www.oracle.com/technetwork/java/javase/jnlp-spec-log-139509.html" target="_blank">Java网络启动协议和API规范更改日志</a> 。
+<hr></div>
+<table border="1" cellpadding="4" cellspacing="3" width="1111" summary="Commonly Used Elements and Attributes in a JNLP file">
+<caption><strong>JNLP文件中的常用元素和属性</strong></caption>
+<colgroup><col width="126">
+<col width="140">
+<col width="646">
+<col width="73">
+<col width="66">
+</colgroup><tbody>
+<tr>
+<th width="386">
+<p>元件</p>
+</th>
+<th width="95">
+<p>属性</p>
+</th>
+<th width="435">
+<p>描述</p>
+</th>
+<th width="63">
+<p>以来</p>
+</th>
+<th width="62">
+<p>需要</p>
+</th>
+</tr>
+<tr>
+<td>
+<p><a name="jnlp" id="jnlp"></a> lp</p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>JNLP文件的最上面的xml元素。</p>
+</td>
+<td width="63">
+<p>1.0<br></p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>规格</p>
+</td>
+<td width="435">
+<p>该属性的值可以是1.0、1.5或6.0，也可以使用通配符，例如1.0+。它表示此JNLP文件可以使用的JNLP规范的最低版本。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>代码库</p>
+</td>
+<td width="435">
+<p>在中指定的所有相对URL的基本位置<code>href</code> JNLP文件中的属性。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>JNLP文件本身的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>版</p>
+</td>
+<td width="435">
+<p>正在启动的RIA版本以及JNLP文件本身的版本。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>     <a name="information" id="information"></a>信息<sup><a href="#jnlp">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>包含描述RIA及其来源的其他元素。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>操作系统</p>
+</td>
+<td width="435">
+<p>应考虑此信息元素的操作系统。</p>
+</td>
+<td width="63">
+<p>1.5.0<br>
+<br></p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>拱</p>
+</td>
+<td width="435">
+<p>应考虑此信息元素的体系结构。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>平台</p>
+</td>
+<td width="435">
+<p>应考虑此信息元素的平台。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>地区</p>
+</td>
+<td width="435">
+<p>应考虑此信息元素的语言环境。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>头衔<sup><a href="#information">家长</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>RIA的标题。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>供应商<sup><a href="#information">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>RIA的提供者。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>主页<sup><a href="#information">上级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>RIA的主页。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>指向可在其中找到有关此RIA的更多信息的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>说明<sup><a href="#information">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>描述RIA的简短声明。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>类</p>
+</td>
+<td width="435">
+<p>描述类型的指示器。合法值是单行，简短和工具提示。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>图标<sup><a href="#information">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可用于向用户标识RIA的图标。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>指向图标文件的URL。可以采用以下格式之一：gif，jpg，png，ico。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>类</p>
+</td>
+<td width="435">
+<p>指示图标的建议用法，可以是：默认，选中，禁用，翻转，启动或快捷方式。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>宽度</p>
+</td>
+<td width="435">
+<p>可以用来指示图像的分辨率。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>高度</p>
+</td>
+<td width="435">
+<p>可以用来指示图像的分辨率。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>深度</p>
+</td>
+<td width="435">
+<p>可以用来指示图像的分辨率。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>离线允许的<sup><a href="#information">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>表示当客户端系统与网络断开连接时，此RIA可以运行。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>快捷方式<sup><a href="#information">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可用于指示RIA对桌面集成的偏好。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>线上</p>
+</td>
+<td width="435">
+<p>可以用来描述RIA创建用于在线或离线运行的快捷方式的偏好。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>桌面<sup><a href="#information">母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以用来指示RIA偏好在用户桌面上放置快捷方式。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>菜单<sup><a href="#information">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以用来指示RIA偏好的将菜单项放置在用户的开始菜单中。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>子菜单</p>
+</td>
+<td width="435">
+<p>可以用来指示RIA对放置菜单项的位置的偏好。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>协会<sup><a href="#information">家长</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以用来向JNLP客户端提示RIA希望在操作系统中注册为某些扩展名和某些mime类型的主要处理程序。如果包含此元素，则还必须包含离线允许的元素，或者必须为jnlp元素设置href属性。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>扩展名</p>
+</td>
+<td width="435">
+<p>RIA请求对其进行处理的文件扩展名列表（以空格分隔）。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>模仿型</p>
+</td>
+<td width="435">
+<p>RIA要求注册要处理的MIME类型。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>相关内容的<sup><a href="#information">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以与RIA集成的其他相关内容。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>指向相关内容的URL。</p>
+</td>
+<td width="63">
+<p>1.5.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>更新<sup><a href="#jnlp">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>JNLP客户端应如何处理RIA更新的首选项。</p>
+</td>
+<td width="63">
+<p>1.6.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>校验</p>
+</td>
+<td width="435">
+<p>JNLP客户端应何时检查更新的首选项。值可以是始终，超时或背景。</p>
+</td>
+<td width="63">
+<p>1.6.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>政策</p>
+</td>
+<td width="435">
+<p>在RIA启动之前有新版本可用时，JNLP客户端应如何处理RIA更新的首选项。值可以是始终，即时更新或即时运行。</p>
+</td>
+<td width="63">
+<p>1.6.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p><br></p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>    <a name="security" id="security"></a>安全<sup><a href="#jnlp">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可用于请求增强的权限。如果不包括此元素，则在安全沙箱中运行该应用程序。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>准<sup><a href="#security">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>请求以所有权限运行RIA。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>j2ee-application-client-permissions <sup><a href="#security">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>请求以符合J2EE应用程序客户端环境的安全性规范的权限集运行RIA。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>    <a name="resources" id="resources"></a>资源<sup><a href="#jnlp">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>描述RIA所需的所有资源。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>操作系统</p>
+</td>
+<td width="435">
+<p>应该考虑资源元素的操作系统。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>拱</p>
+</td>
+<td width="435">
+<p>应该考虑资源元素的体系结构。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>地区</p>
+</td>
+<td width="435">
+<p>应该考虑使用resource元素的语言环境。</p>
+</td>
+<td width="63">
+<p><br></p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>java或j2se <sup><a href="#resources">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>运行RIA的Java软件版本。</p>
+</td>
+<td width="63">
+<p>1.6.0（Java）<br></p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>版</p>
+</td>
+<td width="435">
+<p>要使用的版本范围的有序列表。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>表示此Java软件版本的供应商的URL，以及可以从何处下载的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>java-vm-args</p>
+</td>
+<td width="435">
+<p>在启动JRE软件时，RIA会首选JNLP客户端使用的一组标准和非标准虚拟机参数。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>初始堆大小</p>
+</td>
+<td width="435">
+<p>Java堆的初始大小。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>最大堆大小</p>
+</td>
+<td width="435">
+<p>Java堆的最大大小。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>罐子<sup><a href="#resources">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>一个RIA的classpath的JAR文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>JAR文件的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>版</p>
+</td>
+<td width="435">
+<p>请求的JAR文件版本。需要使用基于版本的下载协议</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>主要</p>
+</td>
+<td width="435">
+<p>指示此JAR文件是否包含包含以下内容的类： <code>main</code> RIA的方法。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>下载</p>
+</td>
+<td width="435">
+<p>指示可以懒惰地或在需要时下载此JAR文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>尺寸</p>
+</td>
+<td width="435">
+<p>JAR文件的可下载大小（以字节为单位）。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>部分</p>
+</td>
+<td width="435">
+<p>可用于将资源分组在一起，以便同时下载它们。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>nativelib <sup><a href="#resources">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>一个JAR文件，其根目录中包含本机库。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>JAR文件的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>版</p>
+</td>
+<td width="435">
+<p>请求的JAR文件版本。需要使用基于版本的下载协议</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>下载</p>
+</td>
+<td width="435">
+<p>可以用来指示此JAR文件可以延迟下载。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>尺寸</p>
+</td>
+<td width="435">
+<p>JAR文件的可下载大小（以字节为单位）。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>部分</p>
+</td>
+<td width="435">
+<p>可用于将资源分组在一起，以便将它们同时下载。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>         <a name="extension" id="extension"></a>扩展<sup><a href="#resources">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>指向与此RIA一起使用的其他component-desc或installer-desc的指针。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>href</p>
+</td>
+<td width="435">
+<p>附加扩展名JNLP文件的URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>版</p>
+</td>
+<td width="435">
+<p>附加扩展名JNLP文件的版本。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>名称</p>
+</td>
+<td width="435">
+<p>附加扩展名JNLP文件的名称</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>ext下载<sup><a href="#extension">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以在扩展元素中使用，以表示组件扩展中包含的部分。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>外部</p>
+</td>
+<td width="435">
+<p>可以在扩展名中找到的零件的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>下载</p>
+</td>
+<td width="435">
+<p>可以用来指示此扩展名可以被急切或懒惰地下载。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>部分</p>
+</td>
+<td width="435">
+<p>表示此JNLP文件中要包含扩展名的零件的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>包<sup><a href="#resources">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以用来向JNLP客户端指示在哪个JAR文件中实现了哪些包。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>名称</p>
+</td>
+<td width="435">
+<p>给定零件的JAR文件中包含的程序包名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>部分</p>
+</td>
+<td width="435">
+<p>包含包含给定包名称的JAR文件的部件名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>递归的</p>
+</td>
+<td width="435">
+<p>可以用来表示可以在给定的部分中找到所有以给定名称开头的软件包名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>财产<sup><a href="#resources">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>定义系统属性，该属性可通过<code>System.getProperty</code>和<code>System.getProperties</code>方法。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>名称</p>
+</td>
+<td width="435">
+<p>系统属性的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>值</p>
+</td>
+<td width="435">
+<p>系统属性的值。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>注意：JNLP文件必须包含以下之一：application-desc，applet-desc，component-desc或installer-desc。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>    <a name="applicationdesc" id="applicationdesc"></a>应用程序描述<sup><a href="#jnlp">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>表示这是应用程序的JNLP文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>主班</p>
+</td>
+<td width="435">
+<p>包含<code>public static void main(String[])</code>应用程序的方法。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><sup><a href="#applicationdesc">父母亲</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>每个自变量包含（按顺序）要传递给<code>main</code>方法。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>    <a name="appletdesc" id="appletdesc"></a> applet-desc <sup><a href="#jnlp">父级</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>表示这是小应用程序的JNLP文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>主班</p>
+</td>
+<td width="435">
+<p>主小程序类的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>文档库</p>
+</td>
+<td width="435">
+<p>小程序的文档库，作为URL。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>名称</p>
+</td>
+<td width="435">
+<p>小程序的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>宽度</p>
+</td>
+<td width="435">
+<p>小程序的宽度（以像素为单位）。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>高度</p>
+</td>
+<td width="435">
+<p>小程序的高度（以像素为单位）。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>参数<sup><a href="#appletdesc">父母</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>可以传递给小程序的一组参数。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>名称</p>
+</td>
+<td width="435">
+<p>此参数的名称。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>值</p>
+</td>
+<td width="435">
+<p>此参数的值。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>组件描述<sup><a href="#jnlp">父</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>表示这是组件扩展的JNLP文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>installer-desc <sup><a href="#jnlp">父项</a></sup></p>
+</td>
+<td width="95">
+<p><br></p>
+</td>
+<td width="435">
+<p>表示这是已安装扩展的JNLP文件。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p><br></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><br></p>
+</td>
+<td width="95">
+<p>主班</p>
+</td>
+<td width="435">
+<p>包含<code>public static void main(String[])</code>安装程序的方法。</p>
+</td>
+<td width="63">
+<p>1.0</p>
+</td>
+<td width="62">
+<p>是</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>编码JNLP文件</h2>
+<p>Java Web Start软件支持Java平台支持的任何字符编码的JNLP文件编码。有关Java平台中字符编码的更多信息，请参见《 <a class="APILink" href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html" target="_blank">支持的编码指南》</a> 。要编码JNLP文件，请在该文件的XML序言中指定编码。例如，以下行指示JNLP文件以UTF-16编码。</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" encoding="utf-16"?&gt;
+</pre></div>
+<div class="note"><hr><strong>注意：</strong> XML序言本身必须是UTF-8编码的。
+<hr></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="jnlp.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="bestPractices.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> Java网络启动协议<br><b>下一页：</b>部署最佳实践</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

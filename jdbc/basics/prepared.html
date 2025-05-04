@@ -1,0 +1,681 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>使用准备好的语句（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="linkAHEAD"><a href="gettingstarted.html">入门</a></div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="nolinkAHEAD">使用准备好的语句</div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="retrieving.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="transactions.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用准备好的语句</h1></div>
+            <div id="PageContent">
+
+<p>此页面包含以下主题：</p>
+<ul>
+<li><a href="#overview_ps">准备好的报表概述</a></li>
+<li><a href="#create_ps">创建一个PreparedStatement对象</a></li>
+<li><a href="#supply_values_ps">为PreparedStatement参数提供值</a></li>
+</ul>
+<h2><a name="overview_ps" id="overview_ps">准备好的报表概述</a></h2>
+<p>有时使用<code>PreparedStatement</code>用于将SQL语句发送到数据库的对象。这种特殊的语句类型来自更通用的类， <code>Statement</code> ，您已经知道。</p>
+<p>如果要执行<code>Statement</code>对象很多次，通常可以减少执行时间<code>PreparedStatement</code>对象。</p>
+<p>一个的主要特点<code>PreparedStatement</code>目的是，与<code>Statement</code>对象，在创建对象时会给出一条SQL语句。这样做的好处是，在大多数情况下，此SQL语句会立即发送到DBMS，并在此进行编译。结果， <code>PreparedStatement</code>对象不仅包含SQL语句，还包含已预编译的SQL语句。这意味着当<code>PreparedStatement</code>执行后，DBMS就可以运行<code>PreparedStatement</code> SQL语句，而无需先编译。</p>
+<p>虽然<code>PreparedStatement</code>对象可以用于不带参数的SQL语句，您可能最常将它们用于带有参数的SQL语句。使用带有参数的SQL语句的优势在于，您可以使用同一条语句，并在每次执行时为其提供不同的值。以下各节为示例。</p>
+<p>以下方法， <code><a href="gettingstarted.html">CoffeesTable.updateCoffeeSales</a></code> ，将当周售出的咖啡磅数存储在<code>SALES</code>列中的每种咖啡，并更新在<code>TOTAL</code>每种咖啡的列：</p>
+<div class="codeblock"><pre>
+public void updateCoffeeSales(HashMap&lt;String, Integer> salesForWeek)
+    throws SQLException {
+
+    PreparedStatement updateSales = null;
+    PreparedStatement updateTotal = null;
+
+    String updateString =
+        "update " + dbName + ".COFFEES " +
+        "set SALES = ? where COF_NAME = ?";
+
+    String updateStatement =
+        "update " + dbName + ".COFFEES " +
+        "set TOTAL = TOTAL + ? " +
+        "where COF_NAME = ?";
+
+    try {
+        con.setAutoCommit(false);
+        updateSales = con.prepareStatement(updateString);
+        updateTotal = con.prepareStatement(updateStatement);
+
+        for (Map.Entry&lt;String, Integer> e : salesForWeek.entrySet()) {
+            updateSales.setInt(1, e.getValue().intValue());
+            updateSales.setString(2, e.getKey());
+            updateSales.executeUpdate();
+            updateTotal.setInt(1, e.getValue().intValue());
+            updateTotal.setString(2, e.getKey());
+            updateTotal.executeUpdate();
+            con.commit();
+        }
+    } catch (SQLException e ) {
+        JDBCTutorialUtilities.printSQLException(e);
+        if (con != null) {
+            try {
+                System.err.print("Transaction is being rolled back");
+                con.rollback();
+            } catch(SQLException excep) {
+                JDBCTutorialUtilities.printSQLException(excep);
+            }
+        }
+    } finally {
+        if (updateSales != null) {
+            updateSales.close();
+        }
+        if (updateTotal != null) {
+            updateTotal.close();
+        }
+        con.setAutoCommit(true);
+    }
+}
+</pre></div>
+<!-- ************************* -->
+<h2><a name="create_ps" id="create_ps">创建一个PreparedStatement对象</a></h2>
+<p>以下创建一个<code>PreparedStatement</code>具有两个输入参数的对象：</p>
+<div class="codeblock"><pre>
+String updateString =
+    "update " + dbName + ".COFFEES " +
+    "set SALES = ? where COF_NAME = ?";
+updateSales = con.prepareStatement(updateString);
+</pre></div>
+<!-- ************************* -->
+<h2><a name="supply_values_ps" id="supply_values_ps">为PreparedStatement参数提供值</a></h2>
+<p>必须先提供值代替问号占位符（如果有），然后才能执行<code>PreparedStatement</code>宾语。为此，请调用在<code>PreparedStatement</code>类。以下语句在以下内容中提供了两个问号占位符： <code>PreparedStatement</code>命名<code>updateSales</code> ：</p>
+<div class="codeblock"><pre>
+updateSales.setInt(1, e.getValue().intValue());
+updateSales.setString(2, e.getKey());
+</pre></div>
+<p>这些设置方法中的每个方法的第一个参数都指定问号占位符。在这个例子中<code>setInt</code>指定第一个占位符，并<code>setString</code>指定第二个占位符。</p>
+<p>将参数设置为值后，它将保留该值，直到将其重置为另一个值或方法为止<code>clearParameters</code>叫做。使用<code>PreparedStatement</code>宾语<code>updateSales</code> ，下面的代码片段说明了在重置其一个参数的值并保持另一个参数不变后重用已准备好的语句：</p>
+<div class="codeblock"><pre>
+<strong>// changes SALES column of French Roast
+//row to 100</strong>
+
+updateSales.setInt(1, 100);
+updateSales.setString(2, "French_Roast");
+updateSales.executeUpdate();
+
+<strong>// changes SALES column of Espresso row to 100
+// (the first parameter stayed 100, and the second
+// parameter was reset to "Espresso")</strong>
+
+updateSales.setString(2, "Espresso");
+updateSales.executeUpdate();
+</pre></div>
+<!-- ************************* -->
+<h3>使用循环设置值</h3>
+<p>通常，您可以使用<code>for</code>循环或<code>while</code>循环设置输入参数的值。</p>
+<p>的<code><a href="gettingstarted.html">CoffeesTable.updateCoffeeSales</a></code>方法使用for-each循环在<code>PreparedStatement</code>对象<code>updateSales</code>和<code>updateTotal</code> ：</p>
+<div class="codeblock"><pre>
+for (Map.Entry&lt;String, Integer> e : salesForWeek.entrySet()) {
+
+    updateSales.setInt(1, e.getValue().intValue());
+    updateSales.setString(2, e.getKey());
+
+    // ...
+}
+</pre></div>
+<p>方法<code><a href="gettingstarted.html">CoffeesTable.updateCoffeeSales</a></code>有一个论点， <code>HashMap</code> 。中的每个元素<code>HashMap</code>参数包含一种咖啡的名称以及在当前一周内售出的这种咖啡的磅数。for-each循环遍历<code>HashMap</code>参数并在其中设置适当的问号占位符<code>updateSales</code>和<code>updateTotal</code> 。</p>
+<!-- ************************* -->
+<h2><a name="execute_ps" id="execute_ps">执行PreparedStatement对象</a></h2>
+<p>与<code>Statement</code>对象，执行一个<code>PreparedStatement</code>对象，调用一条execute语句： <code>executeQuery</code>如果查询仅返回一个<code>ResultSet</code> （比如一个<code>SELECT</code> SQL语句）， <code>executeUpdate</code>如果查询未返回<code>ResultSet</code> （例如<code>UPDATE</code> SQL语句），或<code>execute</code>如果查询可能返回多个<code>ResultSet</code>宾语。都<code>PreparedStatement</code>物体在<code><a href="gettingstarted.html">CoffeesTable.updateCoffeeSales</a></code>包含<code>UPDATE</code> SQL语句，因此两者均通过调用执行<code>executeUpdate</code> ：</p>
+<div class="codeblock"><pre>
+updateSales.setInt(1, e.getValue().intValue());
+updateSales.setString(2, e.getKey());
+<strong>updateSales.executeUpdate();</strong>
+
+updateTotal.setInt(1, e.getValue().intValue());
+updateTotal.setString(2, e.getKey());
+<code>updateTotal.executeUpdate();</code>
+con.commit();
+</pre></div>
+<p>没有提供任何参数<code>executeUpdate</code>当他们用来执行<code>updateSales</code>和<code>updateTotals</code> ;都<code>PreparedStatement</code>对象已经包含要执行的SQL语句。</p>
+<p><strong>注意</strong> ： <code>CoffeesTable.updateCoffeeSales</code> ，自动提交模式设置为false：</p>
+<div class="codeblock"><pre>
+con.setAutoCommit(false);
+</pre></div>
+<p>因此，在方法执行之前，不会提交任何SQL语句<code>commit</code>叫做。有关自动提交模式的更多信息，请参见<a class="TutorialLink" href="transactions.html" target="_top">事务</a> 。</p>
+<!-- ************************* -->
+<h3>executeUpdate方法的返回值</h3>
+<p>鉴于<code>executeQuery</code>返回一个<code>ResultSet</code>包含发送到DBMS的查询结果的对象，返回值为<code>executeUpdate</code>是一个<code>int</code>指示表中有多少行被更新的值。例如，以下代码显示的返回值<code>executeUpdate</code>被分配给变量<code>n</code> ：</p>
+<div class="codeblock"><pre>
+updateSales.setInt(1, 50);
+updateSales.setString(2, "Espresso");
+int n = updateSales.executeUpdate();
+<strong>// n = 1 because one row had a change in it</strong>
+</pre></div>
+<p>桌子<code>COFFEES</code>已更新；值50替换列中的值<code>SALES</code>在行中<code>Espresso</code> 。该更新会影响表中的一行，因此<code>n</code>等于1。</p>
+<p>当方法<code>executeUpdate</code>用于执行DDL（数据定义语言）语句，例如在创建表时，它返回<code>int</code>值为0。因此，在下面的代码片段中，该代码片段执行用于创建表的DDL语句<code>COFFEES</code> ， <code>n</code>分配的值为0：</p>
+<div class="codeblock"><pre>
+<strong>// n = 0</strong>
+int n = executeUpdate(createTableCoffees); 
+</pre></div>
+<p>注意当返回值为<code>executeUpdate</code>为0，可能表示以下两种情况之一：</p>
+<ul>
+<li>执行的语句是影响零行的更新语句。</li>
+<li>执行的语句是DDL语句。</li>
+</ul>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="retrieving.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="transactions.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>从结果集中检索和修改值<br><b>下一页：</b>使用事务</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

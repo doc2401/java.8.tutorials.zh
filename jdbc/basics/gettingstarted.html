@@ -1,0 +1,963 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>入门（Java™教程> JDBC（TM）数据库访问> JDBC基础）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JDBC Java tutorial describes how to use JDBC API to create, insert into, update, and query tables. You will also learn how to use simple and prepared statements, stored procedures and perform transactions">
+     <meta name="keywords" content="java programming, learn java, java sample code, jdbc, prepared statement, result set">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">JDBC基础</a></div>
+<div class="nolinkAHEAD">入门</div>
+<div class="linkAHEAD"><a href="processingsqlstatements.html">使用JDBC处理SQL语句</a></div>
+<div class="linkAHEAD"><a href="connecting.html">建立连接</a></div>
+<div class="linkAHEAD"><a href="sqldatasources.html">连接数据源对象</a></div>
+<div class="linkAHEAD"><a href="sqlexception.html">处理SQLException</a></div>
+<div class="linkAHEAD"><a href="tables.html">设置表格</a></div>
+<div class="linkAHEAD"><a href="retrieving.html">从结果集中检索和修改值</a></div>
+<div class="linkAHEAD"><a href="prepared.html">使用准备好的语句</a></div>
+<div class="linkAHEAD"><a href="transactions.html">使用交易</a></div>
+<div class="linkAHEAD"><a href="rowset.html">使用行集对象</a></div>
+<div class="linkAHEAD"><a href="jdbcrowset.html">使用JdbcRowSet对象</a></div>
+<div class="linkAHEAD"><a href="cachedrowset.html">使用CachedRowSetObjects</a></div>
+<div class="linkAHEAD"><a href="joinrowset.html">使用JoinRowSet对象</a></div>
+<div class="linkAHEAD"><a href="filteredrowset.html">使用FilteredRowSet对象</a></div>
+<div class="linkAHEAD"><a href="webrowset.html">使用WebRowSet对象</a></div>
+<div class="linkAHEAD"><a href="sqltypes.html">使用高级数据类型</a></div>
+<div class="linkAHEAD"><a href="blob.html">使用大对象</a></div>
+<div class="linkAHEAD"><a href="sqlxml.html">使用SQLXML对象</a></div>
+<div class="linkAHEAD"><a href="array.html">使用数组对象</a></div>
+<div class="linkAHEAD"><a href="distinct.html">使用DISTINCT数据类型</a></div>
+<div class="linkAHEAD"><a href="sqlstructured.html">使用结构化对象</a></div>
+<div class="linkAHEAD"><a href="sqlcustommapping.html">使用自定义类型映射</a></div>
+<div class="linkAHEAD"><a href="sqldatalink.html">使用数据链接对象</a></div>
+<div class="linkAHEAD"><a href="sqlrowid.html">使用RowId对象</a></div>
+<div class="linkAHEAD"><a href="storedprocedures.html">使用存储过程</a></div>
+<div class="linkAHEAD"><a href="jdbcswing.html">结合使用JDBC和GUI API</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> JDBC（TM）数据库访问<br><b>课程：</b> JDBC基础</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">JDBC（TM）数据库访问</a> > <a href="index.html" target="_top">JDBC基础</a>
+            </div>
+            <div class="NavBit">
+                <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="processingsqlstatements.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>入门</h1></div>
+            <div id="PageContent">
+
+<p>本教程随附的示例代码创建了一个数据库，该数据库供一家名为The Coffee Break的小型咖啡馆的所有人使用，该咖啡馆按磅出售咖啡豆，而冲泡咖啡则按杯子出售。</p>
+<p>以下步骤配置了一个JDBC开发环境，您可以使用该环境编译并运行本教程示例：</p>
+
+<ol>
+  <li><a href="#step1">在计算机上安装最新版本的Java SE SDK</a></li>
+  <li><a href="#step2">如果需要，安装数据库管理系统（DBMS）</a></li>
+  <li><a href="#step3">从数据库供应商安装JDBC驱动程序</a></li>
+  <li><a href="#step4">安装Apache Ant</a></li>
+  <li><a href="#step5">安装Apache Xalan</a></li>
+  <li><a href="#step6">下载示例代码</a></li>
+  <li><a href="#step7">修改<code>build.xml</code>文件</a></li>
+  <li><a href="#step8">修改教程属性文件</a></li>
+  <li><a href="#step9">编译并打包样本</a></li>
+  <li><a href="#step10">创建数据库，表并填充表</a></li>
+  <li><a href="#step11">运行样本</a></li>
+</ol>
+
+
+<!-- ********************* -->
+
+<h2><a name="step1">在计算机上安装最新版本的Java SE SDK</a></h2>
+
+<p>在计算机上安装最新版本的Java SE SDK。</p>
+
+<p>确保Java SE SDK的完整目录路径<code>bin</code>目录在您的<code>PATH</code>环境变量，以便您可以从任何目录运行Java编译器和Java应用程序启动器。</p>
+
+<!-- ********************* -->
+
+<h2><a name="step2">如果需要，安装数据库管理系统（DBMS）</a></h2>
+
+<p>您可以使用Java DB，它是Java SE SDK的最新版本随附的。本教程已经针对以下DBMS进行了测试：</p>
+<ul>
+<li><a href="http://www.oracle.com/technetwork/java/javadb/overview/index.html">Java数据库</a></li>
+<li><a href="http://www.mysql.com/">的MySQL</a></li>
+</ul>
+<p>请注意，如果您正在使用其他DBMS，则可能必须更改教程示例的代码。</p>
+
+<!-- ********************* -->
+<h2><a name="step3">从数据库供应商安装JDBC驱动程序</a></h2>
+
+<p>如果您使用的是Java DB，则它已随附JDBC驱动程序。如果使用的是MySQL，请安装最新版本的<a href="http://www.mysql.com/products/connector/">Connector / J。</a></p>
+<p>请与数据库的供应商联系，以获取DBMS的JDBC驱动程序。</p>
+<p>JDBC驱动程序有很多可能的实现。这些实现分为以下几类：</p>
+
+<ul>
+<li>
+<p><strong>类型1</strong> ：将JDBC API实现为到另一个数据访问API的映射的驱动程序，例如ODBC（开放数据库连接）。这种类型的驱动程序通常依赖于本机库，这限制了它们的可移植性。JDBC-ODBC桥是类型1驱动程序的示例。</p>
+<p><strong>注意</strong> ：应该将JDBC-ODBC桥视为过渡解决方案。Oracle不支持它。仅当您的DBMS不提供仅Java的JDBC驱动程序时，才考虑使用此功能。</p>
+</li>
+<li>
+<p><strong>类型2</strong> ：部分用Java编程语言和部分本机代码编写的驱动程序。这些驱动程序使用特定于它们连接到的数据源的本机客户端库。同样，由于本机代码，它们的可移植性受到限制。Oracle的OCI（Oracle呼叫接口）客户端驱动程序是Type 2驱动程序的示例。</p>
+</li>
+<li>
+<p><strong>类型3</strong> ：使用纯Java客户端并使用与数据库无关的协议与中间件服务器进行通信的驱动程序。然后，中间件服务器将客户端的请求传达给数据源。</p>
+</li>
+<li>
+<p><strong>类型4</strong> ：纯Java的驱动程序，可为特定数据源实现网络协议。客户端直接连接到数据源。</p>
+</li>
+</ul>
+
+<p>检查DBMS随附的驱动程序类型。 Java DB带有两个Type 4驱动程序，一个嵌入式驱动程序和一个网络客户端驱动程序。MySQL Connector / J是Type 4驱动程序。</p>
+
+<p>安装JDBC驱动程序通常包括将驱动程序复制到计算机上，然后将其位置添加到类路径中。此外，除Type 4驱动程序外，许多JDBC驱动程序都要求您安装客户端API。通常不需要其他特殊配置。</p>
+
+
+<!-- ********************* -->
+<h2><a name="step4">安装Apache Ant</a></h2>
+
+
+<p>这些步骤使用基于Java的工具Apache Ant来构建，编译和运行JDBC教程示例。转到以下链接下载Apache Ant：</p>
+<p><code><a href="http://ant.apache.org/">http://ant.apache.org/</a></code></p>
+<p>确保Apache Ant可执行文件位于您的<code>PATH</code>环境变量，以便您可以从任何目录运行它。</p>
+
+<!-- ********************* -->
+<h2><a name="step5">安装Apache Xalan</a></h2>
+
+<p>这个样本<code>RSSFeedsTable.java</code>如果您的DBMS是Java DB，则<a href="sqlxml.html">使用SQLXML对象中</a>描述的，需要Apache Xalan。该示例使用Apache Xalan-Java。转到以下链接进行下载：</p>
+
+<p><code><a href="http://xml.apache.org/xalan-j/">http://xml.apache.org/xalan-j/</a></code></p>
+
+<!-- ********************* -->
+<h2><a name="step6">下载示例代码</a></h2>
+
+<p>示例代码<code><a href="examples/zipfiles/JDBCTutorial.zip">JDBCTutorial.zip</a></code> ，由以下文件组成：</p>
+
+
+<ul>
+<li><code>properties</code>
+<ul>
+<li><code>javadb-build-properties.xml</code></li>
+<li><code>javadb-sample-properties.xml</code></li>
+<li><code>mysql-build-properties.xml</code></li>
+<li><code>mysql-sample-properties.xml</code></li>
+</ul>
+</li>
+<li><code>sql</code>
+<ul>
+<li><code>javadb</code>
+<ul>
+<li><code>create-procedures.sql</code></li>
+<li><code>create-tables.sql</code></li>
+<li><code>drop-tables.sql</code></li>
+<li><code>populate-tables.sql</code></li>
+</ul>
+</li>
+<li><code>mysql</code>
+<ul>
+<li><code>create-procedures.sql</code></li>
+<li><code>create-tables.sql</code></li>
+<li><code>drop-tables.sql</code></li>
+<li><code>populate-tables.sql</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>src/com/oracle/tutorial/jdbc</code>
+<ul>
+<li><code>CachedRowSetSample.java</code></li>
+<li><code>CityFilter.java</code></li>
+<li><code>ClobSample.java</code></li>
+<li><code>CoffeesFrame.java</code></li>
+<li><code>CoffeesTable.java</code></li>
+<li><code>CoffeesTableModel.java</code></li>
+<li><code>DatalinkSample.java</code></li>
+<li><code>ExampleRowSetListener.java</code></li>
+<li><code>FilteredRowSetSample.java</code></li>
+<li><code>JdbcRowSetSample.java</code></li>
+<li><code>JDBCTutorialUtilities.java</code></li>
+<li><code>JoinSample.java</code></li>
+<li><code>ProductInformationTable.java</code></li>
+<li><code>RSSFeedsTable.java</code></li>
+<li><code>StateFilter.java</code></li>
+<li><code>StoredProcedureJavaDBSample.java</code></li>
+<li><code>StoredProcedureMySQLSample.java</code></li>
+<li><code>SuppliersTable.java</code></li>
+<li><code>WebRowSetSample.java</code></li>
+</ul>
+</li>
+<li><code>txt</code>
+<ul>
+<li><code>colombian-description.txt</code></li>
+</ul>
+</li>
+<li><code>xml</code>
+<ul>
+<li><code>rss-coffee-industry-news.xml</code></li>
+<li><code>rss-the-coffee-break-blog.xml</code></li>
+</ul>
+</li>
+<li><code>build.xml</code></li>
+</ul>
+
+<p>创建一个目录以包含示例的所有文件。这些步骤将此目录称为<code><em><JDBC tutorial directory></em></code> 。解压缩内容<code><a href="examples/zipfiles/JDBCTutorial.zip">JDBCTutorial.zip</a></code>进入<code><em><JDBC tutorial directory></em></code> 。</p>
+
+
+
+<!-- ********************* -->
+
+<h2><a name="step7">修改build.xml文件</a></h2>
+
+<p>的<code>build.xml</code>文件是Apache Ant用于编译和执行JDBC示例的构建文件。文件<code>properties/javadb-build-properties.xml</code>和<code>properties/mysql-build-properties.xml</code>分别包含Java DB和MySQL所需的其他Apache Ant属性。文件<code>properties/javadb-sample-properties.xml</code>和<code>properties/mysql-sample-properties.xml</code>包含样本所需的属性。</p>
+<p>修改这些XML文件，如下所示：</p>
+
+<h3>修改build.xml</h3>
+
+<p>在里面<code>build.xml</code>文件，修改属性<code>ANTPROPERTIES</code>引用其中一个<code>properties/javadb-build-properties.xml</code>要么<code>properties/mysql-build-properties.xml</code> ，具体取决于您的DBMS。例如，如果您使用的是Java DB， <code>build.xml</code>文件将包含以下内容：</p>
+<div class="codeblock"><pre>
+&lt;property
+  name="ANTPROPERTIES"
+  value="properties/javadb-build-properties.xml"/>
+
+  &lt;import file="${ANTPROPERTIES}"/>
+</pre></div>
+<p>同样，如果您使用的是MySQL， <code>build.xml</code>文件将包含以下内容：</p>
+<div class="codeblock"><pre>
+&lt;property
+  name="ANTPROPERTIES"
+  value="properties/mysql-build-properties.xml"/>
+
+  &lt;import file="${ANTPROPERTIES}"/>
+</pre></div>
+
+<h3>修改特定于数据库的属性文件</h3>
+
+<p>在里面<code>properties/javadb-build-properties.xml</code>要么<code>properties/mysql-build-properties.xml</code>文件（取决于您的DBMS），修改以下属性，如下表所示：</p>
+<table border="1" summary="DBMS-specific build properties">
+<tbody><tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+<tr>
+<td><code>JAVAC</code></td>
+<td>Java编译器的完整路径名，<code>javac</code></td>
+</tr>
+<tr>
+<td><code>JAVA</code></td>
+<td>Java运行时可执行文件的完整路径名，<code>java</code></td>
+</tr>
+<tr>
+<td><code>PROPERTIESFILE</code></td>
+<td>属性文件的名称，可以是<code>properties/javadb-sample-properties.xml</code>要么<code>properties/mysql-sample-properties.xml</code></td>
+</tr>
+<tr>
+<td><code>MYSQLDRIVER</code></td>
+<td>MySQL驱动程序的完整路径名。对于Connector / J，通常是<code><em><Connector/J installation directory></em>/mysql-connector-java-<em>version-number</em>.jar</code> 。</td>
+</tr>
+<tr>
+<td><code>JAVADBDRIVER</code></td>
+<td>Java DB驱动程序的完整路径名。通常是<code><em><Java DB installation directory></em>/lib/derby.jar</code> 。</td>
+</tr>
+<tr>
+<td><code>XALANDIRECTORY</code></td>
+<td>包含Apache Xalan的目录的完整路径名。</td>
+</tr>
+<tr>
+<td><code>CLASSPATH</code></td>
+<td>JDBC教程使用的类路径。<em>您不需要更改此值。</em></td>
+</tr>
+<tr>
+<td><code>XALAN</code></td>
+<td>文件的完整路径名<code>xalan.jar</code> 。</td>
+</tr>
+<tr>
+<td><code>DB.VENDOR</code></td>
+<td>任一值<code>derby</code>要么<code>mysql</code>取决于分别使用Java DB还是MySQL。本教程使用此值来构造连接到DBMS所需的URL，并标识特定于DBMS的代码和SQL语句。</td>
+</tr>
+<tr>
+<td><code>DB.DRIVER</code></td>
+<td>JDBC驱动程序的全限定类名。对于Java DB，这是<code>org.apache.derby.jdbc.EmbeddedDriver</code> 。对于MySQL，这是<code>com.mysql.jdbc.Driver</code> 。</td>
+</tr>
+<tr>
+<td><code>DB.HOST</code></td>
+<td>承载DBMS的计算机的主机名。</td>
+</tr>
+<tr>
+<td><code>DB.PORT</code></td>
+<td>托管DBMS的计算机的端口号。</td>
+</tr>
+<tr>
+<td><code>DB.SID</code></td>
+<td>教程创建和使用的数据库的名称。</td>
+</tr>
+<tr>
+<td><code>DB.URL.NEWDATABASE</code></td>
+<td>创建新数据库时用于连接到DBMS的连接URL。<em>您不需要更改此值。</em></td>
+</tr>
+<tr>
+<td><code>DB.URL</code></td>
+<td>用于连接到DBMS的连接URL。 <em>您不需要更改此值。</em></td>
+</tr>
+<tr>
+<td><code>DB.USER</code></td>
+<td>有权在DBMS中创建数据库的用户名。</td>
+</tr>
+<tr>
+<td><code>DB.PASSWORD</code></td>
+<td>在中指定的用户密码<code>DB.USER</code> 。</td>
+</tr>
+<tr>
+<td><code>DB.DELIMITER</code></td>
+<td>用于分隔SQL语句的字符。<em>请勿更改此值。</em> 它应该是分号字符（ <code>;</code> ）。</td>
+</tr>
+</tbody></table>
+
+<!-- ********************* -->
+
+
+<h2><a name="step8">修改教程属性文件</a></h2>
+
+<p>本教程示例使用两个<code>properties/javadb-sample-properties.xml</code>文件或<code>properties/mysql-sample-properties.xml</code>文件（取决于您的DBMS）以连接到DBMS并初始化数据库和表，如下表所述：</p>
+<table border="1" summary="DBMS-specific sample properties">
+<tbody><tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+<tr>
+<td><code>dbms</code></td>
+<td>任一值<code>derby</code>要么<code>mysql</code>取决于分别使用Java DB还是MySQL。本教程使用此值来构造连接到DBMS所需的URL，并标识特定于DBMS的代码和SQL语句。</td>
+</tr>
+<tr>
+<td><code>jar_file</code></td>
+<td>包含本教程所有类文件的JAR文件的完整路径名。</td>
+</tr>
+<tr>
+<td><code>driver</code></td>
+<td>JDBC驱动程序的全限定类名。对于Java DB，这是<code>org.apache.derby.jdbc.EmbeddedDriver</code> 。对于MySQL，这是<code>com.mysql.jdbc.Driver</code> 。</td>
+</tr>
+<tr>
+<td><code>database_name</code></td>
+<td>教程创建和使用的数据库的名称。</td>
+</tr>
+<tr>
+<td><code>user_name</code></td>
+<td>有权在DBMS中创建数据库的用户名。</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>在中指定的用户密码<code>user_name</code> 。</td>
+</tr>
+<tr>
+<td><code>server_name</code></td>
+<td>承载DBMS的计算机的主机名。</td>
+</tr>
+<tr>
+<td><code>port_number</code></td>
+<td>托管DBMS的计算机的端口号。</td>
+</tr>
+</tbody></table>
+<p><strong>注意</strong> ：为了简化JDBC API的演示，JDBC教程示例代码不执行已部署系统通常使用的密码管理技术。在生产环境中，您可以遵循Oracle数据库密码管理准则并禁用任何示例帐户。有关密码管理指南和其他安全建议，请参见《 <a href="http://docs.oracle.com/cd/B28359_01/network.111/b28531/toc.htm"><em>Oracle数据库安全指南》中的“</em></a>为<a href="http://docs.oracle.com/cd/B28359_01/network.111/b28531/app_devs.htm">应用程序开发人员管理安全性”中的“</a> <a href="http://docs.oracle.com/cd/B28359_01/network.111/b28531/app_devs.htm#CJADABGG">在应用程序设计</a>中<a href="http://docs.oracle.com/cd/B28359_01/network.111/b28531/app_devs.htm#CJADABGG">保护密码</a> ”一节。</p>
+
+<!-- ********************* -->
+<h2><a name="step9">编译并打包样本</a></h2>
+
+<p>在命令提示符下，将当前目录更改为<code><em><JDBC tutorial directory></em></code> 。在此目录中，运行以下命令来编译样本并将其打包到一个jar文件中：</p>
+<div class="codeblock"><pre>
+ant jar
+</pre></div>
+
+<!-- ********************* -->
+<h2><a name="step10">创建数据库，表并填充表</a></h2>
+
+<p>如果使用MySQL，请运行以下命令来创建数据库：</p>
+<div class="codeblock"><pre>
+ant create-mysql-database
+</pre></div>
+
+<p><strong>注意</strong> ：对应的Ant目标不存在<code>build.xml</code>为Java DB创建数据库的文件。 Java DB的数据库URL（用于建立数据库连接）包括用于创建数据库的选项（如果尚不存在）。有关更多信息，请参见<a class="TutorialLink" href="connecting.html" target="_top">建立连接</a> 。</p>
+
+<p>如果使用Java DB或MySQL，请从同一目录运行以下命令删除现有的示例数据库表，重新创建表并填充它们。对于Java DB，如果该数据库尚不存在，则此命令还将创建该数据库：</p>
+<div class="codeblock"><pre>
+ant setup
+</pre></div>
+ 
+<p><strong>注意</strong> ：您应该运行命令<code>ant setup</code>每次在运行示例中的Java类之一之前。这些样本中的许多样本都希望样本数据库表的内容中包含特定的数据。</p>
+
+<!-- ********************* -->
+<h2><a name="step11">运行样本</a></h2>
+
+
+<p>每个目标<code>build.xml</code>文件对应于JDBC示例中的Java类或SQL脚本。下表列出了<code>build.xml</code>文件，每个目标执行哪个类或脚本以及每个目标需要的其他类或文件：</p>
+<table border="1" summary="build.xml targets">
+<tbody><tr>
+<th>蚂蚁目标</th>
+<th>类或SQL脚本</th>
+<th>其他必需的类或文件</th>
+</tr>
+<tr>
+<td><code>javadb-create-procedure</code></td>
+<td><code>javadb/create-procedures.sql</code> ;看到<code>build.xml</code>文件以查看其他正在运行的SQL语句</td>
+<td>没有其他必填文件</td>
+</tr>
+<tr>
+<td><code>mysql-create-procedure</code></td>
+<td><code>mysql/create-procedures.sql</code> 。</td>
+<td>没有其他必填文件</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+<td>没有其他必修课</td>
+</tr>
+<tr>
+<td><code>runct</code></td>
+<td><code>CoffeesTable</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runst</code></td>
+<td><code>SuppliersTable</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runjrs</code></td>
+<td><code>JdbcRowSetSample</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runcrs</code></td>
+<td><code>CachedRowSetSample</code> ，<code>ExampleRowSetListener</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runjoin</code></td>
+<td><code>JoinSample</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runfrs</code></td>
+<td><code>FilteredRowSetSample</code></td>
+<td><code>JDBCTutorialUtilities</code> ， <code>CityFilter</code> ，<code>StateFilter</code></td>
+</tr>
+<tr>
+<td><code>runwrs</code></td>
+<td><code>WebRowSetSample</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runclob</code></td>
+<td><code>ClobSample</code></td>
+<td><code>JDBCTutorialUtilities</code> ，<code>txt/colombian-description.txt</code></td>
+</tr>
+<tr>
+<td><code>runrss</code></td>
+<td><code>RSSFeedsTable</code></td>
+<td><code>JDBCTutorialUtilities</code> ，其中包含的XML文件<code>xml</code>目录</td>
+</tr>
+<tr>
+<td><code>rundl</code></td>
+<td><code>DatalinkSample</code></td>
+<td><code>JDBCTutorialUtilities</code></td>
+</tr>
+<tr>
+<td><code>runspjavadb</code></td>
+<td><code>StoredProcedureJavaDBSample</code></td>
+<td><code>JDBCTutorialUtilities</code> ， <code>SuppliersTable</code> ，<code>CoffeesTable</code></td>
+</tr>
+<tr>
+<td><code>runspmysql</code></td>
+<td><code>StoredProcedureMySQLSample</code></td>
+<td><code>JDBCTutorialUtilities</code> ， <code>SuppliersTable</code> ，<code>CoffeesTable</code></td>
+</tr>
+<tr>
+<td><code>runframe</code></td>
+<td><code>CoffeesFrame</code></td>
+<td><code>JDBCTutorialUtilities</code> ，<code>CoffeesTableModel</code></td>
+</tr>
+</tbody></table>
+<p>例如，运行类<code>CoffeesTable</code> ，将当前目录更改为<code><em><JDBC tutorial directory></em></code> ，然后从该目录运行以下命令：</p>
+<div class="codeblock"><pre>
+ant runct
+</pre></div>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="index.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="processingsqlstatements.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> JDBC基础<br><b>下一页：</b>使用JDBC处理SQL语句</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

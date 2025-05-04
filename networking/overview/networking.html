@@ -1,0 +1,535 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>网络基础知识（Java™教程>自定义网络>网络概述）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This networking Java tutorial describes networking capabilities of the Java platform, working with URLs, sockets, datagrams, and cookies">
+     <meta name="keywords" content="java programming, learn java, java sample code, java networking, java url, java socket, datagram, java cookie">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">网络概述</a></div>
+<div class="linkAHEAD"><a href="alreadyknow.html">您可能已经了解Java网络</a></div>
+<div class="nolinkAHEAD">网络基础</div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>自定义网络<br><b>课程：</b>网络概述</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">定制网络</a> > <a href="../index.html" target="_top">网络</a> <a href="index.html" target="_top">概述</a>
+            </div>
+            <div class="NavBit">
+                <a href="alreadyknow.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../urls/index.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>网络基础</h1></div>
+            <div id="PageContent">
+
+<p>互联网上运行的计算机使用传输控制协议（TCP）或用户数据报协议（UDP）相互通信，如下图所示：</p>
+<center><img src="../../figures/networking/1netw.gif" width="155" height="180" align="bottom" alt="网络通信示例。"></center><p>编写通过网络进行通信的Java程序时，就是在应用程序层进行编程。通常，您无需担心TCP和UDP层。相反，您可以使用<code>java.net</code>包。这些类提供独立于系统的网络通信。但是，要确定程序应使用哪些Java类，您确实需要了解TCP和UDP有何不同。</p>
+<h2>TCP协议</h2>
+<p>当两个应用程序希望彼此可靠地通信时，它们将建立连接并通过该连接来回发送数据。这类似于拨打电话。如果您想与肯塔基州的比阿特丽斯姨妈说话，则当您拨打她的电话号码并接听时便建立了联系。您可以通过电话线相互通话，通过连接来回发送数据。像电话公司一样，TCP保证从连接的一端发送的数据实际上以发送的相同顺序到达另一端。否则，将报告错误。</p>
+<p>TCP为需要可靠通信的应用程序提供了点对点通道。超文本传输协议（HTTP），文件传输协议（FTP）和Telnet都是需要可靠通信通道的应用程序的示例。通过网络发送和接收数据的顺序对于这些应用程序的成功至关重要。当使用HTTP读取URL时，必须按照发送顺序接收数据。否则，您将得到混乱的HTML文件，损坏的zip文件或其他无效信息。</p>
+<div class="note"><hr><strong>定义：</strong> <p><em>TCP</em> （ <em>传输控制协议</em> ）是一种基于连接的协议，可在两台计算机之间提供可靠的数据流。</p>
+<hr></div>
+<h2>UDP协议</h2>
+<p>UDP协议提供了网络上两个应用程序之间无法保证的通信。UDP不像TCP那样基于连接。而是将独立的数据包（称为<em>数据报</em> ）从一个应用程序发送到另一个应用程序。发送数据报就像通过邮局发送一封信一样：传递顺序并不重要，也不保证，每条消息彼此独立。</p>
+<div class="note"><hr><strong>定义：</strong> <p><em>UDP</em> （ <em>用户数据报协议</em> ）是一种协议，它从一台计算机向另一台计算机发送独立的数据包（称为数据报），而不能保证其到达。UDP不像TCP那样基于连接。</p>
+<hr></div>
+<p>对于许多应用程序而言，可靠性的保证对于信息从连接的一端到另一端的成功传输至关重要。但是，其他形式的通讯不需要如此严格的标准。实际上，它们可能会因额外的开销而减慢速度，或者可靠的连接可能会使服务完全失效。</p>
+<p>例如，考虑一个时钟服务器，该时钟服务器在被请求时将当前时间发送到其客户端。如果客户端错过了一个数据包，则重新发送它实际上没有任何意义，因为当客户端在第二次尝试中收到它的时间不正确。如果客户端发出两个请求并从服务器接收到乱序的数据包，那没关系，因为客户端可以确定数据包乱序并发出另一个请求。在这种情况下，TCP的可靠性是不必要的，因为它会导致性能下降并可能阻碍服务的实用性。</p>
+<p>不需要保证可靠通道的服务的另一个示例是ping命令。ping命令的目的是测试网络上两个程序之间的通信。实际上，Ping需要了解丢弃的或乱序的数据包，以确定连接的好坏。可靠的渠道将完全使该服务无效。</p>
+<p>UDP协议提供了网络上两个应用程序之间无法保证的通信。UDP不像TCP那样基于连接。相反，它将独立的数据包从一个应用程序发送到另一个应用程序。发送数据报就像通过邮件服务发送信件一样：传递顺序并不重要，也不保证，每条消息彼此独立。</p>
+<div class="note"><hr><strong>注意：</strong> <p>许多防火墙和路由器已配置为不允许UDP数据包。如果无法连接到防火墙外部的服务，或者客户端无法连接到服务，请询问系统管理员是否允许UDP。</p>
+<hr></div>
+<h2>了解端口</h2>
+<p>一般而言，计算机与网络具有单个物理连接。发送到特定计算机的所有数据都通过该连接到达。但是，数据可能打算用于计算机上运行的不同应用程序。那么计算机如何知道将数据转发到哪个应用程序？通过使用<em>端口</em> 。</p>
+<p>通过Internet传输的数据带有寻址信息，该信息标识了计算机及其目的地。该计算机由其32位IP地址标识，该IP地址用于将数据传递到网络上正确的计算机。端口由16位数字标识，TCP和UDP使用该16位数字将数据传递到正确的应用程序。</p>
+<p>在基于连接的通信（例如TCP）中，服务器应用程序将套接字绑定到特定的端口号。这具有在系统中注册服务器以接收发往该端口的所有数据的效果。然后，客户端可以在服务器的端口与服务器会合，如下所示：</p>
+<center><img src="../../figures/networking/2tcp.gif" width="302" height="60" align="bottom" alt="客户端通过其端口与服务器通信"></center><div class="note"><hr><strong>定义：</strong> <p>TCP和UDP协议使用端口将传入数据映射到计算机上运行的特定进程。</p>
+<hr></div>
+<p>在基于数据报的通信（例如UDP）中，数据报包包含其目的地的端口号，并且UDP将数据包路由到适当的应用程序，如下图所示：</p>
+<center><img src="../../figures/networking/3tcpudp.gif" width="334" height="169" align="bottom" alt="将数据包路由到适当的应用程序。"></center><p>端口号的范围是0到65,535，因为端口由16位数字表示。端口号范围是0-1023；它们保留供HTTP和FTP等知名服务以及其他系统服务使用。这些端口称为<em>众所周知的端口</em> 。您的应用程序不应尝试绑定到它们。</p>
+<h2>JDK中的网络类</h2>
+<p>通过中的课程<code>java.net</code> Java程序可以使用TCP或UDP通过Internet进行通信。的<code>URL</code> ， <code>URLConnection</code> ， <code>Socket</code>和<code>ServerSocket</code>所有类都使用TCP通过网络进行通信。的<code>DatagramPacket</code> ， <code>DatagramSocket</code>和<code>MulticastSocket</code>这些类适用于UDP。</p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="alreadyknow.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../urls/index.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>您可能已经了解的有关Java网络的知识<br><b>下一页：</b>使用URL</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

@@ -1,0 +1,112 @@
+<html lang="en-US" ><head>
+    <title>小程序状态和回调</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+    <script>
+        var dotStr=".";
+
+        var READY = 2;
+        function registerAppletStateHandler() {
+            // register onLoad handler if applet has not loaded yet
+            if (drawApplet.status < READY)  {
+                drawApplet.onLoad = onLoadHandler;
+                updateStatusString();
+            } else if (drawApplet.status >= READY) {
+                // applet has already loaded or there was an error
+                document.getElementById("mydiv").innerHTML =
+                    "Applet event handler not registered because applet status is: " +
+                        drawApplet.status;
+            }
+        }
+
+        function onLoadHandler() {
+            // event handler for ready state
+            document.getElementById("mydiv").innerHTML ="Applet has loaded";
+            draw();
+        }
+
+        function updateStatusString() {
+            if (drawApplet.status < READY)  {
+                document.getElementById("mydiv").innerHTML ="Applet not ready yet " + dotStr;
+                dotStr = dotStr + ".";
+                setTimeout("updateStatusString()", 1000);
+            }
+        }
+
+
+        // Draw a pie chart using the Java Canvas applet
+        function drawPieChart(data, cx, cy, r, colors, labels, lx, ly) {
+            // All lines are 2 units thick.  All text is 16pt bold sans-serif.
+            drawApplet.setLineWidth(2);
+            drawApplet.setFont("SansSerif", 16);
+
+            // Add up the data
+            var total = 0;
+            for(var i = 0; i < data.length; i++) total += data[i];
+
+            // Compute wedge angles in degrees
+            var angles = []
+            for(var i = 0; i < data.length; i++) angles[i] = data[i]/total*360;
+
+            startangle = 90;  // Start at 12 o'clock instead of 3 o'clock
+            // Loop through the wedges
+            for(var i = 0; i < data.length; i++) {
+                // This object describes one wedge of the pie
+                var arc = drawApplet.createWedge(cx-r, cy-r, r*2, r*2,
+                                             startangle, -angles[i]);
+                drawApplet.setColor(colors[i]);             // Set this color
+                drawApplet.fill(arc);                       // Fill the wedge
+                drawApplet.setColor(0x000000);              // Switch to black
+                drawApplet.draw(arc);                       // Outline the wedge
+
+                startangle -= angles[i]; // for next time
+
+                // Now draw the box in the legend
+                drawApplet.setColor(colors[i]);             // Back to wedge color
+                drawApplet.fillRect(lx, ly+30*i, 20, 20);   // Fill the box
+                drawApplet.setColor(0x000000);              // Back to black again
+                drawApplet.drawRect(lx, ly+30*i, 20, 20);   // Outline the box
+
+                // And draw the label for each wedge
+                // Remember that we set the font earlier
+                drawApplet.drawString(labels[i], lx+30, ly+30*i+18);
+            }
+            // Tell the applet to display itself
+            drawApplet.repaint();  // Don't forget to call this
+        }
+
+        // This function is invoked when the Draw! button is clicked
+        function draw() {
+            drawPieChart([12, 23, 34, 45], 200, 200, 150,
+                     [0xff0000, 0x0000ff, 0xffff00, 0x00ff00], // Colors are integers
+                     ["Red", "Blue", "Yellow", "Green"],
+                     400, 100);
+        }
+
+    </script>
+<script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="registerAppletStateHandler()">
+<h1>小程序状态和回调</h1>
+<div id="mydiv">
+</div>
+<div>
+    <script src="https://www.java.com/js/deployJava.js"></script>
+    <script>
+        // set java_status_events parameter to true
+        var attributes = { id:'drawApplet', code:'DrawingApplet.class',
+                            archive: 'applet_StatusAndCallback.jar',
+                            width:600, height:400};
+        var parameters = {java_status_events: 'true', permissions:'sandbox'};
+        deployJava.runApplet(attributes, parameters, '1.7');
+    </script>
+    <noscript>该页面需要启用了JavaScript的浏览器才能正常运行。
+    </noscript>
+</div>
+
+
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+  
+
+</body></html>

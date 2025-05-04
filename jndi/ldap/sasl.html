@@ -1,0 +1,578 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>SASL（Java™教程> Java命名和目录接口> LDAP用户的高级主题）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JNDI Java tutorial describes Java Naming and Directory Interface (JNDI) technology, naming and directory operations, and LDAP">
+     <meta name="keywords" content="java programming, learn java, java sample code, jndi, ldap, jndi service provider">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">LDAP用户的高级主题</a></div>
+<div class="linkAHEAD"><a href="ldap.html">LDAP v3</a></div>
+<div class="linkAHEAD"><a href="jndi.html">JNDI作为LDAP API</a></div>
+<div class="linkBHEAD"><a href="operations.html">LDAP操作如何映射到JNDI API</a></div>
+<div class="linkBHEAD"><a href="exceptions.html">LDAP错误代码如何映射到JNDI异常</a></div>
+<div class="linkAHEAD"><a href="security.html">安全</a></div>
+<div class="linkBHEAD"><a href="authentication.html">LDAP认证方式</a></div>
+<div class="linkBHEAD"><a href="auth_mechs.html">认证机制</a></div>
+<div class="linkBHEAD"><a href="anonymous.html">匿名</a></div>
+<div class="linkBHEAD"><a href="simple.html">简单</a></div>
+<div class="nolinkBHEAD">SASL</div>
+<div class="linkBHEAD"><a href="digest.html">文摘-MD5</a></div>
+<div class="linkBHEAD"><a href="ssl.html">SSL和自定义套接字</a></div>
+<div class="linkAHEAD"><a href="rename.html">更多LDAP操作</a></div>
+<div class="linkBHEAD"><a href="compare.html">LDAP比较</a></div>
+<div class="linkBHEAD"><a href="result.html">搜索结果</a></div>
+<div class="linkBHEAD"><a href="unsol.html">LDAP主动通知</a></div>
+<div class="linkAHEAD"><a href="connect.html">连接管理</a></div>
+<div class="linkBHEAD"><a href="create.html">创建</a></div>
+<div class="linkBHEAD"><a href="close.html">闭幕</a></div>
+<div class="linkBHEAD"><a href="pool.html">汇集</a></div>
+<div class="linkBHEAD"><a href="config.html">组态</a></div>
+<div class="linkAHEAD"><a href="faq.html">经常问的问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> Java命名和目录接口<br><b>课程：</b> LDAP用户的高级主题<br><b>部分：</b>安全性</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">Java命名和目录接口</a> > <a href="index.html" target="_top">LDAP用户的高级主题</a>
+            </div>
+            <div class="NavBit">
+                <a href="simple.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="digest.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>SASL</h1></div>
+            <div id="PageContent">
+
+<p>LDAP v3协议使用<a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2222.txt" target="_blank">SASL</a>支持<em>可插入</em>身份验证。这意味着LDAP客户端和服务器可以配置为协商和使用可能的非标准和/或自定义机制进行身份验证，具体取决于客户端和服务器所需的保护级别。LDAP v2协议不支持SASL。</p>
+<p>当前定义了几种SASL机制：</p>
+<ul>
+<li>匿名（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2245.txt" target="_blank">RFC 2245</a> ）</li>
+<li>CRAM-MD5（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2195.txt" target="_blank">RFC 2195</a> ）</li>
+<li>摘要MD5（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2831.txt" target="_blank">RFC 2831</a> ）</li>
+<li>外部（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2830.txt" target="_blank">RFC 2222</a> ）</li>
+<li>Kerberos V4（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2830.txt" target="_blank">RFC 2222</a> ）</li>
+<li>Kerberos V5（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2830.txt" target="_blank">RFC 2222</a> ）</li>
+<li>SecurID（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2808.txt" target="_blank">RFC 2808</a> ）</li>
+<li>S /密钥（ <a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2830.txt" target="_blank">RFC 2222</a> ）</li>
+</ul>
+<h2>LDAP服务器支持的SASL机制</h2>
+<p>在上一个列表中的机制中，流行的LDAP服务器（例如来自Oracle，OpenLDAP和Microsoft的那些）支持外部，Digest-MD5和Kerberos V5。
+<a class="OutsideLink" href="http://www.ietf.org/rfc/rfc2829.txt" target="_blank">RFC 2829</a>建议使用Digest-MD5作为LDAP v3服务器的强制性默认机制。</p>
+<p>这里有一个<a class="SourceLink" href="examples/ServerSasl.java" target="_blank" onclick="showCode('../../displayCode.html', 'examples/ServerSasl.java'); return false;"><code>simple program</code></a>用于查找LDAP服务器支持的SASL机制的列表。</p>
+<div class="codeblock"><pre>
+// Create initial context
+DirContext ctx = new InitialDirContext();
+
+// Read supportedSASLMechanisms from root DSE
+Attributes attrs = ctx.getAttributes(
+    "ldap://localhost:389", new String[]{"supportedSASLMechanisms"});
+</pre></div>
+<p>这是通过在支持外部SASL机制的服务器上运行该程序所产生的输出。</p>
+<div class="codeblock"><pre>
+{supportedsaslmechanisms=supportedSASLMechanisms: 
+                         EXTERNAL, GSSAPI, DIGEST-MD5}
+</pre></div>
+<h2>指定身份验证机制</h2>
+<p>若要使用特定的SASL机制，请在<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_AUTHENTICATION" target="_blank"><tt>上下文中指定其Internet分配号码授权机构（IANA）注册的机制名称</tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_AUTHENTICATION" target="_blank"><tt>。SECURITY_AUTHENTICATION</tt></a>环境属性。您还可以指定LDAP提供程序尝试的机制列表。这是通过指定以空格分隔的机制名称的有序列表来完成的。LDAP提供程序将使用第一个找到实现的机制。</tt></p><tt>
+<p>这是一个示例，要求LDAP提供程序尝试获取DIGEST-MD5机制的实现，如果该实现不可用，则将其用于GSSAPI。</p>
+<div class="codeblock"><pre>
+env.put(Context.SECURITY_AUTHENTICATION, "DIGEST-MD5 GSSAPI");
+</pre></div>
+<p>您可能会从应用程序的用户那里获得身份验证机制的列表。或者，您可以通过类似于前面显示的呼叫来询问LDAP服务器来获取它。LDAP提供程序本身不咨询服务器以获取此信息。它只是尝试查找和使用指定机制的实现。</p>
+<p>平台中的LDAP提供程序具有对外部，摘要MD5和GSSAPI（Kerberos v5）SASL机制的内置支持。您可以添加对其他机制的支持。</p>
+<h2>指定认证机制的输入</h2>
+<p>某些机制（例如外部机制）不需要其他输入-仅机制名称就足以进行身份验证。<a class="TutorialLink" href="ssl.html#EXTERNAL" target="_top">外部示例</a>展示了如何使用外部SASL机制。</p>
+<p>大多数其他机制需要一些额外的输入。根据机制的不同，输入的类型可能会有所不同。以下是机制所需的一些常见输入。</p>
+<ul>
+<li><b>身份验证ID</b> 。执行身份验证的实体的身份。</li>
+<li><b>授权ID</b> 。如果身份验证成功，应该对其进行访问控制检查的实体的身份。</li>
+<li><b>身份验证凭据</b> 。例如，密码或密钥。</li>
+</ul>
+<p>如果程序（例如代理服务器）代表另一个实体进行身份验证，则身份验证和授权ID可能会有所不同。身份验证ID是使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PRINCIPAL" target="_blank"><tt>上下文指定的</tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PRINCIPAL" target="_blank"><tt>。SECURITY_PRINCIPAL</tt></a>环境属性。它的类型为<tt>java.lang。字串</tt> 。</tt></p><tt>
+<p>身份验证ID的密码/密钥是使用<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_CREDENTIALS" target="_blank"><tt>上下文指定的</tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_CREDENTIALS" target="_blank"><tt>。SECURITY_CREDENTIALS</tt></a>环境属性。它的类型为<tt>java.lang。String</tt> ， <tt>char</tt>数组（ <tt>char []</tt> ）或<tt>byte</tt>数组（ <tt>byte []</tt> ）。如果密码是<tt>字节</tt>数组，则使用UTF-8编码将其转换为<tt>char</tt>数组。<a name="authzid" id="authzid"></a></tt></p><tt>
+<p>如果设置了<tt>“ java.naming.security.sasl.authorizationId”</tt>属性，则将其值用作授权ID。它的值必须是<tt>java.lang类型<tt>。字串</tt> 。默认情况下，空字符串用作授权ID，它指示服务器从客户端的身份验证凭据派生授权ID。</tt></p><tt>
+<p><a class="TutorialLink" href="digest.html" target="_top">Digest-MD5示例</a>显示了如何使用<tt>上下文。SECURITY_PRINCIPAL</tt>和<tt>上下文。Digest-MD5身份验证的SECURITY_CREDENTIALS</tt>属性。</p>
+<p>如果某个机制需要除已描述的输入之外的其他输入，那么您需要定义一个<em>回调</em>对象供该机制使用，您可以在<a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/security/callback.html" target="_blank">JNDI Tutorial中</a>查看回调示例。本课程的下一部分讨论如何使用SASL Digest-MD5身份验证机制。《 JNDI教程》介绍了<a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/security/sasl.html" target="_blank">SASL策略</a> ， <a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/security/gssapi.html" target="_blank">GSS API（Kerberos v5）</a>和<a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/security/crammd5.html" target="_blank">CRAM-MD5</a>机制。</p>
+
+
+        </tt></tt></tt></tt></div><tt><tt>
+        <div class="NavBit">
+            <a href="simple.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="digest.html" target="_top">下一个»</a>
+        </div>
+    </tt></tt></div><tt><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>简单<br><b>下一页：</b> Digest-MD5</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></tt></body></html>

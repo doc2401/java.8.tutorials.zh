@@ -1,0 +1,730 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用工具栏（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="linkBHEAD"><a href="splitpane.html">如何使用分割窗格</a></div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="nolinkBHEAD">如何使用工具栏</div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="textfield.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="tooltip.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用工具栏</h1></div>
+            <div id="PageContent">
+
+<p>一种<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html" target="_blank"><code>JToolBar</code></a>是一个将多个组件（通常是带有图标的<a href="button.html">按钮）</a>分组为行或列的容器。通常，工具栏可让您轻松访问<a href="menu.html">菜单</a>中的<a href="menu.html">功能</a> 。<a href="../misc/action.html">如何使用动作</a>描述了如何在菜单项和工具栏按钮中提供相同的功能。
+</p>
+<p>下图显示了一个名为<code>ToolBarDemo</code>在文本区域上方包含一个工具栏。单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ToolBarDemo。另外，要自己编译并运行它，请参阅<a href="../examples/components/index.html#ToolBarDemo">示例index</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ToolBarDemoProject/ToolBarDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ToolBarDemo应用程序"></a><br>
+<center><img src="../../figures/uiswing/components/ToolBarDemo.png" width="458" height="164" align="bottom" alt="ToolBarDemo，工具栏位于初始北位置"></center><p>默认情况下，用户可以将工具栏拖动到其容器的另一边缘或拖出其自己的窗口。下图显示了用户将工具栏拖动到其容器的右边缘后，应用程序的外观。</p>
+<center><img src="../../figures/uiswing/components/ToolBarDemo-2.png" width="458" height="164" align="bottom" alt="ToolBarDemo，在工具栏向东拖动之后"></center><p>为了使拖动行为正确运行，工具栏必须位于使用<a class="TutorialLink" href="../layout/border.html" target="_top"><code>BorderLayout</code></a>布局经理。工具栏影响的组件通常位于容器的中心。工具栏必须是容器中唯一的其他组件，并且不能位于中间。</p>
+<p>下图显示了用户将工具栏拖动到其窗口外之后的应用程序外观。</p>
+<center><img src="../../figures/uiswing/components/ToolBarDemo-3.png" width="595" height="163" align="bottom" alt="ToolBarDemo，将工具栏拖到其自己的窗口中之后"></center><p>以下代码创建工具栏并将其添加到容器中。您可以在以下位置找到整个程序<a class="SourceLink" href="../examples/components/ToolBarDemoProject/src/components/ToolBarDemo.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ToolBarDemoProject/src/components/ToolBarDemo.java'); return false;"><code>ToolBarDemo.java</code></a> 。
+</p>
+<div class="codeblock"><pre>
+public class ToolBarDemo extends JPanel
+                         implements ActionListener {
+    ...
+    public ToolBarDemo() {
+        super(new BorderLayout());
+        ...
+        JToolBar toolBar = new JToolBar("Still draggable");
+        addButtons(toolBar);
+        ...
+        setPreferredSize(new Dimension(450, 130));
+        add(toolBar, BorderLayout.PAGE_START);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+    ...
+}
+</pre></div>
+<p>此代码通过将两个组件都放置在由边框布局控制的面板中，将工具栏置于滚动窗格上方，而工具栏位于<code>PAGE_START</code>位置和滚动窗格<code>CENTER</code>位置。因为滚动窗格位于中间，并且容器中没有工具栏以外的其他组件，所以默认情况下可以将工具栏拖动到容器的其他边缘。也可以将工具栏拖出到其自己的窗口中，在这种情况下，窗口的标题为“仍可拖动”，如<code>JToolBar</code>构造函数。</p>
+<h2><a name="button" id="button">创建工具栏按钮</a></h2>
+<p>工具栏中的按钮是普通的<code>JButton</code>使用Java外观图形存储库中的图像的实例。如果工具栏具有Java外观，则使用Java外观<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/index-138612.html" target="_blank">图形存储库中的</a>图像。</p>
+<p>这是创建按钮并将其添加到工具栏的代码。</p>
+<div class="codeblock"><pre>
+protected void addButtons(JToolBar toolBar) {
+    JButton button = null;
+
+    //first button
+    button = makeNavigationButton("Back24", PREVIOUS,
+                                  "Back to previous something-or-other",
+                                  "Previous");
+    toolBar.add(button);
+
+    //second button
+    button = makeNavigationButton("Up24", UP,
+                                  "Up to something-or-other",
+                                  "Up");
+    toolBar.add(button);
+
+    <em>...//similar code for creating and adding the third button...</em>
+}
+
+protected JButton makeNavigationButton(String imageName,
+                                       String actionCommand,
+                                       String toolTipText,
+                                       String altText) {
+    //Look for the image.
+    String imgLocation = "images/"
+                         + imageName
+                         + ".gif";
+    URL imageURL = ToolBarDemo.class.getResource(imgLocation);
+
+    //Create and initialize the button.
+    JButton button = new JButton();
+    button.setActionCommand(actionCommand);
+    button.setToolTipText(toolTipText);
+    button.addActionListener(this);
+
+    if (imageURL != null) {                      //image found
+        button.setIcon(new ImageIcon(imageURL, altText));
+    } else {                                     //no image found
+        button.setText(altText);
+        System.err.println("Resource not found: " + imgLocation);
+    }
+
+    return button;
+}
+</pre></div>
+<p>首次致电<code>makeNavigationButton</code>使用图形存储库中的24x24“后退”导航图像为第一个按钮创建图像。
+</p>
+<p>除了查找按钮的图像外， <code>makeNavigationButton</code>方法还将创建按钮，为其操作命令和工具提示文本设置字符串，并为按钮添加操作侦听器。如果缺少图像，则该方法将打印一条错误消息并向该按钮添加文本，以便该按钮仍然可用。</p>
+<div class="note"><hr><strong>注意：</strong> <p>如果工具栏中的任何按钮都与其他组件（例如菜单项）的功能重复，那么您可能应该按照<a class="TutorialLink" href="../misc/action.html" target="_top">如何使用操作中</a>所述创建并添加工具栏按钮。</p>
+<hr></div>
+<h2><a name="more" id="more">自定义工具栏</a></h2>
+<p>通过在前面的示例中添加几行代码，我们可以演示更多工具栏功能：</p>
+<ul>
+<li>使用<code>setFloatable(false)</code>使工具栏不动。</li>
+<li>使用<code>setRollover(true)</code>当用户用光标越过工具栏按钮时，以可视方式指示它们。</li>
+<li>在工具栏上添加分隔符。</li>
+<li>将非按钮组件添加到工具栏。</li>
+</ul>
+<p>您可以通过运行ToolBarDemo2来查看这些功能。单击启动按钮以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行ToolBarDemo2。另外，要自己编译并运行它，请参阅<a href="../examples/components/index.html#ToolBarDemo2">示例index</a> 。</p>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/ToolBarDemo2Project/ToolBarDemo2.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动ToolBarDemo2应用程序"></a><br>
+<p>您可以在以下位置找到该程序的完整代码<a class="SourceLink" href="../examples/components/ToolBarDemo2Project/src/components/ToolBarDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/ToolBarDemo2Project/src/components/ToolBarDemo2.java'); return false;"><code>ToolBarDemo2.java</code></a> 。您可以在下面看到使用这些自定义功能的新UI的图片。</p>
+<center><img src="../../figures/uiswing/components/ToolBarDemo2.png" width="458" height="164" align="bottom" alt="ToolBarDemo2显示了具有各种组件的工具栏"></center><p>由于无法再拖动工具栏，因此它的左边缘不再有凹凸。这是关闭拖动的代码：</p>
+<div class="codeblock"><pre>
+toolBar.setFloatable(false);
+</pre></div>
+<p>工具栏处于翻转模式，因此光标下方的按钮具有可视指示器。视觉指示器的类型取决于外观。例如，“金属”外观使用渐变效果来指示光标下方的按钮，而其他类型的外观为此使用边框。这是设置过渡模式的代码：</p>
+<div class="codeblock"><pre>
+toolBar.setRollover(true);
+</pre></div>
+<p>上面示例中的另一个明显区别是工具栏包含两个新组件，这些组件的前面是一个称为<a href="separator.html">分隔符</a>的空白。这是添加分隔符的代码：</p>
+<div class="codeblock"><pre>
+toolBar.addSeparator();
+</pre></div>
+<p>这是添加新组件的代码：</p>
+<div class="codeblock"><pre>
+//fourth button
+button = new JButton("Another button");
+...
+toolBar.add(button);
+
+//fifth component is NOT a button!
+JTextField textField = new JTextField("A text field");
+...
+toolBar.add(textField);
+</pre></div>
+<p>您可以通过调用工具栏上的工具栏组件轻松地使工具栏组件的顶部对齐或底部对齐，而不是居中<code>setAlignmentY</code>方法。例如，要对齐工具栏中所有组件的顶部，请调用<code>setAlignmentY(TOP_ALIGNMENT)</code>在每个组件上。同样，您可以使用<code>setAlignmentX</code>当工具栏垂直时指定组件对齐方式的方法。因为工具栏使用<code>BoxLayout</code>放置其组件。有关更多信息，请参见<a class="TutorialLink" href="../layout/box.html" target="_top">如何使用BoxLayout</a> 。</p>
+<h2><a name="api" id="api">工具栏API</a></h2>
+<p>下表列出了常用的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html" target="_blank"><code>JToolBar</code></a>构造函数和方法。您可能调用的其他方法在<a href="jcomponent.html">JComponent类</a>的API表中列出。
+</p>
+<table border="1" summary="commonly used constructor and methods of JToolbar class">
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#JToolBar--" target="_blank">JToolBar（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#JToolBar-int-" target="_blank">JToolBar（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#JToolBar-java.lang.String-" target="_blank">JToolBar（字符串）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#JToolBar-java.lang.String-int-" target="_blank">JToolBar（String，int）</a></td>
+<td>创建一个工具栏。可选的int参数使您可以指定方向；默认是<code>HORIZONTAL</code> 。可选的<code>String</code>参数允许您指定工具栏窗口的标题（如果将其拖动到容器的外部）。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-" target="_blank">组件add（Component）</a></td>
+<td>将组件添加到工具栏。
+<p>您可以将按钮与<code>Action</code>使用<code>setAction(Action)</code>方法定义<code>AbstractButton</code> 。</p>
+</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#addSeparator--" target="_blank">无效的addSeparator（）</a></td>
+<td>在工具栏的末尾添加分隔符。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#setFloatable-boolean-" target="_blank">void setFloatable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#isFloatable--" target="_blank">boolean isFloatable（）</a></td>
+<td>floatable属性默认情况下为true，它指示用户可以将工具栏拖出到单独的窗口中。要关闭工具栏拖动功能，请使用<code>toolBar.setFloatable(false)</code> 。某些类型的外观可能会忽略此属性。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#setRollover-boolean-" target="_blank">void setRollover（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JToolBar.html#isRollover--" target="_blank">布尔isRollover（）</a></td>
+<td>默认情况下，rollover属性为false。若要使工具栏按钮在用户使用光标经过时直观地指示出来，请将此属性设置为true。某些类型的外观可能会忽略此属性。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用工具栏的示例</a></h2>
+<p>下表列出了使用<code>JToolBar</code>并指向描述这些示例的位置。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ToolBarDemo"><code>ToolBarDemo</code></a></td>
+<td>这一页</td>
+<td>具有仅图标按钮的基本工具栏。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#ToolBarDemo2"><code>ToolBarDemo2</code></a></td>
+<td>这一页</td>
+<td>在过渡模式下演示了一个不易浮动的工具栏，其中包含一个分隔符和一个非按钮组件。</td>
+</tr>
+<tr>
+<td><a href="../examples/misc/index.html#ActionDemo"><code>ActionDemo</code></a></td>
+<td>
+<a class="TutorialLink" href="../misc/action.html" target="_top">如何使用动作</a></td>
+<td>使用以下工具实现工具栏<code>Action</code>对象。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="textfield.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="tooltip.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用文本字段<br><b>下一页：</b>如何使用工具提示</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

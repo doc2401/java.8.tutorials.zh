@@ -1,0 +1,890 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>如何使用拆分窗格（Java™教程>使用JFC / Swing创建GUI>使用Swing组件）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This Swing Java Tutorial describes developing graphical user interfaces (GUIs) for applications and applets using Swing components">
+     <meta name="keywords" content="java programming, learn java, java sample code, java swing, java ui, java user interface, swing components, swing events, swing layout  ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">使用Swing组件</a></div>
+<div class="linkAHEAD"><a href="toplevel.html">使用顶层容器</a></div>
+<div class="linkAHEAD"><a href="jcomponent.html">JComponent类</a></div>
+<div class="linkAHEAD"><a href="text.html">使用文字组件</a></div>
+<div class="linkBHEAD"><a href="generaltext.html">文字组件功能</a></div>
+<div class="linkBHEAD"><a href="textapi.html">文字元件API</a></div>
+<div class="linkAHEAD"><a href="componentlist.html">如何使用各种组件</a></div>
+<div class="linkBHEAD"><a href="applet.html">如何制作小程序</a></div>
+<div class="linkBHEAD"><a href="button.html">如何使用按钮，复选框和单选按钮</a></div>
+<div class="linkBHEAD"><a href="buttongroup.html">如何使用ButtonGroup组件</a></div>
+<div class="linkBHEAD"><a href="colorchooser.html">如何使用颜色选择器</a></div>
+<div class="linkBHEAD"><a href="combobox.html">如何使用组合框</a></div>
+<div class="linkBHEAD"><a href="dialog.html">如何制作对话框</a></div>
+<div class="linkBHEAD"><a href="editorpane.html">如何使用编辑器窗格和文本窗格</a></div>
+<div class="linkBHEAD"><a href="filechooser.html">如何使用文件选择器</a></div>
+<div class="linkBHEAD"><a href="formattedtextfield.html">如何使用格式化的文本字段</a></div>
+<div class="linkBHEAD"><a href="frame.html">如何制作框架（主窗口）</a></div>
+<div class="linkBHEAD"><a href="internalframe.html">如何使用内部框架</a></div>
+<div class="linkBHEAD"><a href="label.html">如何使用标签</a></div>
+<div class="linkBHEAD"><a href="layeredpane.html">如何使用分层窗格</a></div>
+<div class="linkBHEAD"><a href="list.html">如何使用清单</a></div>
+<div class="linkBHEAD"><a href="menu.html">如何使用菜单</a></div>
+<div class="linkBHEAD"><a href="panel.html">如何使用面板</a></div>
+<div class="linkBHEAD"><a href="passwordfield.html">如何使用密码字段</a></div>
+<div class="linkBHEAD"><a href="progress.html">如何使用进度条</a></div>
+<div class="linkBHEAD"><a href="rootpane.html">如何使用根窗格</a></div>
+<div class="linkBHEAD"><a href="scrollpane.html">如何使用滚动窗格</a></div>
+<div class="linkBHEAD"><a href="separator.html">如何使用分隔符</a></div>
+<div class="linkBHEAD"><a href="slider.html">如何使用滑块</a></div>
+<div class="linkBHEAD"><a href="spinner.html">如何使用微调器</a></div>
+<div class="nolinkBHEAD">如何使用分割窗格</div>
+<div class="linkBHEAD"><a href="tabbedpane.html">如何使用选项卡式窗格</a></div>
+<div class="linkBHEAD"><a href="table.html">如何使用表格</a></div>
+<div class="linkBHEAD"><a href="textarea.html">如何使用文字区</a></div>
+<div class="linkBHEAD"><a href="textfield.html">如何使用文字栏位</a></div>
+<div class="linkBHEAD"><a href="toolbar.html">如何使用工具栏</a></div>
+<div class="linkBHEAD"><a href="tooltip.html">如何使用工具提示</a></div>
+<div class="linkBHEAD"><a href="tree.html">如何使用树木</a></div>
+<div class="linkAHEAD"><a href="html.html">如何在Swing组件中使用HTML</a></div>
+<div class="linkAHEAD"><a href="model.html">如何使用模型</a></div>
+<div class="linkAHEAD"><a href="icon.html">如何使用图标</a></div>
+<div class="linkAHEAD"><a href="border.html">如何使用边框</a></div>
+<div class="linkAHEAD"><a href="problems.html">解决常见组件问题</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>使用JFC / Swing创建GUI<br><b>课程：</b>使用Swing组件<br><b>部分：</b>如何使用各种组件</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">使用JFC / Swing创建GUI</a> > <a href="index.html" target="_top">使用Swing组件</a>
+            </div>
+            <div class="NavBit">
+                <a href="spinner.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="tabbedpane.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>如何使用分割窗格</h1></div>
+            <div id="PageContent">
+
+<!-- How to Use Split Panes -->
+<p>一种<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html" target="_blank"><code>JSplitPane</code></a>显示两个组件，两个组件并排显示或一个显示在另一个显示之上。通过拖动出现在组件之间的分隔线，用户可以指定分割窗格的总面积中有多少分配给每个组件。您可以通过将拆分窗格放在拆分窗格中来在三个或更多组件之间划分屏幕空间，如<a href="#nesting">嵌套拆分窗格中所述</a> 。</p>
+<p>经常将每个组件放入<a href="scrollpane.html">滚动窗格中</a> ，而不是将感兴趣的组件直接添加到拆分<a href="scrollpane.html">窗格中</a> 。然后，将滚动窗格放入拆分窗格。这允许用户查看感兴趣的组件的任何部分，而无需该组件占用大量屏幕空间或适应于以各种屏幕空间显示自己。</p>
+<p>这是使用拆分窗格来并排显示列表和图像的应用程序的图片：</p>
+<center><img src="../../figures/uiswing/components/SplitPaneDemo.png" width="408" height="234" align="bottom" alt="SplitPaneDemo快照"></center><div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行SplitPaneDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#SplitPaneDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/SplitPaneDemoProject/SplitPaneDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动SplitPaneDemo示例"></a><br></li>
+<li>向左或向右拖动将列表和图像分开的虚线线。尝试将分隔线一直拖动到窗口的边缘。</li>
+<li>单击分隔线上的小箭头以隐藏/展开左侧或右侧组件。</li>
+</ol>
+<hr></div>
+<p>以下是来自的代码<code>SplitPaneDemo</code>创建并设置拆分窗格。</p>
+<div class="codeblock"><pre>
+//Create a split pane with the two scroll panes in it.
+<strong>splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                           listScrollPane, pictureScrollPane);</strong>
+splitPane.setOneTouchExpandable(true);
+splitPane.setDividerLocation(150);
+
+//Provide minimum sizes for the two components in the split pane
+Dimension minimumSize = new Dimension(100, 50);
+listScrollPane.setMinimumSize(minimumSize);
+pictureScrollPane.setMinimumSize(minimumSize);
+</pre></div>
+<p>本示例使用的构造函数带有三个参数。第一个指示分割方向。其他参数是放置在拆分窗格中的两个组件。有关以下信息，请参阅<a href="#adding">在拆分窗格中设置组件。</a> <code>JSplitPane</code>动态设置组件的方法。</p>
+<p>在此示例中，拆分窗格是水平拆分的-两个组件并排显示-由<code>JSplitPane.HORIZONTAL_SPLIT</code>构造函数的参数。拆分窗格提供了另一个选项，指定为<code>JSplitPane.VERTICAL_SPLIT</code> ，将一个组件置于另一个组件之上。您可以使用以下方法创建拆分窗格后更改拆分方向： <code>setOrientation</code>方法。</p>
+<p>在示例的拆分窗格中，分隔线的顶部出现两个小箭头。这些箭头使用户只需单击一下即可折叠（然后展开）任何一个组件。当前的外观决定这些控件是否默认显示。在Java外观中，默认情况下将其关闭。（请注意，并非所有的外观都支持此功能。）该示例使用<code>setOneTouchExpandable</code>方法。</p>
+<p>拆分窗格的分隔符的范围部分取决于拆分窗格中组件的最小大小。有关详细信息，请参见<a href="#divider">放置分频器并限制其范围</a> 。</p>
+<p>本节的其余部分涵盖以下主题：</p>
+<ul>
+<li><a href="#adding">在拆分窗格中设置组件</a></li>
+<li><a href="#divider">放置分频器并限制其范围</a></li>
+<li><a href="#nesting">嵌套拆分窗格</a></li>
+<li><a href="#api">拆分窗格API</a></li>
+<li><a href="#eg">使用分割窗格的示例</a></li>
+</ul>
+<p><a name="adding" id="adding"></a></p>
+<h2><a name="adding__1" id="adding__1">在拆分窗格中设置组件</a></h2>
+<p>程序可以使用以下四种方法动态设置拆分窗格的两个组件：</p>
+<ul>
+<li><code>setLeftComponent</code></li>
+<li><code>setRightComponent</code></li>
+<li><code>setTopComponent</code></li>
+<li><code>setBottomComponent</code></li>
+</ul>
+<p>无论拆分窗格当前的拆分方向如何，都可以随时使用这些方法中的任何一种。致电<code>setLeftComponent</code>和<code>setTopComponent</code>等效，并将指定的组件设置在顶部或左侧，具体取决于拆分窗格的当前拆分方向。同样， <code>setRightComponent</code>和<code>setBottomComponent</code>是等效的。这些方法用新的方法替换了已经处于该位置的任何部件。</p>
+<p>像其他容器一样<code>JSplitPane</code>支持<code>add</code>方法。拆分窗格将添加的第一个组件放在左侧或顶部。使用的危险<code>add</code>是您可能会无意间多次调用它，在这种情况下，拆分窗格的布局管理器将抛出一个看起来很深奥的异常。如果您正在使用<code>add</code>方法，并且已经填充了拆分窗格，您首先需要使用以下命令删除现有组件<code>remove</code> 。</p>
+<p>如果仅在拆分窗格中放置一个组件，则分隔符将卡在拆分窗格的右侧或底部，具体取决于拆分方向。</p>
+<h2><a name="divider" id="divider">放置分频器并限制其范围</a></h2>
+<p>为了使拆分窗格正常工作，通常需要在拆分窗格中设置组件的最小大小，以及拆分窗格或其包含的组件的首选大小。选择应该设置的尺寸是一门艺术，需要了解如何确定分割窗格的首选尺寸和分隔线位置。在详细介绍之前，让我们再看一下SplitPaneDemo。或者，如果您着急的话，可以跳到<a href="#rules">规则列表</a> 。</p>
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行SplitPaneDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#SplitPaneDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/SplitPaneDemoProject/SplitPaneDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动SplitPaneDemo示例"></a><br>
+<br>因为演示框的大小是使用<code>pack</code>方法，拆分窗格处于其首选大小，SplitPaneDemo恰好是明确设置的。分隔线会自动放置，以使左侧组件处于其首选宽度，所有剩余空间都移至右侧组件。</li>
+<li>扩大窗口。<br>分隔线停留在原来的位置，多余的空间移到右侧的组件。</li>
+<li>使窗口明显比第一次出现时窄-可能是左部分的两倍。<br>同样，左组件的大小和分隔线的位置保持不变。仅正确组件的大小会更改。</li>
+<li>使窗口尽可能窄。<br>假设窗口使用Java外观提供的装饰，则窗口的大小不能小于拆分窗格的最小大小，该最小大小由拆分窗格包含的组件的最小大小确定。SplitPaneDemo显式设置这些包含的组件的最小大小。</li>
+<li>使窗口变宽，然后将分隔线拖动到最右边。<br>分压器仅在正确组件的最小尺寸允许的范围内移动。如果将分隔线拖动到左侧，您会看到它也遵守左侧组件的最小尺寸。</li>
+</ol>
+<hr></div>
+<p>既然您已经看到了拆分窗格的默认行为，我们可以告诉您幕后发生的事情以及如何影响它。在此讨论中，当我们指的是组件的首选或最小尺寸时，如果分割窗格是水平的，则通常是指组件的首选或最小宽度；如果分割窗格是垂直的，则通常是指组件的首选或最小高度。</p>
+<p>默认情况下，将初始化拆分窗格的首选大小和分隔符位置，以使拆分窗格中的两个组件处于首选大小。如果未以此首选大小显示拆分窗格，并且程序尚未明确设置分隔线的位置，则分隔线的初始位置（以及两个组件的大小）取决于称为<em>resize</em>的拆分窗格属性。 <em>重量</em> 。如果分割窗格最初是其首选尺寸或更大，则在调整调整大小权重之前，所包含的组件将从其首选尺寸开始。如果拆分窗格最初太小而无法以首选尺寸显示两个组件，则在调整调整大小权重之前，它们将从<em>最小</em>尺寸开始。</p>
+<p>拆分窗格的调整大小权重的值介于0.0到1.0之间，并确定在设置拆分窗格的大小时如何在两个包含的组件之间分配空间-是通过编程方式还是由用户调整拆分窗格的大小（例如，扩大其包含的窗口） 。默认情况下，拆分窗格的调整大小权重为0.0，指示左侧或顶部组件的大小是固定的，右侧或底部组件将调整其大小以适合剩余空间。将调整大小权重设置为0.5会在两个组件之间平均分配任何多余或缺少的空间。将调整大小权重设置为1.0可使右侧或底部组件的大小保持固定。但是，当用户拖动分隔线时，调整大小的权重无效。</p>
+<p>用户可以将分隔线拖动到任何位置<em>，只要其中一个</em>包含的组件都不小于其最小尺寸即可。如果分隔器具有一键式按钮，则用户可以使用它们使分隔器完全移至一侧或另一侧-无论组件的最小尺寸是多少。</p>
+<p><a name="rules" id="rules"></a></p>
+<p>现在您知道了影响拆分窗格的大小和分隔符位置的因素，以下是一些使它们正常运行的规则：</p>
+<ul>
+<li>为确保在拆分窗格处于其首选大小时可以拖动分隔线，请确保其中一个或两个组件的最小大小小于其所包含的首选大小。您可以通过调用来设置组件的最小尺寸<code>setMinimumSize</code>在其上或通过覆盖其<code>getMinimumSize</code>方法。例如，如果您希望用户能够将分隔线一直拖动到两侧：<div class="codeblock"><pre>
+Dimension minimumSize = new Dimension(0, 0);
+leftComponent.setMinimumSize(minimumSize);
+rightComponent.setMinimumSize(minimumSize);
+</pre></div>
+</li>
+<li>为确保同时显示两个包含的组件，请确保拆分窗格最初等于或大于其首选大小，或者包含的组件的最小大小大于零。
+<p>如果为拆分窗格指定了首选大小，通常会发生这种情况，这取决于包含拆分窗格的布局管理器。另一个选择是在拆分窗格上显式设置一个首选大小，该大小要大于所包含组件的大小。</p>
+</li>
+<li>如果您希望底部或右侧组件的大小保持相同，而顶部或左侧组件在拆分窗格变大时保持灵活，则将调整大小的权重设置为1.0。您可以通过调用<code>setResizeWeight</code> ：<div class="codeblock"><pre>
+splitPane.setResizeWeight(1.0);
+</pre></div>
+</li>
+<li>如果要分割窗格的两个部分在分割窗格的额外或删除的空间中共享，请将调整大小的权重设置为0.5：<div class="codeblock"><pre>
+splitPane.setResizeWeight(0.5);
+</pre></div>
+</li>
+<li>确保拆分窗格中包含的每个组件都具有合理的首选大小。如果组件是使用布局管理器的面板，则通常只能使用其返回的值。如果组件是滚动窗格，则有几种选择。您可以调用<code>setPreferredSize</code>滚动窗格上的方法，在滚动窗格上的组件上调用适当的方法（例如<code>setVisibleRowCount</code>方法<code>JList</code>要么<code>JTree</code> ）。</li>
+<li>确保拆分窗格中包含的每个组件都可以在不同的空间中合理地显示自己。例如，包含多个组件的面板应使用布局管理器，以合理的方式使用额外的空间。</li>
+<li>如果要将包含的组件的大小设置为首选大小以外的其他大小，请使用<code>setDividerLocation</code>方法。例如，要使左侧分量的宽度为150像素，请执行以下操作：<div class="codeblock"><pre>
+splitPane.setDividerLocation(150 + splitPane.getInsets().left);
+</pre></div>尽管拆分窗格会尽最大努力遵守初始分隔符的位置（在这种情况下为150），但是一旦用户拖动分隔符，就可能无法再拖动到以编程方式指定的大小。
+<p>要使正确的组件宽150像素，请执行以下操作：</p>
+<div class="codeblock"><pre>
+splitPane.setDividerLocation(splitPane.getSize().width
+                             - splitPane.getInsets().right
+                             - splitPane.getDividerSize()
+                             - 150);
+</pre></div>如果拆分窗格已经可见，则可以将分隔符位置设置为拆分窗格的百分比。例如，要使25％的空间移到左/上，请执行以下操作：<div class="codeblock"><pre>
+splitPane.setDividerLocation(0.25);
+</pre></div>
+<p>请注意，这是根据当前大小实现的，因此，如果可见拆分窗格，它实际上仅有用。</p>
+</li>
+<li>
+<p>要对拆分窗格进行布局，就好像它刚出现一样，可能会在过程中重新放置分隔符，请调用<code>resetToPreferredSizes()</code>在拆分窗格上。</p>
+<div class="note"><hr><strong>注意：</strong>即使更改包含的组件的首选大小，即使您调用<code>revalidate</code>之后–不足以导致拆分窗格再次布局。您必须调用<code>resetToPreferredSizes</code>也一样
+<hr></div>
+</li>
+</ul>
+<p>以下快照显示了一个名为SplitPaneDividerDemo的示例，该示例演示了拆分窗格组件的大小和分隔线的位置。</p>
+<center><img src="../../figures/uiswing/components/SplitPaneDividerDemo.png" width="270" height="197" align="bottom" alt="SplitPaneDividerDemo的快照"></center><p>与SplitPaneDemo一样，SplitPaneDividerDemo具有一个带有一键式按钮的水平拆分窗格。SplitPaneDividerDemo具有以下附加功能：</p>
+<ul>
+<li>拆分窗格的<em>调整大小权重</em>已明确设置（为0.5）。</li>
+<li>拆分窗格以其默认的首选大小显示。</li>
+<li>窗口底部的“重置”按钮将调用<code>resetToPreferredSizes</code>在拆分窗格上。</li>
+<li>拆分窗格中的组件是自定义实例<code>JComponent</code>子类称为<code>SizeDisplayer</code> 。一种<code>SizeDisplayer</code>在褪色（也是可选）图像的背景下显示可选文本。更重要的是，它具有显示其首选和最小尺寸的矩形。</li>
+<li>SplitPaneDividerDemo设置其<code>SizeDisplayer</code>的首选大小相等（由于它们显示的图像大小相等），但最小大小不相等。</li>
+</ul>
+<div class="note"><hr><strong>尝试这个：</strong> <ol>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行SplitPaneDividerDemo。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#SplitPaneDividerDemo">示例索引</a> 。<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/SplitPaneDividerDemoProject/SplitPaneDividerDemo.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动SplitPaneDividerDemo示例"></a><br>
+<br>因为演示框的大小是使用<code>pack</code>方法，拆分窗格处于其首选大小，默认情况下该大小足以容纳<code>SizeDisplayer</code>保持其首选大小。每个的首选大小<code>SizeDisplayer</code>用红色矩形表示。分隔线会自动放置，以使两个组件均处于其首选宽度。</li>
+<li>扩大窗口。<br>因为拆分窗格的调整大小权重为0.5，所以多余的空间在左右组件之间平均分配。分隔线相应移动。</li>
+<li>使窗口尽可能窄。<br>假设窗口使用Java外观提供的装饰，则不会使窗口的大小小于拆分窗格的最小大小，该最小大小由拆分窗格的最小大小确定。 <code>SizeDisplayers</code>它包含。每个的最小尺寸<code>SizeDisplayer</code>由一个明亮的蓝色矩形表示。</li>
+<li>使窗口稍微宽一点，然后将分隔线拖动到最右边。<br>分压器仅在正确组件的最小尺寸允许的范围内移动。</li>
+<li>确保拆分窗格小于其首选大小后，单击“重置”按钮。<br>注意两个<code>SizeDisplayer</code> s以不同的大小显示，即使应用程序启动时它们具有相同的大小。原因是，尽管它们的首选大小相等，但它们的最小大小却不相等。由于拆分窗格无法以首选尺寸或更大的尺寸显示它们，因此会使用其最小尺寸进行布局。由于拆分窗格的调整大小权重为0.5，因此剩余的空间在组件之间平均分配。</li>
+<li>扩大分割窗格，使其对两个都足够大<code>SizeDisplayer</code>将以其首选尺寸显示，然后单击“重置”按钮。<br>分隔线再次放置在中间，因此两个组件的大小相同。</li>
+</ol>
+<hr></div>
+<p>这是为SplitPaneDividerDemo创建GUI的代码：</p>
+<div class="codeblock"><pre>
+public class SplitPaneDividerDemo extends JPanel ... {
+
+    private JSplitPane splitPane;
+   
+    public SplitPaneDividerDemo() {
+        super(new BorderLayout());
+
+        Font font = new Font("Serif", Font.ITALIC, 24);
+
+        ImageIcon icon = createImageIcon("images/Cat.gif");
+        SizeDisplayer sd1 = new SizeDisplayer("left", icon);
+        sd1.setMinimumSize(new Dimension(30,30));
+        sd1.setFont(font);
+        
+        icon = createImageIcon("images/Dog.gif");
+        SizeDisplayer sd2 = new SizeDisplayer("right", icon);
+        sd2.setMinimumSize(new Dimension(60,60));
+        sd2.setFont(font);
+        
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                   sd1, sd2);
+        splitPane.setResizeWeight(0.5);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setContinuousLayout(true);
+
+        add(splitPane, BorderLayout.CENTER);
+        add(createControlPanel(), BorderLayout.PAGE_END);
+    }
+    ...
+}
+</pre></div>
+<p>该代码是很容易解释的，除了可能调用<code>setContinuousLayout</code> 。将<em>ContinuousLayout</em>属性设置为true可使用户在移动分隔线时连续绘制拆分窗格的内容。默认情况下，连续布局未启用，因为它会对性能产生负面影响。但是，在此演示中使用它是有意义的，当使拆分窗格的组件尽可能最新时，可以改善用户体验。</p>
+<h2><a name="nesting" id="nesting">嵌套拆分窗格</a></h2>
+<p>这是一个程序的图片，该程序通过将一个拆分窗格嵌套在另一个拆分窗格中来实现三向拆分：</p>
+<center><img src="../../figures/uiswing/components/SplitPaneDemo2.png" width="410" height="270" align="bottom" alt="SplitPaneDemo2的快照"></center><p>如果您对分割窗格的顶部看起来很熟悉，那是因为该程序将由<code>SplitPaneDemo</code>在第二个拆分窗格中。一个简单的<code>JLabel</code>是第二个拆分窗格中的另一个组件。这不是嵌套拆分窗格的最实际用途，但可以理解这一点。</p>
+<ul>
+<li>单击启动按钮，以使用<a class="OutsideLink" href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html" target="_blank">Java™Web Start</a> （ <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK 7或更高版本</a> ）运行SplitPaneDemo2。另外，要自己编译并运行示例，请参考<a href="../examples/components/index.html#SplitPaneDemo2">示例索引</a> 。</li>
+</ul>
+<a href="https://docs.oracle.com/javase/tutorialJWS/samples/uiswing/SplitPaneDemo2Project/SplitPaneDemo2.jnlp"><img src="../../images/jws-launch-button.png" width="88" height="23" align="bottom" alt="启动SplitPaneDemo2示例"></a><br>
+<p>这是代码中有趣的部分，您可以在其中找到<a class="SourceLink" href="../examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java" target="_blank" onclick="showCode('../../displayCode.html', '../examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java'); return false;"><code>SplitPaneDemo2.java</code></a> ：</p>
+<div class="codeblock"><pre>
+//Create an instance of SplitPaneDemo
+SplitPaneDemo splitPaneDemo = new SplitPaneDemo();
+JSplitPane top = splitPaneDemo.getSplitPane();
+
+...
+//Create a regular old label
+label = new JLabel("Click on an image name in the list.",
+                   JLabel.CENTER);
+
+//Create a split pane and put "top" (a split pane)
+//and JLabel instance in it.
+JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                      top, label);
+</pre></div>
+<p>有关解决在嵌套拆分窗格时可能出现的边框问题的信息，请参阅<a href="problems.html#nestedborders">解决常见组件问题</a> 。</p>
+<h2><a name="api" id="api">拆分窗格API</a></h2>
+<p>下表列出了常用的<code>JSplitPane</code>构造函数和方法。您最有可能在<code>JSplitPane</code>对象是诸如<code>setPreferredSize</code>它的超类提供的。有关常用继承方法的表，请参见<a href="jcomponent.html#api">JComponent API</a> 。</p>
+<p>使用列表的API分为以下几类：</p>
+<ul>
+<li><a href="#settingupapi">设置拆分窗格</a></li>
+<li><a href="#contentsapi">管理拆分窗格的内容</a></li>
+<li><a href="#dividerapi">放置分频器</a></li>
+</ul>
+<table border="1" summary="methods for setting up the split pane">
+<caption><a name="settingupapi" id="settingupapi">设置分割窗格</a></caption>
+<tbody><tr>
+<th>方法或构造函数</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#JSplitPane--" target="_blank">JSplitPane（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#JSplitPane-int-" target="_blank">JSplitPane（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#JSplitPane-int-boolean-" target="_blank">JSplitPane（int，boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#JSplitPane-int-java.awt.Component-java.awt.Component-" target="_blank">JSplitPane（int，Component，Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#JSplitPane-int-boolean-java.awt.Component-java.awt.Component-" target="_blank">JSplitPane（int，boolean，Component，Component）</a></td>
+<td>创建一个拆分窗格。存在时， <code>int</code>参数指示拆分窗格的方向，可以是<code>HORIZONTAL_SPLIT</code> （默认）或<code>VERTICAL_SPLIT</code> 。的<code>boolean</code>参数（如果存在）设置用户拖动分割窗格时组件是否连续重绘。如果未指定，则关闭此选项（称为<em>连续布局</em> ）。的<code>Component</code>参数分别设置初始的左侧和右侧，或顶部和底部。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setOrientation-int-" target="_blank">setOrientation（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getOrientation--" target="_blank">int getOrientation（）</a></td>
+<td>设置或获取拆分窗格的方向。使用任一<code>HORIZONTAL_SPLIT</code>要么<code>VERTICAL_SPLIT</code>定义于<code>JSplitPane</code> 。如果未指定，则拆分窗格将水平拆分。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setDividerSize-int-" target="_blank">无效setDividerSize（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getDividerSize--" target="_blank">int getDividerSize（）</a></td>
+<td>设置或获取分隔线的大小（以像素为单位）。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setContinuousLayout-boolean-" target="_blank">void setContinuousLayout（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#isContinuousLayout--" target="_blank">boolean isContinuousLayout（）</a></td>
+<td>设置或获取在用户拖动分隔线时是否连续布置和绘制分割窗格的组件。默认情况下，连续布局是关闭的。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setOneTouchExpandable-boolean-" target="_blank">void setOneTouchExpandable（boolean）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#isOneTouchExpandable--" target="_blank">boolean isOneTouchExpandable（）</a></td>
+<td>设置或获取拆分窗格是否在分隔符上显示控件以展开/折叠分隔符。默认值取决于外观。在Java外观中，默认情况下处于禁用状态。
+</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for managing the split pane">
+<caption><a name="contentsapi" id="contentsapi">管理拆分窗格的内容</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setTopComponent-java.awt.Component-" target="_blank">void setTopComponent（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setBottomComponent-java.awt.Component-" target="_blank">void setBottomComponent（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setLeftComponent-java.awt.Component-" target="_blank">void setLeftComponent（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setRightComponent-java.awt.Component-" target="_blank">void setRightComponent（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getTopComponent--" target="_blank">组件getTopComponent（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getBottomComponent--" target="_blank">组件getBottomComponent（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getLeftComponent--" target="_blank">组件getLeftComponent（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getRightComponent--" target="_blank">组件getRightComponent（）</a></td>
+<td>设置或获取指示的组件。不管拆分窗格的方向如何，每种方法都有效。顶部和左侧是等效的，底部和右侧是等效的。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#remove-java.awt.Component-" target="_blank">无效remove（Component）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#removeAll--" target="_blank">无效removeAll（）</a></td>
+<td>从拆分窗格中删除指示的组件。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#add-java.awt.Component-" target="_blank">无效添加（组件）</a></td>
+<td>将组件添加到拆分窗格。您只能将两个组件添加到拆分窗格中。添加的第一个组件是顶部/左侧组件。添加的第二个组件是底部/右侧组件。任何尝试添加更多组件的尝试都会导致异常。</td>
+</tr>
+</tbody></table>
+<table border="1" summary="methods for positioning the divider">
+<caption><a name="dividerapi" id="dividerapi">放置分频器</a></caption>
+<tbody><tr>
+<th>方法</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setDividerLocation-double-" target="_blank">无效setDividerLocation（双）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setDividerLocation-int-" target="_blank">setDividerLocation（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getDividerLocation--" target="_blank">int getDividerLocation（）</a></td>
+<td>设置或获取当前的分频器位置。设置分隔线位置时，您可以将新位置指定为百分比（ <code>double</code> ）或像素位置（ <code>int</code> ）。<br></td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#resetToPreferredSizes--" target="_blank">void resetToPreferredSizes（）</a></td>
+<td>移动分隔器，以使两个组件都处于其首选尺寸。除非另有说明，否则这是拆分窗格在启动时进行自我划分的方式。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setLastDividerLocation-int-" target="_blank">setLastDividerLocation（int）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getLastDividerLocation--" target="_blank">int getLastDividerLocation（）</a></td>
+<td>设置或获取分隔线的先前位置。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getMaximumDividerLocation--" target="_blank">int getMaximumDividerLocation（）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getMinimumDividerLocation--" target="_blank">int getMinimumDividerLocation（）</a></td>
+<td>获取分隔线的最小和最大位置。通过设置拆分窗格的两个组件的最小大小来隐式设置这些属性。</td>
+</tr>
+<tr>
+<td>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setResizeWeight-float-" target="_blank">void setResizeWeight（float）</a><br>
+<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#getResizeWeight--" target="_blank">浮动getResizeWeight（）</a></td>
+<td>设置或获取拆分窗格的调整大小权重，该值介于0.0（默认值）和1.0之间。有关使用调整大小权重的说明和示例，请参见<a href="#divider">放置分频器并限制其范围</a> 。</td>
+</tr>
+</tbody></table>
+<h2><a name="eg" id="eg">使用分割窗格的示例</a></h2>
+<p>下表显示了一些使用的示例<code>JSplitPane</code>以及描述这些示例的位置。</p>
+<table summary="Information about examples">
+<tbody><tr>
+<th align="left">例</th>
+<th align="left">描述的地方</th>
+<th align="left">笔记</th>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#SplitPaneDemo"><code>SplitPaneDemo</code></a></td>
+<td>此页面以及<a href="list.html">如何使用列表</a></td>
+<td>显示具有水平拆分的拆分窗格。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#SplitPaneDividerDemo"><code>SplitPaneDividerDemo</code></a></td>
+<td>这一页</td>
+<td>演示如何使用组件尺寸信息和调整尺寸重量来放置分隔器。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#SplitPaneDemo2"><code>SplitPaneDemo2</code></a></td>
+<td>这一页</td>
+<td>将拆分窗格放在拆分窗格中以创建三向拆分。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TreeDemo"><code>TreeDemo</code></a></td>
+<td><a href="tree.html">如何使用树木</a></td>
+<td>使用垂直拆分的拆分窗格将树（在滚动窗格中）与编辑器窗格（在滚动窗格中）分开。不使用一键式扩展功能。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TextComponentDemo"><code>TextComponentDemo</code></a></td>
+<td><a href="generaltext.html">文字组件功能</a></td>
+<td>使用垂直拆分的拆分窗格在滚动窗格中分离文本窗格和文本区域。</td>
+</tr>
+<tr>
+<td><a href="../examples/components/index.html#TextSamplerDemo"><code>TextSamplerDemo</code></a></td>
+<td><a href="generaltext.html">文字组件功能</a></td>
+<td>使用垂直拆分和调整大小权重为0.5的拆分窗格在滚动窗格中分隔文本窗格和编辑器窗格。拆分窗格位于具有相当复杂布局的容器的右半部分。布局管理器，例如<code>GridLayout</code>和<code>BorderLayout</code>与分割窗格的调整大小权重一起使用，以确保滚动窗格中的组件共享所有额外的空间。</td>
+</tr>
+<tr>
+<td><a href="../examples/events/index.html#ListSelectionDemo"><code>ListSelectionDemo</code></a></td>
+<td>
+<a class="TutorialLink" href="../events/listselectionlistener.html" target="_top">如何编写列表选择监听器</a></td>
+<td>使用垂直拆分的拆分窗格将包含列表和表的上部窗格（均在滚动窗格中）与下部窗格（包含滚动窗格上方的组合框）分开。下部窗格使用边框布局来使组合框保持较小，滚动窗格则贪婪地占用空间。</td>
+</tr>
+</tbody></table>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="spinner.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="tabbedpane.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>如何使用微调框<br><b>下一页：</b>如何使用选项卡式窗格</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

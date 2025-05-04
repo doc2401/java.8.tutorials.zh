@@ -1,0 +1,38 @@
+<html lang="en-US" ><head>
+    <title>向其他小程序发送消息</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+  <body >
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。</noscript>
+    <h1>向其他小程序发送消息</h1>
+    <script>
+        function sendMsgToIncrementCounter() {
+            var myReceiver = document.getElementById("receiver");
+            myReceiver.incrementCounter();
+        }
+    </script>
+
+    <p>发件人小程序</p>
+    <script src="https://www.java.com/js/deployJava.js"></script>
+    <script>
+        var attributes = { id:'sender', code:'Sender.class',
+            archive:'applet_SenderReceiver.jar',  width:300, height:50} ;
+        var parameters = { permissions:'sandbox' } ;
+        deployJava.runApplet(attributes, parameters, '1.6');
+    </script>
+    <br>
+    <br>
+    <p>接收器小程序</p>
+    <script>
+        var attributes = { id:'receiver', code:'Receiver.class',
+            archive:'applet_SenderReceiver.jar',  width:300, height:50} ;
+        var parameters = { permissions:'sandbox' } ;
+        deployJava.runApplet(attributes, parameters, '1.6');
+    </script>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+  
+
+
+</body></html>

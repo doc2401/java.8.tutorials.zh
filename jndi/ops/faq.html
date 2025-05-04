@@ -1,0 +1,577 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>故障排除技巧（Java™教程> Java命名和目录接口>命名和目录操作）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JNDI Java tutorial describes Java Naming and Directory Interface (JNDI) technology, naming and directory operations, and LDAP">
+     <meta name="keywords" content="java programming, learn java, java sample code, jndi, ldap, jndi service provider">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">命名和目录操作</a></div>
+<div class="linkAHEAD"><a href="exception.html">命名异常</a></div>
+<div class="linkAHEAD"><a href="lookup.html">查找对象</a></div>
+<div class="linkAHEAD"><a href="list.html">列出上下文</a></div>
+<div class="linkAHEAD"><a href="bind.html">添加，替换或删除绑定</a></div>
+<div class="linkAHEAD"><a href="rename.html">改名</a></div>
+<div class="linkAHEAD"><a href="create.html">创建和销毁子上下文</a></div>
+<div class="linkAHEAD"><a href="attrnames.html">属性名称</a></div>
+<div class="linkAHEAD"><a href="getattrs.html">读取属性</a></div>
+<div class="linkAHEAD"><a href="modattrs.html">修改属性</a></div>
+<div class="linkAHEAD"><a href="bindattr.html">使用属性添加，替换绑定</a></div>
+<div class="linkAHEAD"><a href="search.html">搜索</a></div>
+<div class="linkBHEAD"><a href="basicsearch.html">基本搜寻</a></div>
+<div class="linkBHEAD"><a href="filter.html">筛选器</a></div>
+<div class="linkBHEAD"><a href="scope.html">范围</a></div>
+<div class="linkBHEAD"><a href="countlimit.html">结果计数</a></div>
+<div class="linkBHEAD"><a href="timelimit.html">时限</a></div>
+<div class="nolinkAHEAD">故障排除技巧</div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b> Java命名和目录接口<br><b>课程：</b>命名和目录操作</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">Java命名和目录接口</a> > <a href="index.html" target="_top">命名和目录操作</a>
+            </div>
+            <div class="NavBit">
+                <a href="timelimit.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../ldap/index.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>故障排除技巧</h1></div>
+            <div id="PageContent">
+
+<p>当您尝试运行使用JNDI类的成功编译的程序时，可能会遇到最常见的问题。</p>
+<hr>
+<ol>
+<li><a href="#1">没有初始上下文</a></li>
+<li><a href="#2">拒绝连接</a></li>
+<li><a href="#3">连接失败</a></li>
+<li><a href="#4">程序挂起</a></li>
+<li><a href="#5">找不到名称</a></li>
+<li><a href="#6">无法连接到任意主机</a></li>
+<li><a href="#7">无法访问系统属性进行配置</a></li>
+<li><a href="#8">无法使用CRAM-MD5进行身份验证</a></li>
+</ol>
+<hr>
+<p><a name="1" style="font-weight:bold">1。您收到一个<tt>NoInitialContextException</tt></a> 。</p>
+<p><em>原因</em> ：您没有指定用于初始上下文的实现。具体而言， <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#INITIAL_CONTEXT_FACTORY" target="_blank"><tt>上下文。未将INITIAL_CONTEXT_FACTORY</tt></a>环境属性设置为将创建初始上下文的工厂的类名。或者，您没有使程序获得<tt>Context命名的服务提供程序的类<tt>。INITIAL_CONTEXT_FACTORY</tt> 。</tt></p><tt>
+<p><em>解决方案</em> ：设置<tt>上下文。INITIAL_CONTEXT_FACTORY</tt>环境属性为您正在使用的初始上下文实现的类名。有关详细信息，请参见“ <a class="TutorialLink" href="index.html" target="_top">配置”</a>部分。</p>
+<p>如果设置了属性，请确保没有键入错误的类名称，并且所命名的类可用于您的程序（在其类路径中或安装在JRE的<tt>jre / lib / ext</tt>目录中）。<a href="">Java平台</a>包括LDAP，COS命名，DNS和RMI注册表的服务提供商。必须安装所有其他服务提供商并将其添加到执行环境中。</p>
+<p><a name="2" style="font-weight:bold">2。您将收到一个<tt>CommunicationException</tt> ，指示“连接被拒绝”。</a></p>
+<p><em>原因</em> ： <tt>上下文标识的服务器和端口<tt>。服务器未提供PROVIDER_URL</tt>环境属性。也许有人禁用或关闭了运行服务器的计算机。或者，也许您输错了服务器的名称或端口号。</tt></p><tt>
+<p><em>解决方案</em> ：检查该端口上确实有服务器在运行，并在必要时重新启动服务器。执行此检查的方式取决于您所使用的LDAP服务器。通常，您可以使用管理控制台或工具来管理服务器。您可以使用该工具来验证服务器的状态。</p>
+<p><a name="3" style="font-weight:bold">3。LDAP服务器响应其他实用程序（例如其管理控制台），但似乎不响应程序的请求。</a></p>
+<p><em>原因</em> ：服务器不响应LDAP v3连接请求。某些服务器（尤其是公用服务器）无法正确响应LDAP v3，从而忽略了请求而不是拒绝了请求。另外，某些LDAP v3服务器在处理Oracle LDAP服务提供商自动发送的控件时遇到问题，并且经常返回服务器特定的故障代码。</p>
+<p><em>解决方法</em> 。尝试将环境属性<tt>“ java.naming.ldap.version”设置</tt>为<tt>“ 2”</tt> 。缺省情况下，LDAP服务提供者尝试使用LDAP v3连接到LDAP服务器。如果失败，则使用LDAP v2。如果服务器无提示地忽略了v3请求，则提供程序将假定该请求有效。要变通解决此类服务器，必须显式设置协议版本以确保服务器的正确行为。</p>
+<p>如果服务器是v3服务器，请在创建初始上下文之前尝试设置以下环境属性：</p>
+<div class="codeblock"><pre>
+env.put(Context.REFERRAL, "throw");
+</pre></div>
+<p>这将关闭LDAP提供程序自动发送的控件。（有关详细信息，请查看《 <a class="OutsideLink" href="https://docs.oracle.com/javase/jndi/tutorial/ldap/referral/index.html" target="_blank">JNDI教程</a> 》。）</p>
+<p><a name="4" style="font-weight:bold">4。程序挂起。</a></p>
+<p><em>原因</em> ：如果您尝试执行会产生太多结果或需要服务器检查太多条目才能生成搜索结果的搜索，则某些服务器（尤其是公共服务器）将不会响应（甚至不会给出否定答案）。回答。这样的服务器试图限制每个请求所消耗的资源量。</p>
+<p>或者，您尝试对不支持它的服务器/端口使用安全套接字层（SSL），反之亦然（也就是说，您尝试使用普通套接字与SSL端口通信）。</p>
+<p>最后，由于负载过重，服务器响应速度非常慢，或者由于某种原因根本没有响应。</p>
+<p><em>解决方案</em> ：如果您的程序由于服务器试图限制其资源的使用而挂起，请使用一个查询重试您的请求，该查询将返回一个结果或仅返回几个结果。这将帮助您确定服务器是否处于活动状态。如果是这样，则可以扩大您的初始查询并重新提交。</p>
+<p>如果您的程序由于SSL问题而挂起，则需要找出该端口是否为SSL端口，然后设置<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PROTOCOL" target="_blank"><tt>上下文。适当设置SECURITY_PROTOCOL</tt></a>环境属性。如果端口是SSL端口，则此属性应设置为<tt>“ ssl”</tt> 。如果它不是SSL端口，则不应设置此属性。</p>
+<p>如果您的程序由于以上原因均未挂起，则属性<tt>com.sun.jndi.ldap.read.timeout</tt>可以方便地指定读取超时。此属性的值是整数的字符串表示形式，该整数表示LDAP操作的读取超时（以毫秒为单位）。如果LDAP提供程序在这段时间内无法获得LDAP响应，它将中止读取尝试。整数应大于零。小于或等于零的整数表示未指定读取超时，这等效于无限期等待响应，直到接收到它为止。</p>
+<p>如果未指定此属性，则默认值为等待响应，直到收到响应为止。</p>
+<p><a>例如，</a></p>
+<p><a><tt>env.put（“ com.sun.jndi.ldap.read.timeout”，“ 5000”）;</tt></a>如果服务器在5秒钟内未响应，则导致LDAP服务提供者中止读取尝试。</p>
+<p><a name="5" style="font-weight:bold">5，您会收到一个<tt>NameNotFoundException</tt></a> 。</p>
+<p><em>原因</em> ：初始化LDAP的初始上下文时，将提供一个根专有名称。例如，如果您设置了<tt>上下文。初始上下文的PROVIDER_URL</tt>环境属性为<tt>“ ldap：// ldapserver：389 / o = JNDITutorial”</tt> ，随后提供了一个名称，例如<tt>“ cn = Joe，c = us”</tt> ，那么您传递给LDAP服务的全名是<tt>“ cn = Joe，c = us，o = JNDITutorial”</tt> 。如果这确实是您想要的名称，则应检查服务器以确保它包含这样的条目。</p>
+<p>另外，如果您提供不正确的专有名称用于身份验证，则Oracle Directory Server会返回此错误。例如，如果设置了<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PRINCIPAL" target="_blank"><tt>Context ，则LDAP提供程序将抛出</tt></a><tt><a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/NameNotFoundException.html" target="_blank"><tt>NameNotFoundException</tt></a> <a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/naming/Context.html#SECURITY_PRINCIPAL" target="_blank"><tt>。<tt>“ cn = Admin，o = Tutorial”</tt>和<tt>“ cn = Admin，o = Tutorial”的</tt> SECURITY_PRINCIPAL</tt></a>环境属性不是LDAP服务器上的条目。Oracle Directory Server返回的正确错误实际上应该是与身份验证相关的内容，而不是“找不到名称”。</tt></p><tt>
+<p><em>解决方案</em> ：验证您提供的名称是服务器上现有条目的名称。您可以通过列出条目的父上下文或使用其他工具（例如目录服务器的管理控制台）来执行此操作。</p>
+<hr>
+<p>在尝试部署使用JNDI类的applet时，可能会遇到一些问题。</p>
+<p><a name="6" style="font-weight:bold">6。当您的小程序尝试与在不同于该小程序加载的计算机上运行的目录服务器通信时，您会收到一个<tt>AppletSecurityException</tt></a></p>
+<p><em>原因</em> ：您的小程序未签名，因此它只能连接到加载它的机器。或者，如果该小程序已签名，则浏览器未授予该小程序连接到目录服务器计算机的权限。</p>
+<p><em>解决方法</em> ：如果你要允许小程序连接到任意计算机上运行的目录服务器，那么你就需要签署<em>两</em>小应用程序<em>和</em>所有的JNDI JAR文件的，你的小应用程序将使用。有关签名jar的信息，请参阅“ <a class="TutorialLink" href="../../deployment/jar/signindex.html" target="_top">签名和验证JAR文件”</a> 。</p>
+<p><a name="7" style="font-weight:bold">7。当您的小程序尝试使用系统属性来设置环境属性时，您将获得一个<tt>AppletSecurityException</tt> 。</a></p>
+<p><em>原因</em> ：Web浏览器限制了对系统属性的访问，如果您尝试读取它们，则会抛出<tt>SecurityException</tt> 。</p>
+<p><em>解决方案</em> ：如果您需要获取applet的输入，请尝试使用applet参数。</p>
+<p><a name="8" style="font-weight:bold">8。当在Firefox内部运行的小应用程序尝试使用CRAM-MD5向LDAP服务器进行身份验证时，您将获得<tt>AppletSecurityException</tt> 。</a></p>
+<p><em>原因</em> ：Firefox禁用对<tt>java.security</tt>软件包的访问。LDAP提供程序使用了<tt>java.security提供的消息摘要功能<tt>。MessageDigest，</tt>用于实现CRAM-MD5。</tt></p><tt>
+<p><em>解决方案</em> ：使用Java插件。</p>
+<hr>
+
+
+        </tt></tt></tt></tt></div><tt><tt>
+        <div class="NavBit">
+            <a href="timelimit.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="../ldap/index.html" target="_top">下一个»</a>
+        </div>
+    </tt></tt></div><tt><tt>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>时间限制<br><b>下一页：</b> LDAP用户的高级主题</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</tt></tt></body></html>

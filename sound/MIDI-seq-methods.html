@@ -1,0 +1,621 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head></head><body  onload="load()">﻿
+        <title>使用音序器方法（Java™教程>声音）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="java programming, learn java, java sample code, ">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script>
+
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkAHEAD"><a href="sampled-overview.html">采样包概述</a></div>
+<div class="linkAHEAD"><a href="accessing.html">访问音频系统资源</a></div>
+<div class="linkAHEAD"><a href="playing.html">播放音频</a></div>
+<div class="linkAHEAD"><a href="capturing.html">捕捉音频</a></div>
+<div class="linkAHEAD"><a href="controls.html">使用控件处理音频</a></div>
+<div class="linkAHEAD"><a href="converters.html">使用文件和格式转换器</a></div>
+<div class="linkAHEAD"><a href="overview-MIDI.html">MIDI包概述</a></div>
+<div class="linkAHEAD"><a href="accessing-MIDI.html">访问MIDI系统资源</a></div>
+<div class="linkAHEAD"><a href="MIDI-messages.html">传输和接收MIDI信息</a></div>
+<div class="linkAHEAD"><a href="MIDI-seq-intro.html">音序器简介</a></div>
+<div class="nolinkAHEAD">使用定序器方法</div>
+<div class="linkAHEAD"><a href="MIDI-seq-adv.html">使用高级音序器功能</a></div>
+<div class="linkAHEAD"><a href="MIDI-synth.html">合成声音</a></div>
+<div class="linkAHEAD"><a href="SPI-intro.html">服务提供商接口简介</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-sampled.html">提供音频采样服务</a></div>
+<div class="linkAHEAD"><a href="SPI-providing-MIDI.html">提供MIDI服务</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>踪迹：</b>声音</div>
+            <div id="BreadCrumbs">
+                <a href="../index.html" target="_top">主页</a> > <a href="./index.html" target="_top">声音</a>
+            </div>
+            <div class="NavBit">
+                <a href="MIDI-seq-intro.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="MIDI-seq-adv.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>使用定序器方法</h1></div>
+            <div id="PageContent">
+
+<p>的<a class="APILink" href="https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/Sequencer.html" target="_blank"><code>Sequencer</code></a>界面提供了几种类别的方法：</p>
+<ul>
+<li><a name="124593"></a>从MIDI文件或<code>Sequence</code>对象，并将当前加载的音序数据保存到MIDI文件。</li>
+<li><a name="124594"></a>与磁带录音机的传输功能类似的方法，用于停止和开始播放和录制，启用和禁用特定轨道上的录制以及在当前播放或录制位置中穿梭<code>Sequence</code> 。</li>
+<li><a name="124595"></a>用于查询和设置对象的同步和定时参数的高级方法。一种<code>Sequencer</code>可能会以不同的节奏演奏，有些<code>Tracks</code>静音，并处于与其他对象的各种同步状态。</li>
+<li><a name="124596"></a>注册“侦听器”对象的高级方法，这些对象在<code>Sequencer</code>处理某些类型的MIDI事件。</li>
+</ul>
+<p><a name="124597"></a>不管哪个<code>Sequencer</code>您将要调用的方法，第一步是获取一个<code>Sequencer</code>系统中的设备，并将其保留供程序使用。</p>
+<p><a name="124598"></a></p>
+<h2>获取音序器</h2>
+<p><a name="124599"></a>应用程序不会实例化<code>Sequencer</code> ;毕竟， <code>Sequencer</code>只是一个接口。相反，就像Java Sound API的MIDI软件包中的所有设备一样， <code>Sequencer</code>通过静态访问<code>MidiSystem</code>宾语。如<a class="TutorialLink" href="accessing-MIDI.html" target="_top">访问MIDI系统资源</a>中所述，以下内容<code>MidiSystem</code>方法可用于获取默认值<code>Sequencer</code> ：</p>
+<div class="codeblock"><pre>
+static Sequencer getSequencer()
+</pre></div>
+<p><a name="124604"></a>以下代码片段获取默认值<code>Sequencer</code> ，获取所需的任何系统资源并使其可运行：</p>
+<div class="codeblock"><pre>
+Sequencer sequencer;
+// Get default sequencer.
+sequencer = MidiSystem.getSequencer(); 
+if (sequencer == null) {
+    // Error -- sequencer device is not supported.
+    // Inform user and return...
+} else {
+    // Acquire resources and make operational.
+    sequencer.open();
+}
+</pre></div>
+<p><a name="124615"></a>的调用<code>open</code>保留音序器设备供程序使用。想象共享一个音序器没有多大意义，因为它一次只能播放一个音序。完成音序器的使用后，您可以通过调用使其对其他程序可用<code>close</code> 。</p>
+<p><a name="124616"></a>可以如<a class="TutorialLink" href="accessing-MIDI.html" target="_top">访问MIDI系统资源中</a>所述获得非默认音序器。</p>
+<p><a name="124620"></a></p>
+<h2>加载序列</h2>
+<p><a name="124621"></a>从系统获得音序器并保留后，您需要加载音序器应播放的数据。有三种典型的方法可以完成此操作：</p>
+<ul>
+<li><a name="124622"></a>从MIDI文件读取音序数据</li>
+<li><a name="124623"></a>通过从其他设备（例如MIDI输入端口）接收MIDI消息来实时记录</li>
+<li><a name="124624"></a>通过将曲目添加到空序列并添加来以编程方式“从头开始”构建它<code>MidiEvent</code>那些轨道的对象</li>
+</ul>
+<p><a name="124625"></a>现在，我们将研究获取序列数据的第一种方法。（下面分别在“ <a href="#124654">记录和保存序列”</a>和“ <a href="#124674">编辑序列”</a>下介绍了其他两种方法。）第一种方法实际上包含两种略有不同的方法。一种方法是将MIDI文件数据输入到<code>InputStream</code>然后您可以通过以下方式直接读取音序器<code>Sequencer.setSequence(InputStream)</code> 。使用这种方法，您无需显式创建<code>Sequence</code>宾语。实际上， <code>Sequencer</code>实现甚至可能不会创建一个<code>Sequence</code>在幕后，因为某些音序器具有内置的机制，可直接处理文件中的数据。</p>
+<p><a name="124632"></a>另一种方法是创建一个<code>Sequence</code>明确地。如果要在播放之前编辑序列数据，则需要使用此方法。使用这种方法，您可以调用<code>MidiSystem's</code>重载方法<code>getSequence</code> 。该方法能够从<code>InputStream</code> ， 一种<code>File</code>或<code>URL</code> 。该方法返回一个<code>Sequence</code>然后可以加载到<code>Sequencer</code>播放。扩展之前的代码摘录，这是获取<code>Sequence</code>来自的对象<code>File</code>并将其加载到我们的<code>sequencer</code> ：</p>
+<div class="codeblock"><pre>
+try {
+    File myMidiFile = new File("seq1.mid");
+    // Construct a Sequence object, and
+    // load it into my sequencer.
+    Sequence mySeq = MidiSystem.getSequence(myMidiFile);
+    sequencer.setSequence(mySeq);
+} catch (Exception e) {
+   // Handle error and/or return
+}
+</pre></div>
+<p><a name="124642"></a>喜欢<code>MidiSystem's</code><code>getSequence</code>方法， <code>setSequence</code>可能会抛出一个<code>InvalidMidiDataException</code> —并且，对于<code>InputStream</code>变体<code>IOException</code> -如果遇到任何麻烦。</p>
+<p><a name="124643"></a></p>
+<h2>播放序列</h2>
+<p><a name="124644"></a>启动和停止<code>Sequencer</code>使用以下方法完成：</p>
+<div class="codeblock"><pre>
+    void start()
+</pre></div>
+<p><a name="124646"></a>和</p>
+<div class="codeblock"><pre>
+    void stop()
+</pre></div>
+<p><a name="124648"></a>的<code>Sequencer.start</code>方法开始播放序列。请注意，播放将从序列中的当前位置开始。使用以下命令加载现有序列<code>setSequence</code>如上所述的方法，将定序器的当前位置初始化到序列的最开始。的<code>stop</code>方法停止定序器，但不会自动倒回当前<code>Sequence</code> 。开始停止<code>Sequence</code>无需重置位置，只需从当前位置恢复播放序列即可。在这种情况下， <code>stop</code>方法已用作暂停操作。但是，有各种各样<code>Sequencer</code>开始播放之前将当前序列位置设置为任意值的方法。（我们将在下面讨论这些方法。）</p>
+<p><a name="124649"></a>如前所述， <code>Sequencer</code>通常有一个或多个<code>Transmitter</code>对象，通过它发送<code>MidiMessages</code>到一个<code>Receiver</code> 。通过这些<code>Transmitters</code>那一个<code>Sequencer</code>扮演<code>Sequence</code> ，通过发出适当的时间<code>MidiMessages</code>对应于<code>MidiEvents</code>当前包含<code>Sequence</code> 。因此，用于播放<code>Sequence</code>是要调用<code>setReceiver</code>上的方法<code>Sequencer's</code><code>Transmitter</code>对象，实际上将其输出连接到将利用回放数据的设备。有关更多详细信息<code>Transmitters</code>和<code>Receivers</code> ，请参考<a class="TutorialLink" href="MIDI-messages.html" target="_top">传输和接收MIDI信息</a> 。</p>
+<p><a name="124654"></a></p>
+<h2>记录和保存序列</h2>
+<p><a name="124655"></a>将MIDI数据捕获到<code>Sequence</code> ，然后是文件，除了上述步骤外，您还需要执行一些其他步骤。以下概述显示了设置录制到<code>Track</code>在一个<code>Sequence</code> ：</p>
+<ol>
+<li><a name="124656"></a>使用<code>MidiSystem.getSequencer</code>如上获得一个新的音序器进行录制。</li>
+<li><a name="124657"></a>设置MIDI连接的“接线”。传输要记录的MIDI数据的对象应通过其对象进行配置<code>setReceiver</code>方法，将数据发送到<code>Receiver</code>与录音相关<code>Sequencer</code> 。</li>
+<li><a name="124658"></a>创建一个新的<code>Sequence</code>对象，它将存储记录的数据。当您创建<code>Sequence</code>对象，您必须为序列指定全局时序信息。例如：<div class="codeblock"><pre>
+      Sequence mySeq;
+      try{
+          mySeq = new Sequence(Sequence.PPQ, 10);
+      } catch (Exception ex) { 
+          ex.printStackTrace(); 
+      }
+</pre></div>
+<a name="124666"></a>的构造函数<code>Sequence</code>以一个<code>divisionType</code>和定时分辨率。的<code>divisionType</code>参数指定分辨率参数的单位。在这种情况下，我们指定了<code>Sequence</code>我们创建的将是每四分音符10个脉冲。的附加可选参数<code>Sequence</code>构造函数是一个tracks参数，它将导致初始序列以指定数量的开始（最初为空） <code>Tracks</code> 。否则<code>Sequence</code>将没有初始创建<code>Tracks</code> ;以后可以根据需要添加它们。</li>
+<li><a name="124667"></a>创建一个空的<code>Track</code>在里面<code>Sequence</code> ，带有<code>Sequence.createTrack</code> 。如果<code>Sequence</code>是最初创建的<code>Tracks</code> 。</li>
+<li><a name="124668"></a>使用<code>Sequencer.setSequence</code> ，选择我们的新<code>Sequence</code>接收录音。的<code>setSequence</code>方法将现有的联系在一起<code>Sequence</code>与<code>Sequencer</code> ，这有点类似于将磁带加载到录音机上。</li>
+<li><a name="124669"></a>调用<code>Sequencer.recordEnable</code>每个<code>Track</code>被记录。如有必要，请参考可用的<code>Tracks</code>在里面<code>Sequence</code>通过调用<code>Sequence.getTracks</code> 。</li>
+<li><a name="124670"></a>调用<code>startRecording</code>在<code>Sequencer</code> 。</li>
+<li><a name="124671"></a>完成录制后，调用<code>Sequencer.stop</code>要么<code>Sequencer.stopRecording</code> 。</li>
+<li><a name="124672"></a>保存记录<code>Sequence</code>到MIDI文件<code>MidiSystem.write</code> 。的<code>write</code>的方法<code>MidiSystem</code>需要一个<code>Sequence</code>作为其论据之一，并将其写为<code>Sequence</code>到流或文件。</li>
+</ol>
+<p><a name="124674"></a></p>
+<h2>编辑序列</h2>
+<p><a name="124675"></a>许多应用程序允许通过从文件中加载序列来创建音序，还有很多应用程序还允许通过从实时MIDI输入（即录制）中捕获音序来创建音序。但是，某些程序将需要以编程方式或响应用户输入从头开始创建MIDI序列。功能齐全的定序器程序允许用户手动构建新序列，以及编辑现有序列。</p>
+<p><a name="124676"></a>这些数据编辑操作不是通过Java Sound API来实现的<code>Sequencer</code>方法，但通过数据对象本身的方法： <code>Sequence</code> ， <code>Track</code>和<code>MidiEvent</code> 。您可以使用以下任一方法创建空序列<code>Sequence</code>构造函数，然后通过调用以下命令向其添加轨道<code>Sequence</code>方法：</p>
+<div class="codeblock"><pre>
+    Track createTrack() 
+</pre></div>
+<p>如果您的程序允许用户编辑序列，则需要此<code>Sequence</code>删除曲目的方法：</p>
+<div class="codeblock"><pre>
+    boolean deleteTrack(Track track) 
+</pre></div>
+<p><a name="124680"></a>序列包含曲目后，您可以通过调用以下内容的方法来修改曲目的内容<code>Track</code>类。的<code>MidiEvents</code>包含在<code>Track</code>存储为<code>java.util.Vector</code>在里面<code>Track</code>对象，以及<code>Track</code>提供了一组用于访问，添加和删除列表中事件的方法。方法<code>add</code>和<code>remove</code>相当不言自明，添加或删除指定的<code>MidiEvent</code>从一个<code>Track</code> 。一种<code>get</code>提供了方法，该方法将索引<code>Track's</code>事件列表并返回<code>MidiEvent</code>存储在那里。此外，还有<code>size</code>和<code>tick</code>方法，分别返回<code>MidiEvents</code>在曲目中以及曲目的持续时间，表示为<code>Ticks</code> 。</p>
+<p><a name="124681"></a>要在将新事件添加到曲目之前创建一个新事件，您当然可以使用<code>MidiEvent</code>构造函数。要指定或修改事件中嵌入的MIDI消息，您可以调用<code>setMessage</code>适当的方法<code>MidiMessage</code>子类（ <code>ShortMessage</code> ， <code>SysexMessage</code> ， 要么<code>MetaMessage</code> ）。要修改事件应发生的时间，请调用<code>MidiEvent.setTick</code> 。</p>
+<p><a name="124682"></a>这些低级方法结合在一起，为功能齐全的音序器程序所需的编辑功能提供了基础。</p>
+<p><a name="124684"></a></p>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="MIDI-seq-intro.html" target="_top">«上一个</a> • <a href="./TOC.html" target="_top">追踪</a> • <a href="MIDI-seq-adv.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b>音序器简介<br><b>下一页：</b>使用高级音序器功能</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>

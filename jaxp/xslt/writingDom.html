@@ -1,0 +1,798 @@
+<html lang="en-US"  xmlns="http://www.w3.org/1999/xhtml"><head>
+        <title>将DOM编写为XML文件（Java™教程>用于XML处理的Java API（JAXP）>可扩展样式表语言转换）</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="This JAXP Java tutorial describes Java API for XML Processing (jaxp), XSLT, SAX, and related XML topics">
+     <meta name="keywords" content="java programming, learn java, java sample code, jaxp, xml, xslt, sax">
+        
+<style type="text/css">
+    body {
+        margin-left:10px;
+        margin-right:10px;
+        line-height: 1.5;
+        FONT-FAMILY: Arial, Helvetica, sans-serif; 
+        font-size: 0.8em;
+    }
+    
+    a:link{text-decoration:none; color:#09569d;}
+    a:visited{text-decoration:none; color: #3a87cf;}
+    a:hover{text-decoration:underline; }
+        
+    code{
+        font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .header-container {
+        background-color: #fff;
+        border-bottom: 1px solid #C1CFDA;
+        -webkit-box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+        box-shadow: 0 2px 2px rgba(117, 163, 231, 0.1);
+    }
+    
+    .bookwrapper {
+        width: auto;
+        margin: auto;
+    }
+    
+    .clearfix {
+    }
+    
+    .clearfloat {
+        clear: both;
+        overflow: auto;
+        height: 0px;
+        font-size: 1px;
+        line-height: 0px;
+    }
+    
+    #brandProdName {
+        width: auto;
+        height: auto;
+    }
+    
+    #logocover {
+        display: block;
+        background: transparent url(../../images/oracle-java-logo.png) 0px 0px no-repeat;
+        height: 50px;
+        width: 229px;
+        float: left;
+    }
+    
+    #productName {
+        font-size: 16px;
+        position: relative;
+        top: 19px;
+        padding-left: 3px;
+        color: #457798;
+        white-space: nowrap;
+        width: 340px;
+    }
+
+
+    .FigureCaption   { 
+        font-family: sans-serif; 
+        text-align: center;
+    }
+    
+    #TopBar_bl {        
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_br {
+        width: 100%;
+        height: 60px;
+    }
+    #TopBar_tl {
+        margin-left: -110px;
+        margin-right: -100px;       
+		align: left;
+        height: 60px;
+    }
+    #TopBar_tr {
+        width: 100%;
+        height: 60px;
+    }
+    
+    #TopBar {
+        min-width:700px;
+        padding:25px 100px 10px;
+        margin-bottom:25px;
+        clear:both;
+        
+        border-bottom:1px solid #d2dde5;
+        border-radius: 3px;
+    
+        background:#efefef; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmVmZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #ffffff 0%, #e2eff9 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2eff9)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#e2eff9 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#e2eff9 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2eff9',GradientType=0 ); /* IE6-8 */
+        
+    }
+    
+    #TopBar_left {
+        line-height: 14px;
+        position: absolute;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        text-align: left;
+        font: 13px/20px Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    #TopBar_right {
+        line-height: 12px;
+        float: right;
+        padding-top: 10px;
+        padding-right: 30px;
+        text-align: left;
+    }
+    
+
+    @media print {
+        #BreadCrumbs, #Download {
+            display: none;
+        }
+    }
+    
+     
+    @media print {
+        #TopBar_right {
+            display: none;
+        }
+    }
+    #TopBar_right a {
+        font-size: 10px;
+        margin: 3px;
+        padding: 0;
+    }
+ 
+    #BreadCrumbs {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+        float: right;
+    }
+    
+    #BreadCrumbs a {
+        color:#09569d;
+    }
+    
+    #BreadCrumbs a:visited, #BreadCrumbs a:link {
+        text-decoration: none;
+    }
+    
+    #BreadCrumbs a:hover, #BreadCrumbs a:active {
+        text-decoration: underline;
+    }
+    
+    #PageTitle {
+        margin: 0 5px 0.5em 0;
+        color: #F90000;
+    }
+    
+    #PageContent{
+        margin: 0 5px 0 20px;
+    }
+    
+    .LeftBar_shown {
+        width: 13em;
+        float: left;
+    }
+    
+    @media print {
+        .LeftBar_shown {
+            display: none;
+        }
+    }
+    
+    .LeftBar_hidden {
+        display: none;
+    }
+    
+    #Footer {
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-right: 10px;       
+    }
+    
+    .footertext {
+        font-size: 10px;
+        font-family: sans-serif; 
+        margin-top: 1px;
+    }
+
+    .NavBit  {
+        padding: 15px 5px 0.5em 0;
+        font-family: sans-serif; 
+    }
+    
+    @media print {
+        .NavBit {
+            display: none;
+        }
+    }
+    
+    #TagNotes {
+        text-align: right;        
+    }
+    
+    @media print {
+        #TagNotes a:visited, #TagNotes a:link {
+            color: #35556B;
+            text-decoration: none;
+        }
+    }
+    
+    #Contents a, .NavBit a, #TagNotes a {
+        color:#09569d;
+    }
+    
+    #TagNotes a:visited, #TagNotes a:link,
+    #Contents a:visited, #Contents a:link,
+    .NavBit a:visited, .NavBit a:link {
+        text-decoration: none;
+    }
+    
+    #TagNotes a:hover, #TagNotes a:active,   
+    #Contents a:hover, #Contents a:active,   
+    .NavBit a:hover, .NavBit a:active {  
+        text-decoration: underline;
+    }
+    
+    #Contents {
+        float: left;
+        font-family: sans-serif; 
+    }
+    @media print {
+        #Contents {
+            display: none;
+        }
+    }
+    @media screen {
+        div.PrintHeaders {
+            display: none;
+        }
+    }
+    .linkLESSON, .nolinkLESSON {
+        margin-left: 0.5em;
+        text-indent: -0.5em;
+    }
+    .linkAHEAD, .nolinkAHEAD, .linkQUESTIONS, .nolinkQUESTIONS   {
+        margin-left: 1.5em; 
+        text-indent: -0.5em
+    }
+    .linkBHEAD, .nolinkBHEAD   {
+        margin-left: 2.5em;
+        text-indent: -0.5em
+    }
+    .linkCHEAD, .nolinkCHEAD   {
+        margin-left: 3.5em;
+        text-indent: -0.5em
+    }
+    .nolinkLESSON, .nolinkAHEAD, .nolinkBHEAD, .nolinkCHEAD,
+    .nolinkQUESTIONS {
+        font-weight: bold;
+        color: #333;
+		
+		
+    }
+    .MainFlow_indented {
+        margin-right: 10px;
+        margin-left: 15em;
+        margin-bottom: 2em;
+
+    }
+    .MainFlow_wide {
+	
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 2em;
+
+    }
+    @media print {
+        .MainFlow_indented, .MainFlow_wide {
+            padding-top: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+    h1, h2, h3, h4, h5 {
+        color: #333;
+        
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+
+    #ToggleLeft {
+        display: none;
+    }
+    
+    .note {
+        margin: 0 30px 0px 30px;
+    }
+    
+    .codeblock {
+        margin: 0 30px 0px 30px;
+		font-size:12px;
+		font-family:Monaco,Courier,"Courier New";
+    }
+    
+    .tocli {
+        list-style-type:none;
+    }
+
+    .betadraft {
+        color: red;
+    }
+
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+    function leftBar() {
+        var nameq = 'tutorial_showLeftBar='
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieString = cookies[i];
+            while (cookieString.charAt(0) == ' ') {
+                cookieString = cookieString.substring(1, cookieString.length);
+            }
+            if (cookieString.indexOf(nameq) == 0) {
+                cookieValue =  cookieString.substring(nameq.length,
+                        cookieString.length);
+                return cookieValue == 'yes';
+            }
+        }
+        return true;
+    }
+
+    function showLeft(b) {
+        var contents = document.getElementById("LeftBar");
+        var main = document.getElementById("MainFlow");
+        var toggle = document.getElementById("ToggleLeft");
+        if (b) {
+            contents.className = "LeftBar_shown";
+            main.className = "MainFlow_indented";
+            toggle.innerHTML = "Hide TOC";
+            document.cookie = 'tutorial_showLeftBar=yes; path=/';
+        } else {
+            contents.className = "LeftBar_hidden";
+            main.className = "MainFlow_wide";
+            toggle.innerHTML = "Show the TOC";
+            document.cookie = 'tutorial_showLeftBar=no; path=/';
+        }
+    }
+
+    function toggleLeft() {
+        showLeft(document.getElementById("LeftBar").className ==
+                "LeftBar_hidden");
+        document.getElementById("ToggleLeft").blur();
+    }
+
+    function load() {
+        showLeft(leftBar());
+        document.getElementById("ToggleLeft").style.display="inline";
+    }
+
+    function showCode(displayCodePage, codePath) {
+        var codePathEls = codePath.split("/");
+        var currDocPathEls = location.href.split("/");
+        //alert ("codePathEls = " + codePathEls + "\n" + "currDocPathEls = " + currDocPathEls);
+        currDocPathEls.pop(); // remove file name at the end
+        while (codePathEls.length > 0) {
+            if (codePathEls[0] == "..") {
+                codePathEls.shift();
+                currDocPathEls.pop();
+            } else {
+                break;
+            }
+        }
+        var fullCodePath = currDocPathEls.join("/") + "/" + codePathEls.join("/");
+        //alert ("fullCodePath = " + fullCodePath );
+        if (codePath.indexOf(".java") != -1 || codePath.indexOf(".jnlp") != -1) {
+            window.location.href = displayCodePage + "?code=" + encodeURI(fullCodePath);
+        } else {
+            window.location.href = fullCodePath;
+        }
+    }
+/* ]]> */    
+</script>
+
+
+    <script>window.ohcglobal || document.write('<script src="/en/dcommon/js/global.js">\x3C/script>')</script></head>
+<body  onload="load()">
+    <noscript>要使此页面正常运行，需要启用JavaScript的浏览器。
+    </noscript>
+        <!-- header -->
+    <div class="header-container">
+        <div class="bookwrapper  clearfix">       
+            <div id="brandProdName">
+                <div id="logocover"></div>
+                <div id="productName">文献资料</div>
+            </div> 
+            <br class="clearfloat">
+        </div>
+    </div>
+    
+    <div id="TopBar">
+        <div id="TopBar_tr">
+            <div id="TopBar_tl">
+                <div id="TopBar_br"> <div id="TopBar_bl"> 
+                    <div id="TopBar_left">Java™教程</div>
+                        <div id="TopBar_right"> 
+                            <!--
+                            <a href="URL" target="_blank">External Link</a><br/>
+                            --> <a href="javascript:void(0);" id="ToggleLeft">隐藏目录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="LeftBar" class="LeftBar_shown">
+        <div id="Contents">
+            <div class="linkLESSON"><a href="index.html">可扩展样式表语言转换</a></div>
+<div class="linkAHEAD"><a href="intro.html">引入XSL，XSLT和XPath</a></div>
+<div class="linkAHEAD"><a href="xpath.html">XPath的工作方式</a></div>
+<div class="nolinkAHEAD">写出DOM作为XML文件</div>
+<div class="linkAHEAD"><a href="generatingXML.html">从任意数据结构生成XML</a></div>
+<div class="linkAHEAD"><a href="transformingXML.html">使用XSLT转换XML数据</a></div>
+</div>
+    </div>
+    <div id="MainFlow" class="MainFlow_indented">
+    <div class="PrintHeaders">
+        <b>Trail：</b>用于XML处理的Java API（JAXP）<br><b>课程：</b>可扩展样式表语言转换</div>
+            <div id="BreadCrumbs">
+                <a href="../../index.html" target="_top">主页</a> > <a href="../index.html" target="_top">用于XML处理的Java API（JAXP）</a> > <a href="index.html" target="_top">可扩展样式表语言转换</a>
+            </div>
+            <div class="NavBit">
+                <a href="xpath.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="generatingXML.html" target="_top">下一个»</a>
+            </div>
+            <div class="Banner"><p style="background-color:rgb(247,248,249);border-width:1px;padding:10px;font-style:italic;border-style:solid;border-color:rgb(64,74,91)">Java教程是为JDK 8编写的。此页面中描述的示例和实践没有利用更高版本中引入的改进。</p></div>
+            <div id="PageTitle"><h1>写出DOM作为XML文件</h1></div>
+            <div id="PageContent">
+
+<!-- Writing Out a DOM as an XML File -->
+<p>在构建了DOM（通过解析XML文件或以编程方式构建它）之后，您通常希望将其另存为XML。本节向您展示如何使用Xalan转换包进行此操作。</p>
+<p>使用该包，您将创建一个转换器对象，将<tt>DOMSource连接</tt>到<tt>StreamResult</tt> 。然后，您将调用转换器的<tt>transform（）</tt>方法将DOM作为XML数据写出。</p>
+<p><a name="gghiy" id="gghiy"></a></p>
+<h2>读取XML</h2>
+<p>第一步是通过解析XML文件在内存中创建DOM。现在，您应该已经熟悉了该过程。</p>
+<div class="note"><hr><strong>注意：</strong> <!--
+<p>The code discussed in this section is in the file <tt>TransformationApp01.java</tt>. <a href="../examples/xslt_samples.zip">Download the XSLT examples</a> 
+ and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</p>
+-->
+<p>本节讨论的代码在<tt>TransformationApp01.java</tt>文件中。
+<a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>Download the XSLT examlles</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</p>
+<hr></div>
+<p>以下代码提供了一个基本的模板。它基本上与“ <a class="TutorialLink" href="../dom/index.html" target="_top">文档对象模型”</a>课程开始时使用的代码相同。</p>
+<div class="codeblock"><pre>
+import javax.xml.parsers.DocumentBuilder; 
+import javax.xml.parsers.DocumentBuilderFactory; 
+import javax.xml.parsers.FactoryConfigurationError; 
+import javax.xml.parsers.ParserConfigurationException; 
+import org.xml.sax.SAXException; 
+import org.xml.sax.SAXParseException; 
+
+import org.w3c.dom.Document;
+import org.w3c.dom.DOMException;
+
+import java.io.*;
+
+public class TransformationApp01 {
+
+    static Document document; 
+
+    public static void main(String argv[]) {
+        if (argv.length != 1) {
+            System.err.println("Usage: java TransformationApp01 filename");
+            System.exit (1);
+        }
+
+        DocumentBuilderFactory factory =
+        DocumentBuilderFactory.newInstance();
+
+        try {
+            File f = new File(argv[0]);
+            DocumentBuilder builder =
+            factory.newDocumentBuilder();
+            document = builder.parse(f);
+  
+        } 
+        catch (SAXParseException spe) {
+            // Error generated by the parser
+            System.out.println("\n** Parsing error"
+                               + ", line " + spe.getLineNumber()
+                               + ", uri " + spe.getSystemId());
+            System.out.println("  " + spe.getMessage() );
+  
+            // Use the contained exception, if any
+            Exception x = spe;
+            if (spe.getException() != null)
+                x = spe.getException();
+            x.printStackTrace();
+        }
+        catch (SAXException sxe) {
+            // Error generated by this application
+            // (or a parser-initialization error)
+            Exception x = sxe;
+            if (sxe.getException() != null)
+                x = sxe.getException();
+            x.printStackTrace();
+        }
+        catch (ParserConfigurationException pce) {
+            // Parser with specified options 
+            // cannot be built
+            pce.printStackTrace();
+        }
+        catch (IOException ioe) {
+            // I/O error
+            ioe.printStackTrace();
+        }
+    }
+}
+</pre></div>
+<p><a name="gghgi" id="gghgi"></a></p>
+<h2>创建一个变压器</h2>
+<p>下一步是创建可用于将XML传输到<tt>System.out</tt>的转换器。首先，需要以下导入语句。</p>
+<div class="codeblock"><pre>
+<b>import javax.xml.transform.Transformer;</b>
+<b>import javax.xml.transform.TransformerFactory;</b>
+<b>import javax.xml.transform.TransformerException;</b>
+<b>import javax.xml.transform.TransformerConfigurationException;</b>
+<b>import javax.xml.transform.dom.DOMSource;</b> 
+<b>import javax.xml.transform.stream.StreamResult;</b>
+import java.io.*;
+</pre></div>
+<p>在这里，您添加了一系列现在应该形成标准模式的类：一个实体（ <tt>Transformer</tt> ），创建它的工厂（ <tt>TransformerFactory</tt> ），以及每个类可以生成的异常。由于转换始终具有源和结果，因此您需要导入将DOM用作源（ <tt>DOMSource</tt> ）和结果的输出流（ <tt>StreamResult</tt> ）所需的类。</p>
+<p>接下来，添加代码以执行转换：</p>
+<div class="codeblock"><pre>
+try {
+    File f = new File(argv[0]);
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    document = builder.parse(f);
+
+    <b>// Use a Transformer for output</b>
+    <b>TransformerFactory tFactory =</b>
+    <b>TransformerFactory.newInstance();</b>
+    <b>Transformer transformer = 
+    tFactory.newTransformer();</b>
+
+    <b>DOMSource source = new DOMSource(document);</b>
+    <b>StreamResult result = new StreamResult(System.out);</b>
+    <b>transformer.transform(source, result);</b>
+}
+</pre></div>
+<p>在这里，您将创建一个转换器对象，使用DOM来构造源对象，并使用<tt>System.out</tt>来构造结果对象。然后，您告诉转换器对源对象进行操作并输出到结果对象。</p>
+<p>在这种情况下，“变压器”实际上并没有改变任何东西。在XSLT术语中，您使用的是恒等变换，这意味着“变换”将生成源的副本，且保持不变。</p>
+<div class="note"><hr><strong>注意：</strong> <p>您可以为变压器对象指定各种输出属性，如W3C规范中<a class="OutsideLink" href="http://www.w3.org/TR/xslt#output" target="_blank">http://www.w3.org/TR/xslt#output</a>所定义。例如，要获得缩进输出，可以调用以下方法：</p>
+<div class="codeblock"><pre>
+% transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+</pre></div>
+<hr></div>
+<p>最后，以下突出显示的代码捕获了可能产生的新错误：</p>
+<div class="codeblock"><pre>
+<b>} 
+catch (TransformerConfigurationException tce) {</b>
+    <b>System.out.println("* Transformer Factory error");</b>
+    <b>System.out.println(" " + tce.getMessage());</b>
+
+    <b>Throwable x = tce;</b>
+    <b>if (tce.getException() != null)</b>
+        <b>x = tce.getException();</b>
+    <b>x.printStackTrace(); </b>
+<b>} 
+catch (TransformerException te) {</b>
+    <b>System.out.println("* Transformation error");</b>
+    <b>System.out.println(" " + te.getMessage());</b>
+
+    <b>Throwable x = te;</b>
+    <b>if (te.getException() != null)</b>
+        <b>x = te.getException();</b>
+    <b>x.printStackTrace();</b>
+} 
+catch (SAXParseException spe) {
+    // ...
+}
+</pre></div>
+<p><strong>笔记</strong></p>
+<ul>
+<li>
+<tt>TransformerExceptions</tt>由转换器对象引发。
+</li>
+<li>
+<tt>TransformerConfigurationException</tt>由工厂引发。
+</li>
+<li>为了保留XML文档的<tt>DOCTYPE</tt>设置，还必须添加以下代码：<div class="codeblock"><pre>
+import javax.xml.transform.OutputKeys;
+...
+if (document.getDoctype() != null) {
+    String systemValue = (new File (document.getDoctype().getSystemId())).getName();
+    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, systemValue);
+}
+</pre></div>
+</li>
+</ul>
+<p>要了解有关配置工厂和处理验证错误的更多信息，请参阅将<a class="TutorialLink" href="../dom/readingXML.html" target="_top">XML数据读取到DOM中</a> 。<a name="gghig" id="gghig"></a></p>
+<h3>运行<tt>TransformationApp01</tt>示例</h3>
+<ol>
+<li><b>导航到<tt>示例</tt>目录。</b>
+<div class="codeblock"><pre>
+% cd <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt>.
+</pre></div>
+</li>
+<!--
+<li><b><a href="../examples/xslt_samples.zip">
+Download the XSLT examples by clicking this link</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</b></li>
+-->
+<li><b>
+<a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>Download the XSLT examples by clicking this link</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</b></li>
+<li><b>导航到<tt>xslt</tt>目录。</b>
+<div class="codeblock"><pre>
+% cd xslt
+</pre></div>
+</li>
+<li><b>编译<tt>TransformationApp01</tt>示例。</b>
+<p>输入以下命令：</p>
+<div class="codeblock"><pre>
+% javac TransformationApp01.java
+</pre></div>
+</li>
+<li><b>在XML文件上运行<tt>TransformationApp01</tt>示例。</b>
+<p>在以下情况下，在解压缩样本包之后， <tt>TransformationApp01</tt>在<tt>xslt / data</tt>目录中的<tt>foo.xml</tt>文件上运行。</p>
+<div class="codeblock"><pre>
+% java TransformationApp01 data/foo.xml
+</pre></div>
+<p>您将看到以下输出：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" 
+    encoding="UTF-8" 
+    standalone="no"?>&lt;doc>
+  &lt;name first="David" last="Marston"/>
+  &lt;name first="David" last="Bertoni"/>
+  &lt;name first="Donald" last="Leslie"/>
+  &lt;name first="Emily" last="Farmer"/>
+  &lt;name first="Joseph" last="Kesselman"/>
+  &lt;name first="Myriam" last="Midy"/>
+  &lt;name first="Paul" last="Dick"/>
+  &lt;name first="Stephen" last="Auriemma"/>
+  &lt;name first="Scott" last="Boag"/>
+  &lt;name first="Shane" last="Curcuru"/>
+</pre></div>
+<p>如<a href="#gghgi">创建转换器中所述</a> ，该转换器实际上并没有进行任何更改，而是仅执行了标识转换，以生成源的副本。<a class="TutorialLink" href="generatingXML.html" target="_top">从任意数据结构生成XML时</a>将执行真正的转换。</p>
+</li>
+</ol>
+<p><a name="gghkx" id="gghkx"></a></p>
+<h2>写出DOM的子树</h2>
+<p>也可以在DOM的子树上进行操作。在本节中，您将尝试使用该选项。</p>
+<div class="note"><hr><strong>注意：</strong> <!--
+<p>The code discussed in this section is in TranformationApp02.java. If you have not done so already, <a href="../examples/xslt_samples.zip">
+download the XSLT examples</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</p>
+-->
+<p>本部分讨论的代码在TranformationApp02.java中。如果您还没有这样做， <a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>download the XSLT examples</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</p>
+<hr></div>
+<p>该过程的唯一区别是，现在您将使用DOM中的节点而不是整个DOM创建<tt>DOMSource</tt> 。第一步是导入获取所需节点所需的类，如以下突出显示的代码所示：</p>
+<div class="codeblock"><pre>
+import org.w3c.dom.Document;
+import org.w3c.dom.DOMException;
+<b>import org.w3c.dom.Node;</b>
+<b>import org.w3c.dom.NodeList;</b> 
+</pre></div>
+<p>下一步是为实验找到一个好的节点。以下突出显示的代码选择第一个<tt><name></name></tt>元件。</p>
+<div class="codeblock"><pre>
+try {
+    File f = new File(argv[0]);
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    document = builder.parse(f);
+
+    <b>NodeList list = document.getElementsByTagName("name");</b>
+    <b>Node node = list.item(0); </b>
+}
+</pre></div>
+<p>在“ <a href="#gghgi">创建变形器”中</a> ，源代码是通过以下代码从整个文档中构造的</p>
+<div class="codeblock"><pre>
+DOMSource source = new DOMSource(document);
+</pre></div>
+<p>但是，下面突出显示的代码行构造了一个源对象，该源对象由植根于特定节点的子树组成。</p>
+<div class="codeblock"><pre>
+<b>DOMSource source = new DOMSource(node);</b>
+StreamResult result = new StreamResult(System.out);
+transformer.transform(source, result);
+</pre></div>
+<p><a name="gghku" id="gghku"></a></p>
+<h3>运行<tt>TranformationApp02</tt>示例</h3>
+<ol>
+<li><b>导航到<tt>示例</tt>目录。</b>
+<div class="codeblock"><pre>
+% cd <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt>.
+</pre></div>
+</li>
+<!--
+<li><b><a href="../examples/xslt_samples.zip">
+Download the XSLT examples by clicking this link</a> and unzip them into the <i>install-dir</i><tt>/jaxp-1_4_2-</tt><i>release-date</i><tt>/samples</tt> directory.</b></li>
+-->
+<li><b>
+<a class="SourceLink" href="../examples/xslt_samples.zip" target="_blank" onclick="showCode('../../displayCode.html', '../examples/xslt_samples.zip'); return false;"><code>Download the XSLT examples by clicking this link</code></a>并将它们解压缩到<i>install-dir</i> <tt>/ jaxp-1_4_2-</tt> <i>release-date</i> <tt>/ samples</tt>目录中。</b></li>
+<li><b>导航到<tt>xslt</tt>目录。</b>
+<div class="codeblock"><pre>
+cd xslt
+</pre></div>
+</li>
+<li><b>编译<tt>TranformationApp02</tt>示例。</b>
+<p>输入以下命令：</p>
+<div class="codeblock"><pre>
+% javac xslt/TranformationApp02.java
+</pre></div>
+</li>
+<li><b>在XML文件上运行<tt>TranformationApp02</tt>示例。</b>
+<p>在下面的情况下<tt>，TranformationApp02</tt>是文件<tt>foo.xml</tt>运行，在<tt>XSLT /数据</tt>目录中找到您解压缩后的样本包。</p>
+<div class="codeblock"><pre>
+% java TranformationApp02 data/foo.xml
+</pre></div>
+<p>您将看到以下输出：</p>
+<div class="codeblock"><pre>
+&lt;?xml version="1.0" encoding="UTF-8" 
+    standalone="no"?>&lt;doc>&lt;name 
+    first="David" last="Marston"/>
+</pre></div>
+<p>这次只有第一次<tt><name></name></tt>元素已打印出来。</p>
+<p>至此，您已经了解了如何使用转换器写出DOM，以及如何使用DOM的子树作为转换中的源对象。在下一节中，您将看到如何使用转换器从您能够解析的任何数据结构中创建XML。</p>
+</li>
+</ol>
+
+
+        </div>
+        <div class="NavBit">
+            <a href="xpath.html" target="_top">«上一个</a> • <a href="../TOC.html" target="_top">追踪</a> • <a href="generatingXML.html" target="_top">下一个»</a>
+        </div>
+    </div>
+    
+<hr class="clearfloat">
+
+<div id="Footer">
+
+<p class="footertext">
+<a href="http://www.oracle.com/corporate/index.html">关于Oracle</a> | <a href="http://www.oracle.com/us/corporate/contact/index.html">联系我们</a> | <a href="http://www.oracle.com/us/legal/index.html">法律声明</a> | <a href="http://www.oracle.com/us/legal/terms/index.html">使用条款</a> | <a href="http://www.oracle.com/us/legal/privacy/index.html">您的隐私权</a></p>
+
+<p class="footertext"><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en-US">版权所有©1995、2017 Oracle和/或其分支机构。版权所有。</a></p>
+       
+</div>    
+    <div class="PrintHeaders">
+        <b>上一页：</b> XPath的工作方式<br><b>下一页：</b>从任意数据结构生成XML</div>
+<!-- Start SiteCatalyst code -->
+<script type="application/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+<!-- End SiteCatalyst code --> 
+
+ 
+</body></html>
